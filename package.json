@@ -12,7 +12,6 @@
     "lint:fix": "eslint --ext .tsx --ext .ts src/ --fix"
   },
   "pre-commit": [
-    "format",
     "lint"
   ],
   "dependencies": {
