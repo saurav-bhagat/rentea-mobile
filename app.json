@@ -1,0 +1,12 @@
+{
+  "name": "renteaMobile",
+  "displayName": "renteaMobile",
+  "expo": {
+    "name": "renteaMobile",
+    "slug": "renteaMobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
