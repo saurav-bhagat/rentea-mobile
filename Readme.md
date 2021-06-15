@@ -13,6 +13,9 @@
 blue - #109FDA
 grey - #666666
 
+# Useful Links
+
+* https://ethercreative.github.io/react-native-shadow-generator/
 
 ## caveats
 

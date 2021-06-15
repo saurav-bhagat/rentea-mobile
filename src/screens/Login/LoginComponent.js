@@ -67,8 +67,6 @@ const styles = StyleSheet.create({
 	},	
 	loginContinueButton: {
 		width: '100%',
-		borderWidth: 1,
-		borderColor: '#ddd',
 		marginTop: 40,
 		backgroundColor: '#109FDA',
 		justifyContent: 'center',
