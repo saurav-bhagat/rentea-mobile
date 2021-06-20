@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Button } from 'native-base';
+import { useNavigation } from '@react-navigation/core';
 
 
 const OwnerUserDetailsScreen = () => {
+
+	const navigation = useNavigation();
 	return(
 		<View style={{ flex:1, backgroundColor: 'white' }}>
 			<View style={styles.oudsContainer}>
@@ -29,7 +32,7 @@ const OwnerUserDetailsScreen = () => {
 						placeholder='Email ID'
 					/>
 
-					<Button rounded transparent style={styles.oudsContinueButton} onPress={() => console.log('Owner Details')}>
+					<Button rounded transparent style={styles.oudsContinueButton} onPress={() => navigation.navigate('AddBuilding')}>
 						<Text style={styles.oudsContinueButton_text}>Continue</Text>
 					</Button>
 				</View>

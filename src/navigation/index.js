@@ -7,6 +7,8 @@ import OTPScreen from '../screens/Otp/OTPScreen';
 
 import CounterScreen from '../screens/CounterScreen';
 import OwnerUserDetailsScreen from '../screens/Owner/OwnerUserDetailsScreen';
+import AddBuilding from '../screens/Owner/addBuilding';
+import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 
 const { Screen, Navigator } = createStackNavigator();
 
@@ -27,8 +29,11 @@ const RootRoutes = () => {
 				{
 					isLogin ? (
 						<>
+							<Screen name='AddBuilding' component={AddBuilding} />
+							<Screen name='AddBuildingForm' component={AddBuildingForm} />
 							<Screen name='OwnerUserDetails' component={OwnerUserDetailsScreen} />
 							<Screen name='Home' component={CounterScreen} />
+							
 						</>
 					) : (
 						<>
@@ -37,7 +42,6 @@ const RootRoutes = () => {
 						</>
 					)
 				}
-				
 				
 			</Navigator>
 		</NavigationContainer>
