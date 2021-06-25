@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Button, Header } from 'native-base';
+import { Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import BuildingAccordion from './BuildingAccordion';

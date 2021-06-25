@@ -11,7 +11,7 @@ const AddRoomSection = ({ roomCount }) => {
 
 	return (
 		<View>
-			<Button 
+			<Button
 				transparent 
 				onPress={() => setShowRoomDetails(!showRoomDetails)}
 				style={{ marginTop: 25 }}

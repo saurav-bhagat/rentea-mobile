@@ -18,9 +18,9 @@ const getStateList = async () => {
   		});
 }
 
-const SelectStatePicker = () => {
+const SelectStatePicker = ({ handleTextChange, stateAddress, onValueChange }) => {
 
-	const [ stateSelect, setStateSelect ] = useState('');
+	// const [ stateSelect, setStateSelect ] = useState('');
 
 	useEffect(() => {
 		// getStateList();
@@ -28,7 +28,7 @@ const SelectStatePicker = () => {
 
 	return(
 		<RNPickerSelect
-			onValueChange={(value) => setStateSelect(value)}
+			onValueChange={onValueChange}
 			useNativeAndroidPickerStyle={false}
 			items={[
 				{ label: 'Karnataka', value: 'karnataka' },
@@ -58,7 +58,7 @@ const SelectStatePicker = () => {
 			textInputProps={{
 				style: {},
 			}}
-			value={stateSelect}
+			value={stateAddress}
 			InputAccessoryView={() => null}
 		/>
 	);

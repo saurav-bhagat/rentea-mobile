@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { Item, Label, Input, Button, Header, Left, Body, Right, Title, Subtitle, Icon  } from 'native-base';
+import { Button } from 'native-base';
+import { useSelector, useDispatch } from 'react-redux';
 
 import BackIcon from '../../../components/common/BackIcon';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
@@ -9,17 +10,33 @@ import AddMaintainerSection from '../../../components/owner/maintainer/AddMainta
 import AddRoomSection from './AddRoomsSection';
 import TextInputCommon from '../../../components/common/TextInputCommon';
 
+import { setBuildingDetails } from '../../../redux/actions';
+
 
 const AddBuildingForm = () => {
 
 	const navigation = useNavigation();
-	const [ roomCount, setRoomCount ] = useState(roomCount);
+	const dispatch = useDispatch();
 
-	const handleTextChange = (name, value) => {
-		console.log(name, value);
-		if(name==='roomCount'){
-			setRoomCount(value);
-		}
+	const [ buildingName, setBuildingName ] = useState('');
+	const [ roomCount, setRoomCount ] = useState('');
+	const [ floorCount, setFloorCount ] = useState('');
+	const [ stateAddress, setStateAddress ] = useState('');
+	const [ pinCode, setPinCode ] = useState('');
+	const [ street, setStreet ] = useState('');
+	const [ district, setDistrict ] = useState('');
+
+	const handleAddBuildingFormSubmit = () => {
+		console.log(`
+			Inside Submit:
+			Building Name is: ${buildingName},
+			Room count is: ${roomCount},
+			Floor Count is: ${floorCount},
+			Address is: ${street} , ${district} , 
+			${stateAddress}, ${pinCode}
+		`);
+		// call an action which will set this values to the store.
+		dispatch(setBuildingDetails({ buildingName, roomCount, floorCount, street, district, pinCode, stateAddress }))
 	}
 
 	return(
@@ -30,14 +47,19 @@ const AddBuildingForm = () => {
 					<Text style={styles.addBFHeaderText}>Add Building Details</Text>
 				</View>
 				<View style={styles.addBFormContainer}>
-					<TextInputCommon  label="Building Name" name="buildingName" handleTextChange={handleTextChange}/>
+					<TextInputCommon  
+						label="Building Name" 
+						name="buildingName" 
+						onChangeText={(val) => setBuildingName(val)}
+					/>
 					<View style={{ flexDirection: 'row', marginTop:30 }}>
 						<View style={{ flex:1 }}>
-							<TextInputCommon  
+							<TextInputCommon
 								label="Number of Rooms" 
 								style={{ width: '80%', alignSelf: 'flex-start' }} 
 								name="roomCount" 
-								handleTextChange={handleTextChange}
+								onChangeText={(val) => setRoomCount(val)}
+								value={roomCount}
 							/>
 						</View>
 						<View style={{ flex:1 }}>
@@ -45,13 +67,17 @@ const AddBuildingForm = () => {
 								label="Number of Floors" 
 								style={{ width: '80%', alignSelf: 'flex-end' }} 
 								name="floorCount" 
-								handleTextChange={handleTextChange}
+								onChangeText={(val) => setFloorCount(val)}
+								value={floorCount}
 							/>
 						</View>
 					</View>
 
 					<View style={{ marginTop: 30 }}>
-						<SelectStatePicker />
+						<SelectStatePicker 
+							onValueChange={(val) => setStateAddress(val)}
+							stateAddress={stateAddress}
+						/>
 					</View>
 
 					<View style={{ flexDirection: 'row', marginTop:30 }}>
@@ -60,7 +86,7 @@ const AddBuildingForm = () => {
 								label="District" 
 								style={{ width: '90%', alignSelf: 'flex-start' }} 
 								name="district" 
-								handleTextChange={handleTextChange}
+								onChangeText={(val) => setDistrict(val)}
 							/>
 						</View>
 						<View style={{ flex:1 }}>
@@ -68,7 +94,7 @@ const AddBuildingForm = () => {
 								label="Pincode" 
 								style={{ width: '90%', alignSelf: 'flex-end' }} 
 								name="pincode" 
-								handleTextChange={handleTextChange}
+								onChangeText={(val) => setPinCode(val)}
 							/>
 						</View>
 					</View>
@@ -77,7 +103,7 @@ const AddBuildingForm = () => {
 						label="Street/Locality" 
 						style={{ marginTop:30 }} 
 						name="street"
-						handleTextChange={handleTextChange}
+						onChangeText={(val) => setStreet(val)}
 					/>
 			
 					<Text style={{ fontSize: 22, marginTop: 35, color: '#666' }}>Maintainer:</Text>
@@ -90,7 +116,7 @@ const AddBuildingForm = () => {
 						rounded 
 						transparent 
 						style={styles.submitBuildingDetailsButton}
-						onPress={() => navigation.navigate('Home')}
+						onPress={handleAddBuildingFormSubmit}
 					>
 						<Text style={styles.submitBuildingDetailsButton_text}>Submit</Text>
 					</Button>

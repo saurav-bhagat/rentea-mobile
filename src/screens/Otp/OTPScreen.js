@@ -2,12 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { Button } from 'native-base';
+import { useNavigation } from '@react-navigation/core';
 
 const OTPScreen = () => {
+
+	const navigation = useNavigation();
 	const handleOTPSubmit = (code) => {
 		console.log(`Code is ${code}, you are good to go!`);
 
 		// once otp is verified, navigate to home screen 
+		setTimeout(() => {
+			navigation.navigate('OwnerUserDetails');
+		}, 2000);
 	}
 	return(
 		<View style={styles.otpContainer}>
