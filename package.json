@@ -7,7 +7,13 @@
     "start": "react-native start",
     "test": "jest"
   },
+<<<<<<< HEAD
  
+=======
+  "pre-commit": [
+    "lint"
+  ],
+>>>>>>> cad2246fe8d364177b10e07597895b1183f05f15
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.9.4",
