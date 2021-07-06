@@ -10,19 +10,11 @@ const HomeScreen = (): ReactElement => {
 };
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-=======
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
->>>>>>> cad2246fe8d364177b10e07597895b1183f05f15
 });
 
 export default HomeScreen;
