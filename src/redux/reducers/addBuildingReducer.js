@@ -1,14 +1,16 @@
 
-// Type of building object 
-	// 	{
-	// 		buildingName:'',
-	// 		roomCount:'',
-	// 		floorCount:'',
-	// 		stateAddress:'',
-	// 		pinCode:'',
-	// 		street:'',
-	// 		district:''
-    //    }
+/*
+   Type of building object 
+		{
+			buildingName:'',
+			roomCount:'',
+			floorCount:'',
+			stateAddress:'',
+			pinCode:'',
+			street:'',
+			district:''
+       }
+*/
 
 const initialState = {
 	buildingDetails:[]
