@@ -5,8 +5,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import BuildingAccordion from './BuildingAccordion';
 import AddBuildingFabButton from '../../../components/owner/building/AddBuildingFabButton';
+import { useSelector, useDispatch } from 'react-redux';
 
 const AddBuilding = () => {
+	const data=useSelector((state)=>state.buildingDetails);
+	console.log('data',data);
 	return(
 		<View style={{ flex:1, backgroundColor: 'white' }} nestedScrollEnabled={true}>
 			<View style={styles.addBContainer}>

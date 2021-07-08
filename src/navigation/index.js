@@ -10,13 +10,12 @@ import OwnerUserDetailsScreen from '../screens/Owner/OwnerUserDetailsScreen';
 import AddBuilding from '../screens/Owner/addBuilding';
 import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 import FormScreen from '../screens/payment/FormScreen.js';
-import { useSelector, useDispatch } from 'react-redux';
+
 
 const { Screen, Navigator } = createStackNavigator();
 
 const RootRoutes = () => {
-    const data=useSelector((state)=>state.buildingDetails);
-	console.log('data',data);
+   
 	const isLogin = true;
 
 	return (
