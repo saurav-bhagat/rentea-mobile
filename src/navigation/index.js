@@ -11,10 +11,11 @@ import AddBuilding from '../screens/Owner/addBuilding';
 import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 import FormScreen from '../screens/payment/FormScreen.js';
 
+
 const { Screen, Navigator } = createStackNavigator();
 
 const RootRoutes = () => {
-
+   
 	const isLogin = true;
 
 	return (
@@ -30,7 +31,7 @@ const RootRoutes = () => {
 				{
 					isLogin ? (
 						<>
-						    <Screen name="Payment"  component={FormScreen}  />
+						    {/* <Screen name="Payment"  component={FormScreen}  /> */}
 							<Screen name='AddBuilding' component={AddBuilding} />
 							<Screen name='AddBuildingForm' component={AddBuildingForm} />
 							<Screen name='OwnerUserDetails' component={OwnerUserDetailsScreen} />
