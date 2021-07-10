@@ -4,14 +4,13 @@ import { Accordion } from "native-base";
 import BuildingAccordionContent from '../../../components/owner/building/BuildingAccordionContent';
 import BuildingAccordionHeader from '../../../components/owner/building/BuildingAccordionHeader';
 
-const BuildingAccordion = () => {
+const BuildingAccordion = ({buildingDetails}) => {
 
 	const dataArray = [
 		{ title: "Building 1", content: <BuildingAccordionContent /> },
 		{ title: "Building 2", content: <BuildingAccordionContent /> },
 		{ title: "Buildiing 3", content: <BuildingAccordionContent /> }
 	];
-
 	const renderHeader = (item, expanded) => <BuildingAccordionHeader item={item} expanded={expanded} />
 	const renderContent = (item) => item.content;
 

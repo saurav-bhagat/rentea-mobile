@@ -23,8 +23,8 @@ const AddBuildingFabButton = () => {
 const styles = StyleSheet.create({
 	fabStyle: {
 		backgroundColor: '#109FDA', 
-		width: 80, 
-		height: 80, 
+		width: 50, 
+		height: 50, 
 		borderRadius: 50
 	}
 });
