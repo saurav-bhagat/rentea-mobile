@@ -36,7 +36,6 @@ const BuildingAccordionContent = () => {
 
 const styles = StyleSheet.create({
 	accordianContentContainer: {
-	//	borderWidth: 2,
 		width: '90%',
 		marginRight: 'auto',
 		marginLeft: 'auto'

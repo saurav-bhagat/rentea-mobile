@@ -8,7 +8,7 @@ import AddBuildingFabButton from '../../../components/owner/building/AddBuilding
 import { useSelector, useDispatch } from 'react-redux';
 
 const AddBuilding = () => {
-	 const data=useSelector((state)=>state.buildingDetails);
+	 const buildingData=useSelector((state)=>state.buildingDetails);
 	return(
 		
 		<View style={{ flex:1, backgroundColor: 'white',paddingTop:20,paddingHorizontal:1 }} >
@@ -18,7 +18,7 @@ const AddBuilding = () => {
 					<Text style={styles.addBText}>Add Building </Text>
 					<Text>Click on the add button below to add building details</Text>
 				</View>
-				<BuildingAccordion buildingDetails={data.buildingDetails} />
+				<BuildingAccordion buildingDetails={buildingData.buildingDetails} />
 				<Button rounded style={styles.addBSkipButton}>
 					<Text style={styles.addBSkipButtonText}>Skip</Text>
 					<Icon name="chevron-forward-outline" style={styles.forwardIcon} />
