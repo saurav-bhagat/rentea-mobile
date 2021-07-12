@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Item, Label } from 'native-base';
 import { StyleSheet } from 'react-native';
 
-const TextInputCommon = ({ label, style, name, value, onChangeText }) => {
+const TextInputCommon = ({ label, style, name, value, onChangeText,keyboardType }) => {
 	return (
 		<Item floatingLabel style={[{ borderColor: '#666' }, style]}>
 			<Label>{label}</Label>
@@ -10,6 +10,7 @@ const TextInputCommon = ({ label, style, name, value, onChangeText }) => {
 				style={styles.inputStyle}
 				onChangeText={onChangeText}
 				value={value}
+				keyboardType={keyboardType}
 			/>
 		</Item>
 	);

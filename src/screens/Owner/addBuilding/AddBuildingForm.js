@@ -82,6 +82,7 @@ const AddBuildingForm = () => {
 								name="roomCount"
 								onChangeText={(val) => setRoomCount(val)}
 								value={roomCount}
+								keyboardType="numeric"
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
@@ -91,6 +92,7 @@ const AddBuildingForm = () => {
 								name="floorCount"
 								onChangeText={(val) => setFloorCount(val)}
 								value={floorCount}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
@@ -120,6 +122,7 @@ const AddBuildingForm = () => {
 								style={{ width: '90%', alignSelf: 'flex-end' }}
 								name="pincode"
 								onChangeText={(val) => setPinCode(val)}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
