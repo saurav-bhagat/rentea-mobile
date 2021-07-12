@@ -4,7 +4,7 @@ import counterReducer from './counterReducer';
 
 const rootReducer = combineReducers({
 	counter: counterReducer,
-	buildingDetails: addBuildingReducer
+	buildingDetails: addBuildingReducer,
 });
 
 export default rootReducer;

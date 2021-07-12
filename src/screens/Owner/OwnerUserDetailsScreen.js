@@ -3,37 +3,44 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 
-
 const OwnerUserDetailsScreen = () => {
-
 	const navigation = useNavigation();
-	return(
-		<View style={{ flex:1, backgroundColor: 'white' }}>
+	return (
+		<View style={{ flex: 1, backgroundColor: 'white' }}>
 			<View style={styles.oudsContainer}>
 				<View style={styles.oudsTextContainer}>
 					<Text style={styles.oudsWelcomeText}>Welcome!</Text>
-					<Text style={styles.oudsShortText}>Enter your details below.</Text>
+					<Text style={styles.oudsShortText}>
+						Enter your details below.
+					</Text>
 				</View>
-				
+
 				<View style={styles.oudsFormContainer}>
-					<TextInput 
-						style={styles.oudsPhoneInputBox} 
-						placeholderTextColor={'#aaa'} 
-						placeholder='First Name'
+					<TextInput
+						style={styles.oudsPhoneInputBox}
+						placeholderTextColor={'#aaa'}
+						placeholder="First Name"
 					/>
-					<TextInput 
-						style={styles.oudsPhoneInputBox} 
-						placeholderTextColor={'#aaa'} 
-						placeholder='Last Name'
+					<TextInput
+						style={styles.oudsPhoneInputBox}
+						placeholderTextColor={'#aaa'}
+						placeholder="Last Name"
 					/>
-					<TextInput 
-						style={styles.oudsPhoneInputBox} 
-						placeholderTextColor={'#aaa'} 
-						placeholder='Email ID'
+					<TextInput
+						style={styles.oudsPhoneInputBox}
+						placeholderTextColor={'#aaa'}
+						placeholder="Email ID"
 					/>
 
-					<Button rounded transparent style={styles.oudsContinueButton} onPress={() => navigation.navigate('AddBuilding')}>
-						<Text style={styles.oudsContinueButton_text}>Continue</Text>
+					<Button
+						rounded
+						transparent
+						style={styles.oudsContinueButton}
+						onPress={() => navigation.navigate('AddBuilding')}
+					>
+						<Text style={styles.oudsContinueButton_text}>
+							Continue
+						</Text>
 					</Button>
 				</View>
 			</View>
@@ -43,26 +50,24 @@ const OwnerUserDetailsScreen = () => {
 
 const styles = StyleSheet.create({
 	oudsContainer: {
-		flex:1,
+		flex: 1,
 		marginTop: '20%',
 		width: '85%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 	},
-	oudsTextContainer: {
-	},
+	oudsTextContainer: {},
 	oudsWelcomeText: {
 		fontSize: 55,
 		letterSpacing: 1.3,
 		color: '#666666',
-		marginBottom: 15
+		marginBottom: 15,
 	},
 	oudsShortText: {
 		fontSize: 17,
 		color: '#666666',
 	},
-	oudsFormContainer: {
-	},
+	oudsFormContainer: {},
 	oudsPhoneInputBox: {
 		paddingLeft: 20,
 		height: 55,
@@ -72,12 +77,12 @@ const styles = StyleSheet.create({
 		borderRadius: 25,
 		padding: 10,
 		backgroundColor: 'white',
-		shadowColor: "#000",
+		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
 			height: 4,
 		},
-		shadowOpacity: 0.30,
+		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
 	},
@@ -87,12 +92,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#109FDA',
 		justifyContent: 'center',
 		height: 58,
-		shadowColor: "#000",
+		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
 			height: 4,
 		},
-		shadowOpacity: 0.30,
+		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
 	},
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
-		letterSpacing: 1
+		letterSpacing: 1,
 	},
 });
 

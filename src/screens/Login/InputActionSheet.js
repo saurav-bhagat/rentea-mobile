@@ -7,24 +7,24 @@
 
 // const InputActionSheet = ({ actionSheetRef }) => {
 // 	let actionSheet;
-	
+
 // 	const navigation = useNavigation();
 // 	const isFocused = useIsFocused()
 
 // 	useEffect(() => {
 // 		navigation.addListener('focus', () => {
-			
+
 // 			setTimeout(() => {
 // 				actionSheetRef.current?.show();
 // 				console.log(actionSheetRef.current);
 // 				console.log('Inside useEffect of InputActionSheet');
 // 			}, 1000);
-			
+
 // 		});
 // 	}, [isFocused]);
 
 // 	return (
-//       	<ActionSheet 
+//       	<ActionSheet
 // 			ref={actionSheetRef}
 // 			closeOnPressBack={false}
 // 			closeOnTouchBackdrop={false}
@@ -35,14 +35,14 @@
 // 			containerStyle={styles.actionSheetStyle}
 // 			elevation={10}
 // 			>
-//         	<LoginComponent />	
+//         	<LoginComponent />
 //       	</ActionSheet>
 // 	);
 // };
 
 // const styles = StyleSheet.create({
 // 	inputSheetContainer: {
-// 		// flex:1, 
+// 		// flex:1,
 // 		justifyContent: 'center'
 // 	},
 // 	actionSheetStyle:{
@@ -51,7 +51,7 @@
 // 		borderTopLeftRadius: 50,
 // 		borderTopRightRadius: 50
 // 	},
-	
+
 // });
 
 // export default InputActionSheet;

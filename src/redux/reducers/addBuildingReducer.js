@@ -1,4 +1,3 @@
-
 /*
    Type of building object 
 		{
@@ -15,16 +14,16 @@
 */
 
 const initialState = {
-	buildingDetails:[]
-}
+	buildingDetails: [],
+};
 
 const addBuildingReducer = (state = initialState, action) => {
-	switch(action.type){
+	switch (action.type) {
 		case 'SET_BUILDING_DETAILS':
-			return { 
+			return {
 				...state,
-				buildingDetails:[...state.buildingDetails,action.payload]
-			 };
+				buildingDetails: [...state.buildingDetails, action.payload],
+			};
 		default:
 			return state;
 	}

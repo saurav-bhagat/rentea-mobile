@@ -2,11 +2,11 @@
 // and on basis of action.type it returns state updating it with action.payload
 
 const counterState = {
-	count: 0
-}
+	count: 0,
+};
 
 const counterReducer = (state = counterState, action) => {
-	switch(action.type){
+	switch (action.type) {
 		case 'INCREMENT':
 			return { ...state, count: state.count + 1 };
 		case 'DECREMENT':

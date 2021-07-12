@@ -4,9 +4,9 @@ import { StyleSheet } from 'react-native';
 
 const TextInputCommon = ({ label, style, name, value, onChangeText }) => {
 	return (
-		<Item floatingLabel style={[{ borderColor: '#666' }, style ]}>
+		<Item floatingLabel style={[{ borderColor: '#666' }, style]}>
 			<Label>{label}</Label>
-			<Input 
+			<Input
 				style={styles.inputStyle}
 				onChangeText={onChangeText}
 				value={value}
@@ -16,9 +16,7 @@ const TextInputCommon = ({ label, style, name, value, onChangeText }) => {
 };
 
 const styles = StyleSheet.create({
-	inputStyle: {
-	
-	}
+	inputStyle: {},
 });
 
 export default TextInputCommon;

@@ -1,13 +1,13 @@
 import React, { useEffect, createRef } from 'react';
-import { 
-	View, 
-	Text, 
-	StyleSheet, 
-	Image, 
-	KeyboardAvoidingView, 
+import {
+	View,
+	Text,
+	StyleSheet,
+	Image,
+	KeyboardAvoidingView,
 	SafeAreaView,
 	Keyboard,
-	TouchableWithoutFeedback
+	TouchableWithoutFeedback,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
@@ -24,33 +24,33 @@ const LoginScreen = () => {
 		navigation.addListener('focus', () => {
 			console.log('Inside useEffect of LoginScreen');
 		});
-		
 	}, []);
 
 	const renderHeader = () => (
 		<View style={styles.header}>
 			<View style={styles.panelHeader}>
 				<View style={styles.panelHandle} />
-		  	</View>
+			</View>
 		</View>
 	);
 
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{flex:1}}>
-					
+		<TouchableWithoutFeedback
+			onPress={Keyboard.dismiss}
+			style={{ flex: 1 }}
+		>
 			<KeyboardAvoidingView
-				behavior={Platform.OS === "ios" ? "padding" : "height"}
+				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 				keyboardVerticalOffset={-80}
-				style={{flex:1}}
+				style={{ flex: 1 }}
 			>
-				
 				<View style={styles.loginContainer}>
 					<View style={styles.login_logo}>
-						<Image 
-							source={require('../../images/rentea-logo.png')} 
+						<Image
+							source={require('../../images/rentea-logo.png')}
 							style={{
 								width: '80%',
-								height: 120
+								height: 120,
 							}}
 						/>
 						<Text>Now, Manage your Property over a cup of Tea</Text>
@@ -68,7 +68,9 @@ const LoginScreen = () => {
 							enabledManualSnapping={false}
 							enabledBottomInitialAnimation={true}
 							renderHeader={renderHeader}
-							renderContent={() => <LoginComponent navigation={navigation} />}
+							renderContent={() => (
+								<LoginComponent navigation={navigation} />
+							)}
 						/>
 					</View>
 				</View>
@@ -79,11 +81,11 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
 	loginContainer: {
-		flex : 1,
+		flex: 1,
 		backgroundColor: '#fff',
 	},
 	login_logo: {
-		flex:1,
+		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -108,12 +110,12 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 	sheetContainer: {
-		flex:1,
+		flex: 1,
 		shadowColor: '#000000',
-    	shadowOffset: { width: 0, height: 0 },
-    	shadowRadius: 5,
-    	shadowOpacity: 0.5
-	}
+		shadowOffset: { width: 0, height: 0 },
+		shadowRadius: 5,
+		shadowOpacity: 0.5,
+	},
 });
 
 export default LoginScreen;
