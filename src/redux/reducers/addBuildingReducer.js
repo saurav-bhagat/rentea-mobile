@@ -8,7 +8,9 @@
 			stateAddress:'',
 			pinCode:'',
 			street:'',
-			district:''
+			district:'',
+			maintainerName:'',
+			maintainerPhone:''
        }
 */
 

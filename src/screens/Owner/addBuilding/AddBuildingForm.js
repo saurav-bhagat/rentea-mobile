@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'native-base';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import BackIcon from '../../../components/common/BackIcon';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
@@ -25,6 +25,8 @@ const AddBuildingForm = () => {
 	const [ pinCode, setPinCode ] = useState('');
 	const [ street, setStreet ] = useState('');
 	const [ district, setDistrict ] = useState('');
+	const [maintainerName,setMaintainerName]=useState('');
+	const [maintainerPhone,setMaintainerPhone]=useState('');
 
 	const handleAddBuildingFormSubmit = () => {
 		console.log(`
@@ -36,7 +38,18 @@ const AddBuildingForm = () => {
 			${stateAddress}, ${pinCode}
 		`);
 		// call an action which will set this values to the store.
-		dispatch(setBuildingDetails({ buildingName, roomCount, floorCount, street, district, pinCode, stateAddress }))
+		dispatch(setBuildingDetails({   
+			                            buildingName,
+										roomCount, 
+										floorCount,
+										street, 
+										district, 
+										pinCode,
+										stateAddress,
+										maintainerName,
+										maintainerPhone
+									})
+			    )
 	}
 
 	return(
@@ -108,7 +121,10 @@ const AddBuildingForm = () => {
 			
 					<Text style={{ fontSize: 22, marginTop: 35, color: '#666' }}>Maintainer:</Text>
 					
-					<AddMaintainerSection />
+					<AddMaintainerSection
+					    setMaintainerName={setMaintainerName}
+						setMaintainerPhone={setMaintainerPhone}
+					 />
 
 					<AddRoomSection roomCount={roomCount} />
 
