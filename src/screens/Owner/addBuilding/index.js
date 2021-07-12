@@ -1,5 +1,12 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+	View,
+	Text,
+	StyleSheet,
+	ScrollView,
+	Dimensions,
+	SafeAreaView,
+} from 'react-native';
 import { Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -8,43 +15,53 @@ import AddBuildingFabButton from '../../../components/owner/building/AddBuilding
 import { useSelector } from 'react-redux';
 
 const AddBuilding = () => {
-	const buildingData = useSelector((state)=>state.buildingDetails);
-	return(
-		
-		<View style={{ flex:1, backgroundColor: 'white',paddingTop:20,paddingHorizontal:1 }} >
-			<ScrollView	>
+	const buildingData = useSelector((state) => state.buildingDetails);
+	return (
+		<View
+			style={{
+				flex: 1,
+				backgroundColor: 'white',
+				paddingTop: 20,
+				paddingHorizontal: 1,
+			}}
+		>
+			<ScrollView>
 				<View style={styles.addBContainer}>
-					<View style={styles.addBTextContainer}> 
+					<View style={styles.addBTextContainer}>
 						<Text style={styles.addBText}>Add Building </Text>
-						<Text>Click on the add button below to add building details</Text>
+						<Text>
+							Click on the add button below to add building
+							details
+						</Text>
 					</View>
-
-					<BuildingAccordion buildingDetails={buildingData.buildingDetails} />
-
+					<BuildingAccordion
+						buildingDetails={buildingData.buildingDetails}
+					/>
 					<Button rounded style={styles.addBSkipButton}>
 						<Text style={styles.addBSkipButtonText}>Skip</Text>
-						<Icon name="chevron-forward-outline" style={styles.forwardIcon} />
+						<Icon
+							name="chevron-forward-outline"
+							style={styles.forwardIcon}
+						/>
 					</Button>
-
 					<AddBuildingFabButton />
 				</View>
 			</ScrollView>
 		</View>
-		
 	);
 };
 
 const styles = StyleSheet.create({
 	addBContainer: {
-		flex:1,
+		flex: 1,
 		paddingTop: '2%',
 		backgroundColor: 'white',
 		width: '85%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 	},
-	addBTextContainer:{
-		marginBottom: 30
+	addBTextContainer: {
+		marginBottom: 30,
 	},
 	addBText: {
 		fontSize: 50,
@@ -59,19 +76,19 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		width: 100,
 		marginRight: 18,
-		marginLeft:12,
-		marginBottom:20	
+		marginLeft: 12,
+		marginBottom: 20,
 	},
 	addBSkipButtonText: {
 		color: '#fff',
-		fontSize: 19
+		fontSize: 19,
 	},
 	forwardIcon: {
 		color: '#fff',
 		marginLeft: 4,
 		top: 2,
 		fontSize: 22,
-	}
+	},
 });
 
 export default AddBuilding;

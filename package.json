@@ -4,8 +4,13 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "prettier": "prettier --check ./src",
+    "prettier:fix": "prettier --write ./src"
   },
+  "pre-commit": [
+    "prettier"
+  ],
   "dependencies": {
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
@@ -43,7 +48,9 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.3.2"
   },
   "private": true
 }
