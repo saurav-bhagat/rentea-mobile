@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	ScrollView,
-	Dimensions,
-	SafeAreaView,
-} from 'react-native';
-import { Button } from 'native-base';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Button, Header, Left, Right, Body, Title } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import BuildingAccordion from './BuildingAccordion';
@@ -21,22 +14,35 @@ const AddBuilding = () => {
 			style={{
 				flex: 1,
 				backgroundColor: 'white',
-				paddingTop: 20,
-				paddingHorizontal: 1,
 			}}
 		>
-			<ScrollView>
-				<View style={styles.addBContainer}>
-					<View style={styles.addBTextContainer}>
+			<Header transparent>
+				<Left>
+					<Button transparent>
+						<Icon name="chevron-back-outline" />
+					</Button>
+				</Left>
+				<Body>
+					<Title style={{ color: '#000', fontSize: 24 }}>
+						Add Building
+					</Title>
+				</Body>
+				<Right />
+			</Header>
+			<View style={styles.addBContainer}>
+				{/* <View style={styles.addBTextContainer}>
 						<Text style={styles.addBText}>Add Building </Text>
 						<Text>
 							Click on the add button below to add building
 							details
 						</Text>
-					</View>
+					</View> */}
+				<ScrollView>
 					<BuildingAccordion
 						buildingDetails={buildingData.buildingDetails}
 					/>
+				</ScrollView>
+				<View>
 					<Button rounded style={styles.addBSkipButton}>
 						<Text style={styles.addBSkipButtonText}>Skip</Text>
 						<Icon
@@ -46,7 +52,7 @@ const AddBuilding = () => {
 					</Button>
 					<AddBuildingFabButton />
 				</View>
-			</ScrollView>
+			</View>
 		</View>
 	);
 };
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
 		width: '85%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
+		justifyContent: 'space-between',
 	},
 	addBTextContainer: {
 		marginBottom: 30,

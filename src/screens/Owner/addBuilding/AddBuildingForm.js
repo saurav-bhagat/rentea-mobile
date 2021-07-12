@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
+import {
+	View,
+	Text,
+	StyleSheet,
+	ScrollView,
+	TouchableHighlight,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
 
@@ -203,7 +209,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
-		borderRadius: 35
+		borderRadius: 35,
 	},
 	submitBuildingDetailsButton_text: {
 		color: '#fff',
@@ -211,7 +217,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		letterSpacing: 1,
-		textAlign: 'center'
+		textAlign: 'center',
 	},
 });
 
