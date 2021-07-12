@@ -1,15 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Accordion } from 'native-base';
 import BuildingAccordionContent from '../../../components/owner/building/BuildingAccordionContent';
 import BuildingAccordionHeader from '../../../components/owner/building/BuildingAccordionHeader';
 
 const BuildingAccordion = ({ buildingDetails }) => {
-	const dataArray = [
-		{ title: 'Building 1', content: <BuildingAccordionContent /> },
-		{ title: 'Building 2', content: <BuildingAccordionContent /> },
-		{ title: 'Buildiing 3', content: <BuildingAccordionContent /> },
-	];
+	const dataArray = buildingDetails.map((detail) => {
+		return {
+			title: detail.buildingName,
+			content: <BuildingAccordionContent detail={detail} />,
+		};
+	});
+
 	const renderHeader = (item, expanded) => (
 		<BuildingAccordionHeader item={item} expanded={expanded} />
 	);

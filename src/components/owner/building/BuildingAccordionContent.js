@@ -1,8 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet, ScrollView } from 'react-native';
 import { Card, List, ListItem, Left } from 'native-base';
 
-const BuildingAccordionContent = () => {
+const BuildingAccordionContent = ({ detail }) => {
+	const {
+		floorCount,
+		roomCount,
+		pinCode,
+		stateAddress,
+		street,
+		district,
+		maintainerName,
+		maintainerPhone,
+	} = detail;
 	return (
 		<ScrollView
 			style={styles.accordianContentContainer}
@@ -13,29 +23,30 @@ const BuildingAccordionContent = () => {
 					<ListItem>
 						<Left>
 							<Text style={{ fontSize: 13 }}>
-								Number of Rooms : 5
+								Number of Rooms : {roomCount}
 							</Text>
 						</Left>
 					</ListItem>
 					<ListItem>
 						<Left>
 							<Text style={{ fontSize: 13 }}>
-								Number of Floors : 2
+								Number of Floors : {floorCount}
 							</Text>
 						</Left>
 					</ListItem>
 					<ListItem>
 						<Left>
 							<Text style={{ fontSize: 13 }}>
-								Maintainer : Mr. Ramesh kumar yadav (1472583690)
+								Maintainer : {maintainerName} ({maintainerPhone}
+								)
 							</Text>
 						</Left>
 					</ListItem>
 					<ListItem>
 						<Left>
 							<Text style={{ fontSize: 13 }}>
-								Address : #582 Street no-3 Azad Nagar Yamuna
-								Nagar Haryan 135001
+								Address : Street no - {street} {district}{' '}
+								{stateAddress} {pinCode}{' '}
 							</Text>
 						</Left>
 					</ListItem>

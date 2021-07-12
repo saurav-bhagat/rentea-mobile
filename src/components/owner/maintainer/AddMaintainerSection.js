@@ -1,20 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import TextInputCommon from '../../common/TextInputCommon';
 
-const AddMaintainerSection = () => {
+const AddMaintainerSection = ({ setMaintainerPhone, setMaintainerName }) => {
 	return (
 		<View style={styles.addMaintainerContainer}>
 			<View style={{ flex: 1 }}>
 				<TextInputCommon
 					label="Name"
 					style={{ width: '90%', alignSelf: 'flex-start' }}
+					name="MaintainerName"
+					onChangeText={(val) => setMaintainerName(val)}
 				/>
 			</View>
 			<View style={{ flex: 1 }}>
 				<TextInputCommon
 					label="Phone"
 					style={{ width: '90%', alignSelf: 'flex-end' }}
+					name="MaintainerPhone"
+					onChangeText={(val) => setMaintainerPhone(val)}
+					keyboardType="numeric"
 				/>
 			</View>
 		</View>

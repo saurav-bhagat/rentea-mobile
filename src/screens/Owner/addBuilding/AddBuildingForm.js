@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { Button } from 'native-base';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import BackIcon from '../../../components/common/BackIcon';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
@@ -23,6 +23,8 @@ const AddBuildingForm = () => {
 	const [pinCode, setPinCode] = useState('');
 	const [street, setStreet] = useState('');
 	const [district, setDistrict] = useState('');
+	const [maintainerName, setMaintainerName] = useState('');
+	const [maintainerPhone, setMaintainerPhone] = useState('');
 
 	const handleAddBuildingFormSubmit = () => {
 		console.log(`
@@ -43,6 +45,8 @@ const AddBuildingForm = () => {
 				district,
 				pinCode,
 				stateAddress,
+				maintainerName,
+				maintainerPhone,
 			})
 		);
 	};
@@ -78,6 +82,7 @@ const AddBuildingForm = () => {
 								name="roomCount"
 								onChangeText={(val) => setRoomCount(val)}
 								value={roomCount}
+								keyboardType="numeric"
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
@@ -87,6 +92,7 @@ const AddBuildingForm = () => {
 								name="floorCount"
 								onChangeText={(val) => setFloorCount(val)}
 								value={floorCount}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
@@ -116,6 +122,7 @@ const AddBuildingForm = () => {
 								style={{ width: '90%', alignSelf: 'flex-end' }}
 								name="pincode"
 								onChangeText={(val) => setPinCode(val)}
+								keyboardType="numeric"
 							/>
 						</View>
 					</View>
@@ -133,7 +140,10 @@ const AddBuildingForm = () => {
 						Maintainer:
 					</Text>
 
-					<AddMaintainerSection />
+					<AddMaintainerSection
+						setMaintainerName={setMaintainerName}
+						setMaintainerPhone={setMaintainerPhone}
+					/>
 
 					<AddRoomSection roomCount={roomCount} />
 
