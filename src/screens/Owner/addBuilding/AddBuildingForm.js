@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { Button } from 'native-base';
 import { useDispatch } from 'react-redux';
 
 import BackIcon from '../../../components/common/BackIcon';
@@ -147,16 +146,14 @@ const AddBuildingForm = () => {
 
 					<AddRoomSection roomCount={roomCount} />
 
-					<Button
-						rounded
-						transparent
+					<TouchableHighlight
 						style={styles.submitBuildingDetailsButton}
 						onPress={handleAddBuildingFormSubmit}
 					>
 						<Text style={styles.submitBuildingDetailsButton_text}>
 							Submit
 						</Text>
-					</Button>
+					</TouchableHighlight>
 				</View>
 			</View>
 		</ScrollView>
@@ -206,6 +203,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
+		borderRadius: 35
 	},
 	submitBuildingDetailsButton_text: {
 		color: '#fff',
@@ -213,6 +211,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		letterSpacing: 1,
+		textAlign: 'center'
 	},
 });
 
