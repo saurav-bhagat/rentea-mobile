@@ -37,8 +37,8 @@ const BuildingAccordionContent = ({ detail }) => {
 					<ListItem>
 						<Left>
 							<Text style={{ fontSize: 13 }}>
-								Maintainer : Mr. {maintainerName} (
-								{maintainerPhone})
+								Maintainer : {maintainerName} ({maintainerPhone}
+								)
 							</Text>
 						</Left>
 					</ListItem>

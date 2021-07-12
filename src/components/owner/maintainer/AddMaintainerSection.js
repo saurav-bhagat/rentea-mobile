@@ -11,7 +11,6 @@ const AddMaintainerSection = ({ setMaintainerPhone, setMaintainerName }) => {
 					style={{ width: '90%', alignSelf: 'flex-start' }}
 					name="MaintainerName"
 					onChangeText={(val) => setMaintainerName(val)}
-
 				/>
 			</View>
 			<View style={{ flex: 1 }}>
@@ -20,8 +19,7 @@ const AddMaintainerSection = ({ setMaintainerPhone, setMaintainerName }) => {
 					style={{ width: '90%', alignSelf: 'flex-end' }}
 					name="MaintainerPhone"
 					onChangeText={(val) => setMaintainerPhone(val)}
-				    keyboardType="numeric"
-
+					keyboardType="numeric"
 				/>
 			</View>
 		</View>

@@ -1,4 +1,4 @@
- import { API_URL } from '@env';
+//import { API_URL } from '@env';
 
 // we can use env API_URL now coming from .env
 
