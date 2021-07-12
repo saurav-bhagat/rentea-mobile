@@ -12,19 +12,17 @@ import TextInputCommon from '../../../components/common/TextInputCommon';
 
 import { setBuildingDetails } from '../../../redux/actions';
 
-
 const AddBuildingForm = () => {
-
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 
-	const [ buildingName, setBuildingName ] = useState('');
-	const [ roomCount, setRoomCount ] = useState('');
-	const [ floorCount, setFloorCount ] = useState('');
-	const [ stateAddress, setStateAddress ] = useState('');
-	const [ pinCode, setPinCode ] = useState('');
-	const [ street, setStreet ] = useState('');
-	const [ district, setDistrict ] = useState('');
+	const [buildingName, setBuildingName] = useState('');
+	const [roomCount, setRoomCount] = useState('');
+	const [floorCount, setFloorCount] = useState('');
+	const [stateAddress, setStateAddress] = useState('');
+	const [pinCode, setPinCode] = useState('');
+	const [street, setStreet] = useState('');
+	const [district, setDistrict] = useState('');
 
 	const handleAddBuildingFormSubmit = () => {
 		console.log(`
@@ -36,37 +34,57 @@ const AddBuildingForm = () => {
 			${stateAddress}, ${pinCode}
 		`);
 		// call an action which will set this values to the store.
-		dispatch(setBuildingDetails({ buildingName, roomCount, floorCount, street, district, pinCode, stateAddress }))
-	}
+		dispatch(
+			setBuildingDetails({
+				buildingName,
+				roomCount,
+				floorCount,
+				street,
+				district,
+				pinCode,
+				stateAddress,
+			})
+		);
+	};
 
-	return(
-		<ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white'}} nestedScrollEnabled={true}>
+	return (
+		<ScrollView
+			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
+			nestedScrollEnabled={true}
+		>
 			<View style={styles.addBFcontainer}>
 				<View style={styles.addBFHeader}>
-					<BackIcon onPress={() => navigation.navigate('AddBuilding')} />
-					<Text style={styles.addBFHeaderText}>Add Building Details</Text>
+					<BackIcon
+						onPress={() => navigation.navigate('AddBuilding')}
+					/>
+					<Text style={styles.addBFHeaderText}>
+						Add Building Details
+					</Text>
 				</View>
 				<View style={styles.addBFormContainer}>
-					<TextInputCommon  
-						label="Building Name" 
-						name="buildingName" 
+					<TextInputCommon
+						label="Building Name"
+						name="buildingName"
 						onChangeText={(val) => setBuildingName(val)}
 					/>
-					<View style={{ flexDirection: 'row', marginTop:30 }}>
-						<View style={{ flex:1 }}>
+					<View style={{ flexDirection: 'row', marginTop: 30 }}>
+						<View style={{ flex: 1 }}>
 							<TextInputCommon
-								label="Number of Rooms" 
-								style={{ width: '80%', alignSelf: 'flex-start' }} 
-								name="roomCount" 
+								label="Number of Rooms"
+								style={{
+									width: '80%',
+									alignSelf: 'flex-start',
+								}}
+								name="roomCount"
 								onChangeText={(val) => setRoomCount(val)}
 								value={roomCount}
 							/>
 						</View>
-						<View style={{ flex:1 }}>
-							<TextInputCommon  
-								label="Number of Floors" 
-								style={{ width: '80%', alignSelf: 'flex-end' }} 
-								name="floorCount" 
+						<View style={{ flex: 1 }}>
+							<TextInputCommon
+								label="Number of Floors"
+								style={{ width: '80%', alignSelf: 'flex-end' }}
+								name="floorCount"
 								onChangeText={(val) => setFloorCount(val)}
 								value={floorCount}
 							/>
@@ -74,53 +92,61 @@ const AddBuildingForm = () => {
 					</View>
 
 					<View style={{ marginTop: 30 }}>
-						<SelectStatePicker 
+						<SelectStatePicker
 							onValueChange={(val) => setStateAddress(val)}
 							stateAddress={stateAddress}
 						/>
 					</View>
 
-					<View style={{ flexDirection: 'row', marginTop:30 }}>
-						<View style={{ flex:1 }}>
-							<TextInputCommon  
-								label="District" 
-								style={{ width: '90%', alignSelf: 'flex-start' }} 
-								name="district" 
+					<View style={{ flexDirection: 'row', marginTop: 30 }}>
+						<View style={{ flex: 1 }}>
+							<TextInputCommon
+								label="District"
+								style={{
+									width: '90%',
+									alignSelf: 'flex-start',
+								}}
+								name="district"
 								onChangeText={(val) => setDistrict(val)}
 							/>
 						</View>
-						<View style={{ flex:1 }}>
-							<TextInputCommon  
-								label="Pincode" 
-								style={{ width: '90%', alignSelf: 'flex-end' }} 
-								name="pincode" 
+						<View style={{ flex: 1 }}>
+							<TextInputCommon
+								label="Pincode"
+								style={{ width: '90%', alignSelf: 'flex-end' }}
+								name="pincode"
 								onChangeText={(val) => setPinCode(val)}
 							/>
 						</View>
 					</View>
-					
-					<TextInputCommon  
-						label="Street/Locality" 
-						style={{ marginTop:30 }} 
+
+					<TextInputCommon
+						label="Street/Locality"
+						style={{ marginTop: 30 }}
 						name="street"
 						onChangeText={(val) => setStreet(val)}
 					/>
-			
-					<Text style={{ fontSize: 22, marginTop: 35, color: '#666' }}>Maintainer:</Text>
-					
+
+					<Text
+						style={{ fontSize: 22, marginTop: 35, color: '#666' }}
+					>
+						Maintainer:
+					</Text>
+
 					<AddMaintainerSection />
 
 					<AddRoomSection roomCount={roomCount} />
 
-					<Button 
-						rounded 
-						transparent 
+					<Button
+						rounded
+						transparent
 						style={styles.submitBuildingDetailsButton}
 						onPress={handleAddBuildingFormSubmit}
 					>
-						<Text style={styles.submitBuildingDetailsButton_text}>Submit</Text>
+						<Text style={styles.submitBuildingDetailsButton_text}>
+							Submit
+						</Text>
 					</Button>
-
 				</View>
 			</View>
 		</ScrollView>
@@ -129,32 +155,32 @@ const AddBuildingForm = () => {
 
 const styles = StyleSheet.create({
 	addBFcontainer: {
-		flex:1,
+		flex: 1,
 		paddingTop: '13%',
 		width: '95%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
-		minHeight: '100%'
+		minHeight: '100%',
 	},
 	addBFHeader: {
 		flexDirection: 'row',
 		alignItems: 'flex-start',
 	},
 	addBFHeaderText: {
-		flex:1,
+		flex: 1,
 		fontSize: 30,
 		letterSpacing: 1.3,
 		color: '#666666',
 		marginBottom: 0,
 	},
-	addBFormContainer:{
-		flex:1,
-		padding: 10
+	addBFormContainer: {
+		flex: 1,
+		padding: 10,
 	},
 	addBFormInput: {
 		borderBottomWidth: 1,
 		height: 40,
-    	margin: 12,
+		margin: 12,
 	},
 	submitBuildingDetailsButton: {
 		width: '100%',
@@ -162,12 +188,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#109FDA',
 		justifyContent: 'center',
 		height: 58,
-		shadowColor: "#000",
+		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
 			height: 4,
 		},
-		shadowOpacity: 0.30,
+		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
 	},
@@ -176,7 +202,7 @@ const styles = StyleSheet.create({
 		fontSize: 22,
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
-		letterSpacing: 1
+		letterSpacing: 1,
 	},
 });
 

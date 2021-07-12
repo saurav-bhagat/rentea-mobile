@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import BuildingAccordion from './BuildingAccordion';
 import AddBuildingFabButton from '../../../components/owner/building/AddBuildingFabButton';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const AddBuilding = () => {
 	const buildingData = useSelector((state) => state.buildingDetails);

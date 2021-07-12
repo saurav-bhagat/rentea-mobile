@@ -3,30 +3,35 @@ import { StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
 
-
 const getStateList = async () => {
 	const headers = {
-		'X-CSCAPI-KEY': 'API_KEY'
+		'X-CSCAPI-KEY': 'API_KEY',
 	};
 	console.log('going to make api call');
-	axios.get('https://api.countrystatecity.in/v1/countries/IN/states', { headers })
- 		.then(response => {
-     		console.log(response.data);
- 		})
- 		.catch((error) => {
-     		console.log('error ' + error);
-  		});
-}
+	axios
+		.get('https://api.countrystatecity.in/v1/countries/IN/states', {
+			headers,
+		})
+		.then((response) => {
+			console.log(response.data);
+		})
+		.catch((error) => {
+			console.log('error ' + error);
+		});
+};
 
-const SelectStatePicker = ({ handleTextChange, stateAddress, onValueChange }) => {
-
+const SelectStatePicker = ({
+	handleTextChange,
+	stateAddress,
+	onValueChange,
+}) => {
 	// const [ stateSelect, setStateSelect ] = useState('');
 
 	useEffect(() => {
 		// getStateList();
 	}, []);
 
-	return(
+	return (
 		<RNPickerSelect
 			onValueChange={onValueChange}
 			useNativeAndroidPickerStyle={false}
@@ -40,8 +45,8 @@ const SelectStatePicker = ({ handleTextChange, stateAddress, onValueChange }) =>
 				inputAndroid: styles.pickerTextStyle,
 				placeholder: {
 					fontSize: 12,
-					paddingLeft: 20
-				}
+					paddingLeft: 20,
+				},
 			}}
 			pickerProps={{
 				mode: 'dropdown',
@@ -52,7 +57,7 @@ const SelectStatePicker = ({ handleTextChange, stateAddress, onValueChange }) =>
 				value: 0,
 				key: 'select Statesss',
 				inputLabel: 'Select State',
-				color: '#000000'
+				color: '#000000',
 			}}
 			placeholderTextColor="red"
 			textInputProps={{
@@ -65,10 +70,10 @@ const SelectStatePicker = ({ handleTextChange, stateAddress, onValueChange }) =>
 };
 
 const styles = StyleSheet.create({
-	pickerAndroidContainer:{
-		borderBottomWidth: 0.7, 
+	pickerAndroidContainer: {
+		borderBottomWidth: 0.7,
 		height: 40,
-		width: '100%'
+		width: '100%',
 	},
 	pickerTextStyle: {
 		fontSize: 18,
@@ -78,8 +83,8 @@ const styles = StyleSheet.create({
 		borderColor: 'purple',
 		borderRadius: 8,
 		color: '#000000',
-		paddingRight: 30, 
-	}
+		paddingRight: 30,
+	},
 });
 
 export default SelectStatePicker;
