@@ -1,6 +1,7 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { View, SafeAreaView, Text, TextInput, StyleSheet, Button, Modal } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { API_URL } from "@env";
 
 const FormScreen = () => {
   const [formModalVisible, setFormModalVisible] = useState(true);
@@ -17,6 +18,7 @@ const FormScreen = () => {
   const handleResponse = (title) => {
     if (title == true) {
       setWebViewFlag(false);
+	  // TODO: navigate to a different page with succesful message
       setAcknowldgement('Transaction successfull');
     } else if (title == false) {
       setWebViewFlag(false);
@@ -51,7 +53,7 @@ const FormScreen = () => {
       >
         <WebView
           source={{
-            uri: `https://c25b6ef04391.ngrok.io/payment/initiate-payment`,
+            uri: `${API_URL}/payment/initiate-payment`, //TODO : replace this with env variable
             method: 'POST',
             body: `name=${name}&amount=${amount}`,
           }}

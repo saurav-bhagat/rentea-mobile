@@ -1,30 +1,33 @@
-import React,{useState} from 'react';
-import { View, Text, StyleSheet, ScrollView,Dimensions,SafeAreaView } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import BuildingAccordion from './BuildingAccordion';
 import AddBuildingFabButton from '../../../components/owner/building/AddBuildingFabButton';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const AddBuilding = () => {
-	 const buildingData=useSelector((state)=>state.buildingDetails);
+	const buildingData = useSelector((state)=>state.buildingDetails);
 	return(
 		
 		<View style={{ flex:1, backgroundColor: 'white',paddingTop:20,paddingHorizontal:1 }} >
-		<ScrollView	>
-			<View style={styles.addBContainer}>
-				<View style={styles.addBTextContainer}> 
-					<Text style={styles.addBText}>Add Building </Text>
-					<Text>Click on the add button below to add building details</Text>
+			<ScrollView	>
+				<View style={styles.addBContainer}>
+					<View style={styles.addBTextContainer}> 
+						<Text style={styles.addBText}>Add Building </Text>
+						<Text>Click on the add button below to add building details</Text>
+					</View>
+
+					<BuildingAccordion buildingDetails={buildingData.buildingDetails} />
+
+					<Button rounded style={styles.addBSkipButton}>
+						<Text style={styles.addBSkipButtonText}>Skip</Text>
+						<Icon name="chevron-forward-outline" style={styles.forwardIcon} />
+					</Button>
+
+					<AddBuildingFabButton />
 				</View>
-				<BuildingAccordion buildingDetails={buildingData.buildingDetails} />
-				<Button rounded style={styles.addBSkipButton}>
-					<Text style={styles.addBSkipButtonText}>Skip</Text>
-					<Icon name="chevron-forward-outline" style={styles.forwardIcon} />
-				</Button>
-				<AddBuildingFabButton />
-			</View>
 			</ScrollView>
 		</View>
 		
