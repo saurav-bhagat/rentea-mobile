@@ -17,11 +17,7 @@ const AddBuilding = () => {
 			}}
 		>
 			<Header transparent>
-				<Left>
-					<Button transparent>
-						<Icon name="chevron-back-outline" />
-					</Button>
-				</Left>
+				<Left />
 				<Body>
 					<Title style={{ color: '#000', fontSize: 24 }}>
 						Add Building
@@ -30,13 +26,6 @@ const AddBuilding = () => {
 				<Right />
 			</Header>
 			<View style={styles.addBContainer}>
-				{/* <View style={styles.addBTextContainer}>
-						<Text style={styles.addBText}>Add Building </Text>
-						<Text>
-							Click on the add button below to add building
-							details
-						</Text>
-					</View> */}
 				<ScrollView>
 					<BuildingAccordion
 						buildingDetails={buildingData.buildingDetails}

@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Button, Header, Left, Right, Body, Title } from 'native-base';
 
 import BackIcon from '../../../components/common/BackIcon';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
@@ -61,15 +63,26 @@ const AddBuildingForm = () => {
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
 			nestedScrollEnabled={true}
 		>
-			<View style={styles.addBFcontainer}>
-				<View style={styles.addBFHeader}>
-					<BackIcon
+			<Header transparent>
+				<Left>
+					<Button
+						transparent
 						onPress={() => navigation.navigate('AddBuilding')}
-					/>
-					<Text style={styles.addBFHeaderText}>
-						Add Building Details
-					</Text>
-				</View>
+					>
+						<Icon
+							name="chevron-back-outline"
+							style={{ fontSize: 22 }}
+						/>
+					</Button>
+				</Left>
+				<Body>
+					<Title style={{ color: '#000', fontSize: 24 }}>
+						Building Details
+					</Title>
+				</Body>
+				<Right />
+			</Header>
+			<View style={styles.addBFcontainer}>
 				<View style={styles.addBFormContainer}>
 					<TextInputCommon
 						label="Building Name"
@@ -169,7 +182,6 @@ const AddBuildingForm = () => {
 const styles = StyleSheet.create({
 	addBFcontainer: {
 		flex: 1,
-		paddingTop: '13%',
 		width: '95%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
