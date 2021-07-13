@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import {
+	View,
+	Text,
+	StyleSheet,
+	ScrollView,
+	TouchableHighlight,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { Button } from 'native-base';
 import { useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Button, Header, Left, Right, Body, Title } from 'native-base';
 
 import BackIcon from '../../../components/common/BackIcon';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
@@ -56,15 +63,26 @@ const AddBuildingForm = () => {
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
 			nestedScrollEnabled={true}
 		>
-			<View style={styles.addBFcontainer}>
-				<View style={styles.addBFHeader}>
-					<BackIcon
+			<Header transparent>
+				<Left>
+					<Button
+						transparent
 						onPress={() => navigation.navigate('AddBuilding')}
-					/>
-					<Text style={styles.addBFHeaderText}>
-						Add Building Details
-					</Text>
-				</View>
+					>
+						<Icon
+							name="chevron-back-outline"
+							style={{ fontSize: 22 }}
+						/>
+					</Button>
+				</Left>
+				<Body>
+					<Title style={{ color: '#000', fontSize: 24 }}>
+						Building Details
+					</Title>
+				</Body>
+				<Right />
+			</Header>
+			<View style={styles.addBFcontainer}>
 				<View style={styles.addBFormContainer}>
 					<TextInputCommon
 						label="Building Name"
@@ -147,16 +165,14 @@ const AddBuildingForm = () => {
 
 					<AddRoomSection roomCount={roomCount} />
 
-					<Button
-						rounded
-						transparent
+					<TouchableHighlight
 						style={styles.submitBuildingDetailsButton}
 						onPress={handleAddBuildingFormSubmit}
 					>
 						<Text style={styles.submitBuildingDetailsButton_text}>
 							Submit
 						</Text>
-					</Button>
+					</TouchableHighlight>
 				</View>
 			</View>
 		</ScrollView>
@@ -166,7 +182,6 @@ const AddBuildingForm = () => {
 const styles = StyleSheet.create({
 	addBFcontainer: {
 		flex: 1,
-		paddingTop: '13%',
 		width: '95%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
@@ -206,6 +221,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
+		borderRadius: 35,
 	},
 	submitBuildingDetailsButton_text: {
 		color: '#fff',
@@ -213,6 +229,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		letterSpacing: 1,
+		textAlign: 'center',
 	},
 });
 
