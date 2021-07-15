@@ -3,10 +3,14 @@ import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Item, Input, Button, Content } from 'native-base';
 
 import { loginStyles } from './loginStyles';
+import { sendOtp } from '../../redux/actions/loginAction';
+import { useDispatch } from 'react-redux';
 
 const LoginComponent = ({ navigation }) => {
+	const dispatch = useDispatch();
 	const handleLoginContinue = () => {
 		console.log('Function called here');
+		dispatch(sendOtp());
 		navigation.navigate('OTP');
 	};
 	return (

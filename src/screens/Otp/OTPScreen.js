@@ -3,14 +3,16 @@ import { View, Text } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
-
+import { useDispatch } from 'react-redux';
 import { otpStyles } from './otpStyles';
+import { verifyOtp } from '../../redux/actions/otpAction';
 
 const OTPScreen = () => {
 	const navigation = useNavigation();
+	const dispatch = useDispatch();
 	const handleOTPSubmit = (code) => {
 		console.log(`Code is ${code}, you are good to go!`);
-
+		dispatch(verifyOtp());
 		// once otp is verified, navigate to home screen
 		setTimeout(() => {
 			navigation.navigate('OwnerUserDetails');
