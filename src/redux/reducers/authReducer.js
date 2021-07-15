@@ -24,7 +24,7 @@ const authReducer = (state = initialState, action) => {
 		case 'VERIFY_OTP_FAIL':
 			return {
 				...state,
-				msg: 'action.msg',
+				msg: action.msg,
 			};
 		default:
 			return state;

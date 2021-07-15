@@ -15,22 +15,6 @@ export const sendOtpFail = () => {
 	};
 };
 
-export const sendOtp = () => {
-	return (dispatch) => {
-		axios
-			.post(`${API_URL}`)
-			.then((response) => {
-				return response;
-			})
-			.then((response) => {
-				dispatch(sendOtpSuccess());
-			})
-			.catch(() => {
-				dispatch(sendOtpFail());
-			});
-	};
-};
-
 export const verifyOtpSuccess = (data) => {
 	return {
 		type: 'VERIFY_OTP_SUCCESS',
@@ -51,13 +35,23 @@ export const verifyOtp = () => {
 		axios
 			.post(`${API_URL}`)
 			.then((response) => {
-				return response;
-			})
-			.then((response) => {
 				dispatch(verifyOtpSuccess(response.data));
 			})
 			.catch(() => {
 				dispatch(verifyOtpFail());
+			});
+	};
+};
+
+export const sendOtp = () => {
+	return (dispatch) => {
+		axios
+			.post(`${API_URL}`)
+			.then((response) => {
+				dispatch(sendOtpSuccess());
+			})
+			.catch(() => {
+				dispatch(sendOtpFail());
 			});
 	};
 };
