@@ -1,8 +1,10 @@
 import React from 'react';
 import { Button, Item, Label, Input } from 'native-base';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import Modal from 'react-native-modal';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { addMaintainerStyles } from './addMaintainerStyles';
 
 const AddMaintainerModalForm = (props) => {
 	return (
@@ -12,7 +14,7 @@ const AddMaintainerModalForm = (props) => {
 				style={styles.addMModalContainer}
 				onBackdropPress={props.toggleModal}
 			>
-				<View style={styles.modalContent}>
+				<View style={addMaintainerStyles.modalContent}>
 					<Text style={{ fontSize: 24 }}>Add Maintainer Details</Text>
 					<Item
 						floatingLabel
@@ -32,7 +34,7 @@ const AddMaintainerModalForm = (props) => {
 						<Button
 							rounded
 							onPress={props.toggleModal}
-							style={styles.submitMaintainerButton}
+							style={addMaintainerStyles.submitMaintainerButton}
 						>
 							<Text style={{ color: '#fff', fontSize: 17 }}>
 								Submit
@@ -41,7 +43,7 @@ const AddMaintainerModalForm = (props) => {
 						<Button
 							rounded
 							onPress={props.toggleModal}
-							style={styles.submitMaintainerButton}
+							style={addMaintainerStyles.submitMaintainerButton}
 						>
 							<Text style={{ color: '#fff', fontSize: 17 }}>
 								Close
@@ -53,26 +55,5 @@ const AddMaintainerModalForm = (props) => {
 		</SafeAreaView>
 	);
 };
-
-const styles = StyleSheet.create({
-	modalContent: {
-		flex: 1,
-		borderRadius: 30,
-		padding: 30,
-		backgroundColor: '#fff',
-		maxHeight: 300,
-		alignContent: 'center',
-	},
-	submitMaintainerButton: {
-		marginTop: 20,
-		backgroundColor: '#109FDA',
-		paddingHorizontal: 18,
-		borderWidth: 1,
-		borderColor: '#ddd',
-		justifyContent: 'center',
-		width: 100,
-		marginRight: 18,
-	},
-});
 
 export default AddMaintainerModalForm;

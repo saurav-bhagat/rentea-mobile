@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { Accordion } from 'native-base';
+
 import BuildingAccordionContent from '../../../components/owner/building/BuildingAccordionContent';
 import BuildingAccordionHeader from '../../../components/owner/building/BuildingAccordionHeader';
 
@@ -18,7 +19,7 @@ const BuildingAccordion = ({ buildingDetails }) => {
 	const renderContent = (item) => item.content;
 
 	return (
-		<View style={styles.accordianContainer}>
+		<View>
 			{buildingDetails.length > 0 ? (
 				<Accordion
 					dataArray={dataArray}
@@ -41,13 +42,5 @@ const BuildingAccordion = ({ buildingDetails }) => {
 		</View>
 	);
 };
-
-const styles = StyleSheet.create({
-	accordianContainer: {
-		// flex:1,
-		// borderWidth:1,
-		// height: 400
-	},
-});
 
 export default BuildingAccordion;
