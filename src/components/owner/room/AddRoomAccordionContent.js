@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
+import { View, Text } from 'react-native';
+import { Card, CardItem, Body, Item, Label, Input } from 'native-base';
+
 import TextInputCommon from '../../common/TextInputCommon';
+import { roomAccordionStyles } from './addRoomAccordionStyles';
 
 const AddRoomAccordionContent = () => {
 	const [roomNo, setRoomNo] = useState('');
@@ -90,23 +92,5 @@ const AddRoomAccordionContent = () => {
 		</Card>
 	);
 };
-
-const styles = StyleSheet.create({
-	addRoomButton: {
-		paddingHorizontal: 18,
-		borderWidth: 1,
-		borderColor: '#ddd',
-		marginTop: 10,
-		backgroundColor: '#109FDA',
-		alignSelf: 'center',
-		bottom: 5,
-	},
-	addRoomButton_text: {
-		color: '#fff',
-		fontSize: 17,
-		letterSpacing: 1,
-		textAlign: 'center',
-	},
-});
 
 export default AddRoomAccordionContent;

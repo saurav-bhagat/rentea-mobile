@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	ScrollView,
-	TouchableHighlight,
-} from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
 
-import BackIcon from '../../../components/common/BackIcon';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
 import AddRoomSection from './AddRoomsSection';
 import TextInputCommon from '../../../components/common/TextInputCommon';
 
 import { setBuildingDetails } from '../../../redux/actions';
+import { addBuildingFormstyles } from './addBuildingFormStyles';
 
 const AddBuildingForm = () => {
 	const navigation = useNavigation();
@@ -42,7 +36,7 @@ const AddBuildingForm = () => {
 			Address is: ${street} , ${district} , 
 			${stateAddress}, ${pinCode}
 		`);
-		// call an action which will set this values to the store.
+
 		dispatch(
 			setBuildingDetails({
 				buildingName,
@@ -82,8 +76,8 @@ const AddBuildingForm = () => {
 				</Body>
 				<Right />
 			</Header>
-			<View style={styles.addBFcontainer}>
-				<View style={styles.addBFormContainer}>
+			<View style={addBuildingFormstyles.addBFcontainer}>
+				<View style={addBuildingFormstyles.addBFormContainer}>
 					<TextInputCommon
 						label="Building Name"
 						name="buildingName"
@@ -165,72 +159,24 @@ const AddBuildingForm = () => {
 
 					<AddRoomSection roomCount={roomCount} />
 
-					<TouchableHighlight
-						style={styles.submitBuildingDetailsButton}
+					<Button
+						style={
+							addBuildingFormstyles.submitBuildingDetailsButton
+						}
 						onPress={handleAddBuildingFormSubmit}
 					>
-						<Text style={styles.submitBuildingDetailsButton_text}>
+						<Text
+							style={
+								addBuildingFormstyles.submitBuildingDetailsButton_text
+							}
+						>
 							Submit
 						</Text>
-					</TouchableHighlight>
+					</Button>
 				</View>
 			</View>
 		</ScrollView>
 	);
 };
-
-const styles = StyleSheet.create({
-	addBFcontainer: {
-		flex: 1,
-		width: '95%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		minHeight: '100%',
-	},
-	addBFHeader: {
-		flexDirection: 'row',
-		alignItems: 'flex-start',
-	},
-	addBFHeaderText: {
-		flex: 1,
-		fontSize: 30,
-		letterSpacing: 1.3,
-		color: '#666666',
-		marginBottom: 0,
-	},
-	addBFormContainer: {
-		flex: 1,
-		padding: 10,
-	},
-	addBFormInput: {
-		borderBottomWidth: 1,
-		height: 40,
-		margin: 12,
-	},
-	submitBuildingDetailsButton: {
-		width: '100%',
-		marginTop: 40,
-		backgroundColor: '#109FDA',
-		justifyContent: 'center',
-		height: 58,
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
-		shadowOpacity: 0.3,
-		shadowRadius: 4.65,
-		elevation: 8,
-		borderRadius: 35,
-	},
-	submitBuildingDetailsButton_text: {
-		color: '#fff',
-		fontSize: 22,
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-		letterSpacing: 1,
-		textAlign: 'center',
-	},
-});
 
 export default AddBuildingForm;
