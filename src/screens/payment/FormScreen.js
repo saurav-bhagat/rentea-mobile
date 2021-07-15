@@ -9,7 +9,7 @@ import {
 	Modal,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-//import { API_URL } from '@env';
+import { API_URL } from '@env';
 
 const FormScreen = () => {
 	const [formModalVisible, setFormModalVisible] = useState(true);
