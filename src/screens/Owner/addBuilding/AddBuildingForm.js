@@ -9,8 +9,8 @@ import SelectStatePicker from '../../../components/owner/building/SelectStatePic
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
 import AddRoomSection from './AddRoomsSection';
 import TextInputCommon from '../../../components/common/TextInputCommon';
-
-import { setBuildingDetails } from '../../../redux/actions';
+import { isValidBuildingData } from '../helper';
+import { saveBuildingData } from '../../../redux/actions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
 
 const AddBuildingForm = () => {
@@ -28,28 +28,22 @@ const AddBuildingForm = () => {
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 
 	const handleAddBuildingFormSubmit = () => {
-		console.log(`
-			Inside Submit:
-			Building Name is: ${buildingName},
-			Room count is: ${roomCount},
-			Floor Count is: ${floorCount},
-			Address is: ${street} , ${district} , 
-			${stateAddress}, ${pinCode}
-		`);
-
-		dispatch(
-			setBuildingDetails({
-				buildingName,
-				roomCount,
-				floorCount,
-				street,
-				district,
-				pinCode,
-				stateAddress,
-				maintainerName,
-				maintainerPhone,
-			})
-		);
+		const formData = {
+			buildingName,
+			roomCount,
+			floorCount,
+			street,
+			district,
+			pinCode,
+			stateAddress,
+			maintainerName,
+			maintainerPhone,
+		};
+		if (isValidBuildingData(formData)) {
+			dispatch(saveBuildingData(formData));
+		} else {
+			alert('Enter fields Properly');
+		}
 	};
 
 	return (
