@@ -14,7 +14,7 @@ import FormScreen from '../screens/payment/FormScreen.js';
 const { Screen, Navigator } = createStackNavigator();
 
 const RootRoutes = () => {
-	const isLogin = true;
+	//const isLogin = true;
 
 	return (
 		<NavigationContainer>
@@ -24,26 +24,24 @@ const RootRoutes = () => {
 					gestureEnabled: true,
 				})}
 			>
-				{isLogin ? (
-					<>
-						{/* <Screen name="Payment"  component={FormScreen}  /> */}
-						<Screen name="AddBuilding" component={AddBuilding} />
-						<Screen
-							name="AddBuildingForm"
-							component={AddBuildingForm}
-						/>
-						<Screen
-							name="OwnerUserDetails"
-							component={OwnerUserDetailsScreen}
-						/>
-						<Screen name="Home" component={CounterScreen} />
-					</>
-				) : (
-					<>
-						<Screen name="Login" component={LoginScreen} />
-						<Screen name="OTP" component={OTPScreen} />
-					</>
-				)}
+				{/* {isLogin ? (
+					<> */}
+				{/* <Screen name="Payment"  component={FormScreen}  /> */}
+				<Screen name="Login" component={LoginScreen} />
+				<Screen name="AddBuilding" component={AddBuilding} />
+				<Screen name="AddBuildingForm" component={AddBuildingForm} />
+				<Screen
+					name="OwnerUserDetails"
+					component={OwnerUserDetailsScreen}
+				/>
+				<Screen name="Home" component={CounterScreen} />
+				{/* </>
+				) : ( */}
+				{/* <> */}
+
+				<Screen name="OTP" component={OTPScreen} />
+				{/* </> */}
+				{/* )} */}
 			</Navigator>
 		</NavigationContainer>
 	);
