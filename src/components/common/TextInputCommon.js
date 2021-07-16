@@ -12,7 +12,7 @@ const TextInputCommon = ({
 }) => {
 	return (
 		<Item floatingLabel style={[{ borderColor: '#666' }, style]}>
-			<Label>{label}</Label>
+			<Label style={{ fontSize: 13 }}>{label}</Label>
 			<Input
 				style={styles.inputStyle}
 				onChangeText={onChangeText}

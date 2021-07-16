@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Item, Input, Button, Content } from 'native-base';
 import { useDispatch } from 'react-redux';
 
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions/authAction';
+import { validatePhone } from '../../helpers/addBuildingValidation';
 
 const LoginComponent = ({ navigation }) => {
 	const dispatch = useDispatch();
+
+	const [phone, setPhone] = useState('');
+
 	const handleLoginContinue = () => {
-		console.log('Function called here');
-		dispatch(sendOtp());
-		navigation.navigate('OTP');
+		if (validatePhone(phone)) {
+			dispatch(sendOtp());
+			navigation.navigate('OTP');
+		} else {
+			alert('Enter valid Phone Number');
+		}
 	};
 	return (
 		<View style={loginStyles.loginComponentContainer}>
@@ -21,6 +28,8 @@ const LoginComponent = ({ navigation }) => {
 				<Item rounded>
 					<Input
 						style={loginStyles.phoneInputBox}
+						value={phone}
+						onChangeText={(val) => setPhone(val)}
 						placeholderTextColor={'#ccc'}
 						placeholder="Enter Phone Number"
 						keyboardType="numeric"

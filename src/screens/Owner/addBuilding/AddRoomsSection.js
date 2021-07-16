@@ -7,7 +7,7 @@ import AddRoomAccordion from '../../../components/owner/room/AddRoomAccordion';
 
 const AddRoomSection = ({ roomCount }) => {
 	const [showRoomDetails, setShowRoomDetails] = useState(false);
-	console.log('Room count is: ', roomCount, showRoomDetails);
+
 	return (
 		<View>
 			<TouchableOpacity
