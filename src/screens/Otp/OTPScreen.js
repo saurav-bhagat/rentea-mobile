@@ -27,7 +27,7 @@ const OTPScreen = () => {
 			</Text>
 			<OTPInputView
 				style={{ width: '80%', height: 200 }}
-				pinCount={4}
+				pinCount={6}
 				// code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
 				// onCodeChanged = {code => { this.setState({code})}}
 				autoFocusOnLoad
