@@ -1,6 +1,7 @@
 const initialState = {
 	userInfo: [],
 	msg: '',
+	error: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -9,22 +10,26 @@ const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				msg: action.msg,
+				error: false,
 			};
 		case 'SEND_OTP_FAIL':
 			return {
 				...state,
 				msg: action.msg,
+				error: true,
 			};
 		case 'VERIFY_OTP_SUCCESS':
 			return {
 				...state,
-				userInfo: [...state, action.payload],
+				userInfo: [...state.userInfo, action.payload],
 				msg: action.msg,
+				error: false,
 			};
 		case 'VERIFY_OTP_FAIL':
 			return {
 				...state,
 				msg: action.msg,
+				error: true,
 			};
 		default:
 			return state;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import { Item, Input, Button, Content } from 'native-base';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions/authAction';
@@ -9,13 +9,21 @@ import { validatePhone } from '../../helpers/addBuildingValidation';
 
 const LoginComponent = ({ navigation }) => {
 	const dispatch = useDispatch();
-
+	const error = useSelector((state) => state.auth.error);
+	const msg = useSelector((state) => state.auth.msg);
 	const [phone, setPhone] = useState('');
 
 	const handleLoginContinue = () => {
 		if (validatePhone(phone)) {
-			dispatch(sendOtp());
-			navigation.navigate('OTP');
+			dispatch(sendOtp(phone));
+			// Todo : For now we directly calling navigate not handling error from store
+			navigation.navigate('OTP', { phone });
+			// Todo : Find a correct position  to use this and  also a case when it occur
+			// if(error){
+			// 	alert(msg);
+			// }else{
+			// 	navigation.navigate('OTP',{phone});
+			// }
 		} else {
 			alert('Enter valid Phone Number');
 		}

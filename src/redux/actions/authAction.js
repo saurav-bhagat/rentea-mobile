@@ -15,11 +15,11 @@ export const sendOtpFail = () => {
 	};
 };
 
-export const verifyOtpSuccess = (data) => {
+export const verifyOtpSuccess = (payload) => {
 	return {
 		type: 'VERIFY_OTP_SUCCESS',
-		payload: data,
 		msg: 'otp verify successfully',
+		payload,
 	};
 };
 
@@ -30,28 +30,23 @@ export const verifyOtpFail = () => {
 	};
 };
 
-export const verifyOtp = () => {
+export const verifyOtp = (phoneNumber, code) => {
 	return (dispatch) => {
 		axios
-			.post(`${API_URL}`)
-			.then((response) => {
-				dispatch(verifyOtpSuccess(response.data));
-			})
-			.catch(() => {
-				dispatch(verifyOtpFail());
-			});
+			.post(`${API_URL}/auth/authenticate`, { phoneNumber, code })
+			.then((response) =>
+				dispatch(verifyOtpSuccess(response.data.userDocument))
+			)
+			.catch(() => dispatch(verifyOtpFail()));
 	};
 };
 
-export const sendOtp = () => {
+export const sendOtp = (phoneNumber) => {
 	return (dispatch) => {
 		axios
-			.post(`${API_URL}`)
-			.then((response) => {
-				dispatch(sendOtpSuccess());
-			})
-			.catch(() => {
-				dispatch(sendOtpFail());
-			});
+			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
+			.then((response) => response)
+			.then(() => dispatch(sendOtpSuccess()))
+			.catch(() => dispatch(sendOtpFail()));
 	};
 };

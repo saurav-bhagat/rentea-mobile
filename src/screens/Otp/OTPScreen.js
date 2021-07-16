@@ -3,22 +3,34 @@ import { View, Text } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { otpStyles } from './otpStyles';
 import { verifyOtp } from '../../redux/actions/authAction';
 
-const OTPScreen = () => {
+const OTPScreen = ({ route }) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 
+	const error = useSelector((state) => state.auth.error);
+	const msg = useSelector((state) => state.auth.msg);
+
 	const handleOTPSubmit = (code) => {
 		console.log(`Code is ${code}, you are good to go!`);
-		dispatch(verifyOtp());
-		// once otp is verified, navigate to home screen
-		setTimeout(() => {
+		const { phone } = route.params;
+		if (code.length === 6) {
+			dispatch(verifyOtp(phone, code));
+			// Todo : For now we directly calling navigate not handling error from store
 			navigation.navigate('OwnerUserDetails');
-		}, 2000);
+			// Todo : Find a correct position  to use this and  also a case when it occur
+			// if(error){
+			// 	alert(msg);
+			//  }else{
+			// 	 navigation.navigate('OwnerUserDetails');
+			//  }
+		} else {
+			alert('Invalid otp');
+		}
 	};
 	return (
 		<View style={otpStyles.otpContainer}>
