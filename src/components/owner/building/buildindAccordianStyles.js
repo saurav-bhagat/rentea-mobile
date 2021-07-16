@@ -1,15 +1,25 @@
 import { ScaledSheet } from 'react-native-size-matters';
 
-export const roomAccordionStyles = ScaledSheet.create({
+export const buildingAccordianStyles = ScaledSheet.create({
+	accordianContentContainer: {
+		width: '90%',
+		marginRight: 'auto',
+		marginLeft: 'auto',
+	},
+	buildingDetailCard: {
+		width: '100%',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+	},
 	accordianHeaderContainer: {
 		flexDirection: 'row',
-		padding: 9,
+		padding: 12,
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		backgroundColor: '#fff',
 		borderRadius: 50,
-		marginBottom: '23@ms',
-		marginTop: '9@ms',
+		marginBottom: '28@ms',
+		marginTop: 10,
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
@@ -24,7 +34,7 @@ export const roomAccordionStyles = ScaledSheet.create({
 	},
 	accordianHeaderTitle: {
 		color: '#666666',
-		fontSize: '18@ms0.3',
+		fontSize: '22@ms0.3',
 		fontWeight: '600',
 	},
 });

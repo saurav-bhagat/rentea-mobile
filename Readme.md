@@ -10,8 +10,8 @@
 
 # colors: 
 
-blue - #109FDA
-grey - #666666
+blue - `#109FDA`
+grey - `#666666`
 
 # Useful Links
 
@@ -22,3 +22,5 @@ grey - #666666
 1. Using this package, '@twotalltotems/react-native-otp-input' creates a hard dependency on its version
    since it required clipboard package. If any problem occurs later, fallback to this package:
    react-native-otp-textinput
+
+2. `react-native-size-matters` - We have followed these conventions: *font-size* - 'value@ms0.3' , *margin/		padding/height/width* - Usually 'value@ms', can be 'value@s' as per design needs.

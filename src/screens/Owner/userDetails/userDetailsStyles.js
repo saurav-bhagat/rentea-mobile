@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-export const userDetailsStyles = StyleSheet.create({
+export const userDetailsStyles = ScaledSheet.create({
 	oudsContainer: {
 		flex: 1,
 		marginTop: '20%',
@@ -10,24 +10,24 @@ export const userDetailsStyles = StyleSheet.create({
 	},
 	oudsTextContainer: {},
 	oudsWelcomeText: {
-		fontSize: 55,
+		fontSize: '50@ms0.3',
 		letterSpacing: 1.3,
 		color: '#666666',
-		marginBottom: 15,
+		marginBottom: '13@s',
 	},
 	oudsShortText: {
-		fontSize: 17,
+		fontSize: '14@ms0.3',
 		color: '#666666',
 	},
 	oudsFormContainer: {},
 	oudsPhoneInputBox: {
-		paddingLeft: 20,
-		height: 55,
+		paddingLeft: '20@ms',
+		height: '52@ms',
 		marginTop: '12%',
 		borderWidth: 0.1,
 		borderColor: '#ddd',
 		borderRadius: 25,
-		padding: 10,
+		padding: '10@ms',
 		backgroundColor: 'white',
 		shadowColor: '#000',
 		shadowOffset: {
@@ -40,10 +40,10 @@ export const userDetailsStyles = StyleSheet.create({
 	},
 	oudsContinueButton: {
 		width: '100%',
-		marginTop: 40,
+		marginTop: '37@ms',
 		backgroundColor: '#109FDA',
 		justifyContent: 'center',
-		height: 58,
+		height: '54@ms',
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
@@ -55,7 +55,7 @@ export const userDetailsStyles = StyleSheet.create({
 	},
 	oudsContinueButton_text: {
 		color: '#fff',
-		fontSize: 22,
+		fontSize: '20@ms0.3',
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		letterSpacing: 1,

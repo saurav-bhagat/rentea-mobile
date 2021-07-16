@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-export const addBuildingStyles = StyleSheet.create({
+export const addBuildingStyles = ScaledSheet.create({
 	addBContainer: {
 		flex: 1,
 		paddingTop: '2%',
@@ -11,10 +11,10 @@ export const addBuildingStyles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	addBTextContainer: {
-		marginBottom: 30,
+		marginBottom: '28@ms',
 	},
 	addBText: {
-		fontSize: 50,
+		fontSize: '47@ms0.3',
 		letterSpacing: 1.3,
 		color: '#666666',
 		marginBottom: 0,
@@ -37,6 +37,6 @@ export const addBuildingStyles = StyleSheet.create({
 		color: '#fff',
 		marginLeft: 4,
 		top: 2,
-		fontSize: 22,
+		fontSize: '22@s',
 	},
 });

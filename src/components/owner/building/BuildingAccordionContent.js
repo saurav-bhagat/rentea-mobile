@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import { Card, List, ListItem, Left } from 'native-base';
+
+import { buildingAccordianStyles } from './buildindAccordianStyles';
 
 const BuildingAccordionContent = ({ detail }) => {
 	const {
@@ -15,10 +17,10 @@ const BuildingAccordionContent = ({ detail }) => {
 	} = detail;
 	return (
 		<ScrollView
-			style={styles.accordianContentContainer}
+			style={buildingAccordianStyles.accordianContentContainer}
 			nestedScrollEnabled={true}
 		>
-			<Card style={styles.buildingDetailCard}>
+			<Card style={buildingAccordianStyles.buildingDetailCard}>
 				<List>
 					<ListItem>
 						<Left>
@@ -55,18 +57,5 @@ const BuildingAccordionContent = ({ detail }) => {
 		</ScrollView>
 	);
 };
-
-const styles = StyleSheet.create({
-	accordianContentContainer: {
-		width: '90%',
-		marginRight: 'auto',
-		marginLeft: 'auto',
-	},
-	buildingDetailCard: {
-		width: '100%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-	},
-});
 
 export default BuildingAccordionContent;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
+
+import { pickerStyles } from './pickerStyles';
 
 const getStateList = async () => {
 	const headers = {
@@ -41,8 +42,8 @@ const SelectStatePicker = ({
 				{ label: 'Jharkhand', value: 'jharkhand' },
 			]}
 			style={{
-				inputAndroidContainer: styles.pickerAndroidContainer,
-				inputAndroid: styles.pickerTextStyle,
+				inputAndroidContainer: pickerStyles.pickerAndroidContainer,
+				inputAndroid: pickerStyles.pickerTextStyle,
 				placeholder: {
 					fontSize: 12,
 					paddingLeft: 20,
@@ -50,7 +51,7 @@ const SelectStatePicker = ({
 			}}
 			pickerProps={{
 				mode: 'dropdown',
-				itemStyle: styles.pickerTextStyle,
+				itemStyle: pickerStyles.pickerTextStyle,
 			}}
 			placeholder={{
 				label: 'Select State',
@@ -68,23 +69,5 @@ const SelectStatePicker = ({
 		/>
 	);
 };
-
-const styles = StyleSheet.create({
-	pickerAndroidContainer: {
-		borderBottomWidth: 0.7,
-		height: 40,
-		width: '100%',
-	},
-	pickerTextStyle: {
-		fontSize: 18,
-		paddingHorizontal: 10,
-		paddingVertical: 8,
-		borderWidth: 0.5,
-		borderColor: 'purple',
-		borderRadius: 8,
-		color: '#000000',
-		paddingRight: 30,
-	},
-});
 
 export default SelectStatePicker;
