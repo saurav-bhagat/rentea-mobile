@@ -9,7 +9,7 @@ import SelectStatePicker from '../../../components/owner/building/SelectStatePic
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
 import AddRoomSection from './AddRoomsSection';
 import TextInputCommon from '../../../components/common/TextInputCommon';
-import { isValidBuildingData } from '../helper';
+import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
 import { saveBuildingData } from '../../../redux/actions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
 

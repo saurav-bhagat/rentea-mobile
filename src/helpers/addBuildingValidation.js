@@ -6,8 +6,9 @@ const validateText = (obj) => {
 	return !result;
 };
 
-const validatePhone = (phone) => {
-	return phone && phone.length === 10;
+export const validatePhone = (phone) => {
+	const phoneRegex = /^\d{10}$/;
+	return phone.match(phoneRegex);
 };
 
 const validateCount = (obj) => {

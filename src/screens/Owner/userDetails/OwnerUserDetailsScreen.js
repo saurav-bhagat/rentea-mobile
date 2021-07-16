@@ -4,7 +4,7 @@ import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 
 import { userDetailsStyles } from './userDetailsStyles';
-import { isValidUserDetails } from '../helper';
+import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
 
 const OwnerUserDetailsScreen = () => {
 	const navigation = useNavigation();
