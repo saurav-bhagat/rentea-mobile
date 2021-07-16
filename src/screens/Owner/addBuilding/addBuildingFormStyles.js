@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-export const addBuildingFormstyles = StyleSheet.create({
+export const addBuildingFormstyles = ScaledSheet.create({
 	addBFcontainer: {
 		flex: 1,
 		width: '95%',
@@ -14,10 +14,10 @@ export const addBuildingFormstyles = StyleSheet.create({
 	},
 	submitBuildingDetailsButton: {
 		width: '100%',
-		marginTop: 40,
+		marginTop: '37@ms',
 		backgroundColor: '#109FDA',
 		justifyContent: 'center',
-		height: 58,
+		height: '50@ms',
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
@@ -30,7 +30,7 @@ export const addBuildingFormstyles = StyleSheet.create({
 	},
 	submitBuildingDetailsButton_text: {
 		color: '#fff',
-		fontSize: 22,
+		fontSize: '20@ms0.3',
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 		letterSpacing: 1,

@@ -79,16 +79,6 @@ const AddRoomAccordionContent = () => {
 					</View>
 				</Body>
 			</CardItem>
-			{/* <CardItem footer style={{ justifyContent: 'flex-end' }}>
-				<Button 
-					rounded 
-					transparent 
-					style={styles.addRoomButton} 
-					onPress={() => toggleModal()}
-				>
-						<Text style={styles.addRoomButton_text}>Submit</Text>
-				</Button>
-            </CardItem> */}
 		</Card>
 	);
 };

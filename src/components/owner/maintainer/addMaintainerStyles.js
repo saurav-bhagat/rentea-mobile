@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-export const addMaintainerStyles = StyleSheet.create({
+export const addMaintainerStyles = ScaledSheet.create({
 	modalContent: {
 		flex: 1,
 		borderRadius: 30,
@@ -21,25 +21,6 @@ export const addMaintainerStyles = StyleSheet.create({
 	},
 	addMaintainerContainer: {
 		flexDirection: 'row',
-		marginTop: 13,
-	},
-	addMaintainerButton: {
-		paddingHorizontal: 18,
-		borderWidth: 1,
-		borderColor: '#ddd',
-		marginTop: 40,
-		backgroundColor: '#109FDA',
-		alignSelf: 'center',
-		bottom: 20,
-	},
-	addMaintainerButton_text: {
-		color: '#fff',
-		fontSize: 17,
-		letterSpacing: 1,
-		textAlign: 'center',
-	},
-	maintainerDetails: {
-		flex: 1,
-		padding: 10,
+		marginTop: '12@ms',
 	},
 });
