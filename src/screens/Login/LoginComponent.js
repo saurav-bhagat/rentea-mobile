@@ -16,14 +16,6 @@ const LoginComponent = ({ navigation }) => {
 	const handleLoginContinue = () => {
 		if (validatePhone(phone)) {
 			dispatch(sendOtp(phone));
-			// Todo : For now we directly calling navigate not handling error from store
-			navigation.navigate('OTP', { phone });
-			// Todo : Find a correct position  to use this and  also a case when it occur
-			// if(error){
-			// 	alert(msg);
-			// }else{
-			// 	navigation.navigate('OTP',{phone});
-			// }
 		} else {
 			alert('Enter valid Phone Number');
 		}

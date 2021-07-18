@@ -7,9 +7,12 @@ import OTPScreen from '../screens/Otp/OTPScreen';
 
 import CounterScreen from '../screens/CounterScreen';
 import OwnerUserDetailsScreen from '../screens/Owner/userDetails/OwnerUserDetailsScreen';
+
 import AddBuilding from '../screens/Owner/addBuilding';
 import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
+
 import FormScreen from '../screens/payment/FormScreen.js';
+import { navigationRef } from './rootNavigation';
 
 const { Screen, Navigator } = createStackNavigator();
 
@@ -17,7 +20,7 @@ const RootRoutes = () => {
 	//const isLogin = true;
 
 	return (
-		<NavigationContainer>
+		<NavigationContainer ref={navigationRef}>
 			<Navigator
 				screenOptions={({ route, navigation }) => ({
 					headerShown: false,

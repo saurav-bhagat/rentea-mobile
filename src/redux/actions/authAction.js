@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '@env';
+import { navigate } from '../../navigation/rootNavigation';
 
 export const sendOtpSuccess = () => {
 	return {
@@ -34,10 +35,14 @@ export const verifyOtp = (phoneNumber, code) => {
 	return (dispatch) => {
 		axios
 			.post(`${API_URL}/auth/authenticate`, { phoneNumber, code })
-			.then((response) =>
-				dispatch(verifyOtpSuccess(response.data.userDocument))
-			)
-			.catch(() => dispatch(verifyOtpFail()));
+			.then((response) => {
+				dispatch(verifyOtpSuccess(response.data.userDocument));
+				navigate('OwnerUserDetails');
+			})
+			.catch(() => {
+				dispatch(verifyOtpFail());
+				alert('Error while verifying otp');
+			});
 	};
 };
 
@@ -46,7 +51,13 @@ export const sendOtp = (phoneNumber) => {
 		axios
 			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
 			.then((response) => response)
-			.then(() => dispatch(sendOtpSuccess()))
-			.catch(() => dispatch(sendOtpFail()));
+			.then(() => {
+				dispatch(sendOtpSuccess());
+				navigate('OTP', phoneNumber);
+			})
+			.catch(() => {
+				dispatch(sendOtpFail());
+				alert('Error while sending otp');
+			});
 	};
 };
