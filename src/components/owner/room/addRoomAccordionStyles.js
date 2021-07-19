@@ -27,4 +27,19 @@ export const roomAccordionStyles = ScaledSheet.create({
 		fontSize: '18@ms0.3',
 		fontWeight: '600',
 	},
+	addRoomButton: {
+		paddingHorizontal: 18,
+		borderWidth: 1,
+		borderColor: '#ddd',
+		marginTop: 10,
+		backgroundColor: '#109FDA',
+		alignSelf: 'center',
+		bottom: 5,
+	},
+	addRoomButton_text: {
+		color: '#fff',
+		fontSize: 17,
+		letterSpacing: 1,
+		textAlign: 'center',
+	},
 });

@@ -53,3 +53,18 @@ export const isValidUserDetails = ({ fName, lName, email }) => {
 	console.log('User details validation failed');
 	return false;
 };
+
+export const validateRoomFields = ({
+	roomNo,
+	rent,
+	security,
+	floor,
+	sizeInFt,
+	bhk,
+}) => {
+	if (validateCount({ roomNo, rent, security, floor, sizeInFt, bhk })) {
+		return true;
+	}
+	console.log('Room details validation failed');
+	return false;
+};

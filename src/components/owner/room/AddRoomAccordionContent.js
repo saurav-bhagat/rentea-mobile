@@ -1,12 +1,43 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { Card, CardItem, Body, Item, Label, Input } from 'native-base';
+import { Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
+import { useDispatch } from 'react-redux';
 
 import TextInputCommon from '../../common/TextInputCommon';
 import { roomAccordionStyles } from './addRoomAccordionStyles';
+import { saveRoomData } from '../../../redux/actions';
+import { validateRoomFields } from '../../../helpers/addBuildingValidation';
 
-const AddRoomAccordionContent = () => {
-	const [roomNo, setRoomNo] = useState('');
+const AddRoomAccordionContent = ({ isData, data }) => {
+	const dispatch = useDispatch();
+
+	const [roomNo, setRoomNo] = isData ? useState(data.roomNo) : useState('');
+	const [rent, setRent] = isData ? useState(data.rent) : useState('');
+	const [security, setSecurity] = isData
+		? useState(data.security)
+		: useState('');
+	const [floor, setFloor] = isData ? useState(data.floor) : useState('');
+	const [sizeInFt, setSizeInFt] = isData
+		? useState(data.sizeInFt)
+		: useState('');
+	const [bhk, setBhk] = isData ? useState(data.bhk) : useState('');
+
+	const currentRoomData = {
+		roomNo,
+		rent,
+		security,
+		floor,
+		sizeInFt,
+		bhk,
+	};
+
+	const handleAddRoomClick = () => {
+		if (validateRoomFields(currentRoomData)) {
+			dispatch(saveRoomData(currentRoomData));
+		} else {
+			alert('Enter fields properly');
+		}
+	};
 
 	return (
 		<Card style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -26,7 +57,10 @@ const AddRoomAccordionContent = () => {
 								}}
 							>
 								<Label>Room No.</Label>
-								<Input onChangeText={(e) => setRoomNo(e)} />
+								<Input
+									onChangeText={(e) => setRoomNo(e)}
+									value={roomNo}
+								/>
 							</Item>
 						</View>
 						<View style={{ flex: 1 }}>
@@ -39,7 +73,10 @@ const AddRoomAccordionContent = () => {
 								}}
 							>
 								<Label>Rent Amount</Label>
-								<Input />
+								<Input
+									onChangeText={(val) => setRent(val)}
+									value={rent}
+								/>
 							</Item>
 						</View>
 					</View>
@@ -51,12 +88,17 @@ const AddRoomAccordionContent = () => {
 									width: '90%',
 									alignSelf: 'flex-start',
 								}}
+								onChangeText={(val) => setSecurity(val)}
+								value={security}
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
 							<TextInputCommon
 								label="Floor"
 								style={{ width: '90%', alignSelf: 'flex-end' }}
+								keyboardType="numeric"
+								onChangeText={(val) => setFloor(val)}
+								value={floor}
 							/>
 						</View>
 					</View>
@@ -68,16 +110,33 @@ const AddRoomAccordionContent = () => {
 									width: '90%',
 									alignSelf: 'flex-start',
 								}}
+								onChangeText={(val) => setSizeInFt(val)}
+								value={sizeInFt}
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
 							<TextInputCommon
 								label="BHK"
 								style={{ width: '90%', alignSelf: 'flex-end' }}
+								onChangeText={(val) => setBhk(val)}
+								keyboardType="numeric"
+								value={bhk}
 							/>
 						</View>
 					</View>
 				</Body>
+			</CardItem>
+			<CardItem footer style={{ justifyContent: 'flex-end' }}>
+				<Button
+					rounded
+					transparent
+					style={roomAccordionStyles.addRoomButton}
+					onPress={() => handleAddRoomClick()}
+				>
+					<Text style={roomAccordionStyles.addRoomButton_text}>
+						Add Room
+					</Text>
+				</Button>
 			</CardItem>
 		</Card>
 	);
