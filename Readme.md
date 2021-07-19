@@ -24,3 +24,9 @@ grey - `#666666`
    react-native-otp-textinput
 
 2. `react-native-size-matters` - We have followed these conventions: *font-size* - 'value@ms0.3' , *margin/		padding/height/width* - Usually 'value@ms', can be 'value@s' as per design needs.
+
+
+# TroubleShooting 
+
+1. `npx rimraf node_modules` , `npx rimraf yarn.lock` , `yarn`, `expo start -c`
+2. `cd android` , `gradlew clean` , `expo start -c`
