@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
-import { Item, Input, Button, Content } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import { View, Text } from 'react-native';
+import { Item, Input, Button } from 'native-base';
+import { useDispatch } from 'react-redux';
 
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions/authAction';
@@ -9,8 +9,7 @@ import { validatePhone } from '../../helpers/addBuildingValidation';
 
 const LoginComponent = ({ navigation }) => {
 	const dispatch = useDispatch();
-	const error = useSelector((state) => state.auth.error);
-	const msg = useSelector((state) => state.auth.msg);
+
 	const [phone, setPhone] = useState('');
 
 	const handleLoginContinue = () => {

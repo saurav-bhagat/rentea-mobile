@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URL } from '@env';
 import { navigate } from '../../navigation/rootNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const sendOtpSuccess = () => {
 	return {
@@ -35,9 +36,18 @@ export const verifyOtp = (phoneNumber, code) => {
 	return (dispatch) => {
 		axios
 			.post(`${API_URL}/auth/authenticate`, { phoneNumber, code })
-			.then((response) => {
+			.then(async (response) => {
 				dispatch(verifyOtpSuccess(response.data.userDocument));
 				navigate('OwnerUserDetails');
+
+				await AsyncStorage.setItem(
+					'accessToken',
+					response.data.userDocument.accessToken
+				);
+				await AsyncStorage.setItem(
+					'refreshToken',
+					response.data.userDocument.refreshToken
+				);
 			})
 			.catch(() => {
 				dispatch(verifyOtpFail());
@@ -50,7 +60,9 @@ export const sendOtp = (phoneNumber) => {
 	return (dispatch) => {
 		axios
 			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
-			.then((response) => response)
+			.then((response) => {
+				return response;
+			})
 			.then(() => {
 				dispatch(sendOtpSuccess());
 				navigate('OTP', phoneNumber);

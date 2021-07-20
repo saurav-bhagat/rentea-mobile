@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userDetailsStyles } from './userDetailsStyles';
 import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
 
@@ -13,6 +13,20 @@ const OwnerUserDetailsScreen = () => {
 	const [lName, setLName] = useState('');
 	const [email, setEmail] = useState('');
 
+	useEffect(() => {
+		// const getData = async () => {
+		// 	try {
+		// 	const value = await AsyncStorage.getItem('@storage_Key')
+		// 	if(value !== null) {
+		// 		// value previously stored
+		// 		console.log(value);
+		// 	}
+		// 	} catch(e) {
+		// 	// error reading value
+		// 	}
+		// }
+		//getData();
+	}, []);
 	const handleUserDetailsSubmit = () => {
 		let formData = {
 			fName,

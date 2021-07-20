@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { Button } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { otpStyles } from './otpStyles';
 import { verifyOtp } from '../../redux/actions/authAction';
@@ -10,8 +10,6 @@ import { verifyOtp } from '../../redux/actions/authAction';
 const OTPScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const [code, setCode] = useState();
-	const error = useSelector((state) => state.auth.error);
-	const msg = useSelector((state) => state.auth.msg);
 
 	const handleOTPSubmit = (code) => {
 		console.log(`Code is ${code}, you are good to go!`);
