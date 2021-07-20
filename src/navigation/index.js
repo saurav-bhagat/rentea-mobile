@@ -14,11 +14,11 @@ import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 import FormScreen from '../screens/payment/FormScreen.js';
 import { navigationRef } from './rootNavigation';
 
+import OwnerDashboardBottomTab from './OwnerDashboardBottomTab';
+
 const { Screen, Navigator } = createStackNavigator();
 
 const RootRoutes = () => {
-	//const isLogin = true;
-
 	return (
 		<NavigationContainer ref={navigationRef}>
 			<Navigator
@@ -27,24 +27,19 @@ const RootRoutes = () => {
 					gestureEnabled: true,
 				})}
 			>
-				{/* {isLogin ? (
-					<> */}
-				{/* <Screen name="Payment"  component={FormScreen}  /> */}
-				<Screen name="Login" component={LoginScreen} />
+				<Screen
+					name="ownerDashboard"
+					component={OwnerDashboardBottomTab}
+				/>
 				<Screen name="AddBuilding" component={AddBuilding} />
+				<Screen name="Login" component={LoginScreen} />
 				<Screen name="AddBuildingForm" component={AddBuildingForm} />
 				<Screen
 					name="OwnerUserDetails"
 					component={OwnerUserDetailsScreen}
 				/>
 				<Screen name="Home" component={CounterScreen} />
-				{/* </>
-				) : ( */}
-				{/* <> */}
-
 				<Screen name="OTP" component={OTPScreen} />
-				{/* </> */}
-				{/* )} */}
 			</Navigator>
 		</NavigationContainer>
 	);
