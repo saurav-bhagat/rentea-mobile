@@ -31,11 +31,10 @@ const RootRoutes = () => {
 			let token = null;
 			try {
 				token = await AsyncStorage.getItem('accessToken');
+				dispatch(setRestoreToken(token));
 			} catch (error) {
-				// errror on fetching token
-				console.log('Restoring token failed');
+				dispatch(setRestoreToken(null));
 			}
-			dispatch(setRestoreToken(token));
 		};
 		checkAuthStatus();
 	}, [userToken]);
