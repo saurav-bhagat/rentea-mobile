@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
-
 import { userDetailsStyles } from './userDetailsStyles';
 import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
 
