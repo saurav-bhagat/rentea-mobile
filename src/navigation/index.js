@@ -27,6 +27,7 @@ const RootRoutes = () => {
 					name="ownerDashboard"
 					component={OwnerDashboardBottomTab}
 				/>
+
 				<Screen name="AddBuilding" component={AddBuilding} />
 				<Screen name="Login" component={LoginScreen} />
 				<Screen name="AddBuildingForm" component={AddBuildingForm} />
