@@ -4,7 +4,7 @@ import { Item, Input, Button } from 'native-base';
 import { useDispatch } from 'react-redux';
 
 import { loginStyles } from './loginStyles';
-import { sendOtp } from '../../redux/actions/authAction';
+import { sendOtp } from '../../redux/actions/authActions';
 import { validatePhone } from '../../helpers/addBuildingValidation';
 
 const LoginComponent = ({ navigation }) => {

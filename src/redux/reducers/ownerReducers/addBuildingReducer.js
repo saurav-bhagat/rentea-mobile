@@ -17,7 +17,7 @@ const initialState = {
 	buildingDetails: [],
 };
 
-const addBuildingReducer = (state = initialState, action) => {
+export const addBuildingReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'SET_BUILDING_DETAILS':
 			return {
@@ -28,5 +28,3 @@ const addBuildingReducer = (state = initialState, action) => {
 			return state;
 	}
 };
-
-export default addBuildingReducer;

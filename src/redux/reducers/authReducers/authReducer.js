@@ -5,7 +5,7 @@ const initialState = {
 	userToken: null,
 };
 
-const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'SEND_OTP_SUCCESS':
 			return {
@@ -42,5 +42,3 @@ const authReducer = (state = initialState, action) => {
 			return state;
 	}
 };
-
-export default authReducer;

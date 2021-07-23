@@ -10,7 +10,7 @@ import AddMaintainerSection from '../../../components/owner/maintainer/AddMainta
 import AddRoomSection from './AddRoomsSection';
 import TextInputCommon from '../../../components/common/TextInputCommon';
 import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
-import { saveBuildingData } from '../../../redux/actions';
+import { saveBuildingData } from '../../../redux/actions/ownerActions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
 
 const AddBuildingForm = () => {

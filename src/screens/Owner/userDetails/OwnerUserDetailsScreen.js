@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
+import { useDispatch } from 'react-redux';
 import { userDetailsStyles } from './userDetailsStyles';
 import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
+import { addUserDetail } from '../../../redux/actions/userDetailActions';
 
 const OwnerUserDetailsScreen = () => {
 	const navigation = useNavigation();
-
+	const dispatch = useDispatch();
 	const [fName, setFName] = useState('');
 	const [lName, setLName] = useState('');
 	const [email, setEmail] = useState('');
@@ -20,6 +22,7 @@ const OwnerUserDetailsScreen = () => {
 		};
 		if (isValidUserDetails(formData)) {
 			// dispatch SaveUserDetails Action, remove console.log
+			dispatch(addUserDetail(formData));
 			console.log('Dispatching user details save action');
 		} else {
 			alert('Enter fields properly');
