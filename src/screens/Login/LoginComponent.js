@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
-import { Item, Input, Button, Content } from 'native-base';
+import { View, Text } from 'react-native';
+import { Item, Input, Button } from 'native-base';
 import { useDispatch } from 'react-redux';
 
 import { loginStyles } from './loginStyles';
@@ -14,8 +14,7 @@ const LoginComponent = ({ navigation }) => {
 
 	const handleLoginContinue = () => {
 		if (validatePhone(phone)) {
-			dispatch(sendOtp());
-			navigation.navigate('OTP');
+			dispatch(sendOtp(phone));
 		} else {
 			alert('Enter valid Phone Number');
 		}

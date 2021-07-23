@@ -1,5 +1,8 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { API_URL } from '@env';
+import { navigate } from '../../navigation/rootNavigation';
 
 export const sendOtpSuccess = () => {
 	return {
@@ -15,11 +18,11 @@ export const sendOtpFail = () => {
 	};
 };
 
-export const verifyOtpSuccess = (data) => {
+export const verifyOtpSuccess = (payload) => {
 	return {
 		type: 'VERIFY_OTP_SUCCESS',
-		payload: data,
 		msg: 'otp verify successfully',
+		payload,
 	};
 };
 
@@ -30,28 +33,53 @@ export const verifyOtpFail = () => {
 	};
 };
 
-export const verifyOtp = () => {
+export const setRestoreToken = (token) => {
+	return {
+		type: 'RESTORE_TOKEN',
+		token,
+	};
+};
+
+export const verifyOtp = (phoneNumber, code) => {
 	return (dispatch) => {
 		axios
-			.post(`${API_URL}`)
-			.then((response) => {
-				dispatch(verifyOtpSuccess(response.data));
+			.post(`${API_URL}/auth/authenticate`, { phoneNumber, code })
+			.then(async (response) => {
+				dispatch(verifyOtpSuccess(response.data.userDocument));
+				try {
+					await AsyncStorage.setItem(
+						'accessToken',
+						response.data.userDocument.accessToken
+					);
+					await AsyncStorage.setItem(
+						'refreshToken',
+						response.data.userDocument.refreshToken
+					);
+				} catch (error) {
+					alert('Error while configure session');
+				}
 			})
 			.catch(() => {
 				dispatch(verifyOtpFail());
+				alert('Error while verifying otp');
 			});
 	};
 };
 
-export const sendOtp = () => {
+export const sendOtp = (phoneNumber) => {
 	return (dispatch) => {
 		axios
-			.post(`${API_URL}`)
+			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
 			.then((response) => {
-				dispatch(sendOtpSuccess());
+				return response;
 			})
-			.catch(() => {
+			.then(() => {
+				dispatch(sendOtpSuccess());
+				navigate('OTP', phoneNumber);
+			})
+			.catch((err) => {
 				dispatch(sendOtpFail());
+				alert('Error while sending otp');
 			});
 	};
 };
