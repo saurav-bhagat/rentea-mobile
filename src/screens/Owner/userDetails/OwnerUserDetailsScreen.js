@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
@@ -30,49 +30,55 @@ const OwnerUserDetailsScreen = () => {
 	};
 
 	return (
-		<View style={{ flex: 1, backgroundColor: 'white' }}>
-			<View style={userDetailsStyles.oudsContainer}>
-				<View style={userDetailsStyles.oudsTextContainer}>
-					<Text style={userDetailsStyles.oudsWelcomeText}>
-						Welcome!
-					</Text>
-					<Text style={userDetailsStyles.oudsShortText}>
-						Enter your details below.
-					</Text>
-				</View>
-
-				<View style={userDetailsStyles.oudsFormContainer}>
-					<TextInput
-						style={userDetailsStyles.oudsPhoneInputBox}
-						placeholderTextColor={'#aaa'}
-						placeholder="First Name"
-						onChangeText={(val) => setFName(val)}
-					/>
-					<TextInput
-						style={userDetailsStyles.oudsPhoneInputBox}
-						placeholderTextColor={'#aaa'}
-						placeholder="Last Name"
-						onChangeText={(val) => setLName(val)}
-					/>
-					<TextInput
-						style={userDetailsStyles.oudsPhoneInputBox}
-						placeholderTextColor={'#aaa'}
-						placeholder="Email ID"
-						onChangeText={(val) => setEmail(val)}
-					/>
-
-					<Button
-						rounded
-						transparent
-						style={userDetailsStyles.oudsContinueButton}
-						onPress={() => handleUserDetailsSubmit()}
-					>
-						<Text style={userDetailsStyles.oudsContinueButton_text}>
-							Continue
+		<View style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}>
+			<ScrollView>
+				<View style={userDetailsStyles.oudsContainer}>
+					<View style={userDetailsStyles.oudsTextContainer}>
+						<Text style={userDetailsStyles.oudsWelcomeText}>
+							Welcome!
 						</Text>
-					</Button>
+						<Text style={userDetailsStyles.oudsShortText}>
+							Enter your details below.
+						</Text>
+					</View>
+
+					<View style={userDetailsStyles.oudsFormContainer}>
+						<TextInput
+							style={userDetailsStyles.oudsPhoneInputBox}
+							placeholderTextColor={'#aaa'}
+							placeholder="First Name"
+							onChangeText={(val) => setFName(val)}
+						/>
+						<TextInput
+							style={userDetailsStyles.oudsPhoneInputBox}
+							placeholderTextColor={'#aaa'}
+							placeholder="Last Name"
+							onChangeText={(val) => setLName(val)}
+						/>
+						<TextInput
+							style={userDetailsStyles.oudsPhoneInputBox}
+							placeholderTextColor={'#aaa'}
+							placeholder="Email ID"
+							onChangeText={(val) => setEmail(val)}
+						/>
+
+						<Button
+							rounded
+							transparent
+							style={userDetailsStyles.oudsContinueButton}
+							onPress={() => handleUserDetailsSubmit()}
+						>
+							<Text
+								style={
+									userDetailsStyles.oudsContinueButton_text
+								}
+							>
+								Continue
+							</Text>
+						</Button>
+					</View>
 				</View>
-			</View>
+			</ScrollView>
 		</View>
 	);
 };
