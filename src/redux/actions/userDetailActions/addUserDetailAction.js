@@ -3,7 +3,6 @@ import { API_URL } from '@env';
 import { navigate } from '../../../navigation/rootNavigation';
 
 export const addUserDetailSuccess = (payload) => {
-	console.log(payload);
 	return {
 		type: 'ADD_USER_DETAIL_SUCCESS',
 		payload,
