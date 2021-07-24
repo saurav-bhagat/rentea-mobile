@@ -5,7 +5,7 @@ import { Button } from 'native-base';
 import { useDispatch } from 'react-redux';
 
 import { otpStyles } from './otpStyles';
-import { verifyOtp } from '../../redux/actions/authActions';
+import { verifyOtp } from '../../redux/actions';
 
 const OTPScreen = ({ route }) => {
 	const dispatch = useDispatch();

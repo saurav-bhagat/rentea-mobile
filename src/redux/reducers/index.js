@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
-import { addBuildingReducer, addRoomsReducer } from './ownerReducers';
-import { authReducer } from './authReducers';
+import { addBuildingReducer } from './ownerReducers/addBuildingReducer';
+import { addRoomsReducer } from './ownerReducers/addRoomsReducer';
+
+import { authReducer } from './authReducers/authReducer';
 
 import counterReducer from './counterReducer';
-import { addUserDetailReducer } from './userDetailReducers';
+import { addUserDetailReducer } from './userDetailReducers/addUserDetailsReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import TextInputCommon from '../../common/TextInputCommon';
 import { roomAccordionStyles } from './addRoomAccordionStyles';
-import { saveRoomData } from '../../../redux/actions/ownerActions';
+import { saveRoomData } from '../../../redux/actions';
 import { validateRoomFields } from '../../../helpers/addBuildingValidation';
 
 const AddRoomAccordionContent = ({ isData, data }) => {

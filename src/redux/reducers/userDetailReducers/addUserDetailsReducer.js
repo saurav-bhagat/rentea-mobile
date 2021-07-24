@@ -1,5 +1,5 @@
 const userDetail = {
-	id: null,
+	_id: null,
 	name: '',
 	phoneNumber: null,
 	userType: '',
@@ -11,10 +11,7 @@ export const addUserDetailReducer = (state = userDetail, action) => {
 		case 'ADD_USER_DETAIL_SUCCESS':
 			return {
 				...state,
-				id: action.id,
-				name: action.name,
-				phoneNumber: action.phoneNumber,
-				userType: action.userType,
+				...action.payload,
 				error: null,
 			};
 		case 'ADD_USER_DETAIL_FAIL':

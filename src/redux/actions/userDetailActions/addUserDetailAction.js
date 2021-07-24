@@ -3,15 +3,17 @@ import { API_URL } from '@env';
 import { navigate } from '../../../navigation/rootNavigation';
 
 export const addUserDetailSuccess = (payload) => {
+	console.log(payload);
 	return {
 		type: 'ADD_USER_DETAIL_SUCCESS',
 		payload,
 	};
 };
 
-export const addUserDetailFail = () => {
+export const addUserDetailFail = (error) => {
 	return {
 		type: 'ADD_USER_DETAIL_FAIL',
+		error,
 	};
 };
 
@@ -32,11 +34,11 @@ export const addUserDetail = (userData) => {
 				},
 			})
 			.then((response) => {
-				dispatch(addUserDetailSuccess(response));
+				dispatch(addUserDetailSuccess(response.data.updatedUserInfo));
 				navigate('AddBuildingForm');
 			})
 			.catch((err) => {
-				dispatch(addUserDetailFail(err));
+				dispatch(addUserDetailFail(err.message));
 				alert('Error while add user info');
 			});
 	};
