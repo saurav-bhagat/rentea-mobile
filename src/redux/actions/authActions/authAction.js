@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { API_URL } from '@env';
-import { navigate } from '../../navigation/rootNavigation';
+import { navigate } from '../../../navigation/rootNavigation';
 
 export const sendOtpSuccess = () => {
 	return {

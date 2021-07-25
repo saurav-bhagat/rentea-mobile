@@ -1,3 +1,4 @@
-export * from './counterActions';
-export * from './addBuildingAction';
-export * from './addRoomAction';
+export * from './authActions/authAction';
+export * from './ownerActions/addBuildingAction';
+export * from './ownerActions/addRoomAction';
+export * from './userDetailActions/addUserDetailAction';

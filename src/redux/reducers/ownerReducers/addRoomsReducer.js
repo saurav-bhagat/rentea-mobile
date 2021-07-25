@@ -4,7 +4,7 @@ const initialState = {
 	roomDetails: [],
 };
 
-const addRoomsReducer = (state = initialState, action) => {
+export const addRoomsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'SET_ROOM_DATA':
 			if (find(state.roomDetails, action.payload)) {
@@ -19,5 +19,3 @@ const addRoomsReducer = (state = initialState, action) => {
 			return state;
 	}
 };
-
-export default addRoomsReducer;

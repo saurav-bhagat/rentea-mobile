@@ -19,7 +19,7 @@ import FormScreen from '../screens/payment/FormScreen.js';
 import { navigationRef } from './rootNavigation';
 
 import OwnerDashboardBottomTab from './OwnerDashboardBottomTab';
-import { setRestoreToken } from '../redux/actions/authAction';
+import { setRestoreToken } from '../redux/actions';
 
 const { Screen, Navigator } = createStackNavigator();
 

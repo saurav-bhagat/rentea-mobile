@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import { Button } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
+import { useDispatch } from 'react-redux';
 import { userDetailsStyles } from './userDetailsStyles';
 import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
+import { addUserDetail } from '../../../redux/actions';
 
 const OwnerUserDetailsScreen = () => {
 	const navigation = useNavigation();
-
+	const dispatch = useDispatch();
 	const [fName, setFName] = useState('');
 	const [lName, setLName] = useState('');
 	const [email, setEmail] = useState('');
@@ -20,6 +22,7 @@ const OwnerUserDetailsScreen = () => {
 		};
 		if (isValidUserDetails(formData)) {
 			// dispatch SaveUserDetails Action, remove console.log
+			dispatch(addUserDetail(formData));
 			console.log('Dispatching user details save action');
 		} else {
 			alert('Enter fields properly');
@@ -27,7 +30,9 @@ const OwnerUserDetailsScreen = () => {
 	};
 
 	return (
-		<View style={{ flex: 1, backgroundColor: 'white' }}>
+		<ScrollView
+			style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}
+		>
 			<View style={userDetailsStyles.oudsContainer}>
 				<View style={userDetailsStyles.oudsTextContainer}>
 					<Text style={userDetailsStyles.oudsWelcomeText}>
@@ -70,7 +75,7 @@ const OwnerUserDetailsScreen = () => {
 					</Button>
 				</View>
 			</View>
-		</View>
+		</ScrollView>
 	);
 };
 
