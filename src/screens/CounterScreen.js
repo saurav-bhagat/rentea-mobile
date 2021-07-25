@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement } from '../redux/actions';
+import { increment, decrement } from '../redux/actions/counterActions';
 
 const CounterScreen = () => {
 	const counter = useSelector((state) => state.counter);
