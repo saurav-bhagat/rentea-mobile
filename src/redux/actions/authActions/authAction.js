@@ -21,7 +21,7 @@ export const sendOtpFail = () => {
 export const verifyOtpSuccess = (payload) => {
 	return {
 		type: 'VERIFY_OTP_SUCCESS',
-		msg: 'otp verify successfully',
+		msg: 'otp verified successfully',
 		payload,
 	};
 };
@@ -33,10 +33,10 @@ export const verifyOtpFail = () => {
 	};
 };
 
-export const setRestoreToken = (token) => {
+export const setUserInfo = (payload) => {
 	return {
-		type: 'RESTORE_TOKEN',
-		token,
+		type: 'SET_USER_INFO',
+		payload,
 	};
 };
 
@@ -45,23 +45,21 @@ export const verifyOtp = (phoneNumber, code) => {
 		axios
 			.post(`${API_URL}/auth/authenticate`, { phoneNumber, code })
 			.then(async (response) => {
-				dispatch(verifyOtpSuccess(response.data.userDocument));
 				try {
 					await AsyncStorage.setItem(
-						'accessToken',
-						response.data.userDocument.accessToken
+						'userInfo',
+						JSON.stringify(response.data.userDocument)
 					);
-					await AsyncStorage.setItem(
-						'refreshToken',
-						response.data.userDocument.refreshToken
-					);
+					console.log(response.data.userDocument);
+					dispatch(verifyOtpSuccess(response.data.userDocument));
 				} catch (error) {
-					alert('Error while configure session');
+					alert('Error in Login');
 				}
 			})
-			.catch(() => {
+			.catch((err) => {
 				dispatch(verifyOtpFail());
-				alert('Error while verifying otp');
+				console.log(err);
+				alert('Error while verifying otp', err);
 			});
 	};
 };
@@ -75,7 +73,7 @@ export const sendOtp = (phoneNumber) => {
 			})
 			.then(() => {
 				dispatch(sendOtpSuccess());
-				navigate('OTP', phoneNumber);
+				navigate('OTP', { phoneNumber });
 			})
 			.catch((err) => {
 				dispatch(sendOtpFail());

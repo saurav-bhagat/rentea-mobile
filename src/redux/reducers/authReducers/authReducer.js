@@ -2,7 +2,6 @@ const initialState = {
 	userInfo: null,
 	msg: '',
 	error: false,
-	userToken: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -25,7 +24,6 @@ export const authReducer = (state = initialState, action) => {
 				userInfo: action.payload,
 				msg: action.msg,
 				error: false,
-				userToken: action.payload.accessToken,
 			};
 		case 'VERIFY_OTP_FAIL':
 			return {
@@ -33,10 +31,15 @@ export const authReducer = (state = initialState, action) => {
 				msg: action.msg,
 				error: true,
 			};
-		case 'RESTORE_TOKEN':
+		case 'SET_USER_INFO':
 			return {
 				...state,
-				userToken: action.token,
+				userInfo: action.payload,
+			};
+		case 'RESTORE_FIRST_LOGIN':
+			return {
+				...state,
+				firstLogin: action.firstLogin,
 			};
 		default:
 			return state;
