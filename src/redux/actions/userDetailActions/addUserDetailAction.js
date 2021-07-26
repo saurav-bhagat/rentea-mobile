@@ -26,9 +26,6 @@ export const addUserDetail = (userData) => {
 			email: userData.email,
 		};
 
-		console.log(body);
-		console.log('Bearer token is', auth.userInfo.accessToken);
-
 		axios
 			.put(`${API_URL}/auth/update-basic-info`, body, {
 				headers: {
@@ -48,7 +45,7 @@ export const addUserDetail = (userData) => {
 						JSON.stringify(userInfo)
 					);
 				} catch (err) {
-					console.log('Error in setting firstLogin False');
+					console.log('Error in setting firstLogin False', err);
 				}
 				dispatch(addUserDetailSuccess(response.data.updatedUserInfo));
 				navigate('AddBuildingForm');
