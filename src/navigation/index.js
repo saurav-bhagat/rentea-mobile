@@ -34,7 +34,7 @@ const RootRoutes = () => {
 	useEffect(() => {
 		const checkAuthStatus = async () => {
 			try {
-				userInfo = await AsyncStorage.getItem('userInfo');
+				let userInfo = await AsyncStorage.getItem('userInfo');
 				userInfo = JSON.parse(userInfo);
 
 				dispatch(setUserInfo(userInfo));
