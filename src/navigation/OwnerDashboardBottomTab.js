@@ -1,11 +1,27 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+Ionicons.loadFont();
 
 import PropertiesScreen from '../screens/Owner/dashboard/property/PropertiesScreen';
+import PropertyInfoScreen from '../screens/Owner/dashboard/property/PropertyInfoScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const PropertiesStack = () => (
+	<Stack.Navigator
+		screenOptions={({ route, navigation }) => ({
+			headerShown: true,
+			gestureEnabled: true,
+		})}
+	>
+		<Stack.Screen name="Properties" component={PropertiesScreen} />
+		<Stack.Screen name="PropertyInfo" component={PropertyInfoScreen} />
+	</Stack.Navigator>
+);
 
 function PaymentScreen() {
 	return (
@@ -41,7 +57,7 @@ export default OwnerDashboardBottomTab = () => {
 				inactiveTintColor: 'gray',
 			}}
 		>
-			<Tab.Screen name="Properties" component={PropertiesScreen} />
+			<Tab.Screen name="Properties" component={PropertiesStack} />
 			<Tab.Screen name="Payments" component={PaymentScreen} />
 		</Tab.Navigator>
 	);

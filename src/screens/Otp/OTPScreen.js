@@ -12,8 +12,12 @@ const OTPScreen = ({ route }) => {
 	const [code, setCode] = useState();
 
 	const handleOTPSubmit = (code) => {
-		console.log(`Code is ${code}, you are good to go!`);
-		const phoneNumber = route.params;
+		if (!code || code.length != 6) {
+			alert('OTP not valid');
+			return;
+		}
+
+		const { phoneNumber } = route.params;
 		if (code.length === 6) {
 			dispatch(verifyOtp(phoneNumber, code));
 		} else {
@@ -35,9 +39,9 @@ const OTPScreen = ({ route }) => {
 				autoFocusOnLoad
 				codeInputFieldStyle={otpStyles.underlineStyleBase}
 				codeInputHighlightStyle={otpStyles.underlineStyleHighLighted}
-				onCodeFilled={(code) => {
-					handleOTPSubmit(code);
-				}}
+				// onCodeFilled={(code) => {
+				// 	handleOTPSubmit(code);
+				// }}
 			/>
 			<Button
 				rounded

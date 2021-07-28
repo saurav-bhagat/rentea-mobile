@@ -23,16 +23,13 @@ const OwnerUserDetailsScreen = () => {
 		if (isValidUserDetails(formData)) {
 			// dispatch SaveUserDetails Action, remove console.log
 			dispatch(addUserDetail(formData));
-			console.log('Dispatching user details save action');
 		} else {
 			alert('Enter fields properly');
 		}
 	};
 
 	return (
-		<ScrollView
-			style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}
-		>
+		<ScrollView contentContainerStyle={{ flex: 1 }}>
 			<View style={userDetailsStyles.oudsContainer}>
 				<View style={userDetailsStyles.oudsTextContainer}>
 					<Text style={userDetailsStyles.oudsWelcomeText}>

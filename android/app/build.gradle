@@ -81,6 +81,10 @@ project.ext.react = [
     enableHermes: false
 ]
 
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf' ] // Name of the font files you want to copy
+]
+
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/expo-constants/scripts/get-app-config-android.gradle"

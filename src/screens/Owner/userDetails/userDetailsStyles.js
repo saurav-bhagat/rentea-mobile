@@ -2,7 +2,6 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const userDetailsStyles = ScaledSheet.create({
 	oudsContainer: {
-		flex: 1,
 		marginTop: '20%',
 		width: '85%',
 		marginLeft: 'auto',

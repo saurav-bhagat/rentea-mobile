@@ -19,25 +19,31 @@ import FormScreen from '../screens/payment/FormScreen.js';
 import { navigationRef } from './rootNavigation';
 
 import OwnerDashboardBottomTab from './OwnerDashboardBottomTab';
-import { setRestoreToken } from '../redux/actions';
+import { setUserInfo } from '../redux/actions';
 
 const { Screen, Navigator } = createStackNavigator();
 
 const RootRoutes = () => {
-	const { userToken, userInfo } = useSelector((state) => state.auth);
+	const authState = useSelector((state) => state.auth);
+	let accessToken, firstLogin;
+
+	if (authState.userInfo) {
+		({ accessToken, firstLogin } = authState.userInfo);
+	}
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const checkAuthStatus = async () => {
-			let token = null;
 			try {
-				token = await AsyncStorage.getItem('accessToken');
-				dispatch(setRestoreToken(token));
+				let userInfo = await AsyncStorage.getItem('userInfo');
+				userInfo = JSON.parse(userInfo);
+
+				dispatch(setUserInfo(userInfo));
 			} catch (error) {
-				dispatch(setRestoreToken(null));
+				dispatch(setUserInfo(null));
 			}
 		};
 		checkAuthStatus();
-	}, [userToken]);
+	}, []);
 	return (
 		<NavigationContainer ref={navigationRef}>
 			<Navigator
@@ -46,9 +52,9 @@ const RootRoutes = () => {
 					gestureEnabled: true,
 				})}
 			>
-				{userToken ? (
+				{accessToken ? (
 					<>
-						{userInfo.firstLogin ? (
+						{firstLogin ? (
 							<>
 								<Screen
 									name="OwnerUserDetails"

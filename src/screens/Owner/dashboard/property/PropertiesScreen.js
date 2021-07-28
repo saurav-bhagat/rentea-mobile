@@ -1,13 +1,24 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 
+import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 
 const PropertiesScreen = () => {
+	useEffect(() => {
+		// dispatch an action to get all the buildings information and add to state
+		// pass that to PropertyList Component
+	}, []);
+
 	return (
-		<View style={propertiesScreenStyles.propertiesContainer}>
-			<Text>List of properties will be displayed here!</Text>
-		</View>
+		<ScrollView
+			contentContainerStyle={propertiesScreenStyles.propertiesContainer}
+		>
+			<Text style={{ fontSize: 22 }}>Properties List</Text>
+
+			<PropertyList />
+		</ScrollView>
 	);
 };
 
