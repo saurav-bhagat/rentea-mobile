@@ -21,7 +21,7 @@ const SingleProperty = ({ data }) => {
 };
 
 const PropertyList = ({ properties }) => {
-	console.log('Inside propertyList');
+	// TODO: change the spelling of owenerDashboardResult below once its resolved in backend
 	return (
 		<View style={propertyStyles.propertyListContainer}>
 			{properties.ownerDashoardResult &&
