@@ -8,14 +8,14 @@ import { roomInfoScreenStyles } from './RoomInfoStyle';
 
 const RoomInfoScreen = ({ route }) => {
 	const [isTenant, setIsTenant] = useState(true);
-	const { id, title } = route.params;
+	const { singleRoomData } = route.params;
 
 	return (
 		<View>
 			{isTenant ? (
-				<TenantInfoScreen id={id} title={title} />
+				<TenantInfoScreen singleRoomData={singleRoomData} />
 			) : (
-				<AddTenantScreen id={id} title={title} />
+				<AddTenantScreen />
 			)}
 		</View>
 	);

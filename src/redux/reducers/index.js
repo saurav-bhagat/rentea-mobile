@@ -7,6 +7,7 @@ import { authReducer } from './authReducers/authReducer';
 
 import counterReducer from './counterReducer';
 import { addUserDetailReducer } from './userDetailReducers/addUserDetailsReducer';
+import dashboardReducer from './ownerReducers/dashboardReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
 	buildingDetails: addBuildingReducer,
 	addRoomDetails: addRoomsReducer,
 	userDetail: addUserDetailReducer,
+	ownerDashbhoard: dashboardReducer,
 });
 
 export default rootReducer;

@@ -10,6 +10,7 @@ export const propertiesScreenStyles = ScaledSheet.create({
 		alignItems: 'stretch',
 	},
 	propertyInfoContainer: {
+		flex: 1,
 		padding: '10@ms',
 		width: '85%',
 		marginLeft: 'auto',
@@ -31,6 +32,7 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	},
 	roomsContainer: {
 		padding: '5@s',
+		flex: 1,
 	},
 	roomTitle: {},
 	roomsList: {},

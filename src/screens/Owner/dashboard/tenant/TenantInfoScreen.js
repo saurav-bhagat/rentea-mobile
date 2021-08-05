@@ -4,13 +4,13 @@ import { Header, Content, Card, CardItem, Body } from 'native-base';
 
 import { tenantInfoStyles } from './TenantInfoStyles';
 
-const TenantInfoScreen = ({ title }) => {
+const TenantInfoScreen = ({ singleRoomData }) => {
 	return (
 		<ScrollView
 			contentContainerStyle={tenantInfoStyles.tenantInfoContainer}
 		>
 			<Text style={tenantInfoStyles.tenantInfoTitle}>
-				Tenant Info Screen for {title}
+				Tenant Info Screen for {singleRoomData.roomNo}
 			</Text>
 
 			<Card>
