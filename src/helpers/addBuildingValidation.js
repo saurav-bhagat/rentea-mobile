@@ -1,4 +1,4 @@
-const validateText = (obj) => {
+export const validateText = (obj) => {
 	const objValues = Object.values(obj);
 	const result = objValues.some((ele) => {
 		return ele === '' || !ele;
@@ -11,7 +11,7 @@ export const validatePhone = (phone) => {
 	return phone.match(phoneRegex);
 };
 
-const validateCount = (obj) => {
+export const validateCount = (obj) => {
 	const objValues = Object.values(obj);
 	const result = objValues.every((e) => {
 		return e > 0;

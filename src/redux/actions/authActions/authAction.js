@@ -67,6 +67,7 @@ export const verifyOtp = (phoneNumber, code) => {
 
 export const sendOtp = (phoneNumber) => {
 	return (dispatch) => {
+		console.log(API_URL);
 		axios
 			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
 			.then((response) => {

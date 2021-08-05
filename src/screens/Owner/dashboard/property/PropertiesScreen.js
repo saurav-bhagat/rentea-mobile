@@ -11,6 +11,7 @@ import { propertiesScreenStyles } from './PropertiesScreenStyles';
 const PropertiesScreen = () => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
+
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
 	);
@@ -19,14 +20,14 @@ const PropertiesScreen = () => {
 		dispatch(getOwnerDashboard());
 	}, []);
 
-	console.log(
-		'Properties: ',
-		properties,
-		' And error is: ',
-		error,
-		' And loading is: ',
-		loading
-	);
+	// console.log(
+	// 	'Properties: ',
+	// 	properties,
+	// 	' And error is: ',
+	// 	error,
+	// 	' And loading is: ',
+	// 	loading
+	// );
 	if (loading) {
 		return <Text>Loading....</Text>;
 	}
@@ -40,13 +41,17 @@ const PropertiesScreen = () => {
 				<Text style={{ fontSize: 18 }}>
 					Error while fetching properties, Login Again
 				</Text>
+				<Text>
+					After clicking logout, shake your phone or press ctrl+M and
+					reload app.
+				</Text>
 				<TouchableOpacity
 					onPress={() => {
 						AsyncStorage.clear();
 						// refresh after this login screen will come
 					}}
 				>
-					<Text>Logout</Text>
+					<Text style={{ fontSize: 28, marginTop: 20 }}>Logout</Text>
 				</TouchableOpacity>
 			</ScrollView>
 		);
