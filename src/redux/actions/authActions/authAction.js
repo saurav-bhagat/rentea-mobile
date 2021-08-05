@@ -42,6 +42,7 @@ export const setUserInfo = (payload) => {
 
 export const verifyOtp = (phoneNumber, code) => {
 	return (dispatch) => {
+		console.log(API_URL);
 		axios
 			.post(`${API_URL}/auth/authenticate`, { phoneNumber, code })
 			.then(async (response) => {
@@ -59,7 +60,7 @@ export const verifyOtp = (phoneNumber, code) => {
 			.catch((err) => {
 				dispatch(verifyOtpFail());
 				console.log(err);
-				alert('Error while verifying otp', err);
+				alert('Error while verifying otp');
 			});
 	};
 };
@@ -77,6 +78,7 @@ export const sendOtp = (phoneNumber) => {
 			})
 			.catch((err) => {
 				dispatch(sendOtpFail());
+				console.log(err);
 				alert('Error while sending otp');
 			});
 	};

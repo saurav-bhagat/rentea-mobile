@@ -30,6 +30,7 @@ const RootRoutes = () => {
 	if (authState.userInfo) {
 		({ accessToken, firstLogin } = authState.userInfo);
 	}
+	console.log('Inside Navigation file: ', accessToken, firstLogin);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		const checkAuthStatus = async () => {

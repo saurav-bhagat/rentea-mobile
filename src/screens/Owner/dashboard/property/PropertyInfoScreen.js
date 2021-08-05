@@ -1,14 +1,51 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import {
+	View,
+	Text,
+	ScrollView,
+	FlatList,
+	TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 
-const PropertyInfoScreen = () => {
+const Item = ({ title, id }) => {
 	const navigation = useNavigation();
+	return (
+		<TouchableOpacity
+			style={propertiesScreenStyles.item}
+			onPress={() => {
+				navigation.navigate('RoomInfo', {
+					id,
+					title,
+				});
+			}}
+		>
+			<Text style={propertiesScreenStyles.title}>{title}</Text>
+		</TouchableOpacity>
+	);
+};
 
+const PropertyInfoScreen = () => {
+	const DATA = [
+		{
+			id: '101',
+			title: 'Room 1',
+		},
+		{
+			id: '102',
+			title: 'Room 2',
+		},
+		{
+			id: '103',
+			title: 'Room 3',
+		},
+	];
+
+	const renderItem = ({ item }) => <Item title={item.title} id={item.id} />;
 	return (
 		<View>
 			<ScrollView
@@ -23,7 +60,7 @@ const PropertyInfoScreen = () => {
 				</View>
 
 				<View style={propertiesScreenStyles.maintainerContainer}>
-					<Text>Maintainer Details..</Text>
+					<Text>Maintainer Details: </Text>
 					<View
 						style={propertiesScreenStyles.maintainerInfoContainer}
 					>
@@ -37,20 +74,13 @@ const PropertyInfoScreen = () => {
 				</View>
 
 				<View style={propertiesScreenStyles.roomsContainer}>
-					<Text>Rooms</Text>
+					<Text style={{ marginBottom: 20 }}>Rooms: </Text>
 					<View style={propertiesScreenStyles.roomsList}>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							1. Room 101
-						</Text>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							2. Room 102
-						</Text>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							3. Room 103
-						</Text>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							4. Room 104
-						</Text>
+						<FlatList
+							data={DATA}
+							renderItem={renderItem}
+							keyExtractor={(item) => item.id}
+						/>
 					</View>
 				</View>
 			</ScrollView>
