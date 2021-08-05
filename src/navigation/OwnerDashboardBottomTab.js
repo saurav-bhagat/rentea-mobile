@@ -7,6 +7,8 @@ Ionicons.loadFont();
 
 import PropertiesScreen from '../screens/Owner/dashboard/property/PropertiesScreen';
 import PropertyInfoScreen from '../screens/Owner/dashboard/property/PropertyInfoScreen';
+import RoomInfoScreen from '../screens/Owner/dashboard/room/RoomInfoScreen';
+import OwnerPaymentInfoScreen from '../screens/Owner/dashboard/payment/OwnerPaymentInfoScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -20,18 +22,9 @@ const PropertiesStack = () => (
 	>
 		<Stack.Screen name="Properties" component={PropertiesScreen} />
 		<Stack.Screen name="PropertyInfo" component={PropertyInfoScreen} />
+		<Stack.Screen name="RoomInfo" component={RoomInfoScreen} />
 	</Stack.Navigator>
 );
-
-function PaymentScreen() {
-	return (
-		<View
-			style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-		>
-			<Text>All Payment information will be displayed here!</Text>
-		</View>
-	);
-}
 
 export default OwnerDashboardBottomTab = () => {
 	return (
@@ -40,7 +33,7 @@ export default OwnerDashboardBottomTab = () => {
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
-					if (route.name === 'Properties') {
+					if (route.name === 'Home') {
 						iconName = focused ? 'home-sharp' : 'home-outline';
 					} else if (route.name === 'Payments') {
 						iconName = focused ? 'cash-sharp' : 'cash-outline';
@@ -57,8 +50,8 @@ export default OwnerDashboardBottomTab = () => {
 				inactiveTintColor: 'gray',
 			}}
 		>
-			<Tab.Screen name="Properties" component={PropertiesStack} />
-			<Tab.Screen name="Payments" component={PaymentScreen} />
+			<Tab.Screen name="Home" component={PropertiesStack} />
+			<Tab.Screen name="Payments" component={OwnerPaymentInfoScreen} />
 		</Tab.Navigator>
 	);
 };

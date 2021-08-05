@@ -1,63 +1,70 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Button, Header, Left, Right, Body, Title } from 'native-base';
+import {
+	View,
+	Text,
+	ScrollView,
+	FlatList,
+	TouchableOpacity,
+	SafeAreaView,
+} from 'react-native';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 
-const PropertyInfoScreen = ({ route }) => {
+const Item = ({ item }) => {
 	const navigation = useNavigation();
-
-	const { propertyInfo } = route.params;
-	console.log('Single Property Info: ', propertyInfo);
-
+	console.log('inside item compo', item);
 	return (
-		<View>
-			<ScrollView
-				contentContainerStyle={
-					propertiesScreenStyles.propertyInfoContainer
-				}
-			>
-				<View style={propertiesScreenStyles.propertyTitleContainer}>
-					<Text style={propertiesScreenStyles.propertyTitle}>
-						{propertyInfo.name}
+		<TouchableOpacity
+			style={propertiesScreenStyles.item}
+			onPress={() => {
+				navigation.navigate('RoomInfo', {
+					singleRoomData: item,
+				});
+			}}
+		>
+			<Text style={propertiesScreenStyles.title}>{item.roomNo}</Text>
+		</TouchableOpacity>
+	);
+};
+
+const PropertyInfoScreen = ({ route }) => {
+	const { propertyInfo } = route.params;
+	const roomListData = propertyInfo.rooms;
+
+	const renderItem = ({ item }) => <Item item={item} />;
+	return (
+		<SafeAreaView style={propertiesScreenStyles.propertyInfoContainer}>
+			<View style={propertiesScreenStyles.propertyTitleContainer}>
+				<Text style={propertiesScreenStyles.propertyTitle}>
+					{propertyInfo.name}
+				</Text>
+			</View>
+
+			<View style={propertiesScreenStyles.maintainerContainer}>
+				<Text>Maintainer Details: </Text>
+				<View style={propertiesScreenStyles.maintainerInfoContainer}>
+					<Text style={propertiesScreenStyles.maintainerName}>
+						Name: Shivam Gupta
+					</Text>
+					<Text style={propertiesScreenStyles.maintainerName}>
+						Phone: +91 9876543210
 					</Text>
 				</View>
+			</View>
 
-				<View style={propertiesScreenStyles.maintainerContainer}>
-					<Text>Maintainer Details..</Text>
-					<View
-						style={propertiesScreenStyles.maintainerInfoContainer}
-					>
-						<Text style={propertiesScreenStyles.maintainerName}>
-							Name: Shivam Gupta
-						</Text>
-						<Text style={propertiesScreenStyles.maintainerName}>
-							Phone: +91 9876543210
-						</Text>
-					</View>
+			<View style={propertiesScreenStyles.roomsContainer}>
+				<Text style={{ marginBottom: 20 }}>Rooms: </Text>
+				<View style={propertiesScreenStyles.roomsList}>
+					<FlatList
+						data={roomListData}
+						renderItem={renderItem}
+						keyExtractor={(item) => item.id}
+						scrollEnabled={true}
+					/>
 				</View>
-
-				<View style={propertiesScreenStyles.roomsContainer}>
-					<Text>Rooms</Text>
-					<View style={propertiesScreenStyles.roomsList}>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							1. Room 101
-						</Text>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							2. Room 102
-						</Text>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							3. Room 103
-						</Text>
-						<Text style={propertiesScreenStyles.singleRoomTitle}>
-							4. Room 104
-						</Text>
-					</View>
-				</View>
-			</ScrollView>
-		</View>
+			</View>
+		</SafeAreaView>
 	);
 };
 
