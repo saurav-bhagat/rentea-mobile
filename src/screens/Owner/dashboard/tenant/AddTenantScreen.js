@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import TextInputCommon from '../../../../components/common/TextInputCommon';
 import { isValidTenantData } from '../../../../helpers/addTenantValidation';
+import { addTenant } from '../../../../redux/actions/ownerActions/addTenantAction';
 import { addTenantStyles } from './AddTenantStyles';
 
-const AddTenantScreen = () => {
+const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
+	const dispatch = useDispatch();
+
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
@@ -17,9 +21,11 @@ const AddTenantScreen = () => {
 			email,
 			phoneNumber: phone,
 			securityAmount: security,
+			roomId: singleRoomData._id,
+			buildId: propertyInfo._id,
 		};
 		if (isValidTenantData(tenantData)) {
-			console.log('dispatch action to register tenant here!');
+			dispatch(addTenant(tenantData));
 		} else {
 			alert('Enter fields Properly');
 		}
@@ -27,7 +33,9 @@ const AddTenantScreen = () => {
 
 	return (
 		<View style={addTenantStyles.addTenantContainer}>
-			<Text style={{ fontSize: 19 }}>Add Tenant to this Room</Text>
+			<Text style={{ fontSize: 19 }}>
+				Add Tenant for Room {singleRoomData.roomNo}
+			</Text>
 			<TextInputCommon
 				label="Tenant Name"
 				name="tenantName"

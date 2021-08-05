@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Header, Content, Card, CardItem, Body } from 'native-base';
+import { Card, CardItem, Body } from 'native-base';
 
 import { tenantInfoStyles } from './TenantInfoStyles';
 
 const TenantInfoScreen = ({ singleRoomData }) => {
+	const tenant = singleRoomData.tenants[0];
+
 	return (
 		<ScrollView
 			contentContainerStyle={tenantInfoStyles.tenantInfoContainer}
@@ -16,12 +18,20 @@ const TenantInfoScreen = ({ singleRoomData }) => {
 			<Card>
 				<CardItem>
 					<Body>
-						<Text>Tenant Name: Random Tenant</Text>
-						<Text>Tenant Phone: 9876543213</Text>
+						<Text>Tenant Name: {tenant.name}</Text>
+						<Text>Tenant Phone: {tenant.phoneNumber}</Text>
+						<Text>Tenant Email: {tenant.email}</Text>
+						<Text>
+							Tenant JoinDate:{' '}
+							{new Date(tenant.joinDate).toLocaleDateString()}
+						</Text>
+						<Text>Security Paid: {tenant.securityAmount}</Text>
 						<Text>
 							Next Due date:{' '}
 							<Text style={tenantInfoStyles.dueDate}>
-								28 July, 2021
+								{new Date(
+									tenant.rentDueDate
+								).toLocaleDateString()}
 							</Text>
 						</Text>
 					</Body>

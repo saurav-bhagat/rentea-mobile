@@ -11,15 +11,15 @@ import {
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 
-const Item = ({ item }) => {
+const Item = ({ item, propertyInfo }) => {
 	const navigation = useNavigation();
-	console.log('inside item compo', item);
 	return (
 		<TouchableOpacity
 			style={propertiesScreenStyles.item}
 			onPress={() => {
 				navigation.navigate('RoomInfo', {
 					singleRoomData: item,
+					propertyInfo,
 				});
 			}}
 		>
@@ -32,7 +32,9 @@ const PropertyInfoScreen = ({ route }) => {
 	const { propertyInfo } = route.params;
 	const roomListData = propertyInfo.rooms;
 
-	const renderItem = ({ item }) => <Item item={item} />;
+	const renderItem = ({ item }) => {
+		return <Item item={item} propertyInfo={propertyInfo} />;
+	};
 	return (
 		<SafeAreaView style={propertiesScreenStyles.propertyInfoContainer}>
 			<View style={propertiesScreenStyles.propertyTitleContainer}>
@@ -58,8 +60,10 @@ const PropertyInfoScreen = ({ route }) => {
 				<View style={propertiesScreenStyles.roomsList}>
 					<FlatList
 						data={roomListData}
-						renderItem={renderItem}
-						keyExtractor={(item) => item.id}
+						renderItem={(item, propertyInfo) =>
+							renderItem(item, propertyInfo)
+						}
+						keyExtractor={(item) => item._id}
 						scrollEnabled={true}
 					/>
 				</View>
