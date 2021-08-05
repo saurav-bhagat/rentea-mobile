@@ -7,7 +7,7 @@ import TenantInfoScreen from '../tenant/TenantInfoScreen';
 import { roomInfoScreenStyles } from './RoomInfoStyle';
 
 const RoomInfoScreen = ({ route }) => {
-	const [isTenant, setIsTenant] = useState(true);
+	const [isTenant, setIsTenant] = useState(false);
 	const { singleRoomData } = route.params;
 
 	return (

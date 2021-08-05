@@ -40,6 +40,10 @@ const PropertiesScreen = () => {
 				<Text style={{ fontSize: 18 }}>
 					Error while fetching properties, Login Again
 				</Text>
+				<Text>
+					After clicking logout, shake your phone or press ctrl+M and
+					reload app.
+				</Text>
 				<TouchableOpacity
 					onPress={() => {
 						AsyncStorage.clear();
