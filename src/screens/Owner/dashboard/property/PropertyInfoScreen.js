@@ -6,8 +6,11 @@ import { Button, Header, Left, Right, Body, Title } from 'native-base';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 
-const PropertyInfoScreen = () => {
+const PropertyInfoScreen = ({ route }) => {
 	const navigation = useNavigation();
+
+	const { propertyInfo } = route.params;
+	console.log('Single Property Info: ', propertyInfo);
 
 	return (
 		<View>
@@ -18,7 +21,7 @@ const PropertyInfoScreen = () => {
 			>
 				<View style={propertiesScreenStyles.propertyTitleContainer}>
 					<Text style={propertiesScreenStyles.propertyTitle}>
-						Tirumala Residency
+						{propertyInfo.name}
 					</Text>
 				</View>
 
