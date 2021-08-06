@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
-
+import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
 import AddRoomSection from './AddRoomsSection';
@@ -51,7 +51,7 @@ const AddBuildingForm = () => {
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
 			nestedScrollEnabled={true}
 		>
-			<Header transparent>
+			{/* <Header transparent>
 				<Left>
 					<Button
 						transparent
@@ -69,7 +69,9 @@ const AddBuildingForm = () => {
 					</Title>
 				</Body>
 				<Right />
-			</Header>
+			</Header> */}
+			<CrossPlatformHeader title="Building Details" backCallback={() => navigation.navigate('AddBuilding')} />
+
 			<View style={addBuildingFormstyles.addBFcontainer}>
 				<View style={addBuildingFormstyles.addBFormContainer}>
 					<TextInputCommon
