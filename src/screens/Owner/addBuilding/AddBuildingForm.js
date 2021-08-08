@@ -51,25 +51,6 @@ const AddBuildingForm = () => {
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
 			nestedScrollEnabled={true}
 		>
-			{/* <Header transparent>
-				<Left>
-					<Button
-						transparent
-						onPress={() => navigation.navigate('AddBuilding')}
-					>
-						<Icon
-							name="chevron-back-outline"
-							style={{ fontSize: 22 }}
-						/>
-					</Button>
-				</Left>
-				<Body>
-					<Title style={{ color: '#000', fontSize: 24 }}>
-						Building Details
-					</Title>
-				</Body>
-				<Right />
-			</Header> */}
 			<CrossPlatformHeader title="Building Details" backCallback={() => navigation.navigate('AddBuilding')} />
 
 			<View style={addBuildingFormstyles.addBFcontainer}>

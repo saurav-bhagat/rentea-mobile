@@ -45,19 +45,6 @@ const RootRoutes = () => {
 		};
 		checkAuthStatus();
 	}, []);
-	// return (
-    //     <NavigationContainer ref={navigationRef}>
-    //         <Navigator
-    //             screenOptions={({ route, navigation }) => ({
-    //                 headerShown: false,
-    //                 gestureEnabled: true,
-    //             })}
-    //         >
-    //             <Screen name="AddBuilding" component={AddBuilding} />
-    //             <Screen name="AddBuildingForm" component={AddBuildingForm} />
-    //         </Navigator>
-    //     </NavigationContainer>
-    // );
 	return (
 		<NavigationContainer ref={navigationRef}>
 			<Navigator

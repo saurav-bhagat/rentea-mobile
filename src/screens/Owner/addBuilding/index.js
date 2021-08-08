@@ -18,16 +18,6 @@ const AddBuilding = () => {
 			}}
 		>
 			<CrossPlatformHeader title="Add Building" />
-
-			{/* <Header transparent>
-				<Left />
-				<Body>
-					<Title style={{ color: '#000', fontSize: 24, right: 40 }}>
-						Add Building
-					</Title>
-				</Body>
-				<Right />
-			</Header> */}
 			<View style={addBuildingStyles.addBContainer}>
 				<ScrollView>
 					<BuildingAccordion

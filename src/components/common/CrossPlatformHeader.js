@@ -1,14 +1,7 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
-
-HeaderStyle = {
-    color: '#000',
-    fontSize: 24,
-    width: 270,
-    right: Platform.OS !== 'ios' ? 40 : null,
-};
 
 export default function CrossPlatformHeader({ title, backCallback }) {
     return (
@@ -24,9 +17,18 @@ export default function CrossPlatformHeader({ title, backCallback }) {
                 )}
             </Left>
             <Body>
-                <Title style={HeaderStyle}>{title}</Title>
+                <Title style={HeaderStyle.header}>{title}</Title>
             </Body>
             <Right />
         </Header>
     );
 }
+
+const HeaderStyle = StyleSheet.create({
+    header:{
+	color: '#000',
+    fontSize: 24,
+    width: 270,
+    right: Platform.OS !== 'ios' ? 40 : null,
+	}
+});
