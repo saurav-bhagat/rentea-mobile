@@ -9,7 +9,7 @@ const TenantPaymentHistory = () => {
 	return (
 		<View style={paymentHisStyles.payHisContainer}>
 			<Text style={paymentHisStyles.headText}>
-				Tenant Payment history Screen
+				Tenant Payment history(use common header)
 			</Text>
 			<ScrollView>
 				<TransactionCard />

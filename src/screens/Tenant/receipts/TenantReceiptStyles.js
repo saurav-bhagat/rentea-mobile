@@ -1,7 +1,7 @@
 import { ScaledSheet } from 'react-native-size-matters';
 
-export const paymentHisStyles = ScaledSheet.create({
-	payHisContainer: {
+export const tenantReceiptStyles = ScaledSheet.create({
+	receiptContainer: {
 		marginTop: '20%',
 		alignItems: 'stretch',
 		flex: 1,
@@ -11,12 +11,12 @@ export const paymentHisStyles = ScaledSheet.create({
 		marginBottom: '10@s',
 		left: '10@s',
 	},
-	transactionCard_row1: {
+	receiptCard_row1: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		padding: '5@s',
 	},
-	transactionCard_row2: {
+	receiptCard_row2: {
 		flexDirection: 'row',
 		justifyContent: 'flex-start',
 		padding: '5@s',
