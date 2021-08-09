@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import TenantDashboard from '../screens/Tenant/dashboard/TenantDashboard';
 import TenantPaymentHistory from '../screens/Tenant/payments/TenantPaymentHistory';
 import TenantReceipts from '../screens/Tenant/receipts/TenantReceipts';
