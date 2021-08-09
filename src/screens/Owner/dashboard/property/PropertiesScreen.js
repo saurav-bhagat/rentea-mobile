@@ -20,14 +20,14 @@ const PropertiesScreen = () => {
 		dispatch(getOwnerDashboard());
 	}, []);
 
-	// console.log(
-	// 	'Properties: ',
-	// 	properties,
-	// 	' And error is: ',
-	// 	error,
-	// 	' And loading is: ',
-	// 	loading
-	// );
+	console.log(
+		'Properties: ',
+		properties,
+		' And error is: ',
+		error,
+		' And loading is: ',
+		loading
+	);
 	if (loading) {
 		return <Text>Loading....</Text>;
 	}
