@@ -23,16 +23,27 @@ import TenantDashboardBottomTab from './TenantDashboardBottomTab';
 
 const { Screen, Navigator } = createStackNavigator();
 
+/**
+ *
+ * if access token is not present, show Login Screen.
+ * If access token is present, check userType,
+ *   if Owner
+ * 		check firstLogin, if true - show AddUserDetails and AddBuilding Forms
+ * 		if false - show Owner Dashboard
+ *	 if Tenant - show Tenant Dashboard
+ */
 const RootRoutes = () => {
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
-	let accessToken, firstLogin;
+	let accessToken, firstLogin, userType;
+	// userType - Tenant / Owner
 
 	if (authState.userInfo) {
 		({ accessToken, firstLogin } = authState.userInfo);
+		userType = authState.userInfo.userDetails.userType;
 	}
 
-	console.log('Inside Navigation file: ', accessToken, firstLogin);
+	console.log('Inside Navigation file: ', accessToken, firstLogin, userType);
 
 	useEffect(() => {
 		const checkAuthStatus = async () => {
@@ -57,41 +68,48 @@ const RootRoutes = () => {
 			>
 				{accessToken ? (
 					<>
-						{firstLogin ? (
+						{userType === 'Owner' ? (
 							<>
-								<Screen
-									name="OwnerUserDetails"
-									component={OwnerUserDetailsScreen}
-								/>
-								<Screen
-									name="AddBuilding"
-									component={AddBuilding}
-								/>
+								{firstLogin ? (
+									<>
+										<Screen
+											name="OwnerUserDetails"
+											component={OwnerUserDetailsScreen}
+										/>
+										<Screen
+											name="AddBuilding"
+											component={AddBuilding}
+										/>
 
-								<Screen
-									name="AddBuildingForm"
-									component={AddBuildingForm}
-								/>
+										<Screen
+											name="AddBuildingForm"
+											component={AddBuildingForm}
+										/>
+									</>
+								) : (
+									<>
+										<Screen
+											name="ownerDashboard"
+											component={OwnerDashboardBottomTab}
+										/>
+
+										<Screen
+											name="AddBuilding"
+											component={AddBuilding}
+										/>
+
+										<Screen
+											name="AddBuildingForm"
+											component={AddBuildingForm}
+										/>
+									</>
+								)}
 							</>
 						) : (
 							<>
 								<Screen
 									name="TenantDashboard"
 									component={TenantDashboardBottomTab}
-								/>
-								<Screen
-									name="ownerDashboard"
-									component={OwnerDashboardBottomTab}
-								/>
-
-								<Screen
-									name="AddBuilding"
-									component={AddBuilding}
-								/>
-
-								<Screen
-									name="AddBuildingForm"
-									component={AddBuildingForm}
 								/>
 							</>
 						)}
