@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
-
+import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import BuildingAccordion from './BuildingAccordion';
 import AddBuildingFabButton from '../../../components/owner/building/AddBuildingFabButton';
 import { addBuildingStyles } from './addBuildingStyles';
@@ -17,15 +17,7 @@ const AddBuilding = () => {
 				backgroundColor: 'white',
 			}}
 		>
-			<Header transparent>
-				<Left />
-				<Body>
-					<Title style={{ color: '#000', fontSize: 24, right: 40 }}>
-						Add Building
-					</Title>
-				</Body>
-				<Right />
-			</Header>
+			<CrossPlatformHeader title="Add Building" />
 			<View style={addBuildingStyles.addBContainer}>
 				<ScrollView>
 					<BuildingAccordion
