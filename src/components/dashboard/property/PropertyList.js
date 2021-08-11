@@ -21,11 +21,10 @@ const SingleProperty = ({ data }) => {
 };
 
 const PropertyList = ({ properties }) => {
-	// TODO: change the spelling of owenerDashboardResult below once its resolved in backend
 	return (
 		<View style={propertyStyles.propertyListContainer}>
-			{properties.ownerDashoardResult &&
-				properties.ownerDashoardResult.buildings.map((item, index) => (
+			{properties.ownerDashboardResult &&
+				properties.ownerDashboardResult.buildings.map((item, index) => (
 					<SingleProperty key={item.name} data={item} />
 				))}
 		</View>

@@ -9,7 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from '../screens/Login';
 import OTPScreen from '../screens/Otp/OTPScreen';
 
-import CounterScreen from '../screens/CounterScreen';
 import OwnerUserDetailsScreen from '../screens/Owner/userDetails/OwnerUserDetailsScreen';
 
 import AddBuilding from '../screens/Owner/addBuilding';
@@ -20,18 +19,21 @@ import { navigationRef } from './rootNavigation';
 
 import OwnerDashboardBottomTab from './OwnerDashboardBottomTab';
 import { setUserInfo } from '../redux/actions';
+import TenantDashboardBottomTab from './TenantDashboardBottomTab';
 
 const { Screen, Navigator } = createStackNavigator();
 
 const RootRoutes = () => {
+	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
 	let accessToken, firstLogin;
 
 	if (authState.userInfo) {
 		({ accessToken, firstLogin } = authState.userInfo);
 	}
+
 	console.log('Inside Navigation file: ', accessToken, firstLogin);
-	const dispatch = useDispatch();
+
 	useEffect(() => {
 		const checkAuthStatus = async () => {
 			try {
@@ -74,9 +76,14 @@ const RootRoutes = () => {
 						) : (
 							<>
 								<Screen
+									name="TenantDashboard"
+									component={TenantDashboardBottomTab}
+								/>
+								<Screen
 									name="ownerDashboard"
 									component={OwnerDashboardBottomTab}
 								/>
+
 								<Screen
 									name="AddBuilding"
 									component={AddBuilding}
@@ -86,8 +93,6 @@ const RootRoutes = () => {
 									name="AddBuildingForm"
 									component={AddBuildingForm}
 								/>
-
-								<Screen name="Home" component={CounterScreen} />
 							</>
 						)}
 					</>

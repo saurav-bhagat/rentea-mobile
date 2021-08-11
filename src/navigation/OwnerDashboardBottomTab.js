@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 Ionicons.loadFont();
 
