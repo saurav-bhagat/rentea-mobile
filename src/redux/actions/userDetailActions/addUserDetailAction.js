@@ -21,7 +21,7 @@ export const addUserDetail = (userData) => {
 	return (dispatch, getState) => {
 		const { auth } = getState();
 		const body = {
-			_id: auth.userInfo.ownerBasicDetails._id,
+			_id: auth.userInfo.userDetails._id,
 			name: `${userData.fName} ${userData.lName}`,
 			email: userData.email,
 		};
@@ -53,6 +53,7 @@ export const addUserDetail = (userData) => {
 			.catch((err) => {
 				dispatch(addUserDetailFail(err.message));
 				console.log(err.message);
+				console.log(err.response.data);
 				alert('Error while add user info');
 			});
 	};
