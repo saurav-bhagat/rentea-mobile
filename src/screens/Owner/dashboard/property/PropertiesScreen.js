@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { Button } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
+
 
 import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashboardAction';
@@ -56,6 +58,9 @@ const PropertiesScreen = () => {
 			</ScrollView>
 		);
 	} else {
+		const clearAsyncStorage = async() => {
+			AsyncStorage.clear();
+		}
 		return (
 			<ScrollView
 				contentContainerStyle={
@@ -64,6 +69,9 @@ const PropertiesScreen = () => {
 			>
 				<Text style={{ fontSize: 22 }}>Properties List</Text>
 				<PropertyList properties={properties} />
+				<Button onPress={clearAsyncStorage}>
+  					<Text>Clear Async Storage</Text>
+				</Button>
 			</ScrollView>
 		);
 	}

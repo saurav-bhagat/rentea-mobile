@@ -1,6 +1,7 @@
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { Card, CardItem, Body } from 'native-base';
+import { Card, CardItem, Body, Button } from 'native-base';
 import { useSelector } from 'react-redux';
 
 import { tenantDashStyles } from './TenantDashboardStyles';
@@ -8,7 +9,9 @@ import { tenantDashStyles } from './TenantDashboardStyles';
 const TenantDashboard = () => {
 	const { userInfo } = useSelector((state) => state.auth);
 	const { userDetails } = userInfo;
-
+	const clearAsyncStorage = async() => {
+		AsyncStorage.clear();
+	}
 	return (
 		<ScrollView
 			contentContainerStyle={tenantDashStyles.tenantDashContainer}
@@ -65,6 +68,9 @@ const TenantDashboard = () => {
 					</Body>
 				</CardItem>
 			</Card>
+			<Button onPress={clearAsyncStorage}>
+  				<Text>Clear Async Storage</Text>
+			</Button>
 		</ScrollView>
 	);
 };
