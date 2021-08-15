@@ -3,31 +3,38 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Card, CardItem, Body, Button } from 'native-base';
 import { useSelector } from 'react-redux';
+import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
+import { format } from 'date-fns';
 
 import { tenantDashStyles } from './TenantDashboardStyles';
 
 const TenantDashboard = () => {
 	const { userInfo } = useSelector((state) => state.auth);
 	const { userDetails } = userInfo;
-	const clearAsyncStorage = async() => {
+	const clearAsyncStorage = async () => {
 		AsyncStorage.clear();
-	}
+	};
 	return (
 		<ScrollView
 			contentContainerStyle={tenantDashStyles.tenantDashContainer}
 		>
-			<Text style={{ fontSize: 15, marginBottom: 20 }}>
+			{/* <Text style={{ fontSize: 15, marginBottom: 20 }}>
 				{' '}
 				Tenant Home(use common header){' '}
-			</Text>
-
+			</Text> */}
+			<CrossPlatformHeader title="Tenant Home" />
 			<Card>
 				<CardItem>
 					<Body>
-						<Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+						<Text
+							style={{
+								fontSize: 17,
+								fontWeight: 'bold',
+							}}
+						>
 							Owner Details:{' '}
 						</Text>
-						<Text>Owner name: {userDetails.ownerName} </Text>
+						<Text>Owner Name: {userDetails.ownerName} </Text>
 						<Text>Owner Email: {userDetails.ownerEmail} </Text>
 						<Text>
 							Owner Phone: {userDetails.ownerPhoneNumber}{' '}
@@ -42,10 +49,10 @@ const TenantDashboard = () => {
 						<Text style={{ fontSize: 17, fontWeight: 'bold' }}>
 							Your Details:{' '}
 						</Text>
-						<Text>Your name: {userDetails.tenantName}</Text>
-						<Text>Your email: {userDetails.tenantEmail}</Text>
-						<Text>Your phone: {userDetails.tenantPhoneNumber}</Text>
-						<Text>Security paid: {userDetails.security}</Text>
+						<Text>Your Name: {userDetails.tenantName}</Text>
+						<Text>Your Email: {userDetails.tenantEmail}</Text>
+						<Text>Your Phone: {userDetails.tenantPhoneNumber}</Text>
+						<Text>Security Paid: {userDetails.security}</Text>
 					</Body>
 				</CardItem>
 			</Card>
@@ -56,9 +63,10 @@ const TenantDashboard = () => {
 						<Text>Rent : {userDetails.rent} </Text>
 						<Text>
 							Rent Due Date:{' '}
-							{new Date(
-								userDetails.rentDueDate
-							).toLocaleDateString()}
+							{format(
+								new Date(userDetails.rentDueDate),
+								'dd MMM yyyy'
+							)}
 						</Text>
 						<TouchableOpacity style={tenantDashStyles.payNowButton}>
 							<Text style={tenantDashStyles.payNowButton_text}>
@@ -69,7 +77,7 @@ const TenantDashboard = () => {
 				</CardItem>
 			</Card>
 			<Button onPress={clearAsyncStorage}>
-  				<Text>Clear Async Storage</Text>
+				<Text>Clear Async Storage</Text>
 			</Button>
 		</ScrollView>
 	);
