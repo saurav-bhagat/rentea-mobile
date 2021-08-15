@@ -2,7 +2,6 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const tenantReceiptStyles = ScaledSheet.create({
 	receiptContainer: {
-		marginTop: '20%',
 		alignItems: 'stretch',
 		flex: 1,
 	},

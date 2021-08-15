@@ -2,8 +2,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const tenantDashStyles = ScaledSheet.create({
 	tenantDashContainer: {
-		marginTop: '20%',
-		width: '85%',
+		width: '100%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		padding: '20@s',
@@ -14,7 +13,7 @@ export const tenantDashStyles = ScaledSheet.create({
 		marginTop: '20@ms',
 		backgroundColor: '#109FDA',
 		justifyContent: 'center',
-		height: '40@ms',
+		height: '50@ms',
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
