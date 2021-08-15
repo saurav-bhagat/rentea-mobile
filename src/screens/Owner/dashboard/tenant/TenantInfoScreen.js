@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Card, CardItem, Body } from 'native-base';
+import { format } from 'date-fns';
 
 import { tenantInfoStyles } from './TenantInfoStyles';
 
@@ -23,15 +24,16 @@ const TenantInfoScreen = ({ singleRoomData }) => {
 						<Text>Tenant Email: {tenant.email}</Text>
 						<Text>
 							Tenant JoinDate:{' '}
-							{new Date(tenant.joinDate).toLocaleDateString()}
+							{format(new Date(tenant.joinDate), 'dd MMM yyyy')}
 						</Text>
 						<Text>Security Paid: {tenant.securityAmount}</Text>
 						<Text>
 							Next Due date:{' '}
 							<Text style={tenantInfoStyles.dueDate}>
-								{new Date(
-									tenant.rentDueDate
-								).toLocaleDateString()}
+								{format(
+									new Date(tenant.rentDueDate),
+									'dd MMM yyyy'
+								)}
 							</Text>
 						</Text>
 					</Body>
