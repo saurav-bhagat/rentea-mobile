@@ -48,18 +48,17 @@ const LoginComponent = ({ navigation }) => {
 			</View>
 			<View style={loginStyles.loginFooterTextContainer}>
 				<Text style={loginStyles.login_footer_text}>
-					By clicking continue, you agree to our {" "}
+					By clicking continue, you agree to our{' '}
 					<Text style={loginStyles.login_footer_underline}>
 						Terms and Conditions
 					</Text>
 				</Text>
 				<Text style={loginStyles.login_footer_text}>
-					and have read out {" "}
+					and have read out{' '}
 					<Text style={loginStyles.login_footer_underline}>
 						Privacy Policy
 					</Text>
 				</Text>
-
 			</View>
 		</View>
 	);

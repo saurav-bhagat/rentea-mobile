@@ -9,9 +9,9 @@ import { tenantDashStyles } from './TenantDashboardStyles';
 const TenantDashboard = () => {
 	const { userInfo } = useSelector((state) => state.auth);
 	const { userDetails } = userInfo;
-	const clearAsyncStorage = async() => {
+	const clearAsyncStorage = async () => {
 		AsyncStorage.clear();
-	}
+	};
 	return (
 		<ScrollView
 			contentContainerStyle={tenantDashStyles.tenantDashContainer}
@@ -69,7 +69,7 @@ const TenantDashboard = () => {
 				</CardItem>
 			</Card>
 			<Button onPress={clearAsyncStorage}>
-  				<Text>Clear Async Storage</Text>
+				<Text>Clear Async Storage</Text>
 			</Button>
 		</ScrollView>
 	);
