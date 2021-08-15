@@ -10,9 +10,6 @@ const TenantPaymentHistory = () => {
 	return (
 		<View style={paymentHisStyles.payHisContainer}>
 			<CrossPlatformHeader title="Tenant Payment history" />
-			{/* <Text style={paymentHisStyles.headText}>
-				Tenant Payment history(use common header)
-			</Text> */}
 			<ScrollView>
 				<TransactionCard />
 				<TransactionCard />

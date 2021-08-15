@@ -20,11 +20,6 @@ const TenantDashboard = () => {
 			<ScrollView
 				contentContainerStyle={tenantDashStyles.tenantDashContainer}
 			>
-				{/* <Text style={{ fontSize: 15, marginBottom: 20 }}>
-				{' '}
-				Tenant Home(use common header){' '}
-			</Text> */}
-				{/* <CrossPlatformHeader title="Tenant Home" /> */}
 				<Card>
 					<CardItem>
 						<Body>
