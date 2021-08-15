@@ -2,7 +2,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const paymentHisStyles = ScaledSheet.create({
 	payHisContainer: {
-		marginTop: '20%',
+		// marginTop: '20%',
 		alignItems: 'stretch',
 		flex: 1,
 	},
