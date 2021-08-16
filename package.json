@@ -23,6 +23,7 @@
     "date-fns": "^2.23.0",
     "expo": "~41.0.1",
     "expo-file-system": "~11.0.2",
+    "expo-font": "~9.1.0",
     "expo-media-library": "~12.0.2",
     "expo-print": "~10.1.0",
     "expo-sharing": "~9.1.2",
