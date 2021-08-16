@@ -77,7 +77,7 @@ export const loginStyles = ScaledSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: '27@s',
-		width: '80%',	
+		width: '80%',
 	},
 	login_footer_text: {
 		color: '#bbb',

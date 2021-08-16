@@ -1,22 +1,27 @@
 import axios from 'axios';
 import { API_URL } from '@env';
+import {
+	GET_OWNER_DASHBOARD_FAILURE,
+	GET_OWNER_DASHBOARD_REQUEST,
+	GET_OWNER_DASHBOARD_SUCCESS,
+} from './dashboardTypes';
 
 const getDashboardRequest = () => {
 	return {
-		type: 'GET_OWNER_DASHBOARD_REQUEST',
+		type: GET_OWNER_DASHBOARD_REQUEST,
 	};
 };
 
 const getDashboardSuccess = (payload) => {
 	return {
-		type: 'GET_OWNER_DASHBOARD_SUCCESS',
+		type: GET_OWNER_DASHBOARD_SUCCESS,
 		payload,
 	};
 };
 
 const getDashboardFailure = (error) => {
 	return {
-		type: 'GET_OWNER_DASHBOARD_FAILURE',
+		type: GET_OWNER_DASHBOARD_FAILURE,
 		payload: error,
 	};
 };
