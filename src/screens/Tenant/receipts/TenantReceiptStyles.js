@@ -17,11 +17,20 @@ export const tenantReceiptStyles = ScaledSheet.create({
 	},
 	receiptCard_row2: {
 		flexDirection: 'row',
-		justifyContent: 'flex-start',
+		justifyContent: 'space-between',
 		padding: '5@s',
 	},
 	boldValue: {
 		fontSize: '15@ms0.3',
 		fontWeight: 'bold',
+	},
+	actionButtonContainer: {
+		flexDirection: 'row',
+	},
+	actionButton: {
+		padding: '10@ms',
+	},
+	actionButton_text: {
+		color: '#109FDA',
 	},
 });

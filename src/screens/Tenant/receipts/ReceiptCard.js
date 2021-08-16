@@ -14,40 +14,39 @@ const htmlContent = `
 `;
 
 const ReceiptCard = () => {
-	const handleReceiptClick = async () => {
-		console.log('Going to download pdf now');
+	const handleReceiptView = async () => {
+		try {
+			const { uri } = await Print.printToFileAsync({
+				html: htmlContent,
+				base64: true,
+			});
+			if (Platform.OS === 'ios') {
+				await Print.PrintAsync({ uri });
+			} else {
+				await Print.printAsync({ uri }); // this opens the pdf that can either be save or print
+			}
+		} catch (err) {
+			console.log('Error while viewing pdf', err);
+		}
+	};
+
+	const handleReceiptShare = async () => {
 		try {
 			const { uri } = await Print.printToFileAsync({
 				html: htmlContent,
 			});
-			// console.log(uri);
-			console.log('Printing doc:', FileSystem.documentDirectory);
-			// const pdfName = `${uri.slice(
-			// 	0,
-			// 	uri.lastIndexOf('/') + 1
-			// )}-receipt.pdf`;
-			// console.log(uri);
-			// console.log(pdfName);
-
-			// if (Platform.OS === "ios") {
-			// 	await Sharing.shareAsync(uri);
-			// } else {
-			// 	const permission = await MediaLibrary.requestPermissionsAsync();
-
-			// 	if (permission.granted) {
-			// 		// await MediaLibrary.createAssetAsync(uri); -> this will just download
-			// 		await Print.printAsync({uri}); // this opens the pdf that can either be save or print
-			// 	} else {
-			// 		alert('Permission Deneid!');
-			// 	}
-			// }
+			if (Platform.OS === 'ios') {
+				await Sharing.shareAsync(uri);
+			} else {
+				await Sharing.shareAsync(uri);
+			}
 		} catch (err) {
-			console.error('Error in processing pdf: ', err);
+			console.log('Error while sharing pdf', err);
 		}
 	};
 
 	return (
-		<TouchableOpacity onPress={handleReceiptClick}>
+		<TouchableOpacity>
 			<Card>
 				<CardItem>
 					<Body>
@@ -69,6 +68,36 @@ const ReceiptCard = () => {
 									></Text>
 									UPI(PhonePe)
 								</Text>
+								<View
+									style={
+										tenantReceiptStyles.actionButtonContainer
+									}
+								>
+									<TouchableOpacity
+										style={tenantReceiptStyles.actionButton}
+										onPress={handleReceiptView}
+									>
+										<Text
+											style={
+												tenantReceiptStyles.actionButton_text
+											}
+										>
+											View
+										</Text>
+									</TouchableOpacity>
+									<TouchableOpacity
+										style={tenantReceiptStyles.actionButton}
+										onPress={handleReceiptShare}
+									>
+										<Text
+											style={
+												tenantReceiptStyles.actionButton_text
+											}
+										>
+											Share
+										</Text>
+									</TouchableOpacity>
+								</View>
 							</View>
 						</View>
 					</Body>
