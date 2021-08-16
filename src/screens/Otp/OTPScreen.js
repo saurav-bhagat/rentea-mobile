@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { Button } from 'native-base';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { otpStyles } from './otpStyles';
 import { verifyOtp } from '../../redux/actions';
 
 const OTPScreen = ({ route }) => {
 	const dispatch = useDispatch();
+	const authState = useSelector((state) => state.auth);
 	const [code, setCode] = useState();
 
 	const handleOTPSubmit = (code) => {
@@ -51,7 +52,13 @@ const OTPScreen = ({ route }) => {
 					handleOTPSubmit(code);
 				}}
 			>
-				<Text style={otpStyles.loginContinueButton_text}>Continue</Text>
+				{authState.loading ? (
+					<ActivityIndicator color="#ffffff" size="large" />
+				) : (
+					<Text style={otpStyles.loginContinueButton_text}>
+						Continue
+					</Text>
+				)}
 			</Button>
 		</View>
 	);
