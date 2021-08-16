@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { View, ActivityIndicator } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LoginScreen from '../screens/Login';
@@ -35,6 +34,7 @@ const { Screen, Navigator } = createStackNavigator();
 const RootRoutes = () => {
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
+	const [routesLoading, setRoutesLoading] = useState(true);
 	let accessToken, firstLogin, userType;
 	// userType - Tenant / Owner
 
@@ -52,12 +52,26 @@ const RootRoutes = () => {
 				userInfo = JSON.parse(userInfo);
 
 				dispatch(setUserInfo(userInfo));
+				setRoutesLoading(false);
 			} catch (error) {
 				dispatch(setUserInfo(null));
 			}
 		};
 		checkAuthStatus();
 	}, []);
+	if (routesLoading) {
+		return (
+			<View
+				style={{
+					flex: 1,
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<ActivityIndicator color="109FDA" size="large" />
+			</View>
+		);
+	}
 	return (
 		<NavigationContainer ref={navigationRef}>
 			<Navigator

@@ -1,20 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import * as Font from 'expo-font';
+import { ActivityIndicator, View } from 'react-native';
 
 import RootRoutes from './src/navigation';
 import store from './src/redux/store';
 
-export default function App(){
+export default function App() {
+	const [fontLoading, setFontLoading] = useState(true);
+
 	useEffect(() => {
-		(async () => await Font.loadAsync({
-			Roboto: require('native-base/Fonts/Roboto.ttf'),
-			Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-		  }))();
+		(async () => {
+			await Font.loadAsync({
+				Roboto: require('native-base/Fonts/Roboto.ttf'),
+				Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+			})
+			setFontLoading(false);
+		})();
 	}, []);
-	return (
-		<Provider store={store}>
-			<RootRoutes />
-		</Provider>
-  	);
+	if (fontLoading) {
+		return (
+			<View
+				style={{ flex:1, justifyContent: 'center', alignItems: 'center' }}
+			>
+				<ActivityIndicator 
+					color='#109FDA'
+					size='large'
+				/>
+			</View>
+		)
+	} else {
+		return (
+			<Provider store={store}>
+				<RootRoutes />
+			</Provider>
+		);
+	}
 };
