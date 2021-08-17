@@ -66,6 +66,13 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				firstLogin: action.firstLogin,
 			};
+		case 'USER_LOGOUT':
+			return {
+				...state,
+				userInfo: null,
+				error: false,
+				msg: '',
+			};
 		default:
 			return state;
 	}

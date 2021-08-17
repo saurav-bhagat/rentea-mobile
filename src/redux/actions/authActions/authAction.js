@@ -40,6 +40,23 @@ export const setUserInfo = (payload) => {
 	};
 };
 
+export const setUserLogout = () => {
+	return {
+		type: 'USER_LOGOUT',
+	};
+};
+
+export const userLogout = () => {
+	return (dispatch) => {
+		try {
+			AsyncStorage.removeItem('userInfo');
+			dispatch(setUserLogout());
+		} catch (err) {
+			console.log('Error while logout');
+		}
+	};
+};
+
 export const verifyOtp = (phoneNumber, code) => {
 	return (dispatch) => {
 		console.log(API_URL);

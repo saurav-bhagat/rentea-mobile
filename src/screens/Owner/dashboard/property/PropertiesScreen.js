@@ -5,6 +5,7 @@ import { Button } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 
+import { userLogout } from '../../../../redux/actions/authActions/authAction';
 import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashboardAction';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
@@ -48,8 +49,7 @@ const PropertiesScreen = () => {
 				</Text>
 				<TouchableOpacity
 					onPress={() => {
-						AsyncStorage.clear();
-						// refresh after this login screen will come
+						dispatch(userLogout());
 					}}
 				>
 					<Text style={{ fontSize: 28, marginTop: 20 }}>Logout</Text>
@@ -57,8 +57,8 @@ const PropertiesScreen = () => {
 			</ScrollView>
 		);
 	} else {
-		const clearAsyncStorage = async () => {
-			AsyncStorage.clear();
+		const logout = () => {
+			dispatch(userLogout());
 		};
 		return (
 			<ScrollView
@@ -68,8 +68,8 @@ const PropertiesScreen = () => {
 			>
 				<Text style={{ fontSize: 22 }}>Properties List</Text>
 				<PropertyList properties={properties} />
-				<Button onPress={clearAsyncStorage}>
-					<Text>Clear Async Storage</Text>
+				<Button onPress={logout}>
+					<Text>Logout</Text>
 				</Button>
 			</ScrollView>
 		);
