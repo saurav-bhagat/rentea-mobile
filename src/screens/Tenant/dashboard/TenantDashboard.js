@@ -82,7 +82,9 @@ const TenantDashboard = () => {
 							>
 								<Text
 									style={tenantDashStyles.payNowButton_text}
-									onPress={navigation.navigate('Payment')}
+									onPress={() =>
+										navigation.navigate('TenantPay')
+									}
 								>
 									Pay Now
 								</Text>
