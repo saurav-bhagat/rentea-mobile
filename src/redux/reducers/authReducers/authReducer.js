@@ -39,7 +39,7 @@ export const authReducer = (state = initialState, action) => {
 		case VERIFY_OTP_REQUEST:
 			return {
 				...state,
-				loading: false,
+				loading: true,
 			};
 		case VERIFY_OTP_SUCCESS:
 			return {
