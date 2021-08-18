@@ -15,14 +15,24 @@
 
 const initialState = {
 	buildingDetails: [],
+	msg: '',
 };
 
 export const addBuildingReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case 'SET_BUILDING_DETAILS':
+		case 'ADD_BUILDING_SUCCESS':
 			return {
 				...state,
-				buildingDetails: [...state.buildingDetails, action.payload],
+				msg: action.payload.msg,
+				buildingDetails: [
+					...state.buildingDetails,
+					action.payload.buildingDetails,
+				],
+			};
+		case 'ADD_BUILDING_ERROR':
+			return {
+				...state,
+				msg: action.payload,
 			};
 		default:
 			return state;

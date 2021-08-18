@@ -99,6 +99,11 @@ const RootRoutes = () => {
 											name="AddBuildingForm"
 											component={AddBuildingForm}
 										/>
+
+										<Screen
+											name="ownerDashboard"
+											component={OwnerDashboardBottomTab}
+										/>
 									</>
 								) : (
 									<>

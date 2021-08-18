@@ -30,7 +30,7 @@ const AddRoomSection = ({ roomCount }) => {
 					)}
 				</Text>
 			</TouchableOpacity>
-			{roomCount && roomCount > 1
+			{roomCount && roomCount > 0
 				? showRoomDetails && <AddRoomAccordion roomCount={roomCount} />
 				: showRoomDetails && <Text>Enter number of rooms</Text>}
 		</View>
