@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { Item, Input, Button } from 'native-base';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions';
@@ -10,6 +10,7 @@ import { API_URL } from '@env';
 
 const LoginComponent = ({ navigation }) => {
 	const dispatch = useDispatch();
+	const authState = useSelector((state) => state.auth);
 
 	const [phone, setPhone] = useState('');
 
@@ -41,9 +42,13 @@ const LoginComponent = ({ navigation }) => {
 					style={loginStyles.loginContinueButton}
 					onPress={() => handleLoginContinue()}
 				>
-					<Text style={loginStyles.loginContinueButton_text}>
-						Continue
-					</Text>
+					{authState.loading ? (
+						<ActivityIndicator color="#ffffff" size="large" />
+					) : (
+						<Text style={loginStyles.loginContinueButton_text}>
+							Continue
+						</Text>
+					)}
 				</Button>
 			</View>
 			<View style={loginStyles.loginFooterTextContainer}>
