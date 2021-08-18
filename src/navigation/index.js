@@ -13,7 +13,6 @@ import OwnerUserDetailsScreen from '../screens/Owner/userDetails/OwnerUserDetail
 import AddBuilding from '../screens/Owner/addBuilding';
 import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 
-import FormScreen from '../screens/payment/FormScreen.js';
 import { navigationRef } from './rootNavigation';
 
 import OwnerDashboardBottomTab from './OwnerDashboardBottomTab';

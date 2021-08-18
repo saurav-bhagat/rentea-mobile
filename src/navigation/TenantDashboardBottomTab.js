@@ -5,8 +5,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import TenantDashboard from '../screens/Tenant/dashboard/TenantDashboard';
 import TenantPaymentHistory from '../screens/Tenant/payments/TenantPaymentHistory';
 import TenantReceipts from '../screens/Tenant/receipts/TenantReceipts';
+import { createStackNavigator } from '@react-navigation/stack';
+import FormScreen from '../screens/payment/FormScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const TenantDashboardStack = () => (
+	<Stack.Navigator
+		screenOptions={({ route, navigation }) => ({
+			headerShown: true,
+			gestureEnabled: true,
+		})}
+	>
+		<Stack.Screen name="TenantDashboard" component={TenantDashboard} />
+		<Stack.Screen name="Payment" component={FormScreen} />
+	</Stack.Navigator>
+);
 
 export default TenantDashboardBottomTab = () => {
 	return (
@@ -36,7 +51,7 @@ export default TenantDashboardBottomTab = () => {
 				inactiveTintColor: 'gray',
 			}}
 		>
-			<Tab.Screen name="Home" component={TenantDashboard} />
+			<Tab.Screen name="Home" component={TenantDashboardStack} />
 			<Tab.Screen
 				name="Payment History"
 				component={TenantPaymentHistory}
