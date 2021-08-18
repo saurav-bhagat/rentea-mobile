@@ -15,7 +15,7 @@ export const addBuildingSuccess = (buildingObj) => {
 export const addBuildingError = () => {
 	return {
 		type: 'ADD_BUILDING_ERROR',
-		payload: 'Error while saving building',
+		msg: 'Error while saving building',
 	};
 };
 

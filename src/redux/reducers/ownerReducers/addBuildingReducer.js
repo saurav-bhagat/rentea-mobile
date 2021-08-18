@@ -32,7 +32,7 @@ export const addBuildingReducer = (state = initialState, action) => {
 		case 'ADD_BUILDING_ERROR':
 			return {
 				...state,
-				msg: action.payload,
+				msg: action.msg,
 			};
 		default:
 			return state;
