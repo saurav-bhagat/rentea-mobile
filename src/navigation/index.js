@@ -43,7 +43,14 @@ const RootRoutes = () => {
 		userType = authState.userInfo.userDetails.userType;
 	}
 
-	console.log('Inside Navigation file: ', accessToken, firstLogin, userType);
+	console.log(
+		'Inside Navigation file: ',
+		authState,
+		authState.userInfo,
+		accessToken,
+		firstLogin,
+		userType
+	);
 
 	useEffect(() => {
 		const checkAuthStatus = async () => {
@@ -100,10 +107,10 @@ const RootRoutes = () => {
 											component={AddBuildingForm}
 										/>
 
-										<Screen
+										{/* <Screen
 											name="ownerDashboard"
 											component={OwnerDashboardBottomTab}
-										/>
+										/> */}
 									</>
 								) : (
 									<>

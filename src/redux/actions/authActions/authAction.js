@@ -67,6 +67,13 @@ export const setUserLogout = () => {
 	};
 };
 
+export const setFirstLoginFalse = () => {
+	console.log('in setfirsloging fale');
+	return {
+		type: 'SET_FIRST_LOGIN_FALSE',
+	};
+};
+
 export const userLogout = () => {
 	return (dispatch) => {
 		try {
@@ -90,7 +97,10 @@ export const verifyOtp = (phoneNumber, code) => {
 						'userInfo',
 						JSON.stringify(response.data.userDocument)
 					);
-					console.log(response.data.userDocument);
+					console.log(
+						'response data doc is ',
+						response.data.userDocument
+					);
 					dispatch(verifyOtpSuccess(response.data.userDocument));
 				} catch (error) {
 					alert('Error in Login');
