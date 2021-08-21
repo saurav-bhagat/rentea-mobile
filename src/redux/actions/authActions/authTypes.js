@@ -7,3 +7,6 @@ export const VERIFY_OTP_SUCCESS = 'VERIFY_OTP_SUCCESS';
 export const VERIFY_OTP_FAIL = 'VERIFY_OTP_FAIL';
 
 export const SET_USER_INFO = 'SET_USER_INFO';
+
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_FIRST_LOGIN_FALSE = 'SET_FIRST_LOGIN_FALSE';

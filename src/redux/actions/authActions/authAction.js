@@ -11,6 +11,8 @@ import {
 	VERIFY_OTP_FAIL,
 	VERIFY_OTP_REQUEST,
 	VERIFY_OTP_SUCCESS,
+	USER_LOGOUT,
+	SET_FIRST_LOGIN_FALSE,
 } from './authTypes';
 
 export const sentOtpRequest = () => {
@@ -63,14 +65,13 @@ export const setUserInfo = (payload) => {
 
 export const setUserLogout = () => {
 	return {
-		type: 'USER_LOGOUT',
+		type: USER_LOGOUT,
 	};
 };
 
 export const setFirstLoginFalse = () => {
-	console.log('in setfirsloging fale');
 	return {
-		type: 'SET_FIRST_LOGIN_FALSE',
+		type: SET_FIRST_LOGIN_FALSE,
 	};
 };
 

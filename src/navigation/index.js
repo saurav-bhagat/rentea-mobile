@@ -43,14 +43,7 @@ const RootRoutes = () => {
 		userType = authState.userInfo.userDetails.userType;
 	}
 
-	console.log(
-		'Inside Navigation file: ',
-		authState,
-		authState.userInfo,
-		accessToken,
-		firstLogin,
-		userType
-	);
+	console.log('Inside Navigation file: ', accessToken, firstLogin, userType);
 
 	useEffect(() => {
 		const checkAuthStatus = async () => {
@@ -65,7 +58,7 @@ const RootRoutes = () => {
 			}
 		};
 		checkAuthStatus();
-	}, []);
+	}, [firstLogin]);
 	if (routesLoading) {
 		return (
 			<View
@@ -106,11 +99,6 @@ const RootRoutes = () => {
 											name="AddBuildingForm"
 											component={AddBuildingForm}
 										/>
-
-										{/* <Screen
-											name="ownerDashboard"
-											component={OwnerDashboardBottomTab}
-										/> */}
 									</>
 								) : (
 									<>

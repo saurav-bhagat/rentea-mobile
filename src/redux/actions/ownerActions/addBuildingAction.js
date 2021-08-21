@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_URL } from '@env';
-import { navigate } from '../../../navigation/rootNavigation';
 import { setFirstLoginFalse } from '../authActions/authAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -58,10 +57,9 @@ export const saveBuildingData = (buildingObj) => {
 				},
 			})
 			.then(async (response) => {
-				console.log('while sending building data1', state.auth);
 				dispatch(addBuildingSuccess(buildingObj));
 				dispatch(setFirstLoginFalse());
-				console.log('while sending building data2', state.auth);
+
 				try {
 					await AsyncStorage.removeItem('userInfo');
 					await AsyncStorage.setItem(
@@ -70,12 +68,10 @@ export const saveBuildingData = (buildingObj) => {
 					);
 					let userInfo = await AsyncStorage.getItem('userInfo');
 					userInfo = JSON.parse(userInfo);
-					console.log('in local db', userInfo);
+					console.log('building added successfully');
 				} catch (err) {
-					console.log('in catch error', err);
+					alert('error while saving to async storage');
 				}
-				console.log('while sending building data3', state.auth);
-				//navigate('ownerDashboard');
 			})
 			.catch((error) => {
 				console.log(

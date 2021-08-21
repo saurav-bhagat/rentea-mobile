@@ -74,10 +74,9 @@ export const authReducer = (state = initialState, action) => {
 				msg: '',
 			};
 		case 'SET_FIRST_LOGIN_FALSE':
-			console.log('in reducer', state);
 			state.userInfo.firstLogin = false;
 			return {
-				state,
+				...state,
 			};
 		default:
 			return state;
