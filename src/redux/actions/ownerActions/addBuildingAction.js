@@ -2,10 +2,21 @@ import axios from 'axios';
 import { API_URL } from '@env';
 import { setFirstLoginFalse } from '../authActions/authAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+	ADD_BUILDING_ERROR,
+	ADD_BUILDING_REQUEST,
+	ADD_BUILDING_SUCCESS,
+} from './addBuildingTypes';
+
+export const addBuildingRequest = () => {
+	return {
+		type: ADD_BUILDING_REQUEST,
+	};
+};
 
 export const addBuildingSuccess = (buildingObj) => {
 	return {
-		type: 'ADD_BUILDING_SUCCESS',
+		type: ADD_BUILDING_SUCCESS,
 		payload: {
 			buildingDetails: buildingObj,
 			msg: 'buildings added successfully',
@@ -15,13 +26,14 @@ export const addBuildingSuccess = (buildingObj) => {
 
 export const addBuildingError = () => {
 	return {
-		type: 'ADD_BUILDING_ERROR',
+		type: ADD_BUILDING_ERROR,
 		msg: 'Error while saving building',
 	};
 };
 
 export const saveBuildingData = (buildingObj) => {
 	return (dispatch, getState) => {
+		dispatch(addBuildingRequest());
 		const state = getState();
 		const { buildingName, district, pinCode, stateAddress, street } =
 			buildingObj;
@@ -66,8 +78,8 @@ export const saveBuildingData = (buildingObj) => {
 						'userInfo',
 						JSON.stringify(state.auth.userInfo)
 					);
-					let userInfo = await AsyncStorage.getItem('userInfo');
-					userInfo = JSON.parse(userInfo);
+					// let userInfo = await AsyncStorage.getItem('userInfo');
+					// userInfo = JSON.parse(userInfo);
 					console.log('building added successfully');
 				} catch (err) {
 					alert('error while saving to async storage');

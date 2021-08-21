@@ -55,6 +55,7 @@ const RootRoutes = () => {
 				setRoutesLoading(false);
 			} catch (error) {
 				dispatch(setUserInfo(null));
+				setRoutesLoading(false);
 			}
 		};
 		checkAuthStatus();

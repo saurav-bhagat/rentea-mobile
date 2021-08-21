@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
+
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
@@ -16,6 +17,7 @@ import { addBuildingFormstyles } from './addBuildingFormStyles';
 const AddBuildingForm = () => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
+	const addBuildingState = useSelector((state) => state.buildingDetails);
 
 	const [buildingName, setBuildingName] = useState('');
 	const [roomCount, setRoomCount] = useState('');
@@ -145,13 +147,17 @@ const AddBuildingForm = () => {
 						}
 						onPress={handleAddBuildingFormSubmit}
 					>
-						<Text
-							style={
-								addBuildingFormstyles.submitBuildingDetailsButton_text
-							}
-						>
-							Submit
-						</Text>
+						{addBuildingState.loading ? (
+							<ActivityIndicator color="#ffffff" size="large" />
+						) : (
+							<Text
+								style={
+									addBuildingFormstyles.submitBuildingDetailsButton_text
+								}
+							>
+								Submit
+							</Text>
+						)}
 					</Button>
 				</View>
 			</View>
