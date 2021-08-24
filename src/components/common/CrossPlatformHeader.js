@@ -42,6 +42,6 @@ const HeaderStyle = StyleSheet.create({
 		color: '#000',
 		fontSize: 24,
 		width: 270,
-		right: Platform.OS != 'ios' ? 40 : 0,
+		right: Platform.OS != 'ios' ? 25 : 0,
 	},
 });

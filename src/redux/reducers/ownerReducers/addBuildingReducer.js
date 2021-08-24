@@ -13,16 +13,41 @@
        }
 */
 
+import {
+	ADD_BUILDING_ERROR,
+	ADD_BUILDING_REQUEST,
+	ADD_BUILDING_SUCCESS,
+} from '../../actions/ownerActions/addBuildingTypes';
+
 const initialState = {
 	buildingDetails: [],
+	msg: '',
+	loading: false,
 };
 
 export const addBuildingReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case 'SET_BUILDING_DETAILS':
+		case ADD_BUILDING_REQUEST: {
 			return {
 				...state,
-				buildingDetails: [...state.buildingDetails, action.payload],
+				loading: true,
+			};
+		}
+		case ADD_BUILDING_SUCCESS:
+			return {
+				...state,
+				msg: action.payload.msg,
+				buildingDetails: [
+					...state.buildingDetails,
+					action.payload.buildingDetails,
+				],
+				loading: false,
+			};
+		case ADD_BUILDING_ERROR:
+			return {
+				...state,
+				msg: action.msg,
+				loading: false,
 			};
 		default:
 			return state;

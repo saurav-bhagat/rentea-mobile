@@ -11,6 +11,8 @@ import {
 	VERIFY_OTP_FAIL,
 	VERIFY_OTP_REQUEST,
 	VERIFY_OTP_SUCCESS,
+	USER_LOGOUT,
+	SET_FIRST_LOGIN_FALSE,
 } from './authTypes';
 
 export const sentOtpRequest = () => {
@@ -63,7 +65,13 @@ export const setUserInfo = (payload) => {
 
 export const setUserLogout = () => {
 	return {
-		type: 'USER_LOGOUT',
+		type: USER_LOGOUT,
+	};
+};
+
+export const setFirstLoginFalse = () => {
+	return {
+		type: SET_FIRST_LOGIN_FALSE,
 	};
 };
 
@@ -90,7 +98,10 @@ export const verifyOtp = (phoneNumber, code) => {
 						'userInfo',
 						JSON.stringify(response.data.userDocument)
 					);
-					console.log(response.data.userDocument);
+					console.log(
+						'response data doc is ',
+						response.data.userDocument
+					);
 					dispatch(verifyOtpSuccess(response.data.userDocument));
 				} catch (error) {
 					alert('Error in Login');

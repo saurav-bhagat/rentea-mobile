@@ -76,6 +76,7 @@ const AddRoomAccordionContent = ({ isData, data }) => {
 								<Input
 									onChangeText={(val) => setRent(val)}
 									value={rent}
+									keyboardType="numeric"
 								/>
 							</Item>
 						</View>
@@ -90,6 +91,7 @@ const AddRoomAccordionContent = ({ isData, data }) => {
 								}}
 								onChangeText={(val) => setSecurity(val)}
 								value={security}
+								keyboardType="numeric"
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
@@ -112,6 +114,7 @@ const AddRoomAccordionContent = ({ isData, data }) => {
 								}}
 								onChangeText={(val) => setSizeInFt(val)}
 								value={sizeInFt}
+								keyboardType="numeric"
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
