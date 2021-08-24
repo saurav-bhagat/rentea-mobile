@@ -59,7 +59,8 @@ const RootRoutes = () => {
 			}
 		};
 		checkAuthStatus();
-	}, [firstLogin]);
+	}, []);
+
 	if (routesLoading) {
 		return (
 			<View
@@ -85,40 +86,24 @@ const RootRoutes = () => {
 					<>
 						{userType === 'Owner' ? (
 							<>
-								{firstLogin ? (
-									<>
-										<Screen
-											name="OwnerUserDetails"
-											component={OwnerUserDetailsScreen}
-										/>
-										<Screen
-											name="AddBuilding"
-											component={AddBuilding}
-										/>
+								<Screen
+									name="OwnerUserDetails"
+									component={OwnerUserDetailsScreen}
+								/>
+								<Screen
+									name="AddBuilding"
+									component={AddBuilding}
+								/>
 
-										<Screen
-											name="AddBuildingForm"
-											component={AddBuildingForm}
-										/>
-									</>
-								) : (
-									<>
-										<Screen
-											name="ownerDashboard"
-											component={OwnerDashboardBottomTab}
-										/>
+								<Screen
+									name="AddBuildingForm"
+									component={AddBuildingForm}
+								/>
 
-										<Screen
-											name="AddBuilding"
-											component={AddBuilding}
-										/>
-
-										<Screen
-											name="AddBuildingForm"
-											component={AddBuildingForm}
-										/>
-									</>
-								)}
+								<Screen
+									name="ownerDashboard"
+									component={OwnerDashboardBottomTab}
+								/>
 							</>
 						) : (
 							<>

@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { API_URL } from '@env';
 import { navigate } from '../../../navigation/rootNavigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const addUserDetailRequest = () => {
+	return {
+		type: 'ADD_USER_DETAIL_REQUEST',
+	};
+};
 
 export const addUserDetailSuccess = (payload) => {
 	return {
@@ -19,6 +24,7 @@ export const addUserDetailFail = (error) => {
 
 export const addUserDetail = (userData) => {
 	return (dispatch, getState) => {
+		dispatch(addUserDetailRequest());
 		const { auth } = getState();
 		const body = {
 			_id: auth.userInfo.userDetails._id,
@@ -35,18 +41,6 @@ export const addUserDetail = (userData) => {
 			})
 			.then(async (response) => {
 				console.log('response after updating user details', response);
-				// update asyncstorage 'userInfo' with firstLogin: false
-				try {
-					let userInfo = await AsyncStorage.getItem('userInfo');
-					userInfo = JSON.parse(userInfo);
-					userInfo.firstLogin = false;
-					await AsyncStorage.setItem(
-						'userInfo',
-						JSON.stringify(userInfo)
-					);
-				} catch (err) {
-					console.log('Error in setting firstLogin False', err);
-				}
 				dispatch(addUserDetailSuccess(response.data.updatedUserInfo));
 				navigate('AddBuildingForm');
 			})

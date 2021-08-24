@@ -7,6 +7,7 @@ import {
 	ADD_BUILDING_REQUEST,
 	ADD_BUILDING_SUCCESS,
 } from './addBuildingTypes';
+import { navigate } from '../../../navigation/rootNavigation';
 
 export const addBuildingRequest = () => {
 	return {
@@ -70,19 +71,23 @@ export const saveBuildingData = (buildingObj) => {
 			})
 			.then(async (response) => {
 				dispatch(addBuildingSuccess(buildingObj));
-				dispatch(setFirstLoginFalse());
 
 				try {
-					await AsyncStorage.removeItem('userInfo');
+					let userInfo = await AsyncStorage.getItem('userInfo');
+					userInfo = JSON.parse(userInfo);
+
+					userInfo.firstLogin = false;
 					await AsyncStorage.setItem(
 						'userInfo',
-						JSON.stringify(state.auth.userInfo)
+						JSON.stringify(userInfo)
 					);
-					// let userInfo = await AsyncStorage.getItem('userInfo');
-					// userInfo = JSON.parse(userInfo);
+
 					console.log('building added successfully');
+					dispatch(setFirstLoginFalse());
+					navigate('ownerDashboard');
 				} catch (err) {
 					alert('error while saving to async storage');
+					console.log('error while saving to async storage', err);
 				}
 			})
 			.catch((error) => {
