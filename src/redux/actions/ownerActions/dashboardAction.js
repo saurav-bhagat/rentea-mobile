@@ -31,8 +31,9 @@ export const getOwnerDashboard = () => {
 		dispatch(getDashboardRequest());
 		const { auth } = getState();
 		const body = {
-			ownerId: auth.userInfo.userDetails._id,
+			ownerId: auth.userInfo.userDetails.ownerId,
 		};
+		console.log('body is ', body);
 		axios
 			.post(`${API_URL}/owner/dashboard`, body, {
 				headers: {

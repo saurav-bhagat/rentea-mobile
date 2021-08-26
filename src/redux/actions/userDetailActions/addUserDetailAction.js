@@ -27,7 +27,7 @@ export const addUserDetail = (userData) => {
 		dispatch(addUserDetailRequest());
 		const { auth } = getState();
 		const body = {
-			_id: auth.userInfo.userDetails._id,
+			_id: auth.userInfo.userDetails.ownerId,
 			name: `${userData.fName} ${userData.lName}`,
 			email: userData.email,
 		};

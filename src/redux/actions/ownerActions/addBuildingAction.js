@@ -49,7 +49,7 @@ export const saveBuildingData = (buildingObj) => {
 			  })
 			: [];
 		const body = {
-			ownerId: state.userDetail._id,
+			ownerId: state.auth.userInfo.userDetails.ownerId,
 			buildingsObj: [
 				{
 					name: buildingName,

@@ -86,24 +86,35 @@ const RootRoutes = () => {
 					<>
 						{userType === 'Owner' ? (
 							<>
-								<Screen
-									name="OwnerUserDetails"
-									component={OwnerUserDetailsScreen}
-								/>
-								<Screen
-									name="AddBuilding"
-									component={AddBuilding}
-								/>
+								{firstLogin ? (
+									<>
+										<Screen
+											name="OwnerUserDetails"
+											component={OwnerUserDetailsScreen}
+										/>
+										<Screen
+											name="AddBuilding"
+											component={AddBuilding}
+										/>
 
-								<Screen
-									name="AddBuildingForm"
-									component={AddBuildingForm}
-								/>
+										<Screen
+											name="AddBuildingForm"
+											component={AddBuildingForm}
+										/>
 
-								<Screen
-									name="ownerDashboard"
-									component={OwnerDashboardBottomTab}
-								/>
+										<Screen
+											name="ownerDashboard"
+											component={OwnerDashboardBottomTab}
+										/>
+									</>
+								) : (
+									<>
+										<Screen
+											name="ownerDashboard"
+											component={OwnerDashboardBottomTab}
+										/>
+									</>
+								)}
 							</>
 						) : (
 							<>
