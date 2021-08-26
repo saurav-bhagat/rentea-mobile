@@ -33,9 +33,8 @@ export const addTenant = (tenantData) => {
 	return (dispatch, getState) => {
 		dispatch(addTenantRequest());
 		const { auth } = getState();
-		const ownerId = auth.userInfo.userDetails.ownerId;
+		const ownerId = auth.userInfo.userDetails._id;
 		const tenantToRegister = { ...tenantData, ownerId };
-
 		axios
 			.post(`${API_URL}/owner/register-tenant`, tenantToRegister, {
 				headers: {
