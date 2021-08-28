@@ -9,6 +9,7 @@ import { userLogout } from '../../../../redux/actions/authActions/authAction';
 import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashboardAction';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
+import AddBuildingFabButton from '../../../../components/owner/building/AddBuildingFabButton';
 
 const PropertiesScreen = () => {
 	const dispatch = useDispatch();
@@ -68,6 +69,8 @@ const PropertiesScreen = () => {
 			>
 				<Text style={{ fontSize: 22 }}>Properties List</Text>
 				<PropertyList properties={properties} />
+				<AddBuildingFabButton />
+
 				<Button onPress={logout}>
 					<Text>Logout</Text>
 				</Button>

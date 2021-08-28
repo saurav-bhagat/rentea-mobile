@@ -75,7 +75,7 @@ export const saveBuildingData = (buildingObj) => {
 				try {
 					let userInfo = await AsyncStorage.getItem('userInfo');
 					userInfo = JSON.parse(userInfo);
-
+					const flag = userInfo.firstLogin;
 					userInfo.firstLogin = false;
 					await AsyncStorage.setItem(
 						'userInfo',
@@ -84,7 +84,7 @@ export const saveBuildingData = (buildingObj) => {
 
 					console.log('building added successfully');
 					dispatch(setFirstLoginFalse());
-					navigate('ownerDashboard');
+					flag ? navigate('ownerDashboard') : navigate('Properties');
 				} catch (err) {
 					alert('error while saving to async storage');
 					console.log('error while saving to async storage', err);
