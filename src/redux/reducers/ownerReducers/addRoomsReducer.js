@@ -1,4 +1,8 @@
 import { find } from 'lodash';
+import {
+	SET_ROOM_DATA,
+	SET_ROOM_DETAILS,
+} from '../../actions/ownerActions/addRoomActionTypes';
 
 const initialState = {
 	roomDetails: [],
@@ -6,7 +10,7 @@ const initialState = {
 
 export const addRoomsReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case 'SET_ROOM_DATA':
+		case SET_ROOM_DATA:
 			if (find(state.roomDetails, action.payload)) {
 				return state;
 			}
@@ -15,7 +19,7 @@ export const addRoomsReducer = (state = initialState, action) => {
 				...state,
 				roomDetails: [...state.roomDetails, action.payload],
 			};
-		case 'SET_ROOM_DETAILS':
+		case SET_ROOM_DETAILS:
 			return {
 				...state,
 				roomDetails: [],
