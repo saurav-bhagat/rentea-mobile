@@ -15,6 +15,11 @@ export const addRoomsReducer = (state = initialState, action) => {
 				...state,
 				roomDetails: [...state.roomDetails, action.payload],
 			};
+		case 'SET_ROOM_DETAILS':
+			return {
+				...state,
+				roomDetails: [],
+			};
 		default:
 			return state;
 	}
