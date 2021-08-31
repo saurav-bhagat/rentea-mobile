@@ -5,19 +5,22 @@ import * as Print from 'expo-print';
 import * as MediaLibrary from 'expo-media-library';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
+import receiptHtml from '../../../helpers/receiptHtml';
 
 import { tenantReceiptStyles } from './TenantReceiptStyles';
-
-const htmlContent = `
-	<h1>This is Receipt from Rentea</h1>
-	<P> You have paid 10000 INR to owner for August </p>
-`;
 
 const ReceiptCard = () => {
 	const handleReceiptView = async () => {
 		try {
 			const { uri } = await Print.printToFileAsync({
-				html: htmlContent,
+				html: receiptHtml(
+					'June 01 2021',
+					'10000',
+					'Saurav Bhagat',
+					'Munnidery layout Bangalore',
+					'May 01 2021 to June 01 2021',
+					'Dheeraj Shrivastava'
+				),
 				base64: true,
 			});
 			if (Platform.OS === 'ios') {
@@ -33,7 +36,15 @@ const ReceiptCard = () => {
 	const handleReceiptShare = async () => {
 		try {
 			const { uri } = await Print.printToFileAsync({
-				html: htmlContent,
+				html: receiptHtml(
+					'June 01 2021',
+					'10000',
+					'Saurav Bhagat',
+
+					'Munnidery layout Bangalore',
+					'May 01 2021 to June 01 2021',
+					'Dheeraj Shrivastava'
+				),
 			});
 			if (Platform.OS === 'ios') {
 				await Sharing.shareAsync(uri);
