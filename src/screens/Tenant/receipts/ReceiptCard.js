@@ -13,7 +13,14 @@ const ReceiptCard = () => {
 	const handleReceiptView = async () => {
 		try {
 			const { uri } = await Print.printToFileAsync({
-				html: receiptHtml(),
+				html: receiptHtml(
+					'June 01 2021',
+					'10000',
+					'Saurav Bhagat',
+					'Munnidery layout Bangalore',
+					'May 01 2021 to June 01 2021',
+					'Dheeraj Shrivastava'
+				),
 				base64: true,
 			});
 			if (Platform.OS === 'ios') {
@@ -29,7 +36,15 @@ const ReceiptCard = () => {
 	const handleReceiptShare = async () => {
 		try {
 			const { uri } = await Print.printToFileAsync({
-				html: receiptHtml(),
+				html: receiptHtml(
+					'June 01 2021',
+					'10000',
+					'Saurav Bhagat',
+
+					'Munnidery layout Bangalore',
+					'May 01 2021 to June 01 2021',
+					'Dheeraj Shrivastava'
+				),
 			});
 			if (Platform.OS === 'ios') {
 				await Sharing.shareAsync(uri);

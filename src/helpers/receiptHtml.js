@@ -1,4 +1,4 @@
-const receiptHtml = () => {
+const receiptHtml = (date, amount, tenantName, address, month, ownerName) => {
 	return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,25 +17,22 @@ const receiptHtml = () => {
             Rent Reciept
             <span style="color: grey; margin-left: 2%" >June 2021</span>
           </h4>
-          <a style="text-decoration: none;"  href="">
-            Generated on ClearTax
-          </a>
         </div>
         <div style=" margin-top: 7%">
           <p>Receipt No.1</p>
-          <p>Date: June 01 2021</p>
+          <p>${date}</p>
         </div>
       </div>
       <div style=" margin: 5% 0 0 4%">
         <p>
-          Received sum of INR 10000 from Saurav Bhagat towards the rent of
-          property located at Munnidery layout, Bengalore for the period from
-          May 01 2021 to June 01 2021
+          Received sum of INR ${amount} from ${tenantName} towards the rent of
+          property located at ${address} for the period from
+          ${month}
         </p>
       </div>
       <div style="margin: 5% 0 5% 4%">
         <p>
-          Dheeraj Shrivastva
+          ${ownerName}
           <span style="color: grey; margin: 0 1% 0 1%" >(Landlord)</span>
           Pan: 303302
         </p>
