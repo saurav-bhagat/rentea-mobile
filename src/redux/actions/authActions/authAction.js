@@ -110,10 +110,12 @@ export const sendOtp = (phoneNumber) => {
 		dispatch(sentOtpRequest());
 		axios
 			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
+
 			.then((response) => {
 				return response;
 			})
 			.then(() => {
+				console.log('Hello');
 				dispatch(sendOtpSuccess());
 				navigate('OTP', { phoneNumber });
 			})
