@@ -33,7 +33,7 @@ const downloadTermsAndConditions = async () => {
 
 const downloadPrivacyPolicy = async () => {
 	await downloadFile(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Terms_and_Conditions_bve5ie.docx',
+		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/Privacy_Policy_RenTea_tflno9.docx',
 		'Privacy_Policy.pdf'
 	);
 };
