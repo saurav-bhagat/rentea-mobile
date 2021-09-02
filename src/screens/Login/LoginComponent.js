@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Item, Input, Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Constants from 'expo-constants';
+import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 
 import { loginStyles } from './loginStyles';
@@ -10,37 +12,49 @@ import { sendOtp } from '../../redux/actions';
 import { validatePhone } from '../../helpers/addBuildingValidation';
 import { API_URL } from '@env';
 
-componentDidMount = () => {
-	this.downloadFile();
+const view = async (fileUrl) => {
+	console.log('Inside', fileUrl);
+	try {
+		await Print.printAsync({ uri: fileUrl });
+		console.log('Inside printAsync', fileUrl);
+
+		// if (Platform.OS === 'ios') {
+		// 	await Print.PrintAsync({ uri });
+		// 	console.log('if');
+		// } else {
+		// 	console.log('Inside android', fileUrl, uri);
+		// 	await Print.printAsync({ uri }); // this opens the pdf that can either be save or print
+		// }
+	} catch (err) {
+		console.log('Error while viewing pdf', err);
+	}
 };
 
-const downloadFile = async (fileUrl, fileName) => {
-	FileSystem.downloadAsync(fileUrl, FileSystem.documentDirectory + fileName)
-		.then(({ uri }) => {
-			console.log('Finished downloading to ', uri);
-		})
-		.catch((error) => {
-			console.error(error);
-		});
-};
+// const downloadFile = async (fileUrl, fileName) => {
+// 	FileSystem.downloadAsync(fileUrl, FileSystem.documentDirectory + fileName)
+// 		.then(({ uri }) => {
+// 			console.log('Finished downloading to ', uri);
+// 		})
+// 		.catch((error) => {
+// 			console.error(error);
+// 		});
+// };
 
-const downloadTermsAndConditions = async () => {
-	await downloadFile(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Terms_and_Conditions_bve5ie.docx',
-		'Terms_Condition.pdf'
+const viewTermsAndConditions = async () => {
+	console.log('Inside view');
+	await view(
+		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Terms_and_Conditions_bve5ie.docx'
 	);
 };
 
-const downloadPrivacyPolicy = async () => {
-	await downloadFile(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/Privacy_Policy_RenTea_tflno9.docx',
-		'Privacy_Policy.pdf'
+const viewPrivacyPolicy = async () => {
+	await view(
+		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/Privacy_Policy_RenTea_tflno9.docx'
 	);
 };
-const downloadRefundPolicy = async () => {
-	await downloadFile(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Refund_and_Cancellation_gnb0tl.docx',
-		'Refund_and_Cancellation.pdf'
+const viewRefundPolicy = async () => {
+	await view(
+		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Refund_and_Cancellation_gnb0tl.docx'
 	);
 };
 
@@ -90,7 +104,7 @@ const LoginComponent = ({ navigation }) => {
 			<View style={loginStyles.loginFooterTextContainer}>
 				<Text style={loginStyles.login_footer_text}>
 					By clicking continue, you agree to our{' '}
-					<TouchableOpacity onPress={downloadTermsAndConditions}>
+					<TouchableOpacity onPress={viewTermsAndConditions}>
 						<Text style={loginStyles.login_footer_underline}>
 							Terms and Conditions
 						</Text>
@@ -98,7 +112,7 @@ const LoginComponent = ({ navigation }) => {
 				</Text>
 				<Text style={loginStyles.login_footer_text}>
 					and have read out{' '}
-					<TouchableOpacity onPress={downloadPrivacyPolicy}>
+					<TouchableOpacity onPress={viewPrivacyPolicy}>
 						<Text style={loginStyles.login_footer_underline}>
 							Privacy Policy
 						</Text>
@@ -106,7 +120,7 @@ const LoginComponent = ({ navigation }) => {
 				</Text>
 				<Text style={loginStyles.login_footer_text}>
 					and
-					<TouchableOpacity onPress={downloadRefundPolicy}>
+					<TouchableOpacity onPress={viewRefundPolicy}>
 						<Text style={loginStyles.login_footer_underline}>
 							Refund Policy
 						</Text>
