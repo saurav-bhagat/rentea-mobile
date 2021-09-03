@@ -83,7 +83,10 @@ export const loginStyles = ScaledSheet.create({
 		color: '#bbb',
 		fontSize: '10@ms0.3',
 	},
+
 	login_footer_underline: {
+		marginLeft: '3@s',
 		textDecorationLine: 'underline',
+		fontSize: '10@ms0.3',
 	},
 });
