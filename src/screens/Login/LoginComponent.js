@@ -13,48 +13,27 @@ import { validatePhone } from '../../helpers/addBuildingValidation';
 import { API_URL } from '@env';
 
 const view = async (fileUrl) => {
-	console.log('Inside', fileUrl);
 	try {
 		await Print.printAsync({ uri: fileUrl });
-		console.log('Inside printAsync', fileUrl);
-
-		// if (Platform.OS === 'ios') {
-		// 	await Print.PrintAsync({ uri });
-		// 	console.log('if');
-		// } else {
-		// 	console.log('Inside android', fileUrl, uri);
-		// 	await Print.printAsync({ uri }); // this opens the pdf that can either be save or print
-		// }
 	} catch (err) {
 		console.log('Error while viewing pdf', err);
 	}
 };
 
-// const downloadFile = async (fileUrl, fileName) => {
-// 	FileSystem.downloadAsync(fileUrl, FileSystem.documentDirectory + fileName)
-// 		.then(({ uri }) => {
-// 			console.log('Finished downloading to ', uri);
-// 		})
-// 		.catch((error) => {
-// 			console.error(error);
-// 		});
-// };
-
 const viewTermsAndConditions = async () => {
-	console.log('Inside view');
 	await view(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Terms_and_Conditions_bve5ie.docx'
+		'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Terms_and_Conditions_ovwnum.pdf'
 	);
 };
 
 const viewPrivacyPolicy = async () => {
 	await view(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/Privacy_Policy_RenTea_tflno9.docx'
+		'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/Privacy_Policy_RenTea_hpwm0f.pdf'
 	);
 };
 const viewRefundPolicy = async () => {
 	await view(
-		'https://res.cloudinary.com/ddwwsfeeh/raw/upload/v1630419305/RenTea_Refund_and_Cancellation_gnb0tl.docx'
+		'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Refund_and_Cancellation_fro5lp.pdf'
 	);
 };
 
