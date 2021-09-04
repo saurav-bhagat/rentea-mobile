@@ -8,6 +8,7 @@ import {
 	ADD_BUILDING_SUCCESS,
 } from './addBuildingTypes';
 import { navigate } from '../../../navigation/rootNavigation';
+import { setRoomDetails } from './addRoomAction';
 
 export const addBuildingRequest = () => {
 	return {
@@ -75,7 +76,7 @@ export const saveBuildingData = (buildingObj) => {
 				try {
 					let userInfo = await AsyncStorage.getItem('userInfo');
 					userInfo = JSON.parse(userInfo);
-
+					const firstLogin = userInfo.firstLogin;
 					userInfo.firstLogin = false;
 					await AsyncStorage.setItem(
 						'userInfo',
@@ -84,7 +85,10 @@ export const saveBuildingData = (buildingObj) => {
 
 					console.log('building added successfully');
 					dispatch(setFirstLoginFalse());
-					navigate('ownerDashboard');
+					dispatch(setRoomDetails());
+					firstLogin
+						? navigate('ownerDashboard')
+						: navigate('Properties');
 				} catch (err) {
 					alert('error while saving to async storage');
 					console.log('error while saving to async storage', err);
@@ -92,9 +96,8 @@ export const saveBuildingData = (buildingObj) => {
 			})
 			.catch((error) => {
 				console.log(
-					'error while sending building data',
-					error.message,
-					state
+					'error while sending building data is : ',
+					error.response.data.err
 				);
 				dispatch(addBuildingError());
 				alert('Error while adding building');
