@@ -64,7 +64,7 @@ const FormScreen = () => {
 			>
 				<WebView
 					source={{
-						uri: `https://c25b6ef04391.ngrok.io/payment/initiate-payment`,
+						uri: `${API_URL}/payment/initiate-payment`,
 						method: 'POST',
 						body: `name=${name}&amount=${amount}`,
 					}}

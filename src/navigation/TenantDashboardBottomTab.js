@@ -1,12 +1,28 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import TenantDashboard from '../screens/Tenant/dashboard/TenantDashboard';
 import TenantPaymentHistory from '../screens/Tenant/payments/TenantPaymentHistory';
 import TenantReceipts from '../screens/Tenant/receipts/TenantReceipts';
+import FormScreen from '../screens/payment/FormScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const TenantDashboardStack = () => (
+	<Stack.Navigator
+		screenOptions={({ route, navigation }) => ({
+			headerShown: false,
+			gestureEnabled: true,
+		})}
+		initialRouteName="TenantDashboard"
+	>
+		<Stack.Screen name="TenantDashboard" component={TenantDashboard} />
+		<Stack.Screen name="TenantPay" component={FormScreen} />
+	</Stack.Navigator>
+);
 
 export default TenantDashboardBottomTab = () => {
 	return (
@@ -15,7 +31,7 @@ export default TenantDashboardBottomTab = () => {
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 
-					if (route.name === 'Home') {
+					if (route.name === 'Dashboard') {
 						iconName = focused ? 'home-sharp' : 'home-outline';
 					} else if (route.name === 'Payment History') {
 						iconName = focused ? 'cash-sharp' : 'cash-outline';
@@ -36,7 +52,7 @@ export default TenantDashboardBottomTab = () => {
 				inactiveTintColor: 'gray',
 			}}
 		>
-			<Tab.Screen name="Home" component={TenantDashboard} />
+			<Tab.Screen name="Dashboard" component={TenantDashboardStack} />
 			<Tab.Screen
 				name="Payment History"
 				component={TenantPaymentHistory}
