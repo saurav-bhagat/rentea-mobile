@@ -1,12 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Item, Input, Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Constants from 'expo-constants';
+import * as Print from 'expo-print';
+import * as FileSystem from 'expo-file-system';
 
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions';
 import { validatePhone } from '../../helpers/addBuildingValidation';
 import { API_URL } from '@env';
+
+const view = async (fileUrl) => {
+	try {
+		await Print.printAsync({ uri: fileUrl });
+	} catch (err) {
+		console.log('Error while viewing pdf', err);
+	}
+};
+
+const viewTermsAndConditions = async () => {
+	await view(
+		'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Terms_and_Conditions_ovwnum.pdf'
+	);
+};
+
+const viewPrivacyPolicy = async () => {
+	await view(
+		'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/Privacy_Policy_RenTea_hpwm0f.pdf'
+	);
+};
+const viewRefundPolicy = async () => {
+	await view(
+		'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Refund_and_Cancellation_fro5lp.pdf'
+	);
+};
 
 const LoginComponent = ({ navigation }) => {
 	const dispatch = useDispatch();
@@ -54,15 +83,27 @@ const LoginComponent = ({ navigation }) => {
 			<View style={loginStyles.loginFooterTextContainer}>
 				<Text style={loginStyles.login_footer_text}>
 					By clicking continue, you agree to our{' '}
-					<Text style={loginStyles.login_footer_underline}>
-						Terms and Conditions
-					</Text>
+					<TouchableOpacity onPress={viewTermsAndConditions}>
+						<Text style={loginStyles.login_footer_underline}>
+							Terms and Conditions
+						</Text>
+					</TouchableOpacity>
 				</Text>
 				<Text style={loginStyles.login_footer_text}>
 					and have read out{' '}
-					<Text style={loginStyles.login_footer_underline}>
-						Privacy Policy
-					</Text>
+					<TouchableOpacity onPress={viewPrivacyPolicy}>
+						<Text style={loginStyles.login_footer_underline}>
+							Privacy Policy
+						</Text>
+					</TouchableOpacity>
+				</Text>
+				<Text style={loginStyles.login_footer_text}>
+					and
+					<TouchableOpacity onPress={viewRefundPolicy}>
+						<Text style={loginStyles.login_footer_underline}>
+							Refund Policy
+						</Text>
+					</TouchableOpacity>
 				</Text>
 			</View>
 		</View>
