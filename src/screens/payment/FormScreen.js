@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { API_URL } from '@env';
+import { useSelector } from 'react-redux';
 
 const FormScreen = () => {
 	const [formModalVisible, setFormModalVisible] = useState(true);
@@ -17,6 +18,8 @@ const FormScreen = () => {
 	const [webViewFlag, setWebViewFlag] = useState(false);
 	const [name, setName] = useState('');
 	const [amount, setAmount] = useState('');
+	const userId = useSelector((state) => state.auth.userInfo.userDetails._id);
+
 	const handlePaynow = () => {
 		console.log(name, amount);
 		setFormModalVisible(false);
@@ -66,7 +69,7 @@ const FormScreen = () => {
 					source={{
 						uri: `${API_URL}/payment/initiate-payment`,
 						method: 'POST',
-						body: `name=${name}&amount=${amount}`,
+						body: `name=${name}&amount=${amount}&orderId=${userId}`,
 					}}
 					onNavigationStateChange={(data) =>
 						handleResponse(data.title)
