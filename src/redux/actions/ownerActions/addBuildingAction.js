@@ -96,9 +96,8 @@ export const saveBuildingData = (buildingObj) => {
 			})
 			.catch((error) => {
 				console.log(
-					'error while sending building data',
-					error.message,
-					state
+					'error while sending building data is : ',
+					error.response.data.err
 				);
 				dispatch(addBuildingError());
 				alert('Error while adding building');
