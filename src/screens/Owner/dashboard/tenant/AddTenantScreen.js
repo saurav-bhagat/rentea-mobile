@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch } from 'react-redux';
 
 import TextInputCommon from '../../../../components/common/TextInputCommon';
@@ -32,48 +33,52 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 	};
 
 	return (
-		<View style={addTenantStyles.addTenantContainer}>
-			<Text style={{ fontSize: 19 }}>
-				Add Tenant for Room {singleRoomData.roomNo}
-			</Text>
-			<TextInputCommon
-				label="Tenant Name"
-				name="tenantName"
-				onChangeText={(val) => setName(val)}
-				value={name}
-				style={{ marginBottom: 30, marginTop: 20 }}
-			/>
-			<TextInputCommon
-				label="Tenant Email"
-				name="tenantEmail"
-				onChangeText={(val) => setEmail(val)}
-				value={email}
-				style={{ marginBottom: 30 }}
-			/>
-			<TextInputCommon
-				label="Tenant Phone"
-				name="tenantPhone"
-				onChangeText={(val) => setPhone(val)}
-				value={phone}
-				keyboardType="numeric"
-				style={{ marginBottom: 30 }}
-			/>
-			<TextInputCommon
-				label="Security Paid"
-				name="securityPaid"
-				onChangeText={(val) => setSecurity(val)}
-				value={security}
-				keyboardType="numeric"
-				style={{ marginBottom: 30 }}
-			/>
+		<KeyboardAwareScrollView>
+			<View style={addTenantStyles.addTenantContainer}>
+				<Text style={{ fontSize: 19 }}>
+					Add Tenant for Room {singleRoomData.roomNo}
+				</Text>
+				<TextInputCommon
+					label="Tenant Name"
+					name="tenantName"
+					onChangeText={(val) => setName(val)}
+					value={name}
+					style={{ marginBottom: 30, marginTop: 20 }}
+				/>
+				<TextInputCommon
+					label="Tenant Email"
+					name="tenantEmail"
+					onChangeText={(val) => setEmail(val)}
+					value={email}
+					style={{ marginBottom: 30 }}
+				/>
+				<TextInputCommon
+					label="Tenant Phone"
+					name="tenantPhone"
+					onChangeText={(val) => setPhone(val)}
+					value={phone}
+					keyboardType="numeric"
+					style={{ marginBottom: 30 }}
+				/>
+				<TextInputCommon
+					label="Security Paid"
+					name="securityPaid"
+					onChangeText={(val) => setSecurity(val)}
+					value={security}
+					keyboardType="numeric"
+					style={{ marginBottom: 30 }}
+				/>
 
-			<TouchableOpacity
-				style={addTenantStyles.submitButton}
-				onPress={handleAddTenant}
-			>
-				<Text style={addTenantStyles.submitButton_text}>Submit</Text>
-			</TouchableOpacity>
-		</View>
+				<TouchableOpacity
+					style={addTenantStyles.submitButton}
+					onPress={handleAddTenant}
+				>
+					<Text style={addTenantStyles.submitButton_text}>
+						Submit
+					</Text>
+				</TouchableOpacity>
+			</View>
+		</KeyboardAwareScrollView>
 	);
 };
 
