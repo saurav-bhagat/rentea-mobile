@@ -8,7 +8,6 @@ import PropertiesScreen from '../screens/Owner/dashboard/property/PropertiesScre
 import PropertyInfoScreen from '../screens/Owner/dashboard/property/PropertyInfoScreen';
 import RoomInfoScreen from '../screens/Owner/dashboard/room/RoomInfoScreen';
 import OwnerPaymentInfoScreen from '../screens/Owner/dashboard/payment/OwnerPaymentInfoScreen';
-import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -16,14 +15,13 @@ const Stack = createStackNavigator();
 const PropertiesStack = () => (
 	<Stack.Navigator
 		screenOptions={({ route, navigation }) => ({
-			headerShown: true,
+			headerShown: false,
 			gestureEnabled: true,
 		})}
 	>
 		<Stack.Screen name="Properties" component={PropertiesScreen} />
 		<Stack.Screen name="PropertyInfo" component={PropertyInfoScreen} />
 		<Stack.Screen name="RoomInfo" component={RoomInfoScreen} />
-		<Stack.Screen name="AddBuildingForm" component={AddBuildingForm} />
 	</Stack.Navigator>
 );
 

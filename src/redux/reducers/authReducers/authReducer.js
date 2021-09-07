@@ -59,26 +59,26 @@ export const authReducer = (state = initialState, action) => {
 				error: true,
 				loading: false,
 			};
-			case REFRESH_TOKEN_REQUEST:
-				return {
-					...state,
-					loading: true,
-				};
-			case REFRESH_TOKEN_SUCCESS:
-				return {
-					...state,
-					userInfo: action.payload,
-					msg: action.msg,
-					error: false,
-					loading: false,
-				};
-			case REFRESH_TOKEN_FAIL:
-				return {
-					...state,
-					msg: action.msg,
-					error: true,
-					loading: false,
-				};
+		case REFRESH_TOKEN_REQUEST:
+			return {
+				...state,
+				loading: true,
+			};
+		case REFRESH_TOKEN_SUCCESS:
+			return {
+				...state,
+				userInfo: action.payload,
+				msg: action.msg,
+				error: false,
+				loading: false,
+			};
+		case REFRESH_TOKEN_FAIL:
+			return {
+				...state,
+				msg: action.msg,
+				error: true,
+				loading: false,
+			};
 		case SET_USER_INFO:
 			return {
 				...state,

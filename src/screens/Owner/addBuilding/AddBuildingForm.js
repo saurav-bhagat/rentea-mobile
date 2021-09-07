@@ -13,12 +13,13 @@ import TextInputCommon from '../../../components/common/TextInputCommon';
 import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
 import { saveBuildingData } from '../../../redux/actions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
+import { navigate } from '../../../navigation/rootNavigation';
 
 const AddBuildingForm = () => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 	const addBuildingState = useSelector((state) => state.buildingDetails);
-
+	const authState = useSelector((state) => state.auth);
 	const [buildingName, setBuildingName] = useState('');
 	const [roomCount, setRoomCount] = useState('');
 	const [floorCount, setFloorCount] = useState('');
@@ -53,10 +54,14 @@ const AddBuildingForm = () => {
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
 			nestedScrollEnabled={true}
 		>
-			<CrossPlatformHeader
-				title="Building Details"
-				backCallback={() => navigation.navigate('AddBuilding')}
-			/>
+			{!authState.userInfo.firstLogin ? (
+				<CrossPlatformHeader
+					title="Building Details"
+					backCallback={() => navigate('Properties')}
+				/>
+			) : (
+				<CrossPlatformHeader title="Building Details" />
+			)}
 
 			<View style={addBuildingFormstyles.addBFcontainer}>
 				<View style={addBuildingFormstyles.addBFormContainer}>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {refreshToken } from '../authActions/authAction'
+import { refreshToken } from '../authActions/authAction';
 import { API_URL } from '@env';
 import {
 	GET_OWNER_DASHBOARD_FAILURE,
@@ -51,7 +51,7 @@ export const getOwnerDashboard = () => {
 					error.response.status === 403 &&
 					error.response.data.err === 'jwt expired'
 				) {
-					console.log('callilng refreshToken')
+					console.log('callilng refreshToken');
 					// Wipes the cash if not given a way to call the failed request again.
 					// await dispatch(refreshToken());
 				} else {

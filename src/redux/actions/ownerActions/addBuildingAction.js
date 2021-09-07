@@ -78,7 +78,7 @@ export const saveBuildingData = (buildingObj) => {
 					await dispatch(refreshToken());
 				}
 				dispatch(addBuildingSuccess(buildingObj));
-				
+
 				try {
 					let userInfo = await AsyncStorage.getItem('userInfo');
 					userInfo = JSON.parse(userInfo);
@@ -105,7 +105,7 @@ export const saveBuildingData = (buildingObj) => {
 					'error while sending building data is : ',
 					error.message,
 					state
-				);				
+				);
 				dispatch(addBuildingError());
 				alert('Error while adding building');
 			});

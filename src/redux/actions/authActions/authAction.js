@@ -186,13 +186,13 @@ export const refreshToken = () => {
 						'userInfo',
 						JSON.stringify(newUserData)
 					);
-					console.log('response data doc is ' + JSON.stringify(newUserData));
-					dispatch(
-						refreshTokenSuccess(newUserData.userInfo)
+					console.log(
+						'response data doc is ' + JSON.stringify(newUserData)
 					);
+					dispatch(refreshTokenSuccess(newUserData.userInfo));
 				} catch (error) {
 					alert('Error in updating refreshed token');
-          console.log(error)
+					console.log(error);
 				}
 			})
 			.catch((err) => {
