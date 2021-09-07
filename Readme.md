@@ -8,6 +8,10 @@
 - Open a new tab with port 19001
 - on expo start, it will automatically take up the openend debugger
 
+# Build
+
+Expo can generate a signed apk by running `expo build:android -t apk` or an Android App Bundle(AAB) by running `expo build:android -t app-bundle`
+
 # colors: 
 
 blue - `#109FDA`
