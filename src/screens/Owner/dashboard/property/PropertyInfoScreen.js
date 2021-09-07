@@ -7,9 +7,11 @@ import {
 	TouchableOpacity,
 	SafeAreaView,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
-import { useNavigation } from '@react-navigation/native';
+import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
+import { navigate } from '../../../../navigation/rootNavigation';
 
 const Item = ({ item, propertyInfo }) => {
 	const navigation = useNavigation();
@@ -28,7 +30,7 @@ const Item = ({ item, propertyInfo }) => {
 	);
 };
 
-const PropertyInfoScreen = ({ route }) => {
+const PropertyInfoScreen = ({ route, navigation }) => {
 	const { propertyInfo } = route.params;
 	const roomListData = propertyInfo.rooms;
 
@@ -37,6 +39,13 @@ const PropertyInfoScreen = ({ route }) => {
 	};
 	return (
 		<SafeAreaView style={propertiesScreenStyles.propertyInfoContainer}>
+			<CrossPlatformHeader
+				title="PropertyInfo"
+				backCallback={() => {
+					navigate('Properties');
+				}}
+			/>
+
 			<View style={propertiesScreenStyles.propertyTitleContainer}>
 				<Text style={propertiesScreenStyles.propertyTitle}>
 					{propertyInfo.name}

@@ -4,16 +4,19 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Button } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/native';
 
 import { userLogout } from '../../../../redux/actions/authActions/authAction';
 import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashboardAction';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import AddBuildingFabButton from '../../../../components/owner/building/AddBuildingFabButton';
+import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 
 const PropertiesScreen = () => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
+	const isFocused = useIsFocused();
 
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
@@ -21,7 +24,7 @@ const PropertiesScreen = () => {
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
-	}, []);
+	}, [isFocused]);
 
 	// console.log(
 	// 	'Properties: ',
@@ -41,6 +44,7 @@ const PropertiesScreen = () => {
 					propertiesScreenStyles.propertiesContainer
 				}
 			>
+				<CrossPlatformHeader title="Properties" />
 				<Text style={{ fontSize: 18 }}>
 					Error while fetching properties, Login Again
 				</Text>
@@ -62,19 +66,21 @@ const PropertiesScreen = () => {
 			dispatch(userLogout());
 		};
 		return (
-			<ScrollView
-				contentContainerStyle={
-					propertiesScreenStyles.propertiesContainer
-				}
-			>
-				<Text style={{ fontSize: 22 }}>Properties List</Text>
-				<PropertyList properties={properties} />
-				<AddBuildingFabButton />
+			<View>
+				<CrossPlatformHeader title="Properties" />
+				<ScrollView
+					contentContainerStyle={
+						propertiesScreenStyles.propertiesContainer
+					}
+				>
+					<PropertyList properties={properties} />
+					<AddBuildingFabButton />
 
-				<Button onPress={logout}>
-					<Text>Logout</Text>
-				</Button>
-			</ScrollView>
+					<Button onPress={logout}>
+						<Text>Logout</Text>
+					</Button>
+				</ScrollView>
+			</View>
 		);
 	}
 };
