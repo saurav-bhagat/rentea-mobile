@@ -13,6 +13,9 @@ import {
 	VERIFY_OTP_SUCCESS,
 	USER_LOGOUT,
 	SET_FIRST_LOGIN_FALSE,
+	REFRESH_TOKEN_REQUEST,
+	REFRESH_TOKEN_SUCCESS,
+	REFRESH_TOKEN_FAIL,
 } from './authTypes';
 
 export const sentOtpRequest = () => {
@@ -75,6 +78,27 @@ export const setFirstLoginFalse = () => {
 	};
 };
 
+export const refreshTokenRequest = () => {
+	return {
+		type: REFRESH_TOKEN_REQUEST,
+	};
+};
+
+export const refreshTokenSuccess = (payload) => {
+	return {
+		type: REFRESH_TOKEN_SUCCESS,
+		payload,
+		msg: 'Token refreshed successfully',
+	};
+};
+
+export const refreshTokenFail = () => {
+	return {
+		type: REFRESH_TOKEN_FAIL,
+		msg: 'Error while refreshing token',
+	};
+};
+
 export const userLogout = () => {
 	return (dispatch) => {
 		try {
@@ -134,6 +158,47 @@ export const sendOtp = (phoneNumber) => {
 				dispatch(sendOtpFail());
 				console.log(err);
 				alert('Error while sending otp');
+			});
+	};
+};
+
+export const refreshToken = () => {
+	return async (dispatch, getState) => {
+		let { auth } = await getState();
+		let auth1 = AsyncStorage.getItem('userInfo');
+		console.log('OLD STATE' + JSON.stringify(auth1));
+		let refreshToken = auth.userInfo.refreshToken;
+		console.log('REf  ' + refreshToken);
+		dispatch(refreshTokenRequest());
+		axios
+			.post(`${API_URL}/auth/refresh-token`, { refreshToken })
+			.then((response) => {
+				try {
+					let newUserData = {
+						...auth,
+						userInfo: {
+							...auth.userInfo,
+							refreshToken: response.data.refreshToken,
+							accessToken: response.data.accessToken,
+						},
+					};
+					AsyncStorage.setItem(
+						'userInfo',
+						JSON.stringify(newUserData)
+					);
+					console.log('response data doc is ' + JSON.stringify(newUserData));
+					dispatch(
+						refreshTokenSuccess(newUserData.userInfo)
+					);
+				} catch (error) {
+					alert('Error in updating refreshed token');
+          console.log(error)
+				}
+			})
+			.catch((err) => {
+				dispatch(refreshTokenFail());
+				console.log(err);
+				alert('Error while refreshing token');
 			});
 	};
 };
