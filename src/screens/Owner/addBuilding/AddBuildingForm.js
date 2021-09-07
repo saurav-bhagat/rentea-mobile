@@ -54,12 +54,14 @@ const AddBuildingForm = () => {
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
 			nestedScrollEnabled={true}
 		>
-			<CrossPlatformHeader
-				title="Building Details"
-				backCallback={() =>
-					!authState.userInfo.firstLogin && navigate('Properties')
-				}
-			/>
+			{!authState.userInfo.firstLogin ? (
+				<CrossPlatformHeader
+					title="Building Details"
+					backCallback={() => navigate('Properties')}
+				/>
+			) : (
+				<CrossPlatformHeader title="Building Details" />
+			)}
 
 			<View style={addBuildingFormstyles.addBFcontainer}>
 				<View style={addBuildingFormstyles.addBFormContainer}>

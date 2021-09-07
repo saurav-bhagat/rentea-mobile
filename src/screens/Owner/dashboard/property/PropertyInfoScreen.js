@@ -7,9 +7,9 @@ import {
 	TouchableOpacity,
 	SafeAreaView,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
-import { useNavigation } from '@react-navigation/native';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
 

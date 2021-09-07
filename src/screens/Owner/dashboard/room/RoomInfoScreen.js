@@ -15,7 +15,7 @@ const RoomInfoScreen = ({ route }) => {
 	return (
 		<View>
 			<CrossPlatformHeader
-				title="RoomInfo"
+				title="TenantInfo"
 				backCallback={() => {
 					navigate('PropertyInfo');
 				}}

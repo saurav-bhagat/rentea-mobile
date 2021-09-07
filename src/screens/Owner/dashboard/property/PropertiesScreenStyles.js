@@ -10,10 +10,6 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	},
 	propertyInfoContainer: {
 		flex: 1,
-		// padding: '10@ms',
-		// width: '85%',
-		// marginLeft: 'auto',
-		// marginRight: 'auto',
 	},
 	propertyTitleContainer: {
 		marginTop: '20@s',

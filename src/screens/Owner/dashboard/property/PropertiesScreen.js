@@ -5,6 +5,7 @@ import { Button } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import { useIsFocused } from '@react-navigation/native';
+
 import { userLogout } from '../../../../redux/actions/authActions/authAction';
 import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashboardAction';
