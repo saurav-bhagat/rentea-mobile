@@ -144,7 +144,10 @@ const AddBuildingForm = () => {
 						setMaintainerPhone={setMaintainerPhone}
 					/>
 
-					<AddRoomSection roomCount={roomCount} />
+					<AddRoomSection
+						roomCount={roomCount}
+						floorCount={floorCount}
+					/>
 
 					<Button
 						style={

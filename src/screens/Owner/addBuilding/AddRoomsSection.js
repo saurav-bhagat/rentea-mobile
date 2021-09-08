@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import AddRoomAccordion from '../../../components/owner/room/AddRoomAccordion';
 
-const AddRoomSection = ({ roomCount }) => {
+const AddRoomSection = ({ roomCount, floorCount }) => {
 	const [showRoomDetails, setShowRoomDetails] = useState(false);
 
 	return (
@@ -31,7 +31,12 @@ const AddRoomSection = ({ roomCount }) => {
 				</Text>
 			</TouchableOpacity>
 			{roomCount && roomCount > 0
-				? showRoomDetails && <AddRoomAccordion roomCount={roomCount} />
+				? showRoomDetails && (
+						<AddRoomAccordion
+							roomCount={roomCount}
+							floorCount={floorCount}
+						/>
+				  )
 				: showRoomDetails && <Text>Enter number of rooms</Text>}
 		</View>
 	);
