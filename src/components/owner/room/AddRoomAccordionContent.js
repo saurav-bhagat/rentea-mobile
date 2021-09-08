@@ -60,7 +60,6 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 								<Input
 									onChangeText={(e) => setRoomNo(e)}
 									value={roomNo}
-									keyboardType="numeric"
 								/>
 							</Item>
 						</View>

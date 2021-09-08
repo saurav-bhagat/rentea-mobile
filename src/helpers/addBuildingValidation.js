@@ -14,6 +14,9 @@ export const validatePhone = (phone) => {
 export const validateCount = (obj) => {
 	const objValues = Object.values(obj);
 	const result = objValues.every((e) => {
+		if (obj && obj.rent && obj.rent.length > 0) {
+			return true;
+		}
 		return e > 0;
 	});
 	return result;
@@ -64,7 +67,7 @@ export const validateRoomFields = (
 			bhk < 10 &&
 			floor > 0 &&
 			floor <= floorCount &&
-			security <= rent &&
+			security >= rent &&
 			sizeInFt >= 100
 		) {
 			return true;
