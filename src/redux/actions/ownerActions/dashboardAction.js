@@ -53,7 +53,11 @@ export const getOwnerDashboard = () => {
 				) {
 					console.log('callilng refreshToken');
 					// Wipes the cash if not given a way to call the failed request again.
-					// await dispatch(refreshToken());
+					await dispatch(refreshToken());
+					// await dispatch(getOwnerDashboard());
+					console.log(
+						'Token is refreshed! please compare the old and new access token from redux store in the debugger!'
+					);
 				} else {
 					console.log(
 						'Error while getting dashboard: ',
