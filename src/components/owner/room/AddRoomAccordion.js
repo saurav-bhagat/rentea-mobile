@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import AddRoomAccordionContent from './AddRoomAccordionContent';
 import AddRoomAccordionHeader from './AddRoomAccordionHeader';
 
-const AddRoomAccordion = ({ roomCount }) => {
+const AddRoomAccordion = ({ roomCount, floorCount }) => {
 	const roomsFormData = useSelector((state) => state.addRoomDetails);
 	const roomsInStore = roomsFormData.roomDetails;
 
@@ -41,7 +41,12 @@ const AddRoomAccordion = ({ roomCount }) => {
 			} else {
 				tempArray.push({
 					title: `Room ${i + 1}`,
-					content: <AddRoomAccordionContent isData={false} />,
+					content: (
+						<AddRoomAccordionContent
+							isData={false}
+							floorCount={floorCount}
+						/>
+					),
 				});
 			}
 			roomsPresentLength--;

@@ -8,9 +8,8 @@ import { roomAccordionStyles } from './addRoomAccordionStyles';
 import { saveRoomData } from '../../../redux/actions';
 import { validateRoomFields } from '../../../helpers/addBuildingValidation';
 
-const AddRoomAccordionContent = ({ isData, data }) => {
+const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 	const dispatch = useDispatch();
-
 	const [roomNo, setRoomNo] = isData ? useState(data.roomNo) : useState('');
 	const [rent, setRent] = isData ? useState(data.rent) : useState('');
 	const [security, setSecurity] = isData
@@ -32,8 +31,9 @@ const AddRoomAccordionContent = ({ isData, data }) => {
 	};
 
 	const handleAddRoomClick = () => {
-		if (validateRoomFields(currentRoomData)) {
+		if (validateRoomFields(currentRoomData, floorCount)) {
 			dispatch(saveRoomData(currentRoomData));
+			alert(`Room ${roomNo} added in building`);
 		} else {
 			alert('Enter fields properly');
 		}
