@@ -35,7 +35,7 @@ export const addBankDetailsData = (bankDetails) => {
 			ownerId: state.auth.userInfo.userDetails.ownerId,
 			...bankDetails,
 		};
-		console.log('body in addBankDetailsData', body);
+
 		axios
 			.post(`${API_URL}/owner/add-bank-info`, body, {
 				headers: {
