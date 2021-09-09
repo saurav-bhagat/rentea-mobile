@@ -8,6 +8,7 @@ import { authReducer } from './authReducers/authReducer';
 import { addUserDetailReducer } from './userDetailReducers/addUserDetailsReducer';
 import dashboardReducer from './ownerReducers/dashboardReducer';
 import addTenantReducer from './ownerReducers/addTenantReducer';
+import addBankDetailsReducer from './ownerReducers/addBankDetailReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
 	userDetail: addUserDetailReducer,
 	ownerDashbhoard: dashboardReducer,
 	addTenantResponse: addTenantReducer,
+	addBankDetails: addBankDetailsReducer,
 });
 
 export default rootReducer;
