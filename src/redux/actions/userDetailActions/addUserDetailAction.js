@@ -42,7 +42,7 @@ export const addUserDetail = (userData) => {
 			.then(async (response) => {
 				console.log('response after updating user details', response);
 				dispatch(addUserDetailSuccess(response.data.updatedUserInfo));
-				navigate('AddBuildingForm');
+				navigate('OwnerBankDetail');
 			})
 			.catch((err) => {
 				dispatch(addUserDetailFail(err.message));

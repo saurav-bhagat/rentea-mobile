@@ -57,6 +57,29 @@ export const isValidUserDetails = ({ fName, lName, email }) => {
 	return false;
 };
 
+export const isValidBankDetails = ({
+	accountName,
+	accountNumber,
+	ifsc,
+	bankName,
+	beneficiaryName,
+}) => {
+	if (
+		!validateText({
+			accountName,
+			accountNumber,
+			ifsc,
+			bankName,
+			beneficiaryName,
+		})
+	) {
+		return false;
+	}
+	const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+	const accountNumberRegex = /[0-9]{9,18}/;
+	return accountNumberRegex.test(accountNumber) && ifscRegex.test(ifsc);
+};
+
 export const validateRoomFields = (
 	{ roomNo, rent, security, floor, sizeInFt, bhk },
 	floorCount
