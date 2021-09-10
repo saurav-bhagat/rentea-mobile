@@ -6,6 +6,7 @@ import { ActivityIndicator, View } from 'react-native';
 import RootRoutes from './src/navigation';
 import store from './src/redux/store';
 
+
 export default function App() {
 	const [fontLoading, setFontLoading] = useState(true);
 

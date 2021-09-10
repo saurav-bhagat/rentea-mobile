@@ -165,10 +165,9 @@ export const sendOtp = (phoneNumber) => {
 export const refreshToken = () => {
 	return async (dispatch, getState) => {
 		let { auth } = await getState();
-		let auth1 = AsyncStorage.getItem('userInfo');
-		console.log('OLD STATE' + JSON.stringify(auth1));
+
 		let refreshToken = auth.userInfo.refreshToken;
-		console.log('REf  ' + refreshToken);
+
 		dispatch(refreshTokenRequest());
 		axios
 			.post(`${API_URL}/auth/refresh-token`, { refreshToken })
@@ -178,17 +177,17 @@ export const refreshToken = () => {
 						...auth,
 						userInfo: {
 							...auth.userInfo,
-							refreshToken: response.data.refreshToken,
-							accessToken: response.data.accessToken,
+							refreshToken:
+								response.data.userDocument.refreshToken,
+							accessToken: response.data.userDocument.accessToken,
 						},
 					};
+
 					AsyncStorage.setItem(
 						'userInfo',
 						JSON.stringify(newUserData)
 					);
-					console.log(
-						'response data doc is ' + JSON.stringify(newUserData)
-					);
+
 					dispatch(refreshTokenSuccess(newUserData.userInfo));
 				} catch (error) {
 					alert('Error in updating refreshed token');

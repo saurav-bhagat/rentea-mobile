@@ -34,7 +34,7 @@ export const getOwnerDashboard = () => {
 		const body = {
 			ownerId: auth.userInfo.userDetails.ownerId,
 		};
-		console.log('body is ', body);
+
 		axios
 			.post(`${API_URL}/owner/dashboard`, body, {
 				headers: {
@@ -54,10 +54,7 @@ export const getOwnerDashboard = () => {
 					console.log('callilng refreshToken');
 					// Wipes the cash if not given a way to call the failed request again.
 					await dispatch(refreshToken());
-					// await dispatch(getOwnerDashboard());
-					console.log(
-						'Token is refreshed! please compare the old and new access token from redux store in the debugger!'
-					);
+					await dispatch(getOwnerDashboard());
 				} else {
 					console.log(
 						'Error while getting dashboard: ',
