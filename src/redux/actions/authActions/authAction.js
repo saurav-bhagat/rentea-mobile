@@ -133,8 +133,11 @@ export const verifyOtp = (phoneNumber, code) => {
 			})
 			.catch((err) => {
 				dispatch(verifyOtpFail());
-				console.log(err);
-				alert('Error while verifying otp');
+				console.log(err.response.data);
+				alert(
+					'Error while verifying otp: ' +
+						JSON.stringify(err.response.data)
+				);
 			});
 	};
 };
@@ -156,8 +159,11 @@ export const sendOtp = (phoneNumber) => {
 			})
 			.catch((err) => {
 				dispatch(sendOtpFail());
-				console.log(err);
-				alert('Error while sending otp');
+				console.log(err.response.data);
+				alert(
+					'Error while sending otp: ' +
+						JSON.stringify(err.response.data)
+				);
 			});
 	};
 };
