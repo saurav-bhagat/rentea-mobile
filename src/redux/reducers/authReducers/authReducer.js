@@ -6,6 +6,9 @@ import {
 	VERIFY_OTP_FAIL,
 	VERIFY_OTP_REQUEST,
 	VERIFY_OTP_SUCCESS,
+	REFRESH_TOKEN_REQUEST,
+	REFRESH_TOKEN_SUCCESS,
+	REFRESH_TOKEN_FAIL,
 } from '../../actions/authActions/authTypes';
 
 const initialState = {
@@ -50,6 +53,26 @@ export const authReducer = (state = initialState, action) => {
 				loading: false,
 			};
 		case VERIFY_OTP_FAIL:
+			return {
+				...state,
+				msg: action.msg,
+				error: true,
+				loading: false,
+			};
+		case REFRESH_TOKEN_REQUEST:
+			return {
+				...state,
+				loading: true,
+			};
+		case REFRESH_TOKEN_SUCCESS:
+			return {
+				...state,
+				userInfo: action.payload,
+				msg: action.msg,
+				error: false,
+				loading: false,
+			};
+		case REFRESH_TOKEN_FAIL:
 			return {
 				...state,
 				msg: action.msg,

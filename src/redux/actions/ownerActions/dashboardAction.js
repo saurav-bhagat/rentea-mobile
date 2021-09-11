@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { refreshToken } from '../authActions/authAction';
 import { API_URL } from '@env';
 import {
 	GET_OWNER_DASHBOARD_FAILURE,
@@ -33,7 +34,7 @@ export const getOwnerDashboard = () => {
 		const body = {
 			ownerId: auth.userInfo.userDetails.ownerId,
 		};
-		console.log('body is ', body);
+
 		axios
 			.post(`${API_URL}/owner/dashboard`, body, {
 				headers: {
@@ -41,16 +42,26 @@ export const getOwnerDashboard = () => {
 					Authorization: `Bearer ${auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				console.log('Owner dashboard: ', response.data);
 				dispatch(getDashboardSuccess(response.data));
 			})
-			.catch((error) => {
-				console.log(
-					'Error while getting dashboard: ',
-					error.response.data
-				);
-				dispatch(getDashboardFailure(error.response.data));
+			.catch(async (error) => {
+				if (
+					error.response.status === 403 &&
+					error.response.data.err === 'jwt expired'
+				) {
+					console.log('callilng refreshToken');
+					// Wipes the cash if not given a way to call the failed request again.
+					await dispatch(refreshToken());
+					await dispatch(getOwnerDashboard());
+				} else {
+					console.log(
+						'Error while getting dashboard: ',
+						error.response.data
+					);
+					dispatch(getDashboardFailure(error.response.data));
+				}
 			});
 	};
 };

@@ -71,6 +71,12 @@ export const saveBuildingData = (buildingObj) => {
 				},
 			})
 			.then(async (response) => {
+				if (
+					response.status === 403 &&
+					response.body.err === 'jwt expired'
+				) {
+					await dispatch(refreshToken());
+				}
 				dispatch(addBuildingSuccess(buildingObj));
 
 				try {
@@ -97,7 +103,8 @@ export const saveBuildingData = (buildingObj) => {
 			.catch((error) => {
 				console.log(
 					'error while sending building data is : ',
-					error.response.data.err
+					error.message,
+					state
 				);
 				dispatch(addBuildingError());
 				alert('Error while adding building');

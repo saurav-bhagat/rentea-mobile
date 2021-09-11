@@ -6,7 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import { useIsFocused } from '@react-navigation/native';
 
-import { userLogout } from '../../../../redux/actions/authActions/authAction';
+import {
+	userLogout,
+	refreshToken,
+} from '../../../../redux/actions/authActions/authAction';
 import PropertyList from '../../../../components/dashboard/property/PropertyList';
 import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashboardAction';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
@@ -35,7 +38,25 @@ const PropertiesScreen = () => {
 	// 	loading
 	// );
 	if (loading) {
-		return <Text>Loading....</Text>;
+		return (
+			<>
+				<Button
+					onPress={() => {
+						dispatch(refreshToken());
+					}}
+				>
+					<Text>Refresh</Text>
+				</Button>
+				<Button
+					onPress={() => {
+						dispatch(getOwnerDashboard());
+					}}
+				>
+					<Text>Reload</Text>
+				</Button>
+				<Text>Loading....</Text>
+			</>
+		);
 	}
 	if (error) {
 		return (
