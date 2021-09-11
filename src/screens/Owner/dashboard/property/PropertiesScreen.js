@@ -1,6 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import {
+	View,
+	Text,
+	ScrollView,
+	TouchableOpacity,
+	ActivityIndicator,
+} from 'react-native';
 import { Button } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
@@ -29,18 +34,11 @@ const PropertiesScreen = () => {
 		dispatch(getOwnerDashboard());
 	}, [isFocused]);
 
-	// console.log(
-	// 	'Properties: ',
-	// 	properties,
-	// 	' And error is: ',
-	// 	error,
-	// 	' And loading is: ',
-	// 	loading
-	// );
 	if (loading) {
 		return (
-			<>
-				<Button
+			<View style={{ flex: 1 }}>
+				<CrossPlatformHeader title="Properties" />
+				{/* <Button
 					onPress={() => {
 						dispatch(refreshToken());
 					}}
@@ -53,9 +51,17 @@ const PropertiesScreen = () => {
 					}}
 				>
 					<Text>Reload</Text>
-				</Button>
-				<Text>Loading....</Text>
-			</>
+				</Button> */}
+				<View
+					style={{
+						flex: 1,
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<ActivityIndicator color="#109FDA" size="large" />
+				</View>
+			</View>
 		);
 	}
 	if (error) {
@@ -87,7 +93,7 @@ const PropertiesScreen = () => {
 			dispatch(userLogout());
 		};
 		return (
-			<View>
+			<View style={{ flex: 1 }}>
 				<CrossPlatformHeader title="Properties" />
 				<ScrollView
 					contentContainerStyle={
@@ -95,12 +101,12 @@ const PropertiesScreen = () => {
 					}
 				>
 					<PropertyList properties={properties} />
-					<AddBuildingFabButton />
 
 					<Button onPress={logout}>
 						<Text>Logout</Text>
 					</Button>
 				</ScrollView>
+				<AddBuildingFabButton />
 			</View>
 		);
 	}
