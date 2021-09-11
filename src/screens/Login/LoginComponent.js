@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Item, Input, Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
-
-import Constants from 'expo-constants';
 import * as Print from 'expo-print';
-import * as FileSystem from 'expo-file-system';
 
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions';
 import { validatePhone } from '../../helpers/addBuildingValidation';
-import { API_URL } from '@env';
 
 const view = async (fileUrl) => {
 	try {

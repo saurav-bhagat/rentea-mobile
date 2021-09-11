@@ -11,7 +11,6 @@ export const loginStyles = ScaledSheet.create({
 		alignItems: 'center',
 	},
 	header: {
-		// shadowColor: '#000000',
 		borderColor: '#f2f2f2',
 		borderTopWidth: 1,
 		borderLeftWidth: 1,
@@ -32,20 +31,10 @@ export const loginStyles = ScaledSheet.create({
 	},
 	sheetContainer: {
 		flex: 1,
-		// shadowColor: '#000000',
-		// shadowOffset: { width: 0, height: 0 },
-		// shadowRadius: 5,
-		// shadowOpacity: 0.5,
 	},
 	loginComponentContainer: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		paddingTop: '12@s',
-		paddingBottom: '12@s',
-		// shadowColor: '#000',
-		// shadowOffset: { width: 0, height: 0 },
-		// shadowRadius: 5,
-		// shadowOpacity: 0.4,
 	},
 	loginText: {
 		fontSize: '27@s',
@@ -76,7 +65,7 @@ export const loginStyles = ScaledSheet.create({
 	loginFooterTextContainer: {
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginTop: '27@s',
+		marginTop: '10@s',
 		width: '80%',
 	},
 	login_footer_text: {
@@ -88,5 +77,7 @@ export const loginStyles = ScaledSheet.create({
 		marginLeft: '3@s',
 		textDecorationLine: 'underline',
 		fontSize: '10@ms0.3',
+		position: 'relative',
+		top: '2@s',
 	},
 });

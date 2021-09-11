@@ -40,7 +40,7 @@ const LoginScreen = () => {
 		>
 			<KeyboardAvoidingView
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				keyboardVerticalOffset={-80}
+				keyboardVerticalOffset={-150}
 				style={{ flex: 1 }}
 			>
 				<View style={loginStyles.loginContainer}>
@@ -49,7 +49,7 @@ const LoginScreen = () => {
 							source={require('../../images/rentea-logo.png')}
 							style={{
 								width: '80%',
-								height: 120,
+								height: 140,
 							}}
 						/>
 						<Text>Now, Manage your Property over a cup of Tea</Text>
