@@ -1,11 +1,22 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { ScrollView } from 'react-native';
+import TransactionCard from '../../../Tenant/payments/TransactionCard';
 
 const CompletedPayments = () => {
 	return (
-		<View>
-			<Text>Completed Payments</Text>
-		</View>
+		<ScrollView>
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+			<TransactionCard />
+		</ScrollView>
 	);
 };
 
