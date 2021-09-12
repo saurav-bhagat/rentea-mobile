@@ -24,7 +24,7 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	},
 	maintainerContainer: {
 		padding: '10@ms',
-		width: '85%',
+		width: '90%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 	},
@@ -35,6 +35,7 @@ export const propertiesScreenStyles = ScaledSheet.create({
 		fontSize: '15@ms0.3',
 	},
 	roomsContainer: {
+		flex: 1,
 		padding: '10@ms',
 		width: '85%',
 		marginLeft: 'auto',
@@ -51,5 +52,17 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	},
 	title: {
 		fontSize: 18,
+	},
+	listContainer: {
+		width: '90%',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		marginBottom: 15,
+	},
+	listSubtitle: {
+		flexDirection: 'row',
+		justifyContent: 'space-evenly',
+		paddingLeft: 10,
+		paddingTop: 5,
 	},
 });
