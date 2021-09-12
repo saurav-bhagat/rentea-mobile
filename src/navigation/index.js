@@ -20,6 +20,7 @@ import { setUserInfo } from '../redux/actions';
 
 import TenantDashboardBottomTab from './TenantDashboardBottomTab';
 import OwnerBankDetailsScreen from '../screens/Owner/bankDetails/OwnerBankDetailsScreen';
+import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 
 const { Screen, Navigator } = createStackNavigator();
 
@@ -111,6 +112,10 @@ const RootRoutes = () => {
 											name="ownerDashboard"
 											component={OwnerDashboardBottomTab}
 										/>
+										<Screen
+											name="Profile"
+											component={ProfileScreen}
+										/>
 									</>
 								) : (
 									<>
@@ -122,6 +127,10 @@ const RootRoutes = () => {
 											name="AddBuildingForm"
 											component={AddBuildingForm}
 										/>
+										<Screen
+											name="Profile"
+											component={ProfileScreen}
+										/>
 									</>
 								)}
 							</>
@@ -130,6 +139,10 @@ const RootRoutes = () => {
 								<Screen
 									name="TenantDashboard"
 									component={TenantDashboardBottomTab}
+								/>
+								<Screen
+									name="Profile"
+									component={ProfileScreen}
 								/>
 							</>
 						)}

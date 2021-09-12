@@ -92,9 +92,6 @@ const TenantDashboard = () => {
 						</Body>
 					</CardItem>
 				</Card>
-				<Button onPress={logout}>
-					<Text>Logout</Text>
-				</Button>
 			</ScrollView>
 		</View>
 	);

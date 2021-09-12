@@ -58,9 +58,10 @@ const AddBuildingForm = () => {
 				<CrossPlatformHeader
 					title="Building Details"
 					backCallback={() => navigate('Properties')}
+					profile={false}
 				/>
 			) : (
-				<CrossPlatformHeader title="Building Details" />
+				<CrossPlatformHeader title="Building Details" profile={false} />
 			)}
 
 			<View style={addBuildingFormstyles.addBFcontainer}>
