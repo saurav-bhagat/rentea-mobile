@@ -36,7 +36,7 @@ const OwnerBankDetailsScreen = () => {
 
 	return (
 		<KeyboardAwareScrollView>
-			<CrossPlatformHeader title="Bank Details" />
+			<CrossPlatformHeader title="Bank Details" profile={false} />
 			<View style={ownerBankDetailsStyles.oudsContainer}>
 				<View style={ownerBankDetailsStyles.oudsTextContainer}>
 					<Text style={ownerBankDetailsStyles.oudsShortText}>

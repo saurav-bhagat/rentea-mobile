@@ -43,7 +43,6 @@ export const getOwnerDashboard = () => {
 				},
 			})
 			.then(async (response) => {
-				console.log('Owner dashboard: ', response.data);
 				dispatch(getDashboardSuccess(response.data));
 			})
 			.catch(async (error) => {

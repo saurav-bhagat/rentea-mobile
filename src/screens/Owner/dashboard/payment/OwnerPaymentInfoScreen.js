@@ -7,6 +7,7 @@ import UpcomingPayments from './UpcomingPayments';
 import CompletedPayments from './CompletedPayments';
 
 import { ownerPaymentStyles } from './OwnerPaymentStyles';
+import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 
 const renderTabBar = (props) => {
 	props.tabStyle = Object.create(props.tabStyle);
@@ -16,6 +17,7 @@ const renderTabBar = (props) => {
 const OwnerPaymentInfoScreen = () => {
 	return (
 		<View style={ownerPaymentStyles.ownerPaymentContainer}>
+			<CrossPlatformHeader title="Payment Info" />
 			<Tabs renderTabBar={renderTabBar}>
 				<Tab
 					tabStyle={{ backgroundColor: '#109FDA' }}

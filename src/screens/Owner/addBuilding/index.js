@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { Button, Header, Left, Right, Body, Title } from 'native-base';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import BuildingAccordion from './BuildingAccordion';
@@ -17,7 +15,7 @@ const AddBuilding = () => {
 				backgroundColor: 'white',
 			}}
 		>
-			<CrossPlatformHeader title="Add Building" />
+			<CrossPlatformHeader title="Add Building" profile={false} />
 			<View style={addBuildingStyles.addBContainer}>
 				<ScrollView>
 					<BuildingAccordion

@@ -101,10 +101,6 @@ const PropertiesScreen = () => {
 					}
 				>
 					<PropertyList properties={properties} />
-
-					<Button onPress={logout}>
-						<Text>Logout</Text>
-					</Button>
 				</ScrollView>
 				<AddBuildingFabButton />
 			</View>
