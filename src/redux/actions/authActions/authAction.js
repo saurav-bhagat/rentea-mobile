@@ -179,22 +179,12 @@ export const refreshToken = () => {
 			.post(`${API_URL}/auth/refresh-token`, { refreshToken })
 			.then((response) => {
 				try {
-					let newUserData = {
-						...auth,
-						userInfo: {
-							...auth.userInfo,
-							refreshToken:
-								response.data.userDocument.refreshToken,
-							accessToken: response.data.userDocument.accessToken,
-						},
-					};
-
 					AsyncStorage.setItem(
 						'userInfo',
-						JSON.stringify(newUserData)
+						JSON.stringify(response.data.userDocument)
 					);
 
-					dispatch(refreshTokenSuccess(newUserData.userInfo));
+					dispatch(refreshTokenSuccess(response.data.userDocument));
 				} catch (error) {
 					alert('Error in updating refreshed token');
 					console.log(error);

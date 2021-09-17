@@ -18,10 +18,13 @@ export default function CrossPlatformHeader({
 	let userType;
 	if (authState && authState.userInfo) {
 		userType = authState.userInfo.userDetails.userType;
-		userType === 'Owner'
-			? (userName = authState.userInfo.userDetails.accountName.split(' '))
-			: (userName = authState.userInfo.userDetails.tenantName.split(' '));
-		userName = userName[0][0] + userName[1][0];
+		const { accountName, tenantName } = authState.userInfo.userDetails;
+		if (accountName || tenantName) {
+			userType === 'Owner'
+				? (userName = accountName.split(' '))
+				: (userName = tenantName.split(' '));
+			userName = userName[0][0] + userName[1][0];
+		}
 	}
 
 	return (

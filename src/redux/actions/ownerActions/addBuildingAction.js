@@ -107,7 +107,9 @@ export const saveBuildingData = (buildingObj) => {
 					state
 				);
 				dispatch(addBuildingError());
-				alert('Error while adding building');
+				alert(
+					`Error while adding building is  :  ${error.response.data.err}`
+				);
 			});
 	};
 };
