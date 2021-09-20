@@ -9,7 +9,7 @@ import receiptHtml from '../../../helpers/receiptHtml';
 
 import { tenantReceiptStyles } from './TenantReceiptStyles';
 
-const ReceiptCard = () => {
+const ReceiptCard = ({ receiptData }) => {
 	const handleReceiptView = async () => {
 		try {
 			const { uri } = await Print.printToFileAsync({
@@ -63,11 +63,11 @@ const ReceiptCard = () => {
 					<Body>
 						<View style={{ width: '100%' }}>
 							<View style={tenantReceiptStyles.receiptCard_row1}>
-								<Text>For Month: July</Text>
+								<Text>For Month: {receiptData.month}</Text>
 								<Text>
 									Amount Paid:{' '}
 									<Text style={tenantReceiptStyles.boldValue}>
-										10,000
+										{receiptData.amount}
 									</Text>
 								</Text>
 							</View>
@@ -77,7 +77,7 @@ const ReceiptCard = () => {
 									<Text
 										style={tenantReceiptStyles.boldValue}
 									></Text>
-									UPI(PhonePe)
+									{receiptData.mode}
 								</Text>
 								<View
 									style={
