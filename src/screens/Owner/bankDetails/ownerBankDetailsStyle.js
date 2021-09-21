@@ -12,6 +12,10 @@ export const ownerBankDetailsStyles = ScaledSheet.create({
 		fontSize: '14@ms0.3',
 		color: '#666666',
 	},
+	oudsAsteriskText: {
+		fontSize: '12@ms0.3',
+		color: '#888888',
+	},
 	oudsFormContainer: {},
 	oudsPhoneInputBox: {
 		paddingLeft: '20@ms',

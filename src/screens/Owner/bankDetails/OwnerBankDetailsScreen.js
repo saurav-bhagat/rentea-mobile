@@ -42,32 +42,35 @@ const OwnerBankDetailsScreen = () => {
 					<Text style={ownerBankDetailsStyles.oudsShortText}>
 						Enter your bank details below.
 					</Text>
+					<Text style={ownerBankDetailsStyles.oudsAsteriskText}>
+						* Mandatory field.
+					</Text>
 				</View>
 
 				<View style={ownerBankDetailsStyles.oudsFormContainer}>
 					<TextInput
 						style={ownerBankDetailsStyles.oudsPhoneInputBox}
 						placeholderTextColor={'#aaa'}
-						placeholder="Account Name"
+						placeholder="Account Name*"
 						onChangeText={(val) => setAccountName(val)}
 					/>
 					<TextInput
 						style={ownerBankDetailsStyles.oudsPhoneInputBox}
 						placeholderTextColor={'#aaa'}
-						placeholder="Account Number"
+						placeholder="Account Number*"
 						onChangeText={(val) => setAccountNumber(val)}
 						keyboardType="numeric"
 					/>
 					<TextInput
 						style={ownerBankDetailsStyles.oudsPhoneInputBox}
 						placeholderTextColor={'#aaa'}
-						placeholder="IFSC"
+						placeholder="IFSC*"
 						onChangeText={(val) => setIfsc(val)}
 					/>
 					<TextInput
 						style={ownerBankDetailsStyles.oudsPhoneInputBox}
 						placeholderTextColor={'#aaa'}
-						placeholder="Bank Name"
+						placeholder="Bank Name*"
 						onChangeText={(val) => setBankName(val)}
 					/>
 					<TextInput
