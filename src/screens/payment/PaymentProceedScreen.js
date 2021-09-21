@@ -26,6 +26,7 @@ const PaymentProceedScreen = () => {
 				setWebViewFlag(false);
 				createReceipt(data, authState);
 				setAcknowldgement('Transaction successfull');
+				navigate('TenantDashboard');
 			} else {
 				setWebViewFlag(false);
 				setAcknowldgement('Opps something went wrong');

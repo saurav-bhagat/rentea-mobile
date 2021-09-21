@@ -1,30 +1,21 @@
 import axios from 'axios';
+import { format } from 'date-fns';
 import { API_URL } from '@env';
 
 const createReceipt = (transactionResponseData, authState) => {
 	const { TXNAMOUNT: amount, PAYMENTMODE: mode } = transactionResponseData;
-	const monthNames = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December',
-	];
 
-	const rentDueDate = new Date(authState.userInfo.userDetails.rentDueDate);
+	const month = format(
+		new Date(authState.userInfo.userDetails.rentDueDate),
+		'MMMM'
+	);
 
 	const body = {
 		amount,
-		month: monthNames[rentDueDate.getMonth()],
+		month,
 		mode,
 		userId: authState.userInfo.userDetails._id,
+		rentDueDate: authState.userInfo.userDetails.rentDueDate,
 	};
 
 	axios
@@ -34,11 +25,11 @@ const createReceipt = (transactionResponseData, authState) => {
 				Authorization: `Bearer ${authState.userInfo.accessToken}`,
 			},
 		})
-		.then(async (response) => {
+		.then((response) => {
 			console.log('create receipt response is ', response.data.msg);
 		})
-		.catch(async (error) => {
-			console.log('error while creating receipt', error);
+		.catch((error) => {
+			console.log('error while creating receipt', error.response.data);
 		});
 };
 

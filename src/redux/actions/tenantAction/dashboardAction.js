@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '@env';
+import { refreshToken } from '../authActions/authAction';
 import {
 	GET_TENANT_DASHBOARD_FAILURE,
 	GET_TENANT_DASHBOARD_REQUEST,
@@ -40,14 +41,25 @@ export const getTenantDashboard = () => {
 					Authorization: `Bearer ${auth.userInfo.accessToken}`,
 				},
 			})
-			.then(async (response) => {
+			.then((response) => {
 				console.log('data fetch successfully in tenant dashboard');
 				dispatch(getDashboardSuccess(response.data.tenantDetails));
 			})
 			.catch(async (error) => {
-				console.log('error in tenant dash action', error);
-				alert('error while getting tenant dashboard');
-				dispatch(getDashboardFailure(error));
+				if (
+					error.response.status === 403 &&
+					error.response.data.err === 'jwt expired'
+				) {
+					console.log('callilng refreshToken');
+					await dispatch(refreshToken());
+					await dispatch(getTenantDashboard());
+				} else {
+					console.log(
+						'Error while getting tenant dashboard: ',
+						error.response.data
+					);
+					dispatch(getDashboardFailure(error.response.data));
+				}
 			});
 	};
 };
