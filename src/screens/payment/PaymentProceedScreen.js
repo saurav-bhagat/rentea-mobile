@@ -7,11 +7,13 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 import CrossPlatformHeader from '../../components/common/CrossPlatformHeader';
 import { navigate } from '../../navigation/rootNavigation';
+import createReceipt from '../../helpers/createReceipt';
 
 const PaymentProceedScreen = () => {
 	const [acknowldgement, setAcknowldgement] = useState('');
 	const [webViewFlag, setWebViewFlag] = useState(false);
 	const userDetails = useSelector((state) => state.auth.userInfo.userDetails);
+	const authState = useSelector((state) => state.auth);
 	const { _id: userId, ownerName, tenantName, rent } = userDetails;
 
 	const handleResponse = (data) => {
@@ -22,7 +24,9 @@ const PaymentProceedScreen = () => {
 
 			if (data.RESPCODE[0] == 0 && data.RESPCODE[1] == 1) {
 				setWebViewFlag(false);
+				createReceipt(data, authState);
 				setAcknowldgement('Transaction successfull');
+				navigate('TenantDashboard');
 			} else {
 				setWebViewFlag(false);
 				setAcknowldgement('Opps something went wrong');

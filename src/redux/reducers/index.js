@@ -9,6 +9,7 @@ import { addUserDetailReducer } from './userDetailReducers/addUserDetailsReducer
 import dashboardReducer from './ownerReducers/dashboardReducer';
 import addTenantReducer from './ownerReducers/addTenantReducer';
 import addBankDetailsReducer from './ownerReducers/addBankDetailReducer';
+import tenantDashboard from './tenantReducer/dashboardReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	ownerDashbhoard: dashboardReducer,
 	addTenantResponse: addTenantReducer,
 	addBankDetails: addBankDetailsReducer,
+	tenantDashboard: tenantDashboard,
 });
 
 export default rootReducer;
