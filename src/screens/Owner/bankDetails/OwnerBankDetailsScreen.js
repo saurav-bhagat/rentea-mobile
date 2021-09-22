@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
+import Clipboard from 'expo-clipboard';
 import { Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import { ownerBankDetailsStyles } from './ownerBankDetailsStyle';
@@ -14,23 +15,28 @@ const OwnerBankDetailsScreen = () => {
 	const addBankDetailsState = useSelector((state) => state.addBankDetails);
 	const [accountName, setAccountName] = useState('');
 	const [accountNumber, setAccountNumber] = useState('');
+	const [confirmAccountNumber, setConfirmAccountNumber] = useState('');
 	const [ifsc, setIfsc] = useState('');
 	const [bankName, setBankName] = useState('');
 	const [beneficiaryName, setBeneficiaryName] = useState('');
 
 	const handleOwnerBankDetailsSubmit = () => {
-		let formData = {
-			accountName,
-			accountNumber,
-			ifsc,
-			bankName,
-			beneficiaryName,
-		};
+		if (accountNumber === confirmAccountNumber) {
+			let formData = {
+				accountName,
+				accountNumber,
+				ifsc,
+				bankName,
+				beneficiaryName,
+			};
 
-		if (isValidBankDetails(formData)) {
-			dispatch(addBankDetailsData(formData));
+			if (isValidBankDetails(formData)) {
+				dispatch(addBankDetailsData(formData));
+			} else {
+				alert('Enter fields properly');
+			}
 		} else {
-			alert('Enter fields properly');
+			alert("Both the account numbers don't match.");
 		}
 	};
 
@@ -55,10 +61,28 @@ const OwnerBankDetailsScreen = () => {
 						onChangeText={(val) => setAccountName(val)}
 					/>
 					<TextInput
+						secureTextEntry={true}
+						contextMenuHidden={true}
+						selectTextOnFocus={false}
+						onBlur={() => Clipboard.setString('')}
+						onFocus={() => Clipboard.setString('')}
+						onSelectionChange={() => Clipboard.setString('')}
 						style={ownerBankDetailsStyles.oudsPhoneInputBox}
 						placeholderTextColor={'#aaa'}
-						placeholder="Account Number*"
+						placeholder="Bank Account Number*"
 						onChangeText={(val) => setAccountNumber(val)}
+						keyboardType="numeric"
+					/>
+					<TextInput
+						contextMenuHidden
+						selectTextOnFocus={false}
+						onBlur={() => Clipboard.setString('')}
+						onFocus={() => Clipboard.setString('')}
+						onSelectionChange={() => Clipboard.setString('')}
+						style={ownerBankDetailsStyles.oudsPhoneInputBox}
+						placeholderTextColor={'#aaa'}
+						placeholder="Confirm Account Number*"
+						onChangeText={(val) => setConfirmAccountNumber(val)}
 						keyboardType="numeric"
 					/>
 					<TextInput
