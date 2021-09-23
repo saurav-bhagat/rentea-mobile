@@ -9,6 +9,25 @@ export const otpStyles = ScaledSheet.create({
 		marginLeft: 'auto',
 		marginRight: 'auto',
 	},
+	resendContainer: {
+		marginTop: '-20%',
+		flex: 0.1,
+		width: '80%',
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
+	resendText: {
+		fontSize: '15@ms0.3',
+		color: '#777777',
+	},
+	sText: {
+		fontSize: '15@ms0.3',
+		color: '#777777',
+		marginLeft: '-2.3%',
+	},
+	countDownContainer: {
+		marginLeft: '-1%',
+	},
 	otpEnterText: {
 		fontSize: '28@ms0.3',
 		color: '#666666',
