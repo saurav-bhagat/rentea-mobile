@@ -11,10 +11,22 @@ const TransactionCard = ({ data }) => {
 			<CardItem>
 				<Body>
 					<View style={{ width: '100%' }}>
-						<View style={paymentHisStyles.transactionCard_row1}>
+						<View>
+							<Text>Building Name : {data.buildingName}</Text>
+						</View>
+						<View>
+							<Text>Room Number : {data.roomNo}</Text>
+						</View>
+						<View>
+							<Text>Tenant Name : {data.tenantName}</Text>
+						</View>
+						<View>
 							<Text>
+								Date :{' '}
 								{format(new Date(data.txnDate), 'dd MMM, yyyy')}
 							</Text>
+						</View>
+						<View>
 							<Text>
 								Amount:{' '}
 								<Text style={paymentHisStyles.boldValue}>
@@ -23,7 +35,7 @@ const TransactionCard = ({ data }) => {
 							</Text>
 						</View>
 						{data.paymentMode && (
-							<View style={paymentHisStyles.transactionCard_row2}>
+							<View>
 								<Text>
 									Paid Through:{' '}
 									<Text

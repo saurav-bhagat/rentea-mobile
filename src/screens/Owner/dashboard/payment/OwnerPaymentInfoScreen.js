@@ -31,36 +31,57 @@ const OwnerPaymentInfoScreen = () => {
 			buildingIndex++
 		) {
 			let building = ownerBuilding[buildingIndex];
-			const { rooms } = building;
+			const { rooms, name: buildingName } = building;
 			if (rooms && rooms.length) {
 				for (let roomIndex = 0; roomIndex < rooms.length; roomIndex++) {
-					const { tenants, rent } = rooms[roomIndex];
-					tenantPlusRentContainer.push({ tenants, rent });
+					const { tenants, rent, roomNo } = rooms[roomIndex];
+					tenantPlusRentContainer.push({
+						tenants,
+						rent,
+						roomNo,
+						buildingName,
+					});
 				}
 			}
 		}
 
 		if (tenantPlusRentContainer.length) {
 			for (let i = 0; i < tenantPlusRentContainer.length; i++) {
-				let { rent, tenants } = tenantPlusRentContainer[i];
+				let { rent, tenants, roomNo, buildingName } =
+					tenantPlusRentContainer[i];
 				if (tenants && tenants.length) {
 					for (
 						let tenantIndex = 0;
 						tenantIndex < tenants.length;
 						tenantIndex++
 					) {
-						const { paymentDetails, rentDueDate } =
-							tenants[tenantIndex];
+						const {
+							paymentDetails,
+							rentDueDate,
+							name: tenantName,
+						} = tenants[tenantIndex];
 						paymentDetails &&
 							paymentDetails.length &&
-							paymentDetailsContainer.push(paymentDetails);
+							paymentDetailsContainer.push({
+								paymentDetails,
+								tenantName,
+								roomNo,
+								buildingName,
+							});
+
 						pendingPaymentData.push({
 							txnAmount: rent,
 							txnDate: rentDueDate,
+							tenantName,
+							roomNo,
+							buildingName,
 						});
 						upcomingPaymentData.push({
 							txnAmount: rent,
 							txnDate: rentDueDate,
+							tenantName,
+							roomNo,
+							buildingName,
 						});
 					}
 				}
@@ -69,16 +90,20 @@ const OwnerPaymentInfoScreen = () => {
 
 		if (paymentDetailsContainer.length) {
 			for (let i = 0; i < paymentDetailsContainer.length; i++) {
-				const paymentDetails = paymentDetailsContainer[i];
+				const { paymentDetails, tenantName, roomNo, buildingName } =
+					paymentDetailsContainer[i];
 				if (paymentDetails && paymentDetails.length) {
 					for (
 						let paymentDetailIndex = 0;
 						paymentDetailIndex < paymentDetails.length;
 						paymentDetailIndex++
 					) {
-						completedPaymentData.push(
-							paymentDetails[paymentDetailIndex]
-						);
+						completedPaymentData.push({
+							...paymentDetails[paymentDetailIndex],
+							tenantName,
+							roomNo,
+							buildingName,
+						});
 					}
 				}
 			}
