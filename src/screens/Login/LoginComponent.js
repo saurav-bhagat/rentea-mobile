@@ -36,12 +36,13 @@ const viewRefundPolicy = async () => {
 const LoginComponent = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
+	const resend = false;
 
 	const [phone, setPhone] = useState('');
 
 	const handleLoginContinue = () => {
 		if (validatePhone(phone)) {
-			dispatch(sendOtp(phone));
+			dispatch(sendOtp(phone, resend));
 		} else {
 			alert('Enter valid Phone Number');
 		}
