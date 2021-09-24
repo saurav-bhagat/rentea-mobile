@@ -7,20 +7,20 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { otpStyles } from './otpStyles';
 import { verifyOtp } from '../../redux/actions';
+import { sendOtp } from '../../redux/actions';
 
 const OTPScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
 	const [code, setCode] = useState();
 	const [random, setRandom] = useState(Math.random().toString());
+	const { phoneNumber } = route.params;
 
 	const handleOTPSubmit = (code) => {
 		if (!code || code.length != 6) {
 			alert('OTP not valid');
 			return;
 		}
-
-		const { phoneNumber } = route.params;
 		if (code.length === 6) {
 			dispatch(verifyOtp(phoneNumber, code));
 		} else {
@@ -29,10 +29,12 @@ const OTPScreen = ({ route }) => {
 	};
 
 	const resendOTP = () => {
+		const resend = true;
 		Alert.alert('Login Code Sent', 'OTP is sent to your device.', [
 			{ text: 'OK' },
 		]);
 		setRandom(Math.random().toString());
+		dispatch(sendOtp(phoneNumber, resend));
 	};
 
 	return (

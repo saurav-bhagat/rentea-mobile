@@ -142,10 +142,12 @@ export const verifyOtp = (phoneNumber, code) => {
 	};
 };
 
-export const sendOtp = (phoneNumber) => {
+export const sendOtp = (phoneNumber, resend) => {
 	return (dispatch) => {
 		console.log(API_URL);
-		dispatch(sentOtpRequest());
+		if (resend == false) {
+			dispatch(sentOtpRequest());
+		}
 		axios
 			.post(`${API_URL}/auth/send-otp`, { phoneNumber })
 
@@ -155,7 +157,9 @@ export const sendOtp = (phoneNumber) => {
 			.then(() => {
 				console.log('Hello');
 				dispatch(sendOtpSuccess());
-				navigate('OTP', { phoneNumber });
+				if (resend == false) {
+					navigate('OTP', { phoneNumber });
+				}
 			})
 			.catch((err) => {
 				dispatch(sendOtpFail());
