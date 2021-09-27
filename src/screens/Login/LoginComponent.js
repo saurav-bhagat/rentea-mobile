@@ -7,6 +7,8 @@ import * as Print from 'expo-print';
 import { loginStyles } from './loginStyles';
 import { sendOtp } from '../../redux/actions';
 import { validatePhone } from '../../helpers/addBuildingValidation';
+import SnackBar from '../../components/common/SnackBar';
+import useSnack from '../../components/common/useSnack';
 
 const view = async (fileUrl) => {
 	try {
@@ -40,11 +42,22 @@ const LoginComponent = ({ navigation }) => {
 
 	const [phone, setPhone] = useState('');
 
+	const {
+		visible,
+		text,
+		setVisible,
+		setText,
+		onToggleSnackBar,
+		onDismissSnackBar,
+	} = useSnack();
+
 	const handleLoginContinue = () => {
 		if (validatePhone(phone)) {
 			dispatch(sendOtp(phone, resend));
 		} else {
-			alert('Enter valid Phone Number');
+			// alert('Enter valid Phone Number');
+			setText('Enter a valid Phone Number');
+			setVisible(true);
 		}
 	};
 	return (
@@ -103,6 +116,13 @@ const LoginComponent = ({ navigation }) => {
 					</TouchableOpacity>
 				</Text>
 			</View>
+			<SnackBar
+				visible={visible}
+				text={text}
+				onDismissSnackBar={onDismissSnackBar}
+				onToggleSnackBar={onToggleSnackBar}
+				bottom={-25}
+			/>
 		</View>
 	);
 };

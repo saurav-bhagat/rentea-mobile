@@ -7,6 +7,7 @@ import {
 const initialState = {
 	tenant: {},
 	error: '',
+	tenantMsg: '',
 	loading: false,
 };
 
@@ -22,17 +23,22 @@ const addTenantReducer = (state = initialState, action) => {
 				...state,
 				tenant: action.payload,
 				error: '',
+				tenantMsg: 'tenant added successfully',
 				loading: false,
 			};
 		case ADD_TENANT_FAILURE:
 			return {
 				...state,
 				tenant: {},
+				tenantMsg: 'failed to save tenant',
 				error: action.payload,
 				loading: false,
 			};
 		default:
-			return state;
+			return {
+				...state,
+				tenantMsg: 'default  state',
+			};
 	}
 };
 
