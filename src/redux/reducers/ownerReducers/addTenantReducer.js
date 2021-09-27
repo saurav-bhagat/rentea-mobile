@@ -2,11 +2,13 @@ import {
 	ADD_TENANT_FAILURE,
 	ADD_TENANT_REQUEST,
 	ADD_TENANT_SUCCESS,
+	ADD_TENANT_COMPLETE,
 } from '../../actions/ownerActions/addEntitiesTypes';
 
 const initialState = {
 	tenant: {},
 	error: '',
+	tenantMsg: '',
 	loading: false,
 };
 
@@ -20,17 +22,25 @@ const addTenantReducer = (state = initialState, action) => {
 		case ADD_TENANT_SUCCESS:
 			return {
 				...state,
-				tenant: action.payload,
+				tenantMsg: action.payload.tenantMsg,
+				tenant: action.payload.tenant,
 				error: '',
 				loading: false,
 			};
 		case ADD_TENANT_FAILURE:
 			return {
 				...state,
+				tenantMsg: action.payload.tenantMsg,
 				tenant: {},
 				error: action.payload,
 				loading: false,
 			};
+		case ADD_TENANT_COMPLETE: {
+			return {
+				...state,
+				tenantMsg: action.tenantMsg,
+			};
+		}
 		default:
 			return state;
 	}

@@ -4,6 +4,7 @@ import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CountDown from 'react-native-countdown-component';
 import { Button } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
+import { Snackbar } from 'react-native-paper';
 
 import { otpStyles } from './otpStyles';
 import { verifyOtp } from '../../redux/actions';
@@ -16,23 +17,31 @@ const OTPScreen = ({ route }) => {
 	const [random, setRandom] = useState(Math.random().toString());
 	const { phoneNumber } = route.params;
 
+	const [visible, setVisible] = useState(false);
+	const [snackText, setSnackText] = useState('');
+	const onToggleSnackBar = () => setVisible(!visible);
+	const onDismissSnackBar = () => {
+		setVisible(false);
+	};
+
 	const handleOTPSubmit = (code) => {
 		if (!code || code.length != 6) {
-			alert('OTP not valid');
+			setSnackText('OTP not valid');
+			setVisible(true);
 			return;
 		}
 		if (code.length === 6) {
 			dispatch(verifyOtp(phoneNumber, code));
 		} else {
-			alert('Invalid otp');
+			setSnackText('Invalid OTP');
+			setVisible(true);
 		}
 	};
 
 	const resendOTP = () => {
 		const resend = true;
-		Alert.alert('Login Code Sent', 'OTP is sent to your device.', [
-			{ text: 'OK' },
-		]);
+		setSnackText('Otp is sent to your device');
+		setVisible(true);
 		setRandom(Math.random().toString());
 		dispatch(sendOtp(phoneNumber, resend));
 	};
@@ -89,6 +98,20 @@ const OTPScreen = ({ route }) => {
 					</Text>
 				)}
 			</Button>
+			<Snackbar
+				visible={visible}
+				onDismiss={onDismissSnackBar}
+				action={{
+					label: 'OK!',
+					onPress: () => {
+						onToggleSnackBar();
+					},
+				}}
+				duration={3000}
+				style={{ backgroundColor: '#000', bottom: 50 }}
+			>
+				{snackText}
+			</Snackbar>
 		</View>
 	);
 };

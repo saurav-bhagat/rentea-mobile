@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	View,
 	Text,
@@ -20,15 +20,52 @@ import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashbo
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import AddBuildingFabButton from '../../../../components/owner/building/AddBuildingFabButton';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
+import { Snackbar } from 'react-native-paper';
+import { addBuildingDone } from '../../../../redux/actions';
+import { addTenantComplete } from '../../../../redux/actions/ownerActions/addTenantAction';
 
 const PropertiesScreen = () => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
 
+	const buildingAdded = 'buildings added successfully';
+	const tenantAdded = 'added tenant successfully';
+
+	const [visible, setVisible] = useState(false);
+	const [snackText, setSnackText] = useState('');
+
+	const onToggleSnackBar = () => setVisible(!visible);
+
+	const onDismissSnackBar = () => {
+		setVisible(false);
+		if (msg === buildingAdded) {
+			dispatch(addBuildingDone());
+		} else if (tenantMsg === tenantAdded) {
+			dispatch(addTenantComplete());
+		}
+	};
+
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
 	);
+
+	const { msg } = useSelector((state) => state.buildingDetails);
+	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+
+	const updateSnack = () => {
+		if (msg === buildingAdded) {
+			setSnackText(msg);
+			setVisible(true);
+		} else if (tenantMsg === tenantAdded) {
+			setSnackText(tenantMsg);
+			setVisible(true);
+		}
+	};
+
+	useEffect(() => {
+		updateSnack();
+	}, [msg, tenantMsg]);
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
@@ -103,6 +140,20 @@ const PropertiesScreen = () => {
 					<PropertyList properties={properties} />
 				</ScrollView>
 				<AddBuildingFabButton />
+				<Snackbar
+					visible={visible}
+					onDismiss={onDismissSnackBar}
+					action={{
+						label: 'OK!',
+						onPress: () => {
+							onToggleSnackBar();
+						},
+					}}
+					duration={3000}
+					style={{ backgroundColor: '#000', bottom: 50 }}
+				>
+					{snackText}
+				</Snackbar>
 			</View>
 		);
 	}

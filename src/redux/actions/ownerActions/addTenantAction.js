@@ -6,6 +6,7 @@ import {
 	ADD_TENANT_FAILURE,
 	ADD_TENANT_REQUEST,
 	ADD_TENANT_SUCCESS,
+	ADD_TENANT_COMPLETE,
 } from './addEntitiesTypes';
 import { getOwnerDashboard } from './dashboardAction';
 
@@ -15,17 +16,29 @@ const addTenantRequest = () => {
 	};
 };
 
-const addTenantSuccess = (payload) => {
+const addTenantSuccess = (tenant) => {
 	return {
 		type: ADD_TENANT_SUCCESS,
-		payload,
+		payload: {
+			tenant,
+			tenantMsg: 'added tenant successfully',
+		},
 	};
 };
 
 const addTenantFailure = (error) => {
 	return {
 		type: ADD_TENANT_FAILURE,
-		payload: error,
+		payload: {
+			error,
+			tenantMsg: 'error in adding tenant',
+		},
+	};
+};
+export const addTenantComplete = () => {
+	return {
+		type: ADD_TENANT_COMPLETE,
+		tenantMsg: 'Stop snackbar',
 	};
 };
 

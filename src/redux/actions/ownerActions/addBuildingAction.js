@@ -6,6 +6,7 @@ import {
 	ADD_BUILDING_ERROR,
 	ADD_BUILDING_REQUEST,
 	ADD_BUILDING_SUCCESS,
+	ADD_BUILDING_DONE,
 } from './addBuildingTypes';
 import { navigate } from '../../../navigation/rootNavigation';
 import { setRoomDetails } from './addRoomAction';
@@ -30,6 +31,13 @@ export const addBuildingError = () => {
 	return {
 		type: ADD_BUILDING_ERROR,
 		msg: 'Error while saving building',
+	};
+};
+
+export const addBuildingDone = () => {
+	return {
+		type: ADD_BUILDING_DONE,
+		msg: 'Stop snackbar',
 	};
 };
 

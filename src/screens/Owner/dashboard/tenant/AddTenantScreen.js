@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TextInputCommon from '../../../../components/common/TextInputCommon';
 import { isValidTenantData } from '../../../../helpers/addTenantValidation';
 import { addTenant } from '../../../../redux/actions/ownerActions/addTenantAction';
 import { addTenantStyles } from './AddTenantStyles';
+import { Snackbar } from 'react-native-paper';
 
 const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 	const dispatch = useDispatch();
@@ -15,6 +16,13 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
+
+	const [visible, setVisible] = useState(false);
+	const [snackText, setSnackText] = useState('');
+	const onToggleSnackBar = () => setVisible(!visible);
+	const onDismissSnackBar = () => {
+		setVisible(false);
+	};
 
 	const handleAddTenant = () => {
 		const tenantData = {
@@ -28,7 +36,8 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 		if (isValidTenantData(tenantData)) {
 			dispatch(addTenant(tenantData));
 		} else {
-			alert('Enter fields Properly');
+			setSnackText('Enter fields properly');
+			setVisible(true);
 		}
 	};
 
@@ -78,6 +87,20 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 					</Text>
 				</TouchableOpacity>
 			</View>
+			<Snackbar
+				visible={visible}
+				onDismiss={onDismissSnackBar}
+				action={{
+					label: 'OK!',
+					onPress: () => {
+						onToggleSnackBar();
+					},
+				}}
+				duration={3000}
+				style={{ backgroundColor: '#000', bottom: 50 }}
+			>
+				{snackText}
+			</Snackbar>
 		</KeyboardAwareScrollView>
 	);
 };

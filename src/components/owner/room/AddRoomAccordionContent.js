@@ -7,6 +7,7 @@ import TextInputCommon from '../../common/TextInputCommon';
 import { roomAccordionStyles } from './addRoomAccordionStyles';
 import { saveRoomData } from '../../../redux/actions';
 import { validateRoomFields } from '../../../helpers/addBuildingValidation';
+import { Snackbar } from 'react-native-paper';
 
 const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 	const dispatch = useDispatch();
@@ -21,6 +22,11 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 		: useState('');
 	const [bhk, setBhk] = isData ? useState(data.bhk) : useState('');
 
+	const [visible, setVisible] = useState(false);
+	const [snackText, setSnackText] = useState('');
+	const onToggleSnackBar = () => setVisible(!visible);
+	const onDismissSnackBar = () => setVisible(false);
+
 	const currentRoomData = {
 		roomNo,
 		rent,
@@ -33,9 +39,11 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 	const handleAddRoomClick = () => {
 		if (validateRoomFields(currentRoomData, floorCount)) {
 			dispatch(saveRoomData(currentRoomData));
-			alert(`Room ${roomNo} added in building`);
+			setSnackText(`Room ${roomNo} added in building`);
+			setVisible(true);
 		} else {
-			alert('Enter fields properly');
+			setSnackText('Enter fields properly');
+			setVisible(true);
 		}
 	};
 
@@ -141,6 +149,20 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 					</Text>
 				</Button>
 			</CardItem>
+			<Snackbar
+				visible={visible}
+				onDismiss={onDismissSnackBar}
+				action={{
+					label: 'OK!',
+					onPress: () => {
+						onToggleSnackBar();
+					},
+				}}
+				duration={3000}
+				style={{ backgroundColor: '#000', bottom: 50 }}
+			>
+				{snackText}
+			</Snackbar>
 		</Card>
 	);
 };

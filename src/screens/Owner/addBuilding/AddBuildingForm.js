@@ -14,6 +14,7 @@ import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
 import { saveBuildingData } from '../../../redux/actions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
 import { navigate } from '../../../navigation/rootNavigation';
+import { Snackbar } from 'react-native-paper';
 
 const AddBuildingForm = () => {
 	const navigation = useNavigation();
@@ -30,6 +31,13 @@ const AddBuildingForm = () => {
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 
+	const [visible, setVisible] = useState(false);
+	const [snackText, setSnackText] = useState('');
+	const onToggleSnackBar = () => setVisible(!visible);
+	const onDismissSnackBar = () => {
+		setVisible(false);
+	};
+
 	const handleAddBuildingFormSubmit = () => {
 		const formData = {
 			buildingName,
@@ -45,7 +53,8 @@ const AddBuildingForm = () => {
 		if (isValidBuildingData(formData)) {
 			dispatch(saveBuildingData(formData));
 		} else {
-			alert('Enter fields Properly');
+			setSnackText('Enter fields properly');
+			setVisible(true);
 		}
 	};
 
@@ -156,6 +165,20 @@ const AddBuildingForm = () => {
 						}
 						onPress={handleAddBuildingFormSubmit}
 					>
+						<Snackbar
+							visible={visible}
+							onDismiss={onDismissSnackBar}
+							action={{
+								label: 'OK!',
+								onPress: () => {
+									onToggleSnackBar();
+								},
+							}}
+							duration={3000}
+							style={{ backgroundColor: '#000', bottom: 50 }}
+						>
+							{snackText}
+						</Snackbar>
 						{addBuildingState.loading ? (
 							<ActivityIndicator color="#ffffff" size="large" />
 						) : (
