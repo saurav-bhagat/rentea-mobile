@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Alert, ActivityIndicator } from 'react-native';
+import {
+	View,
+	Text,
+	Alert,
+	ActivityIndicator,
+	KeyboardAvoidingView,
+} from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import CountDown from 'react-native-countdown-component';
 import { Button } from 'native-base';
@@ -54,7 +60,7 @@ const OTPScreen = ({ route }) => {
 	};
 
 	return (
-		<View style={otpStyles.otpContainer}>
+		<KeyboardAvoidingView style={otpStyles.otpContainer}>
 			<Text style={otpStyles.otpEnterText}>
 				Enter OTP received on your mobile:
 			</Text>
@@ -112,7 +118,7 @@ const OTPScreen = ({ route }) => {
 				onDismissSnackBar={onDismissSnackBar}
 				onToggleSnackBar={onToggleSnackBar}
 			/>
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
 

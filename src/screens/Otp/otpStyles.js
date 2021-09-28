@@ -10,7 +10,7 @@ export const otpStyles = ScaledSheet.create({
 		marginRight: 'auto',
 	},
 	resendContainer: {
-		marginTop: '-20%',
+		marginTop: '-60@ms',
 		flex: 0.1,
 		width: '80%',
 		flexDirection: 'row',
