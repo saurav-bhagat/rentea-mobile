@@ -20,15 +20,42 @@ import { getOwnerDashboard } from '../../../../redux/actions/ownerActions/dashbo
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import AddBuildingFabButton from '../../../../components/owner/building/AddBuildingFabButton';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
+import SnackBar from '../../../../components/common/SnackBar';
+import useSnack from '../../../../components/common/useSnack';
 
 const PropertiesScreen = () => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
 
+	const buildingAdded = 'buildings added successfully';
+	const tenantAdded = 'tenant added successfully';
+
+	const {
+		visible,
+		text,
+		setVisible,
+		setText,
+		onToggleSnackBar,
+		onDismissSnackBar,
+	} = useSnack();
+
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
 	);
+
+	const { msg } = useSelector((state) => state.buildingDetails);
+	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+
+	useEffect(() => {
+		if (msg === buildingAdded) {
+			setVisible(true);
+			setText('Building added successfully.');
+		} else if (tenantMsg === tenantAdded) {
+			setVisible(true);
+			setText('Tenant added successfully.');
+		}
+	}, [msg, tenantMsg]);
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
@@ -103,6 +130,12 @@ const PropertiesScreen = () => {
 					<PropertyList properties={properties} />
 				</ScrollView>
 				<AddBuildingFabButton />
+				<SnackBar
+					visible={visible}
+					text={text}
+					onDismissSnackBar={onDismissSnackBar}
+					onToggleSnackBar={onToggleSnackBar}
+				/>
 			</View>
 		);
 	}

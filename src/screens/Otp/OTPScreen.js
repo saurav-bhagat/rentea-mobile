@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { otpStyles } from './otpStyles';
 import { verifyOtp } from '../../redux/actions';
 import { sendOtp } from '../../redux/actions';
+import SnackBar from '../../components/common/SnackBar';
+import useSnack from '../../components/common/useSnack';
 
 const OTPScreen = ({ route }) => {
 	const dispatch = useDispatch();
@@ -15,24 +17,38 @@ const OTPScreen = ({ route }) => {
 	const [code, setCode] = useState();
 	const [random, setRandom] = useState(Math.random().toString());
 	const { phoneNumber } = route.params;
+	const {
+		visible,
+		onToggleSnackBar,
+		onDismissSnackBar,
+		setVisible,
+		text,
+		setText,
+	} = useSnack();
 
 	const handleOTPSubmit = (code) => {
 		if (!code || code.length != 6) {
-			alert('OTP not valid');
+			// alert('OTP not valid');
+			setVisible(true);
+			setText('Invalid OTP');
 			return;
 		}
 		if (code.length === 6) {
 			dispatch(verifyOtp(phoneNumber, code));
 		} else {
-			alert('Invalid otp');
+			// alert('Invalid otp');
+			setVisible(true);
+			setText('Invalid OTP');
 		}
 	};
 
 	const resendOTP = () => {
 		const resend = true;
-		Alert.alert('Login Code Sent', 'OTP is sent to your device.', [
-			{ text: 'OK' },
-		]);
+		// Alert.alert('Login Code Sent', 'OTP is sent to your device.', [
+		// 	{ text: 'OK' },
+		// ]);
+		setVisible(true);
+		setText('OTP is sent to your device.');
 		setRandom(Math.random().toString());
 		dispatch(sendOtp(phoneNumber, resend));
 	};
@@ -89,6 +105,13 @@ const OTPScreen = ({ route }) => {
 					</Text>
 				)}
 			</Button>
+
+			<SnackBar
+				text={text}
+				visible={visible}
+				onDismissSnackBar={onDismissSnackBar}
+				onToggleSnackBar={onToggleSnackBar}
+			/>
 		</View>
 	);
 };

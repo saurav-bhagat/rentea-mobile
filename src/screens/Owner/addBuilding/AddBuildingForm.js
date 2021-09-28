@@ -14,6 +14,8 @@ import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
 import { saveBuildingData } from '../../../redux/actions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
 import { navigate } from '../../../navigation/rootNavigation';
+import SnackBar from '../../../components/common/SnackBar';
+import useSnack from '../../../components/common/useSnack';
 
 const AddBuildingForm = () => {
 	const navigation = useNavigation();
@@ -30,6 +32,15 @@ const AddBuildingForm = () => {
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 
+	const {
+		visible,
+		onToggleSnackBar,
+		onDismissSnackBar,
+		setVisible,
+		text,
+		setText,
+	} = useSnack();
+
 	const handleAddBuildingFormSubmit = () => {
 		const formData = {
 			buildingName,
@@ -45,7 +56,8 @@ const AddBuildingForm = () => {
 		if (isValidBuildingData(formData)) {
 			dispatch(saveBuildingData(formData));
 		} else {
-			alert('Enter fields Properly');
+			setText('Enter fields properly.');
+			setVisible(true);
 		}
 	};
 
@@ -170,6 +182,13 @@ const AddBuildingForm = () => {
 					</Button>
 				</View>
 			</View>
+			<SnackBar
+				text={text}
+				visible={visible}
+				onDismissSnackBar={onDismissSnackBar}
+				onToggleSnackBar={onToggleSnackBar}
+				bottom={120}
+			/>
 		</ScrollView>
 	);
 };

@@ -7,6 +7,8 @@ import TextInputCommon from '../../../../components/common/TextInputCommon';
 import { isValidTenantData } from '../../../../helpers/addTenantValidation';
 import { addTenant } from '../../../../redux/actions/ownerActions/addTenantAction';
 import { addTenantStyles } from './AddTenantStyles';
+import SnackBar from '../../../../components/common/SnackBar';
+import useSnack from '../../../../components/common/useSnack';
 
 const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 	const dispatch = useDispatch();
@@ -15,6 +17,15 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
+
+	const {
+		text,
+		visible,
+		setText,
+		setVisible,
+		onDismissSnackBar,
+		onToggleSnackBar,
+	} = useSnack();
 
 	const handleAddTenant = () => {
 		const tenantData = {
@@ -28,12 +39,13 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 		if (isValidTenantData(tenantData)) {
 			dispatch(addTenant(tenantData));
 		} else {
-			alert('Enter fields Properly');
+			setText('Enter fields properly');
+			setVisible(true);
 		}
 	};
 
 	return (
-		<KeyboardAwareScrollView>
+		<KeyboardAwareScrollView style={{ minHeight: '100%' }}>
 			<View style={addTenantStyles.addTenantContainer}>
 				<Text style={{ fontSize: 19 }}>
 					Add Tenant for Room {singleRoomData.roomNo}
@@ -78,6 +90,12 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo }) => {
 					</Text>
 				</TouchableOpacity>
 			</View>
+			<SnackBar
+				visible={visible}
+				text={text}
+				onDismissSnackBar={onDismissSnackBar}
+				onToggleSnackBar={onToggleSnackBar}
+			/>
 		</KeyboardAwareScrollView>
 	);
 };
