@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tenantInfoStyles } from './TenantInfoStyles';
 import { payWithCash } from '../../../../redux/actions/payment/payWithCashAction';
 
-const TenantInfoScreen = ({ singleRoomData }) => {
+import { navigate } from '../../../../navigation/rootNavigation';
+
+const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 	const { loading } = useSelector((state) => state.payWithCash);
 	const dispatch = useDispatch();
 	const tenant = singleRoomData.tenants[0];
@@ -48,7 +50,15 @@ const TenantInfoScreen = ({ singleRoomData }) => {
 								)}
 							</Text>
 						</Text>
-						<View style={{ marginTop: 20 }}>
+						<View
+							style={{
+								width: '100%',
+								marginTop: 20,
+								flex: 1,
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+							}}
+						>
 							<Button
 								onPress={() => {
 									handlePayWithCash();
@@ -65,8 +75,27 @@ const TenantInfoScreen = ({ singleRoomData }) => {
 										size="large"
 									/>
 								) : (
-									<Text>Paid with cash</Text>
+									<Text style={{ color: '#fff' }}>
+										Paid with cash
+									</Text>
 								)}
+							</Button>
+							<Button
+								style={{
+									backgroundColor: '#109FDA',
+									padding: 10,
+								}}
+								rounded
+								onPress={() =>
+									navigate('UpdateTenantInfo', {
+										singleRoomData,
+										propertyInfo,
+									})
+								}
+							>
+								<Text style={{ color: '#fff' }}>
+									Update Details
+								</Text>
 							</Button>
 						</View>
 					</Body>
