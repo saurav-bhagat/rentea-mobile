@@ -21,6 +21,7 @@ import { setUserInfo } from '../redux/actions';
 import TenantDashboardBottomTab from './TenantDashboardBottomTab';
 import OwnerBankDetailsScreen from '../screens/Owner/bankDetails/OwnerBankDetailsScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
+import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 
 const { Screen, Navigator } = createStackNavigator();
 
@@ -130,6 +131,10 @@ const RootRoutes = () => {
 										<Screen
 											name="Profile"
 											component={ProfileScreen}
+										/>
+										<Screen
+											name="UpdateTenantInfo"
+											component={AddTenantScreen}
 										/>
 									</>
 								)}
