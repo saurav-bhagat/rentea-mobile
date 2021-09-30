@@ -10,6 +10,7 @@ import dashboardReducer from './ownerReducers/dashboardReducer';
 import addTenantReducer from './ownerReducers/addTenantReducer';
 import addBankDetailsReducer from './ownerReducers/addBankDetailReducer';
 import tenantDashboard from './tenantReducer/dashboardReducer';
+import payWithCashReducer from './payment/payWithCashReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 	addTenantResponse: addTenantReducer,
 	addBankDetails: addBankDetailsReducer,
 	tenantDashboard: tenantDashboard,
+	payWithCash: payWithCashReducer,
 });
 
 export default rootReducer;
