@@ -5,7 +5,7 @@ import {
 	PAY_WITH_CASH_FAIL,
 	PAY_WITH_CASH_REQUEST,
 	PAY_WITH_CASH_SUCCESS,
-} from './payWIthActionTypes';
+} from './payWithActionTypes';
 
 export const payWithCashRequest = () => {
 	return {
