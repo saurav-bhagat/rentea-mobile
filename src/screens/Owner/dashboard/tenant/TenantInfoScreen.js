@@ -1,12 +1,24 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { Card, CardItem, Body } from 'native-base';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { Card, CardItem, Body, Button } from 'native-base';
 import { format } from 'date-fns';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { tenantInfoStyles } from './TenantInfoStyles';
+import { payWithCash } from '../../../../redux/actions/payment/payWithCashAction';
 
 const TenantInfoScreen = ({ singleRoomData }) => {
+	const { loading } = useSelector((state) => state.payWithCash);
+	const dispatch = useDispatch();
 	const tenant = singleRoomData.tenants[0];
+
+	const handlePayWithCash = () => {
+		const {
+			_id: tenantUserId,
+			securityAmount: amount,
+			rentDueDate,
+		} = tenant;
+		dispatch(payWithCash({ tenantUserId, amount, rentDueDate }));
+	};
 
 	return (
 		<ScrollView
@@ -36,6 +48,27 @@ const TenantInfoScreen = ({ singleRoomData }) => {
 								)}
 							</Text>
 						</Text>
+						<View style={{ marginTop: 20 }}>
+							<Button
+								onPress={() => {
+									handlePayWithCash();
+								}}
+								style={{
+									backgroundColor: '#109FDA',
+									padding: 10,
+								}}
+								rounded
+							>
+								{loading ? (
+									<ActivityIndicator
+										color="#ffffff"
+										size="large"
+									/>
+								) : (
+									<Text>Paid with cash</Text>
+								)}
+							</Button>
+						</View>
 					</Body>
 				</CardItem>
 			</Card>
