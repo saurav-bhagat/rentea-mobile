@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Button } from 'react-native';
 import { Card, CardItem, Body } from 'native-base';
 import { format } from 'date-fns';
 
 import { tenantInfoStyles } from './TenantInfoStyles';
+import { navigate } from '../../../../navigation/rootNavigation';
 
-const TenantInfoScreen = ({ singleRoomData }) => {
+const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 	const tenant = singleRoomData.tenants[0];
 
 	return (
@@ -36,6 +37,15 @@ const TenantInfoScreen = ({ singleRoomData }) => {
 								)}
 							</Text>
 						</Text>
+						<Button
+							title="Update Details"
+							onPress={() =>
+								navigate('UpdateTenantInfo', {
+									singleRoomData,
+									propertyInfo,
+								})
+							}
+						/>
 					</Body>
 				</CardItem>
 			</Card>
