@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { format } from 'date-fns';
 
@@ -51,9 +51,10 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 				>
 					Rooms:{' '}
 				</Text>
-				<View Style={propertiesScreenStyles.roomsList}>
+				<View style={propertiesScreenStyles.roomsList}>
 					{roomListData.map((item, i) => (
 						<ListItem
+							Component={TouchableOpacity}
 							key={i}
 							bottomDivider
 							containerStyle={
