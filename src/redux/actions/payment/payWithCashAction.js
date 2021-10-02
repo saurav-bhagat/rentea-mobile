@@ -43,11 +43,12 @@ export const payWithCash = (paymentDetail) => {
 			})
 			.then((response) => {
 				dispatch(payWithCashSuccess(response.data.msg));
-				navigate('Properties');
+				navigate('Properties', { payWithCashResponse: true });
 			})
 			.catch((err) => {
 				dispatch(payWithCashFail(err.response.data.err));
 				alert('Error while paying with cash ');
+				navigate('Properties', { payWithCashResponse: false });
 			});
 	};
 };

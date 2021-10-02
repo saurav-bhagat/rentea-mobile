@@ -16,21 +16,47 @@ import { userLogout } from '../../../redux/actions';
 
 import { tenantDashStyles } from './TenantDashboardStyles';
 import { getTenantDashboard } from '../../../redux/actions/tenantAction/dashboardAction';
+import SnackBar from '../../../components/common/SnackBar';
+import useSnack from '../../../components/common/useSnack';
 
-const TenantDashboard = () => {
+const TenantDashboard = ({ route }) => {
 	const { tenantDetails, error, loading } = useSelector(
 		(state) => state.tenantDashboard
 	);
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
+	const {
+		visible,
+		text,
+		setVisible,
+		setText,
+		onToggleSnackBar,
+		onDismissSnackBar,
+	} = useSnack();
 
 	let userDetails;
 	if (tenantDetails) userDetails = tenantDetails;
+	let paytmResponse;
+	if (route && route.params) {
+		paytmResponse = route.params.paytmResponse;
+	}
 
 	useEffect(() => {
 		dispatch(getTenantDashboard());
 	}, [isFocused]);
+
+	useEffect(() => {
+		if (paytmResponse) {
+			setVisible(true);
+			paytmResponse = false;
+			setText('Payment successfull, receipt Generated');
+		} else if (paytmResponse === false) {
+			setVisible(true);
+			paytmResponse = null;
+			setText('Error while paying with paytm ');
+		}
+	}, [paytmResponse]);
 
 	const logout = async () => {
 		dispatch(userLogout());
@@ -154,6 +180,13 @@ const TenantDashboard = () => {
 							</Body>
 						</CardItem>
 					</Card>
+					<SnackBar
+						visible={visible}
+						text={text}
+						onDismissSnackBar={onDismissSnackBar}
+						onToggleSnackBar={onToggleSnackBar}
+						bottom={5}
+					/>
 				</ScrollView>
 			</View>
 		);

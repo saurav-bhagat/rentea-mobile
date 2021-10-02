@@ -7,6 +7,7 @@ export const tenantDashStyles = ScaledSheet.create({
 		marginRight: 'auto',
 		padding: '20@s',
 		alignItems: 'stretch',
+		height: '100%',
 	},
 	payNowButton: {
 		padding: 20,
