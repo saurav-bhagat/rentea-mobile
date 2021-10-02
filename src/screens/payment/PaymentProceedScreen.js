@@ -26,10 +26,11 @@ const PaymentProceedScreen = () => {
 				setWebViewFlag(false);
 				createReceipt(data, authState);
 				setAcknowldgement('Transaction successfull');
-				navigate('TenantDashboard');
+				navigate('TenantDashboard', { paytmResponse: true });
 			} else {
 				setWebViewFlag(false);
 				setAcknowldgement('Opps something went wrong');
+				navigate('TenantDashboard', { paytmResponse: false });
 			}
 		}
 	};
@@ -72,7 +73,7 @@ const PaymentProceedScreen = () => {
 					onNavigationStateChange={(data) => handleResponse(data)}
 				/>
 			</Modal>
-			<Text>{acknowldgement && alert(acknowldgement)}</Text>
+			<Text>{acknowldgement}</Text>
 		</View>
 	);
 };

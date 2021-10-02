@@ -23,7 +23,7 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 
-const PropertiesScreen = () => {
+const PropertiesScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
@@ -46,6 +46,10 @@ const PropertiesScreen = () => {
 
 	const { msg } = useSelector((state) => state.buildingDetails);
 	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+	let payWithCashResponse;
+	if (route && route.params) {
+		payWithCashResponse = route.params.payWithCashResponse;
+	}
 
 	useEffect(() => {
 		if (msg === buildingAdded) {
@@ -56,6 +60,18 @@ const PropertiesScreen = () => {
 			setText('Tenant added successfully.');
 		}
 	}, [msg, tenantMsg]);
+
+	useEffect(() => {
+		if (payWithCashResponse) {
+			setVisible(true);
+			payWithCashResponse = null;
+			setText('Payment successfully updated');
+		} else if (payWithCashResponse === false) {
+			setVisible(true);
+			payWithCashResponse = null;
+			setText('Error while payment updation');
+		}
+	}, [payWithCashResponse]);
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
