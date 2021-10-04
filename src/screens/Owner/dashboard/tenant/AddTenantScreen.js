@@ -82,7 +82,10 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 				<CrossPlatformHeader
 					title="TenantInfo"
 					backCallback={() => {
-						navigate('PropertyInfo');
+						navigate('RoomInfo', {
+							singleRoomData: roomData,
+							propertyInfo: property,
+						});
 					}}
 				/>
 			)}

@@ -5,6 +5,7 @@ import { navigate } from '../../../../navigation/rootNavigation';
 
 import AddTenantScreen from '../tenant/AddTenantScreen';
 import TenantInfoScreen from '../tenant/TenantInfoScreen';
+import RoomDetailsScreen from './RoomDetailsScreen';
 
 import { roomInfoScreenStyles } from './RoomInfoStyle';
 
@@ -15,16 +16,22 @@ const RoomInfoScreen = ({ route }) => {
 	return (
 		<View>
 			<CrossPlatformHeader
-				title="TenantInfo"
+				title="Room Info"
 				backCallback={() => {
 					navigate('PropertyInfo');
 				}}
 			/>
 			{singleRoomData.tenants.length > 0 ? (
-				<TenantInfoScreen
-					singleRoomData={singleRoomData}
-					propertyInfo={propertyInfo}
-				/>
+				<>
+					<RoomDetailsScreen
+						singleRoomData={singleRoomData}
+						propertyInfo={propertyInfo}
+					/>
+					<TenantInfoScreen
+						singleRoomData={singleRoomData}
+						propertyInfo={propertyInfo}
+					/>
+				</>
 			) : (
 				<AddTenantScreen
 					singleRoomData={singleRoomData}

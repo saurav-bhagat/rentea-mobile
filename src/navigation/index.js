@@ -22,7 +22,7 @@ import TenantDashboardBottomTab from './TenantDashboardBottomTab';
 import OwnerBankDetailsScreen from '../screens/Owner/bankDetails/OwnerBankDetailsScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
-
+import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -135,6 +135,10 @@ const RootRoutes = () => {
 										<Screen
 											name="UpdateTenantInfo"
 											component={AddTenantScreen}
+										/>
+										<Screen
+											name="UpdateRoomDetails"
+											component={UpdateRoomDetails}
 										/>
 									</>
 								)}
