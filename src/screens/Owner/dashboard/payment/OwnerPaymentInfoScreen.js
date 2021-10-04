@@ -15,10 +15,12 @@ const renderTabBar = (props) => {
 };
 
 const OwnerPaymentInfoScreen = () => {
-	const ownerBuilding = useSelector(
-		(state) =>
-			state.ownerDashbhoard.properties.ownerDashboardResult.buildings
+	const { ownerDashboardResult } = useSelector(
+		(state) => state.ownerDashbhoard.properties
 	);
+	const ownerBuilding = ownerDashboardResult
+		? ownerDashboardResult.buildings
+		: null;
 	let completedPaymentData = [];
 	let pendingPaymentData = [];
 	let upcomingPaymentData = [];
