@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Header, Left, Right, Body, Title } from 'native-base';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
@@ -16,6 +16,7 @@ import { addBuildingFormstyles } from './addBuildingFormStyles';
 import { navigate } from '../../../navigation/rootNavigation';
 import SnackBar from '../../../components/common/SnackBar';
 import useSnack from '../../../components/common/useSnack';
+import { setFirstLoginFalse } from '../../../redux/actions';
 
 const AddBuildingForm = () => {
 	const navigation = useNavigation();
@@ -31,7 +32,7 @@ const AddBuildingForm = () => {
 	const [district, setDistrict] = useState('');
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
-
+	const { firstLogin } = useSelector((state) => state.auth.userInfo);
 	const {
 		visible,
 		onToggleSnackBar,
@@ -61,6 +62,29 @@ const AddBuildingForm = () => {
 		}
 	};
 
+	const skipAddBuilding = async () => {
+		if (firstLogin) {
+			try {
+				let userInfo = await AsyncStorage.getItem('userInfo');
+				userInfo = JSON.parse(userInfo);
+				const firstLogin = userInfo.firstLogin;
+				userInfo.firstLogin = false;
+				await AsyncStorage.setItem(
+					'userInfo',
+					JSON.stringify(userInfo)
+				);
+				dispatch(setFirstLoginFalse());
+				firstLogin
+					? navigate('ownerDashboard')
+					: navigate('Properties');
+			} catch (err) {
+				alert('error while saving to async storage');
+				console.log('error while saving to async storage', err);
+			}
+		} else {
+			firstLogin ? navigate('ownerDashboard') : navigate('Properties');
+		}
+	};
 	return (
 		<ScrollView
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
@@ -161,27 +185,51 @@ const AddBuildingForm = () => {
 						roomCount={roomCount}
 						floorCount={floorCount}
 					/>
-
-					<Button
-						style={
-							addBuildingFormstyles.submitBuildingDetailsButton
-						}
-						onPress={handleAddBuildingFormSubmit}
+					<View
+						style={{
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+						}}
 					>
-						{addBuildingState.loading ? (
-							<ActivityIndicator color="#ffffff" size="large" />
-						) : (
+						<Button
+							style={
+								addBuildingFormstyles.submitBuildingDetailsButton
+							}
+							onPress={handleAddBuildingFormSubmit}
+						>
+							{addBuildingState.loading ? (
+								<ActivityIndicator
+									color="#ffffff"
+									size="large"
+								/>
+							) : (
+								<Text
+									style={
+										addBuildingFormstyles.submitBuildingDetailsButton_text
+									}
+								>
+									Submit
+								</Text>
+							)}
+						</Button>
+						<Button
+							onPress={skipAddBuilding}
+							style={
+								addBuildingFormstyles.skipBuildingDetailButton
+							}
+						>
 							<Text
 								style={
-									addBuildingFormstyles.submitBuildingDetailsButton_text
+									addBuildingFormstyles.skipBuildingDetailButton_text
 								}
 							>
-								Submit
+								Skip
 							</Text>
-						)}
-					</Button>
+						</Button>
+					</View>
 				</View>
 			</View>
+
 			<SnackBar
 				text={text}
 				visible={visible}

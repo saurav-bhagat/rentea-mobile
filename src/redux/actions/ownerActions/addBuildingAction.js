@@ -91,6 +91,7 @@ export const saveBuildingData = (buildingObj) => {
 
 					console.log('building added successfully');
 					dispatch(setFirstLoginFalse());
+					// The action setRoomDetails empty the room reducer for next room field
 					dispatch(setRoomDetails());
 					firstLogin
 						? navigate('ownerDashboard')

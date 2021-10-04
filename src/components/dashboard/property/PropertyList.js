@@ -24,6 +24,7 @@ const PropertyList = ({ properties }) => {
 	return (
 		<View style={propertyStyles.propertyListContainer}>
 			{properties.ownerDashboardResult &&
+				properties.ownerDashboardResult.buildings &&
 				properties.ownerDashboardResult.buildings.map((item, index) => (
 					<SingleProperty key={item.name} data={item} />
 				))}
