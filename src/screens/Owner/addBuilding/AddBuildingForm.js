@@ -78,8 +78,9 @@ const AddBuildingForm = () => {
 					? navigate('ownerDashboard')
 					: navigate('Properties');
 			} catch (err) {
-				alert('error while saving to async storage');
 				console.log('error while saving to async storage', err);
+				setText('Error while skip, please try again?.');
+				setVisible(true);
 			}
 		} else {
 			firstLogin ? navigate('ownerDashboard') : navigate('Properties');
