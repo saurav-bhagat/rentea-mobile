@@ -46,6 +46,7 @@ export const saveBuildingData = (buildingObj) => {
 						type: `${room.bhk}bhk`,
 						floor: room.floor,
 						roomNo: room.roomNo,
+						roomSize: room.sizeInFt,
 					};
 			  })
 			: [];

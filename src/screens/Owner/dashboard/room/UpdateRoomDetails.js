@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
+import { Button } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import SnackBar from '../../../../components/common/SnackBar';
 import TextInputCommon from '../../../../components/common/TextInputCommon';
 import useSnack from '../../../../components/common/useSnack';
-import { validateRoomFields } from '../../../../helpers/addBuildingValidation';
+import { validateRoomFieldsForUpdate } from '../../../../helpers/addBuildingValidation';
 import { navigate } from '../../../../navigation/rootNavigation';
+import { updateRoomDetail } from '../../../../redux/actions/ownerActions/updateRoomAction';
 import { updateRoomDetailsStyle } from './UpdateRoomDetailsStyle';
 
 export default function UpdateRoomDetails({ route }) {
+	const dispatch = useDispatch();
+
 	const { singleRoomData, propertyInfo } = route.params;
+	const { loading } = useSelector((state) => state.updateRoom);
+
 	const [roomNO, setRoomNO] = useState('');
 	const [rentAmount, setRentAmount] = useState('');
-	const [securityAmount, setSecurityAmount] = useState('');
+	const [roomSize, setRoomSize] = useState('');
 	const [floorNo, setFloorNo] = useState('');
 	const [BHK, setBHK] = useState('');
 
@@ -29,16 +36,22 @@ export default function UpdateRoomDetails({ route }) {
 
 	const updateRoomData = () => {
 		const roomData = {
+			roomId: singleRoomData._id,
 			roomNo: roomNO,
-			rent: rentAmount,
-			security: securityAmount,
+			rent: parseInt(rentAmount),
+			roomSize,
 			floor: floorNo,
-			bhk: BHK,
+			roomType: BHK + 'bhk',
 		};
-		if (validateRoomFields(roomData)) {
-			//need to modify validateRoomFields accordingly
-			//also need to add size input field
-			console.log(roomData);
+
+		const dataForValidation = {
+			...roomData,
+			roomType: BHK,
+			rent: rentAmount.toString(),
+		};
+		if (validateRoomFieldsForUpdate(dataForValidation)) {
+			//TODO: floor number shouldn't be updated to more than the capacity of building
+			dispatch(updateRoomDetail(roomData));
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);
@@ -46,10 +59,9 @@ export default function UpdateRoomDetails({ route }) {
 	};
 
 	useEffect(() => {
-		const tenant = singleRoomData.tenants[0];
 		setRoomNO(singleRoomData.roomNo);
 		setRentAmount(singleRoomData.rent.toString());
-		setSecurityAmount(tenant['securityAmount'].toString());
+		setRoomSize(singleRoomData.roomSize);
 		setFloorNo(singleRoomData.floor);
 		setBHK(singleRoomData.type.split('')[0]);
 	}, [singleRoomData]);
@@ -83,14 +95,7 @@ export default function UpdateRoomDetails({ route }) {
 						value={rentAmount}
 						onChangeText={(val) => setRentAmount(val)}
 					/>
-					<TextInputCommon
-						label="Security Amount"
-						name="securityAmount"
-						keyboardType="numeric"
-						style={{ marginBottom: 30 }}
-						value={securityAmount}
-						onChangeText={(val) => setSecurityAmount(val)}
-					/>
+
 					<TextInputCommon
 						label="Floor"
 						name="floor"
@@ -98,6 +103,14 @@ export default function UpdateRoomDetails({ route }) {
 						style={{ marginBottom: 30 }}
 						value={floorNo}
 						onChangeText={(val) => setFloorNo(val)}
+					/>
+					<TextInputCommon
+						label="Room Size"
+						name="roomSize"
+						keyboardType="numeric"
+						style={{ marginBottom: 30 }}
+						value={roomSize}
+						onChangeText={(val) => setRoomSize(val)}
 					/>
 					<TextInputCommon
 						label="BHK"
@@ -108,14 +121,22 @@ export default function UpdateRoomDetails({ route }) {
 						onChangeText={(val) => setBHK(val)}
 					/>
 
-					<TouchableOpacity
+					<Button
 						style={updateRoomDetailsStyle.submitButton}
-						onPress={() => updateRoomData()}
+						onPress={() => {
+							updateRoomData();
+						}}
 					>
-						<Text style={updateRoomDetailsStyle.submitButton_text}>
-							Submit
-						</Text>
-					</TouchableOpacity>
+						{loading ? (
+							<ActivityIndicator color="#ffffff" size="large" />
+						) : (
+							<Text
+								style={updateRoomDetailsStyle.submitButton_text}
+							>
+								Submit
+							</Text>
+						)}
+					</Button>
 				</View>
 				<SnackBar
 					visible={visible}

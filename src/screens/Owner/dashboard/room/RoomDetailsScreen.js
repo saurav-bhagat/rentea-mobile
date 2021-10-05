@@ -8,7 +8,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 	const tenant = singleRoomData.tenants[0];
-	//size field required
 	return (
 		<ScrollView contentContainerStyle={roomDetailStyles.roomInfoContainer}>
 			<Text style={roomDetailStyles.roomInfoTitle}>
@@ -35,7 +34,7 @@ export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 						/>
 						<Text>Room No.: {singleRoomData.roomNo}</Text>
 						<Text>Rent Amount: {singleRoomData.rent}</Text>
-						<Text>Security Amount: {tenant['securityAmount']}</Text>
+						<Text>Room Size: {singleRoomData.roomSize}</Text>
 						<Text>Floor: {singleRoomData.floor}</Text>
 						<Text>BHK: {singleRoomData.type.split('')[0]}</Text>
 					</Body>
