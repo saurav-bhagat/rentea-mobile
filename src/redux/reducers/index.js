@@ -11,11 +11,13 @@ import addTenantReducer from './ownerReducers/addTenantReducer';
 import addBankDetailsReducer from './ownerReducers/addBankDetailReducer';
 import tenantDashboard from './tenantReducer/dashboardReducer';
 import payWithCashReducer from './payment/payWithCashReducer';
+import updateRoomReducer from './ownerReducers/updateRoomReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
 	buildingDetails: addBuildingReducer,
 	addRoomDetails: addRoomsReducer,
+	updateRoom: updateRoomReducer,
 	userDetail: addUserDetailReducer,
 	ownerDashbhoard: dashboardReducer,
 	addTenantResponse: addTenantReducer,

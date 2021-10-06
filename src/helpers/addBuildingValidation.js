@@ -99,3 +99,18 @@ export const validateRoomFields = (
 	console.log('Room details validation failed');
 	return false;
 };
+export const validateRoomFieldsForUpdate = ({
+	roomNo,
+	rent,
+	floor,
+	roomSize,
+	roomType,
+}) => {
+	if (validateCount({ roomNo, rent, floor, roomSize, roomType })) {
+		if (roomType > 0 && roomType < 10 && floor > 0 && roomSize >= 100) {
+			return true;
+		}
+	}
+	console.log('Room details validation failed');
+	return false;
+};
