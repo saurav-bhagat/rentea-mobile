@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
+import { Button } from 'native-base';
+
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TextInputCommon from '../../../../components/common/TextInputCommon';
 import { isValidTenantData } from '../../../../helpers/addTenantValidation';
@@ -11,6 +13,7 @@ import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
+import { updateTenantDetails } from '../../../../redux/actions/ownerActions/updateTenantAction';
 
 const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	const dispatch = useDispatch();
@@ -18,6 +21,9 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	if (route) {
 		var { singleRoomData: roomData, propertyInfo: property } = route.params;
 		var tenant = roomData.tenants[0];
+		var { loading } = useSelector((state) => state.updateTenant);
+	} else {
+		var { loading } = useSelector((state) => state.addTenantResponse);
 	}
 
 	const [name, setName] = useState('');
@@ -52,15 +58,14 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	};
 	const updateTenantData = () => {
 		const tenantData = {
+			_id: tenant._id,
 			name,
 			email,
 			phoneNumber: phone,
 			securityAmount: security,
-			roomId: roomData._id,
-			buildId: property._id,
 		};
 		if (isValidTenantData(tenantData)) {
-			// console.log(tenantData);
+			dispatch(updateTenantDetails(tenantData));
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);
@@ -128,14 +133,18 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 						style={{ marginBottom: 30 }}
 					/>
 
-					<TouchableOpacity
+					<Button
 						style={addTenantStyles.submitButton}
 						onPress={tenant ? updateTenantData : handleAddTenant}
 					>
-						<Text style={addTenantStyles.submitButton_text}>
-							Submit
-						</Text>
-					</TouchableOpacity>
+						{loading ? (
+							<ActivityIndicator color="#ffffff" size="large" />
+						) : (
+							<Text style={addTenantStyles.submitButton_text}>
+								Submit
+							</Text>
+						)}
+					</Button>
 				</View>
 				<SnackBar
 					visible={visible}
