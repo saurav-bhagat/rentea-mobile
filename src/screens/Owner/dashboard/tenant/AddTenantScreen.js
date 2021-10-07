@@ -18,14 +18,15 @@ import { updateTenantDetails } from '../../../../redux/actions/ownerActions/upda
 const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	const dispatch = useDispatch();
 
+	let loading, roomData, property, tenant;
 	if (route) {
-		var { singleRoomData: roomData, propertyInfo: property } = route.params;
-		var tenant = roomData.tenants[0];
-		var { loading } = useSelector((state) => state.updateTenant);
+		roomData = route.params.singleRoomData;
+		property = route.params.propertyInfo;
+		tenant = roomData.tenants[0];
+		loading = useSelector((state) => state.updateTenant.loading);
 	} else {
-		var { loading } = useSelector((state) => state.addTenantResponse);
+		loading = useSelector((state) => state.addTenantResponse.loading);
 	}
-
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
