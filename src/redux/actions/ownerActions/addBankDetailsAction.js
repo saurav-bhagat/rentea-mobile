@@ -35,7 +35,7 @@ export const addBankDetailsData = (bankDetails) => {
 			ownerId: state.auth.userInfo.userDetails.ownerId,
 			...bankDetails,
 		};
-
+		const { firstLogin } = state.auth.userInfo;
 		axios
 			.post(`${API_URL}/owner/add-bank-info`, body, {
 				headers: {
@@ -45,7 +45,9 @@ export const addBankDetailsData = (bankDetails) => {
 			})
 			.then(async (response) => {
 				dispatch(addBankDetailsSuccess(bankDetails));
-				navigate('AddBuildingForm');
+				firstLogin
+					? navigate('AddBuildingForm')
+					: navigate('ownerDashboard');
 				console.log('owner bank details added successfully!');
 			})
 			.catch((error) => {

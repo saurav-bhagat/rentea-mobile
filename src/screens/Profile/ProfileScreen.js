@@ -1,26 +1,39 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+
 import { ListItem, Button } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
-import { useDispatch } from 'react-redux';
 
+import { useDispatch, useSelector } from 'react-redux';
 import CrossPlatformHeader from '../../components/common/CrossPlatformHeader';
-import { userLogout } from '../../redux/actions/authActions/authAction';
 
-const list = [
-	{
-		name: 'Edit Profile',
-	},
-	{
-		name: 'Bank Account',
-	},
-];
+import { userLogout } from '../../redux/actions/authActions/authAction';
+import { navigate } from '../../navigation/rootNavigation';
 
 export const ProfileScreen = ({ route }) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 
 	const { userType } = route.params;
+
+	let list = [
+		{
+			name: 'Edit Profile',
+		},
+	];
+	if (userType === 'Owner') {
+		const ownerDashboardResult = useSelector(
+			(state) => state.ownerDashbhoard.properties.ownerDashboardResult
+		);
+		let accountName;
+		if (ownerDashboardResult && ownerDashboardResult.accountName) {
+			accountName = ownerDashboardResult.accountName;
+		}
+		list.push({
+			name: 'Bank Account',
+			url: accountName ? 'OwnerBankDetail' : 'OwnerBankDetailForm',
+		});
+	}
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -36,7 +49,13 @@ export const ProfileScreen = ({ route }) => {
 			{list.map((l, i) => (
 				<ListItem key={i} bottomDivider>
 					<ListItem.Content>
-						<ListItem.Title>{l.name}</ListItem.Title>
+						<ListItem.Title
+							onPress={() => {
+								navigate(l.url);
+							}}
+						>
+							{l.name}
+						</ListItem.Title>
 					</ListItem.Content>
 				</ListItem>
 			))}

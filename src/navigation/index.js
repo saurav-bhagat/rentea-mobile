@@ -19,10 +19,11 @@ import OwnerDashboardBottomTab from './OwnerDashboardBottomTab';
 import { setUserInfo } from '../redux/actions';
 
 import TenantDashboardBottomTab from './TenantDashboardBottomTab';
-import OwnerBankDetailsScreen from '../screens/Owner/bankDetails/OwnerBankDetailsScreen';
+import OwnerBankDetailsFormScreen from '../screens/Owner/bankDetails/OwnerBankDetailsFormScreen';
 import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
+import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -96,8 +97,10 @@ const RootRoutes = () => {
 											component={OwnerUserDetailsScreen}
 										/>
 										<Screen
-											name="OwnerBankDetail"
-											component={OwnerBankDetailsScreen}
+											name="OwnerBankDetailForm"
+											component={
+												OwnerBankDetailsFormScreen
+											}
 										/>
 										<Screen
 											name="AddBuilding"
@@ -139,6 +142,16 @@ const RootRoutes = () => {
 										<Screen
 											name="UpdateRoomDetails"
 											component={UpdateRoomDetails}
+										/>
+										<Screen
+											name="OwnerBankDetailForm"
+											component={
+												OwnerBankDetailsFormScreen
+											}
+										/>
+										<Screen
+											name="OwnerBankDetail"
+											component={OwnerBankDetailScreen}
 										/>
 									</>
 								)}

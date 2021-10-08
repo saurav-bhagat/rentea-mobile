@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
+
 import Clipboard from 'expo-clipboard';
 import { Button } from 'native-base';
+
+import { useIsFocused } from '@react-navigation/native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { ownerBankDetailsStyles } from './ownerBankDetailsStyle';
+
 import { isValidBankDetails } from '../../../helpers/addBuildingValidation';
 import { addBankDetailsData } from '../../../redux/actions/ownerActions/addBankDetailsAction';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import { navigate } from '../../../navigation/rootNavigation';
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 
@@ -19,7 +25,11 @@ const OwnerBankDetailsScreen = () => {
 	const [ifsc, setIfsc] = useState('');
 	const [bankName, setBankName] = useState('');
 	const [beneficiaryName, setBeneficiaryName] = useState('');
+	const isFocused = useIsFocused();
 
+	const { firstLogin } = useSelector((state) => state.auth.userInfo);
+	// This useEffect for changing firstLogin true to false
+	useEffect(() => {}, [isFocused]);
 	const handleOwnerBankDetailsSubmit = () => {
 		if (accountNumber === confirmAccountNumber) {
 			let formData = {
@@ -134,7 +144,11 @@ const OwnerBankDetailsScreen = () => {
 							rounded
 							transparent
 							style={ownerBankDetailsStyles.oudsContinueButton}
-							onPress={() => navigate('AddBuildingForm')}
+							onPress={() =>
+								firstLogin
+									? navigate('AddBuildingForm')
+									: navigate('ownerDashboard')
+							}
 						>
 							<Text
 								style={
