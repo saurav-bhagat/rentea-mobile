@@ -11,7 +11,7 @@ const slides = [
 	{
 		key: 1,
 		title: 'Manage all your properties at one go',
-		text: 'Landloards can easily manage thier\nproperties in one app',
+		text: 'Landlords can easily manage thier\nproperties in one app',
 		image: require('./../../images/intro/manage-rent.png'),
 	},
 	{
@@ -43,7 +43,7 @@ export const IntroSlider = () => {
 				<View style={sliderStyles.textContainer}>
 					<Text style={sliderStyles.title}>{item.title}</Text>
 					<Text style={sliderStyles.description}>{item.text}</Text>
-					{item.key < 3 && (
+					{item.key < 3 ? (
 						<View style={sliderStyles.nextButton}>
 							<Button
 								title="Next"
@@ -51,6 +51,14 @@ export const IntroSlider = () => {
 								onPress={() =>
 									sliderRef.current.goToSlide(item.key, true)
 								}
+							/>
+						</View>
+					) : (
+						<View style={sliderStyles.nextButton}>
+							<Button
+								title="Done"
+								type="clear"
+								onPress={onDone}
 							/>
 						</View>
 					)}
@@ -76,7 +84,6 @@ export const IntroSlider = () => {
 				data={slides}
 				onDone={onDone}
 				renderItem={renderItem}
-				renderDoneButton={renderDone}
 				showNextButton={false}
 				activeDotStyle={sliderStyles.activeDot}
 				dotStyle={sliderStyles.dotStyle}

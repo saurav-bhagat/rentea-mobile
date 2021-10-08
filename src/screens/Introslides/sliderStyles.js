@@ -6,6 +6,7 @@ export const sliderStyles = ScaledSheet.create({
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		backgroundColor: '#ffffff',
+		height: '90%',
 	},
 	logo: {},
 	image: {},
@@ -24,11 +25,11 @@ export const sliderStyles = ScaledSheet.create({
 	activeDot: {
 		backgroundColor: '#109ED9',
 		width: '26@s',
-		marginBottom: '140%',
+		marginBottom: '118%',
 	},
 	dotStyle: {
 		backgroundColor: '#109ED9',
-		marginBottom: '140%',
+		marginBottom: '118%',
 	},
 	nextButton: {
 		borderColor: '#109ED9',
