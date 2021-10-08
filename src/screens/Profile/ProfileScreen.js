@@ -16,7 +16,11 @@ export const ProfileScreen = ({ route }) => {
 
 	const { userType } = route.params;
 
-	let list;
+	let list = [
+		{
+			name: 'Edit Profile',
+		},
+	];
 	if (userType === 'Owner') {
 		const ownerDashboardResult = useSelector(
 			(state) => state.ownerDashbhoard.properties.ownerDashboardResult
@@ -25,21 +29,10 @@ export const ProfileScreen = ({ route }) => {
 		if (ownerDashboardResult && ownerDashboardResult.accountName) {
 			accountName = ownerDashboardResult.accountName;
 		}
-		list = [
-			{
-				name: 'Edit Profile',
-			},
-			{
-				name: 'Bank Account',
-				url: accountName ? 'OwnerBankDetail' : 'OwnerBankDetailForm',
-			},
-		];
-	} else if (userType === 'Tenant') {
-		list = [
-			{
-				name: 'Edit Profile',
-			},
-		];
+		list.push({
+			name: 'Bank Account',
+			url: accountName ? 'OwnerBankDetail' : 'OwnerBankDetailForm',
+		});
 	}
 
 	return (
