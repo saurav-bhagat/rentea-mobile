@@ -24,6 +24,7 @@ import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
 import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
+import { IntroSlider } from '../screens/Introslides/IntroSlider';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -171,6 +172,7 @@ const RootRoutes = () => {
 					</>
 				) : (
 					<>
+						<Screen name="Intro" component={IntroSlider} />
 						<Screen name="Login" component={LoginScreen} />
 						<Screen name="OTP" component={OTPScreen} />
 					</>
