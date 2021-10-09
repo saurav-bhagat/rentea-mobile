@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { format } from 'date-fns';
+import { Button } from 'native-base';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
@@ -41,16 +42,26 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 						</Text>
 					</View>
 				</View>
-
-				<Text
-					style={{
-						marginBottom: 20,
-						marginLeft: 30,
-						fontWeight: 'bold',
-					}}
+				<View
+					style={propertiesScreenStyles.roomsAndAddRoomBtnContainer}
 				>
-					Rooms:{' '}
-				</Text>
+					<Text style={propertiesScreenStyles.roomsText}>
+						Rooms:{' '}
+					</Text>
+					<View style={propertiesScreenStyles.addRoomBtnContainer}>
+						<Button
+							style={{ padding: 20, backgroundColor: '#FFF' }}
+							onPress={() =>
+								navigate('UpdateRoomDetails', { propertyInfo })
+							}
+						>
+							<Text style={propertiesScreenStyles.addRoomBtnText}>
+								Add room
+							</Text>
+						</Button>
+					</View>
+				</View>
+
 				<View style={propertiesScreenStyles.roomsList}>
 					{roomListData.map((item, i) => (
 						<ListItem

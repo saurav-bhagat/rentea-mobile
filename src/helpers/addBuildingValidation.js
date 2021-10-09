@@ -114,3 +114,28 @@ export const validateRoomFieldsForUpdate = ({
 	console.log('Room details validation failed');
 	return false;
 };
+
+export const validateRoomFieldsForAddition = ({
+	ownerId,
+	buildingId,
+	rooms,
+}) => {
+	const mongoIdRegex = /^[a-f\d]{24}$/i;
+	const roomNo = rooms[0].roomNo;
+	const rent = rooms[0].rent;
+	const floor = rooms[0].floor;
+	const roomSize = rooms[0].roomSize;
+	const roomType = rooms[0].type;
+
+	if (validateCount({ roomNo, rent, floor, roomSize, roomType })) {
+		if (roomType > 0 && roomType < 10 && floor > 0 && roomSize >= 100) {
+			return (
+				true &&
+				mongoIdRegex.test(ownerId) &&
+				mongoIdRegex.test(buildingId)
+			);
+		}
+	}
+	console.log('Room details validation failed');
+	return false;
+};

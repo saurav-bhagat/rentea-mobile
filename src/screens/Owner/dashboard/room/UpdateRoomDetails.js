@@ -8,16 +8,24 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import SnackBar from '../../../../components/common/SnackBar';
 import TextInputCommon from '../../../../components/common/TextInputCommon';
 import useSnack from '../../../../components/common/useSnack';
-import { validateRoomFieldsForUpdate } from '../../../../helpers/addBuildingValidation';
+import {
+	validateRoomFieldsForAddition,
+	validateRoomFieldsForUpdate,
+} from '../../../../helpers/addBuildingValidation';
 import { navigate } from '../../../../navigation/rootNavigation';
 import { updateRoomDetail } from '../../../../redux/actions/ownerActions/updateRoomAction';
+import { addRoomSeparately } from '../../../../redux/actions/ownerActions/addRoomSeparately';
 import { updateRoomDetailsStyle } from './UpdateRoomDetailsStyle';
 
 export default function UpdateRoomDetails({ route }) {
 	const dispatch = useDispatch();
 
-	const { singleRoomData, propertyInfo } = route.params;
-	const { loading } = useSelector((state) => state.updateRoom);
+	const singleRoomData = route.params?.singleRoomData;
+	const propertyInfo = route.params?.propertyInfo;
+	let loading = useSelector((state) => state.updateRoom.loading);
+	const ownerId = useSelector(
+		(state) => state.auth.userInfo.userDetails.ownerId
+	);
 
 	const [roomNO, setRoomNO] = useState('');
 	const [rentAmount, setRentAmount] = useState('');
@@ -44,11 +52,10 @@ export default function UpdateRoomDetails({ route }) {
 			roomType: BHK + 'bhk',
 		};
 
-		const dataForValidation = {
-			...roomData,
-			roomType: BHK,
-			rent: rentAmount.toString(),
-		};
+		const dataForValidation = JSON.parse(JSON.stringify(roomData));
+		dataForValidation.roomType = BHK;
+		dataForValidation.rent = rentAmount.toString();
+
 		if (validateRoomFieldsForUpdate(dataForValidation)) {
 			//TODO: floor number shouldn't be updated to more than the capacity of building
 			dispatch(updateRoomDetail(roomData));
@@ -58,28 +65,72 @@ export default function UpdateRoomDetails({ route }) {
 		}
 	};
 
+	const addRoomToBuilding = () => {
+		const roomData = {
+			ownerId: ownerId,
+			buildingId: propertyInfo._id,
+			rooms: [
+				{
+					rent: parseInt(rentAmount),
+					type: BHK + 'bhk',
+					floor: floorNo,
+					roomNo: roomNO,
+					roomSize: roomSize,
+				},
+			],
+		};
+		const dataForValidation = JSON.parse(JSON.stringify(roomData));
+
+		dataForValidation.rooms[0].type = BHK;
+		dataForValidation.rooms[0].rent = rentAmount.toString();
+
+		if (validateRoomFieldsForAddition(dataForValidation)) {
+			dispatch(addRoomSeparately(roomData));
+		} else {
+			setText('Enter fields properly');
+			setVisible(true);
+		}
+	};
+
 	useEffect(() => {
-		setRoomNO(singleRoomData.roomNo);
-		setRentAmount(singleRoomData.rent.toString());
-		setRoomSize(singleRoomData.roomSize);
-		setFloorNo(singleRoomData.floor);
-		setBHK(singleRoomData.type.split('')[0]);
+		if (singleRoomData) {
+			setRoomNO(singleRoomData.roomNo);
+			setRentAmount(singleRoomData.rent.toString());
+			setRoomSize(singleRoomData.roomSize);
+			setFloorNo(singleRoomData.floor);
+			setBHK(singleRoomData.type.split('')[0]);
+		}
 	}, [singleRoomData]);
 
 	return (
 		<View>
-			<CrossPlatformHeader
-				title="Update Room"
-				backCallback={() => {
-					navigate('RoomInfo', {
-						singleRoomData,
-						propertyInfo,
-					});
-				}}
-			/>
-			<KeyboardAwareScrollView style={{ minHeight: '100%' }}>
+			{singleRoomData ? (
+				<CrossPlatformHeader
+					title="Update Room"
+					backCallback={() => {
+						navigate('RoomInfo', {
+							singleRoomData,
+							propertyInfo,
+						});
+					}}
+				/>
+			) : (
+				<CrossPlatformHeader
+					title="Add Room"
+					backCallback={() => {
+						navigate('PropertyInfo');
+					}}
+				/>
+			)}
+
+			<KeyboardAwareScrollView>
 				<View style={updateRoomDetailsStyle.updateRoomContainer}>
-					<Text style={{ fontSize: 19 }}>Update Room Details</Text>
+					<Text style={{ fontSize: 19 }}>
+						{' '}
+						{singleRoomData
+							? 'Update Room Details'
+							: 'Add Room Details'}{' '}
+					</Text>
 					<TextInputCommon
 						label="Room No."
 						name="roomNo"
@@ -123,9 +174,9 @@ export default function UpdateRoomDetails({ route }) {
 
 					<Button
 						style={updateRoomDetailsStyle.submitButton}
-						onPress={() => {
-							updateRoomData();
-						}}
+						onPress={
+							singleRoomData ? updateRoomData : addRoomToBuilding
+						}
 					>
 						{loading ? (
 							<ActivityIndicator color="#ffffff" size="large" />
