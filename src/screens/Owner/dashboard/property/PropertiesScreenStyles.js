@@ -65,4 +65,21 @@ export const propertiesScreenStyles = ScaledSheet.create({
 		paddingLeft: 10,
 		paddingTop: 5,
 	},
+	roomsAndAddRoomBtnContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		width: '95%',
+	},
+	roomsText: {
+		marginBottom: '20@s',
+		marginLeft: '30@s',
+		fontWeight: 'bold',
+		alignSelf: 'flex-end',
+	},
+	addRoomBtnContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginBottom: '10@s',
+		marginLeft: '20@s',
+	},
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
@@ -41,16 +41,27 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 						</Text>
 					</View>
 				</View>
-
-				<Text
-					style={{
-						marginBottom: 20,
-						marginLeft: 30,
-						fontWeight: 'bold',
-					}}
+				<View
+					style={propertiesScreenStyles.roomsAndAddRoomBtnContainer}
 				>
-					Rooms:{' '}
-				</Text>
+					<Text style={propertiesScreenStyles.roomsText}>
+						Rooms:{' '}
+					</Text>
+					<View style={propertiesScreenStyles.addRoomBtnContainer}>
+						<Button
+							buttonStyle={{
+								backgroundColor: '#FFF',
+							}}
+							titleStyle={{ color: '#109FDA' }}
+							onPress={() =>
+								navigate('UpdateRoomDetails', { propertyInfo })
+							}
+							title="Add Room"
+							raised
+						></Button>
+					</View>
+				</View>
+
 				<View style={propertiesScreenStyles.roomsList}>
 					{roomListData.map((item, i) => (
 						<ListItem
