@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
-import { Button } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Button } from 'react-native-elements';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import SnackBar from '../../../../components/common/SnackBar';
 import TextInputCommon from '../../../../components/common/TextInputCommon';
@@ -23,6 +22,9 @@ export default function UpdateRoomDetails({ route }) {
 	const singleRoomData = route.params?.singleRoomData;
 	const propertyInfo = route.params?.propertyInfo;
 	let loading = useSelector((state) => state.updateRoom.loading);
+	const addRoomLoading = useSelector(
+		(state) => state.addRoomSeparately.loading
+	);
 	const ownerId = useSelector(
 		(state) => state.auth.userInfo.userDetails.ownerId
 	);
@@ -173,21 +175,15 @@ export default function UpdateRoomDetails({ route }) {
 					/>
 
 					<Button
-						style={updateRoomDetailsStyle.submitButton}
+						buttonStyle={updateRoomDetailsStyle.submitButton}
 						onPress={
 							singleRoomData ? updateRoomData : addRoomToBuilding
 						}
-					>
-						{loading ? (
-							<ActivityIndicator color="#ffffff" size="large" />
-						) : (
-							<Text
-								style={updateRoomDetailsStyle.submitButton_text}
-							>
-								Submit
-							</Text>
-						)}
-					</Button>
+						title="Submit"
+						titleStyle={updateRoomDetailsStyle.submitButton_text}
+						loading={addRoomLoading || loading}
+						loadingProps={{ size: 'large', color: 'white' }}
+					></Button>
 				</View>
 				<SnackBar
 					visible={visible}

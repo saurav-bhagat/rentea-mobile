@@ -14,14 +14,14 @@ const addRoomSeparatelyReducer = (state = initialState, action) => {
 		case ADD_ROOM_REQUEST:
 			return {
 				...state,
-				loading: false,
+				loading: true,
 			};
 
 		case ADD_ROOM_SUCCESS:
 			return {
 				...state,
 				msg: action.msg,
-				loading: true,
+				loading: false,
 			};
 		case ADD_ROOM_FAIL:
 			return {
@@ -34,7 +34,6 @@ const addRoomSeparatelyReducer = (state = initialState, action) => {
 			return {
 				...state,
 				msg: 'default state',
-				loading: false,
 			};
 	}
 };

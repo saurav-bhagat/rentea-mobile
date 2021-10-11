@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
-import { Button } from 'native-base';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
@@ -50,15 +49,16 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 					</Text>
 					<View style={propertiesScreenStyles.addRoomBtnContainer}>
 						<Button
-							style={{ padding: 20, backgroundColor: '#FFF' }}
+							buttonStyle={{
+								backgroundColor: '#FFF',
+							}}
+							titleStyle={{ color: '#109FDA' }}
 							onPress={() =>
 								navigate('UpdateRoomDetails', { propertyInfo })
 							}
-						>
-							<Text style={propertiesScreenStyles.addRoomBtnText}>
-								Add room
-							</Text>
-						</Button>
+							title="Add Room"
+							raised
+						></Button>
 					</View>
 				</View>
 
