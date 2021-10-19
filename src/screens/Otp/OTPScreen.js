@@ -16,7 +16,6 @@ import { verifyOtp } from '../../redux/actions';
 import { sendOtp } from '../../redux/actions';
 import SnackBar from '../../components/common/SnackBar';
 import useSnack from '../../components/common/useSnack';
-import useNotification from '../../components/common/useNotification';
 import * as Notifications from 'expo-notifications';
 
 const OTPScreen = ({ route }) => {
@@ -33,7 +32,6 @@ const OTPScreen = ({ route }) => {
 		text,
 		setText,
 	} = useSnack();
-	useNotification();
 
 	async function schedulePushNotification() {
 		await Notifications.scheduleNotificationAsync({

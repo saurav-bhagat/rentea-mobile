@@ -5,9 +5,10 @@ import { ActivityIndicator, View } from 'react-native';
 
 import RootRoutes from './src/navigation';
 import store from './src/redux/store';
-
+import useNotification from './src/components/common/useNotification';
 
 export default function App() {
+	useNotification();
 	const [fontLoading, setFontLoading] = useState(true);
 
 	useEffect(() => {
@@ -15,21 +16,22 @@ export default function App() {
 			await Font.loadAsync({
 				Roboto: require('native-base/Fonts/Roboto.ttf'),
 				Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-			})
+			});
 			setFontLoading(false);
 		})();
 	}, []);
 	if (fontLoading) {
 		return (
 			<View
-				style={{ flex:1, justifyContent: 'center', alignItems: 'center' }}
+				style={{
+					flex: 1,
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
 			>
-				<ActivityIndicator 
-					color='#109FDA'
-					size='large'
-				/>
+				<ActivityIndicator color="#109FDA" size="large" />
 			</View>
-		)
+		);
 	} else {
 		return (
 			<Provider store={store}>
@@ -37,4 +39,4 @@ export default function App() {
 			</Provider>
 		);
 	}
-};
+}
