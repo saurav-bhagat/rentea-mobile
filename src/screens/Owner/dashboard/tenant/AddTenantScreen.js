@@ -15,14 +15,15 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import { navigate } from '../../../../navigation/rootNavigation';
 import { updateTenantDetails } from '../../../../redux/actions/ownerActions/updateTenantAction';
 
-const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
+const AddTenantScreen = ({ route }) => {
 	const dispatch = useDispatch();
-
 	let loading, roomData, property, tenant;
+	const showAddTenantScreenFlag = route.params.showAddTenantScreenFlag;
+	const { propertyInfo } = route.params;
 	if (route) {
 		roomData = route.params.singleRoomData;
 		property = route.params.propertyInfo;
-		tenant = roomData.tenants[0];
+		tenant = route.params.tenantInfo;
 		loading = useSelector((state) => state.updateTenant.loading);
 	} else {
 		loading = useSelector((state) => state.addTenantResponse.loading);
@@ -47,7 +48,7 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 			email,
 			phoneNumber: phone,
 			securityAmount: security,
-			roomId: singleRoomData._id,
+			roomId: roomData._id,
 			buildId: propertyInfo._id,
 		};
 		if (isValidTenantData(tenantData)) {
@@ -74,7 +75,7 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	};
 
 	useEffect(() => {
-		if (tenant) {
+		if (tenant && !showAddTenantScreenFlag) {
 			setName(tenant.name);
 			setPhone(tenant.phoneNumber);
 			setEmail(tenant.email);
@@ -84,24 +85,23 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 
 	return (
 		<View>
-			{tenant && (
-				<CrossPlatformHeader
-					title="TenantInfo"
-					backCallback={() => {
-						navigate('RoomInfo', {
-							singleRoomData: roomData,
-							propertyInfo: property,
-						});
-					}}
-				/>
-			)}
+			<CrossPlatformHeader
+				title="TenantInfo"
+				backCallback={() => {
+					navigate('RoomInfo', {
+						singleRoomData: roomData,
+						propertyInfo: property,
+					});
+				}}
+			/>
+
 			<KeyboardAwareScrollView style={{ minHeight: '100%' }}>
 				<View style={addTenantStyles.addTenantContainer}>
 					<Text style={{ fontSize: 19 }}>
-						{tenant
+						{!showAddTenantScreenFlag
 							? 'Update Tenant for Room'
 							: 'Add Tenant for Room'}{' '}
-						{tenant ? roomData.roomNo : singleRoomData.roomNo}
+						{tenant && roomData.roomNo}
 					</Text>
 					<TextInputCommon
 						label="Tenant Name"
@@ -136,7 +136,11 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 
 					<Button
 						style={addTenantStyles.submitButton}
-						onPress={tenant ? updateTenantData : handleAddTenant}
+						onPress={
+							!showAddTenantScreenFlag
+								? updateTenantData
+								: handleAddTenant
+						}
 					>
 						{loading ? (
 							<ActivityIndicator color="#ffffff" size="large" />

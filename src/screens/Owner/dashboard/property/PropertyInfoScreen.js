@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
 
@@ -10,7 +10,6 @@ import { navigate } from '../../../../navigation/rootNavigation';
 const PropertyInfoScreen = ({ route, navigation }) => {
 	const { propertyInfo } = route.params;
 	const roomListData = propertyInfo.rooms;
-
 	return (
 		<View style={propertiesScreenStyles.propertyInfoContainer}>
 			<CrossPlatformHeader
@@ -22,12 +21,17 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 			<ScrollView style={{ flex: 1 }}>
 				<View style={propertiesScreenStyles.propertyTitleContainer}>
 					<Text style={propertiesScreenStyles.propertyTitle}>
+						<Text
+							style={propertiesScreenStyles.propertyHeadingText}
+						>
+							Building Name :{' '}
+						</Text>
 						{propertyInfo.name}
 					</Text>
 				</View>
 
 				<View style={propertiesScreenStyles.maintainerContainer}>
-					<Text style={{ fontWeight: 'bold' }}>
+					<Text style={propertiesScreenStyles.maintainerDetailsText}>
 						Maintainer Details:{' '}
 					</Text>
 					<View
@@ -58,54 +62,111 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 							}
 							title="Add Room"
 							raised
-						></Button>
+						/>
 					</View>
 				</View>
 
 				<View style={propertiesScreenStyles.roomsList}>
 					{roomListData.map((item, i) => (
 						<ListItem
-							Component={TouchableOpacity}
 							key={i}
 							bottomDivider
 							containerStyle={
 								propertiesScreenStyles.listContainer
 							}
-							onPress={() => {
-								navigation.navigate('RoomInfo', {
-									singleRoomData: item,
-									propertyInfo,
-								});
-							}}
 						>
 							<ListItem.Content>
-								<ListItem.Title>
-									Room No: {item.roomNo}
-								</ListItem.Title>
 								<View
-									style={propertiesScreenStyles.listSubtitle}
+									style={
+										propertiesScreenStyles.roomNoAndAddTenantBtnRow
+									}
 								>
-									{item.tenants.length > 0 ? (
-										<>
-											<Text style={{ marginRight: 90 }}>
-												{item.tenants[0].name}
-											</Text>
-											<Text>
-												Due Date:{' '}
-												{format(
-													new Date(
-														item.tenants[0].rentDueDate
-													),
-													'dd MMM yyyy'
-												)}
-											</Text>
-										</>
-									) : (
-										<Text>No Tenant Added</Text>
-									)}
+									<View>
+										<Text>Room No: {item.roomNo}</Text>
+									</View>
+									<View>
+										<Button
+											title="Add Tenant"
+											buttonStyle={{
+												backgroundColor: '#109FDA',
+												borderRadius: 20,
+											}}
+											titleStyle={{
+												color: '#FFF',
+												fontSize: 10,
+											}}
+											onPress={() => {
+												navigation.navigate(
+													'UpdateTenantInfo',
+													{
+														singleRoomData: item,
+														propertyInfo,
+														showAddTenantScreenFlag: true,
+													}
+												);
+											}}
+										/>
+									</View>
 								</View>
+
+								{item.tenants.length > 0 &&
+									item.tenants.map((tenant) => {
+										return (
+											<View
+												key={tenant._id}
+												style={
+													propertiesScreenStyles.tenantDetailContainer
+												}
+											>
+												<View
+													style={
+														propertiesScreenStyles.tenantDetailContainerCol1
+													}
+												>
+													<Text>{tenant.name}</Text>
+												</View>
+												<View
+													style={
+														propertiesScreenStyles.tenantDetailContainerCol2
+													}
+												>
+													<Text>
+														Due Date:{' '}
+														{format(
+															new Date(
+																tenant.rentDueDate
+															),
+															'dd MMM yyyy'
+														)}
+													</Text>
+												</View>
+												<View
+													style={
+														propertiesScreenStyles.tenantDetailContainerCol3
+													}
+												>
+													<Text
+														style={
+															propertiesScreenStyles.readMoreText
+														}
+														onPress={() => {
+															navigation.navigate(
+																'RoomInfo',
+																{
+																	singleRoomData:
+																		item,
+																	propertyInfo,
+																}
+															);
+														}}
+													>
+														Read more
+													</Text>
+												</View>
+											</View>
+										);
+									})}
 							</ListItem.Content>
-							<ListItem.Chevron />
 						</ListItem>
 					))}
 				</View>
