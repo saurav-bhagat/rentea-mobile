@@ -24,6 +24,7 @@ import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
 import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
+import useNotification from '../components/common/useNotification';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -41,11 +42,11 @@ const RootRoutes = () => {
 	const [routesLoading, setRoutesLoading] = useState(true);
 	let accessToken, firstLogin, userType;
 	// userType - Tenant / Owner
-
 	if (authState.userInfo) {
 		({ accessToken, firstLogin } = authState.userInfo);
 		userType = authState.userInfo.userDetails.userType;
 	}
+	useNotification();
 
 	console.log('Inside Navigation file: ', accessToken, firstLogin, userType);
 

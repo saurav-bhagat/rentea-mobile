@@ -8,7 +8,6 @@ import store from './src/redux/store';
 import useNotification from './src/components/common/useNotification';
 
 export default function App() {
-	useNotification();
 	const [fontLoading, setFontLoading] = useState(true);
 
 	useEffect(() => {
