@@ -103,12 +103,6 @@ export const propertiesScreenStyles = ScaledSheet.create({
 		flex: 1,
 	},
 	tenantDetailContainerCol2: {
-		flex: 3,
-	},
-	tenantDetailContainerCol3: {
-		flex: 1,
-	},
-	readMoreText: {
-		color: '#109FDA',
+		flex: 2,
 	},
 });

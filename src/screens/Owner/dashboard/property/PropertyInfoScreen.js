@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
 
@@ -70,44 +70,22 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 					{roomListData.map((item, i) => (
 						<ListItem
 							key={i}
+							Component={TouchableOpacity}
 							bottomDivider
 							containerStyle={
 								propertiesScreenStyles.listContainer
 							}
+							onPress={() => {
+								navigation.navigate('RoomInfo', {
+									singleRoomData: item,
+									propertyInfo,
+								});
+							}}
 						>
 							<ListItem.Content>
-								<View
-									style={
-										propertiesScreenStyles.roomNoAndAddTenantBtnRow
-									}
-								>
-									<View>
-										<Text>Room No: {item.roomNo}</Text>
-									</View>
-									<View>
-										<Button
-											title="Add Tenant"
-											buttonStyle={{
-												backgroundColor: '#109FDA',
-												borderRadius: 20,
-											}}
-											titleStyle={{
-												color: '#FFF',
-												fontSize: 10,
-											}}
-											onPress={() => {
-												navigation.navigate(
-													'UpdateTenantInfo',
-													{
-														singleRoomData: item,
-														propertyInfo,
-														showAddTenantScreenFlag: true,
-													}
-												);
-											}}
-										/>
-									</View>
-								</View>
+								<ListItem.Title>
+									Room No: {item.roomNo}
+								</ListItem.Title>
 
 								{item.tenants.length > 0 &&
 									item.tenants.map((tenant) => {
@@ -140,32 +118,14 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 														)}
 													</Text>
 												</View>
-												<View
-													style={
-														propertiesScreenStyles.tenantDetailContainerCol3
-													}
-												>
-													<Text
-														style={
-															propertiesScreenStyles.readMoreText
-														}
-														onPress={() => {
-															navigation.navigate(
-																'RoomInfo',
-																{
-																	singleRoomData:
-																		item,
-																	propertyInfo,
-																}
-															);
-														}}
-													>
-														Read more
-													</Text>
-												</View>
 											</View>
 										);
 									})}
+								{item.tenants.length === 0 && (
+									<View style={{ marginTop: 10 }}>
+										<Text>No Tenant added yet</Text>
+									</View>
+								)}
 							</ListItem.Content>
 						</ListItem>
 					))}
