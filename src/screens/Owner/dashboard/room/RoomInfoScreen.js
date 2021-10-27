@@ -9,7 +9,6 @@ import RoomDetailsScreen from './RoomDetailsScreen';
 
 const RoomInfoScreen = ({ route }) => {
 	const { singleRoomData, propertyInfo } = route.params;
-
 	return (
 		<ScrollView>
 			<CrossPlatformHeader

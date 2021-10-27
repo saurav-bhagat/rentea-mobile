@@ -19,12 +19,13 @@ const AddTenantScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const { error } = useSelector((state) => state.addTenantResponse);
 
-	let loading, roomData, property, tenant;
+	let loading, roomData, property, tenant, isMultipleTenant;
 	const showAddTenantScreenFlag = route.params.showAddTenantScreenFlag;
 
 	const { propertyInfo } = route.params;
 	if (route) {
 		roomData = route.params.singleRoomData;
+		isMultipleTenant = roomData.isMultipleTenant;
 		property = route.params.propertyInfo;
 		tenant = route.params.tenantInfo;
 	}
@@ -38,6 +39,7 @@ const AddTenantScreen = ({ route }) => {
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
+	const [rent, setRent] = useState(0);
 
 	const {
 		text,
@@ -49,14 +51,27 @@ const AddTenantScreen = ({ route }) => {
 	} = useSnack();
 
 	const handleAddTenant = () => {
-		const tenantData = {
-			name,
-			email,
-			phoneNumber: phone,
-			securityAmount: security,
-			roomId: roomData._id,
-			buildId: propertyInfo._id,
-		};
+		let tenantData;
+		if (isMultipleTenant) {
+			tenantData = {
+				name,
+				email,
+				phoneNumber: phone,
+				securityAmount: security,
+				roomId: roomData._id,
+				buildId: propertyInfo._id,
+				rent,
+			};
+		} else {
+			tenantData = {
+				name,
+				email,
+				phoneNumber: phone,
+				securityAmount: security,
+				roomId: roomData._id,
+				buildId: propertyInfo._id,
+			};
+		}
 		if (isValidTenantData(tenantData)) {
 			dispatch(addTenant(tenantData));
 		} else {
@@ -146,7 +161,16 @@ const AddTenantScreen = ({ route }) => {
 						keyboardType="numeric"
 						style={{ marginBottom: 30 }}
 					/>
-
+					{isMultipleTenant && showAddTenantScreenFlag && (
+						<TextInputCommon
+							label="Rent"
+							name="rent"
+							onChangeText={(val) => setRent(val)}
+							value={rent}
+							keyboardType="numeric"
+							style={{ marginBottom: 30 }}
+						/>
+					)}
 					<Button
 						style={addTenantStyles.submitButton}
 						onPress={

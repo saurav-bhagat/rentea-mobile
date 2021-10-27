@@ -31,11 +31,15 @@ export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 							}}
 							name={'edit'}
 						/>
-						<Text>Room No.: {singleRoomData.roomNo}</Text>
+						<Text>Room No : {singleRoomData.roomNo}</Text>
 						<Text>Rent Amount: {singleRoomData.rent}</Text>
 						<Text>Room Size: {singleRoomData.roomSize}</Text>
 						<Text>Floor: {singleRoomData.floor}</Text>
 						<Text>BHK: {singleRoomData.type.split('')[0]}</Text>
+						<Text>
+							MultipleTenantAllowed :{' '}
+							{singleRoomData.isMultipleTenant ? 'Yes' : 'No'}
+						</Text>
 					</Body>
 				</CardItem>
 			</Card>

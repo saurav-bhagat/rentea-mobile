@@ -14,11 +14,7 @@ const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 	const tenants = singleRoomData.tenants;
 
 	const handlePayWithCash = (tenant) => {
-		const {
-			_id: tenantUserId,
-			securityAmount: amount,
-			rentDueDate,
-		} = tenant;
+		const { _id: tenantUserId, rent: amount, rentDueDate } = tenant;
 		dispatch(payWithCash({ tenantUserId, amount, rentDueDate }));
 	};
 
@@ -46,6 +42,12 @@ const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 											new Date(tenant.joinDate),
 											'dd MMM yyyy'
 										)}
+									</Text>
+									<Text>
+										Rent :{' '}
+										{singleRoomData.isMultipleTenant
+											? tenant.rent
+											: singleRoomData.rent}
 									</Text>
 									<Text>
 										Security Paid: {tenant.securityAmount}
