@@ -6,6 +6,7 @@ import {
 	KeyboardAvoidingView,
 	Keyboard,
 	TouchableWithoutFeedback,
+	BackHandler,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
@@ -23,6 +24,15 @@ const LoginScreen = () => {
 		navigation.addListener('focus', () => {
 			console.log('Inside useEffect of LoginScreen');
 		});
+	}, []);
+
+	// To disable hardware back press once user reaches login screen
+	useEffect(() => {
+		const backHandler = BackHandler.addEventListener(
+			'hardwareBackPress',
+			() => true
+		);
+		return () => backHandler.remove();
 	}, []);
 
 	const renderHeader = () => (
