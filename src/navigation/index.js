@@ -46,7 +46,7 @@ const RootRoutes = () => {
 		({ accessToken, firstLogin } = authState.userInfo);
 		userType = authState.userInfo.userDetails.userType;
 	}
-	useNotification();
+	// useNotification();
 
 	console.log('Inside Navigation file: ', accessToken, firstLogin, userType);
 

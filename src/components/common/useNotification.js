@@ -1,13 +1,12 @@
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { addExpoPushToken } from '../../redux/actions';
 
 const useNotification = () => {
 	const dispatch = useDispatch();
-	const authState = useSelector((state) => state.auth);
 
 	Notifications.setNotificationHandler({
 		handleNotification: async () => ({

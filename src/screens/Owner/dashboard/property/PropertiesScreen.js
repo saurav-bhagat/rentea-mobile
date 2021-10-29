@@ -22,11 +22,13 @@ import AddBuildingFabButton from '../../../../components/owner/building/AddBuild
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
+import useNotification from '../../../../components/common/useNotification';
 
 const PropertiesScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
+	useNotification();
 
 	const buildingAdded = 'buildings added successfully';
 	const tenantAdded = 'tenant added successfully';
