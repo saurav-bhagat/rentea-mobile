@@ -31,9 +31,10 @@ export const addExpoPushTokenRequest = () => {
 	return { type: ADD_EXPO_PUSH_TOKEN_REQUEST };
 };
 
-export const addExpoPushTokenSuccess = () => {
+export const addExpoPushTokenSuccess = (payload) => {
 	return {
 		type: ADD_EXPO_PUSH_TOKEN_SUCCESS,
+		payload,
 	};
 };
 
@@ -51,6 +52,7 @@ export const addUserDetail = (userData) => {
 			_id: auth.userInfo.userDetails.ownerId,
 			name: `${userData.fName} ${userData.lName}`,
 			email: userData.email,
+			expoPushToken: userData.expoPushToken,
 		};
 
 		axios
@@ -92,7 +94,11 @@ export const addExpoPushToken = (token) => {
 			})
 			.then(async (response) => {
 				console.log('Expo token addded successfully');
-				dispatch(addExpoPushTokenSuccess());
+				dispatch(
+					addExpoPushTokenSuccess(
+						response.data.updatedUserInfo.expoPushToken
+					)
+				);
 			})
 			.catch((err) => {
 				console.log('Notifications will not be sent');

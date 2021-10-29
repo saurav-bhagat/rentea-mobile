@@ -1,3 +1,6 @@
+import { ADD_EXPO_PUSH_TOKEN_SUCCESS } from '../../actions/authActions/authTypes';
+import { ADD_BUILDING_SUCCESS } from '../../actions/ownerActions/addBuildingTypes';
+
 const userDetail = {
 	_id: null,
 	name: '',
@@ -5,6 +8,7 @@ const userDetail = {
 	userType: '',
 	error: '',
 	loading: false,
+	expoPushToken: '',
 };
 
 export const addUserDetailReducer = (state = userDetail, action) => {
@@ -27,6 +31,13 @@ export const addUserDetailReducer = (state = userDetail, action) => {
 				error: action.error,
 				loading: false,
 			};
+
+		case ADD_EXPO_PUSH_TOKEN_SUCCESS:
+			return {
+				...state,
+				expoPushToken: action.payload,
+			};
+
 		default:
 			return state;
 	}

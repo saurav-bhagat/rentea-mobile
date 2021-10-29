@@ -23,12 +23,14 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import useNotification from '../../../../components/common/useNotification';
+import { addExpoPushToken } from '../../../../redux/actions';
 
 const PropertiesScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
-	useNotification();
+	const { expoPushToken: token } = useSelector((state) => state.userDetail);
+	const { expoPushToken } = useNotification();
 
 	const buildingAdded = 'buildings added successfully';
 	const tenantAdded = 'tenant added successfully';
@@ -78,6 +80,12 @@ const PropertiesScreen = ({ route }) => {
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
 	}, [isFocused]);
+
+	useEffect(() => {
+		if (token === '' && expoPushToken) {
+			dispatch(addExpoPushToken(expoPushToken));
+		}
+	}, [expoPushToken]);
 
 	if (loading) {
 		return (

@@ -1,13 +1,9 @@
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
-import { useDispatch } from 'react-redux';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { addExpoPushToken } from '../../redux/actions';
 
 const useNotification = () => {
-	const dispatch = useDispatch();
-
 	Notifications.setNotificationHandler({
 		handleNotification: async () => ({
 			shouldShowAlert: true,
@@ -23,7 +19,6 @@ const useNotification = () => {
 
 	useEffect(() => {
 		registerForPushNotificationsAsync().then((token) => {
-			dispatch(addExpoPushToken(token));
 			setExpoPushToken(token);
 		});
 
@@ -81,6 +76,9 @@ const useNotification = () => {
 
 		return token;
 	}
+	return {
+		expoPushToken,
+	};
 };
 
 export default useNotification;

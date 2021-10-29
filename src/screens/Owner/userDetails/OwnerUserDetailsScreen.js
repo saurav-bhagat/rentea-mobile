@@ -6,6 +6,7 @@ import { userDetailsStyles } from './userDetailsStyles';
 import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
 import { addUserDetail } from '../../../redux/actions';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import useNotification from '../../../components/common/useNotification';
 
 const OwnerUserDetailsScreen = () => {
 	const dispatch = useDispatch();
@@ -14,11 +15,14 @@ const OwnerUserDetailsScreen = () => {
 	const [lName, setLName] = useState('');
 	const [email, setEmail] = useState('');
 
+	const { expoPushToken } = useNotification();
+
 	const handleUserDetailsSubmit = () => {
 		let formData = {
 			fName,
 			lName,
 			email,
+			expoPushToken,
 		};
 		if (isValidUserDetails(formData)) {
 			// dispatch SaveUserDetails Action, remove console.log
