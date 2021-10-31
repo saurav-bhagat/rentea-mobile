@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import {
+	Text,
+	View,
+	ActivityIndicator,
+	Switch,
+	ScrollView,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-elements';
@@ -34,6 +40,10 @@ export default function UpdateRoomDetails({ route }) {
 	const [roomSize, setRoomSize] = useState('');
 	const [floorNo, setFloorNo] = useState('');
 	const [BHK, setBHK] = useState('');
+	const [isMultipleTenant, setIsMultipleTenant] = useState(false);
+
+	const toggleSwitch = () =>
+		setIsMultipleTenant((previousState) => !previousState);
 
 	const {
 		text,
@@ -52,12 +62,12 @@ export default function UpdateRoomDetails({ route }) {
 			roomSize,
 			floor: floorNo,
 			roomType: BHK + 'bhk',
+			isMultipleTenant,
 		};
 
 		const dataForValidation = JSON.parse(JSON.stringify(roomData));
 		dataForValidation.roomType = BHK;
 		dataForValidation.rent = rentAmount.toString();
-
 		if (validateRoomFieldsForUpdate(dataForValidation)) {
 			//TODO: floor number shouldn't be updated to more than the capacity of building
 			dispatch(updateRoomDetail(roomData));
@@ -78,6 +88,7 @@ export default function UpdateRoomDetails({ route }) {
 					floor: floorNo,
 					roomNo: roomNO,
 					roomSize: roomSize,
+					isMultipleTenant,
 				},
 			],
 		};
@@ -101,11 +112,12 @@ export default function UpdateRoomDetails({ route }) {
 			setRoomSize(singleRoomData.roomSize);
 			setFloorNo(singleRoomData.floor);
 			setBHK(singleRoomData.type.split('')[0]);
+			setIsMultipleTenant(singleRoomData.isMultipleTenant);
 		}
 	}, [singleRoomData]);
 
 	return (
-		<View>
+		<ScrollView>
 			{singleRoomData ? (
 				<CrossPlatformHeader
 					title="Update Room"
@@ -173,7 +185,25 @@ export default function UpdateRoomDetails({ route }) {
 						value={BHK}
 						onChangeText={(val) => setBHK(val)}
 					/>
-
+					<View style={{ flexDirection: 'row' }}>
+						<View style={{ flex: 1 }}>
+							<Text>IsMultipleTenantAllowed</Text>
+						</View>
+						<View style={{ flex: 1 }}>
+							<Switch
+								trackColor={{
+									false: '#767577',
+									true: '#109FDA',
+								}}
+								thumbColor={
+									isMultipleTenant ? '#109FDA' : '#f4f3f4'
+								}
+								ios_backgroundColor="#3e3e3e"
+								onValueChange={toggleSwitch}
+								value={isMultipleTenant}
+							/>
+						</View>
+					</View>
 					<Button
 						buttonStyle={updateRoomDetailsStyle.submitButton}
 						onPress={
@@ -192,6 +222,6 @@ export default function UpdateRoomDetails({ route }) {
 					onToggleSnackBar={onToggleSnackBar}
 				/>
 			</KeyboardAwareScrollView>
-		</View>
+		</ScrollView>
 	);
 }

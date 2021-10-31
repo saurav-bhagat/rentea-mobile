@@ -39,7 +39,7 @@ const AddTenantScreen = ({ route }) => {
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
-	const [rent, setRent] = useState(0);
+	const [rent, setRent] = useState('');
 
 	const {
 		text,

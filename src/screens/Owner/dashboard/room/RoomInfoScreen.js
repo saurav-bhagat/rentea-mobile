@@ -23,35 +23,69 @@ const RoomInfoScreen = ({ route }) => {
 					singleRoomData={singleRoomData}
 					propertyInfo={propertyInfo}
 				/>
-				<View
-					style={{
-						flexDirection: 'row',
-						justifyContent: 'flex-end',
-						marginTop: 10,
-						marginBottom: 10,
-						marginRight: 20,
-					}}
-				>
-					<Button
-						title="Add Tenant"
-						buttonStyle={{
-							backgroundColor: '#fff',
-							borderRadius: 20,
+				{singleRoomData.isMultipleTenant && (
+					<View
+						style={{
+							flexDirection: 'row',
+							justifyContent: 'flex-end',
+							marginTop: 10,
+							marginBottom: 10,
+							marginRight: 20,
 						}}
-						titleStyle={{
-							color: '#109FDA',
-							fontSize: 15,
-						}}
-						onPress={() => {
-							navigate('UpdateTenantInfo', {
-								singleRoomData,
-								propertyInfo,
-								showAddTenantScreenFlag: true,
-							});
-						}}
-						raised
-					/>
-				</View>
+					>
+						<Button
+							title="Add Tenant"
+							buttonStyle={{
+								backgroundColor: '#fff',
+								borderRadius: 20,
+							}}
+							titleStyle={{
+								color: '#109FDA',
+								fontSize: 15,
+							}}
+							onPress={() => {
+								navigate('UpdateTenantInfo', {
+									singleRoomData,
+									propertyInfo,
+									showAddTenantScreenFlag: true,
+								});
+							}}
+							raised
+						/>
+					</View>
+				)}
+				{!singleRoomData.isMultipleTenant &&
+					singleRoomData.tenants.length < 1 && (
+						<View
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'flex-end',
+								marginTop: 10,
+								marginBottom: 10,
+								marginRight: 20,
+							}}
+						>
+							<Button
+								title="Add Tenant"
+								buttonStyle={{
+									backgroundColor: '#fff',
+									borderRadius: 20,
+								}}
+								titleStyle={{
+									color: '#109FDA',
+									fontSize: 15,
+								}}
+								onPress={() => {
+									navigate('UpdateTenantInfo', {
+										singleRoomData,
+										propertyInfo,
+										showAddTenantScreenFlag: true,
+									});
+								}}
+								raised
+							/>
+						</View>
+					)}
 				{singleRoomData.tenants.length > 0 && (
 					<TenantInfoScreen
 						singleRoomData={singleRoomData}
