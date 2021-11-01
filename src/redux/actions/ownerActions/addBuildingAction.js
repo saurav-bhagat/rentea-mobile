@@ -41,13 +41,24 @@ export const saveBuildingData = (buildingObj) => {
 			buildingObj;
 		const rooms = state.addRoomDetails.roomDetails
 			? state.addRoomDetails.roomDetails.map((room) => {
-					return {
-						rent: room.rent,
-						type: `${room.bhk}bhk`,
-						floor: room.floor,
-						roomNo: room.roomNo,
-						roomSize: room.sizeInFt,
-					};
+					if (room.isMultipleTenant) {
+						return {
+							type: `${room.bhk}bhk`,
+							floor: room.floor,
+							roomNo: room.roomNo,
+							roomSize: room.sizeInFt,
+							isMultipleTenant: room.isMultipleTenant,
+						};
+					} else {
+						return {
+							rent: room.rent,
+							type: `${room.bhk}bhk`,
+							floor: room.floor,
+							roomNo: room.roomNo,
+							roomSize: room.sizeInFt,
+							isMultipleTenant: room.isMultipleTenant,
+						};
+					}
 			  })
 			: [];
 		const body = {

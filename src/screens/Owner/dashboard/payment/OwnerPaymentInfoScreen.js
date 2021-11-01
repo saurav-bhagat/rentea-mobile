@@ -36,12 +36,14 @@ const OwnerPaymentInfoScreen = () => {
 			const { rooms, name: buildingName } = building;
 			if (rooms && rooms.length) {
 				for (let roomIndex = 0; roomIndex < rooms.length; roomIndex++) {
-					const { tenants, rent, roomNo } = rooms[roomIndex];
+					const { tenants, rent, roomNo, isMultipleTenant } =
+						rooms[roomIndex];
 					tenantPlusRentContainer.push({
 						tenants,
 						rent,
 						roomNo,
 						buildingName,
+						isMultipleTenant,
 					});
 				}
 			}
@@ -49,7 +51,7 @@ const OwnerPaymentInfoScreen = () => {
 
 		if (tenantPlusRentContainer.length) {
 			for (let i = 0; i < tenantPlusRentContainer.length; i++) {
-				let { rent, tenants, roomNo, buildingName } =
+				let { rent, tenants, roomNo, buildingName, isMultipleTenant } =
 					tenantPlusRentContainer[i];
 				if (tenants && tenants.length) {
 					for (
@@ -61,6 +63,7 @@ const OwnerPaymentInfoScreen = () => {
 							paymentDetails,
 							rentDueDate,
 							name: tenantName,
+							rent: tenantRent,
 						} = tenants[tenantIndex];
 						paymentDetails &&
 							paymentDetails.length &&
@@ -72,14 +75,14 @@ const OwnerPaymentInfoScreen = () => {
 							});
 
 						pendingPaymentData.push({
-							txnAmount: rent,
+							txnAmount: isMultipleTenant ? tenantRent : rent,
 							txnDate: rentDueDate,
 							tenantName,
 							roomNo,
 							buildingName,
 						});
 						upcomingPaymentData.push({
-							txnAmount: rent,
+							txnAmount: isMultipleTenant ? tenantRent : rent,
 							txnDate: rentDueDate,
 							tenantName,
 							roomNo,

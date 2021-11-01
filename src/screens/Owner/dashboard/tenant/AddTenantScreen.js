@@ -15,22 +15,31 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import { navigate } from '../../../../navigation/rootNavigation';
 import { updateTenantDetails } from '../../../../redux/actions/ownerActions/updateTenantAction';
 
-const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
+const AddTenantScreen = ({ route }) => {
 	const dispatch = useDispatch();
+	const { error } = useSelector((state) => state.addTenantResponse);
 
-	let loading, roomData, property, tenant;
+	let loading, roomData, property, tenant, isMultipleTenant;
+	const showAddTenantScreenFlag = route.params.showAddTenantScreenFlag;
+
+	const { propertyInfo } = route.params;
 	if (route) {
 		roomData = route.params.singleRoomData;
+		isMultipleTenant = roomData.isMultipleTenant;
 		property = route.params.propertyInfo;
-		tenant = roomData.tenants[0];
-		loading = useSelector((state) => state.updateTenant.loading);
-	} else {
-		loading = useSelector((state) => state.addTenantResponse.loading);
+		tenant = route.params.tenantInfo;
 	}
+	if (showAddTenantScreenFlag) {
+		loading = useSelector((state) => state.addTenantResponse.loading);
+	} else {
+		loading = useSelector((state) => state.updateTenant.loading);
+	}
+
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
+	const [rent, setRent] = useState('');
 
 	const {
 		text,
@@ -42,14 +51,27 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	} = useSnack();
 
 	const handleAddTenant = () => {
-		const tenantData = {
-			name,
-			email,
-			phoneNumber: phone,
-			securityAmount: security,
-			roomId: singleRoomData._id,
-			buildId: propertyInfo._id,
-		};
+		let tenantData;
+		if (isMultipleTenant) {
+			tenantData = {
+				name,
+				email,
+				phoneNumber: phone,
+				securityAmount: security,
+				roomId: roomData._id,
+				buildId: propertyInfo._id,
+				rent,
+			};
+		} else {
+			tenantData = {
+				name,
+				email,
+				phoneNumber: phone,
+				securityAmount: security,
+				roomId: roomData._id,
+				buildId: propertyInfo._id,
+			};
+		}
 		if (isValidTenantData(tenantData)) {
 			dispatch(addTenant(tenantData));
 		} else {
@@ -74,7 +96,7 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 	};
 
 	useEffect(() => {
-		if (tenant) {
+		if (tenant && !showAddTenantScreenFlag) {
 			setName(tenant.name);
 			setPhone(tenant.phoneNumber);
 			setEmail(tenant.email);
@@ -82,26 +104,32 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 		}
 	}, [tenant]);
 
+	useEffect(() => {
+		if (error) {
+			setVisible(true);
+			setText(error.err);
+		}
+	}, [error]);
+
 	return (
 		<View>
-			{tenant && (
-				<CrossPlatformHeader
-					title="TenantInfo"
-					backCallback={() => {
-						navigate('RoomInfo', {
-							singleRoomData: roomData,
-							propertyInfo: property,
-						});
-					}}
-				/>
-			)}
+			<CrossPlatformHeader
+				title="TenantInfo"
+				backCallback={() => {
+					navigate('RoomInfo', {
+						singleRoomData: roomData,
+						propertyInfo: property,
+					});
+				}}
+			/>
+
 			<KeyboardAwareScrollView style={{ minHeight: '100%' }}>
 				<View style={addTenantStyles.addTenantContainer}>
 					<Text style={{ fontSize: 19 }}>
-						{tenant
+						{!showAddTenantScreenFlag
 							? 'Update Tenant for Room'
 							: 'Add Tenant for Room'}{' '}
-						{tenant ? roomData.roomNo : singleRoomData.roomNo}
+						{tenant && roomData.roomNo}
 					</Text>
 					<TextInputCommon
 						label="Tenant Name"
@@ -133,10 +161,23 @@ const AddTenantScreen = ({ singleRoomData, propertyInfo, route }) => {
 						keyboardType="numeric"
 						style={{ marginBottom: 30 }}
 					/>
-
+					{isMultipleTenant && showAddTenantScreenFlag && (
+						<TextInputCommon
+							label="Rent"
+							name="rent"
+							onChangeText={(val) => setRent(val)}
+							value={rent}
+							keyboardType="numeric"
+							style={{ marginBottom: 30 }}
+						/>
+					)}
 					<Button
 						style={addTenantStyles.submitButton}
-						onPress={tenant ? updateTenantData : handleAddTenant}
+						onPress={
+							!showAddTenantScreenFlag
+								? updateTenantData
+								: handleAddTenant
+						}
 					>
 						{loading ? (
 							<ActivityIndicator color="#ffffff" size="large" />

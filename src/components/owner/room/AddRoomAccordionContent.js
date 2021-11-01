@@ -1,27 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Switch } from 'react-native';
+
 import { Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
 import { useDispatch } from 'react-redux';
 
 import TextInputCommon from '../../common/TextInputCommon';
 import { roomAccordionStyles } from './addRoomAccordionStyles';
+
 import { saveRoomData } from '../../../redux/actions';
 import { validateRoomFields } from '../../../helpers/addBuildingValidation';
+
 import SnackBar from '../../common/SnackBar';
 import useSnack from '../../common/useSnack';
 
 const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 	const dispatch = useDispatch();
 	const [roomNo, setRoomNo] = isData ? useState(data.roomNo) : useState('');
+
 	const [rent, setRent] = isData ? useState(data.rent) : useState('');
 	const [security, setSecurity] = isData
 		? useState(data.security)
 		: useState('');
+
 	const [floor, setFloor] = isData ? useState(data.floor) : useState('');
 	const [sizeInFt, setSizeInFt] = isData
 		? useState(data.sizeInFt)
 		: useState('');
+
 	const [bhk, setBhk] = isData ? useState(data.bhk) : useState('');
+	const [isMultipleTenant, setIsMultipleTenant] = useState(false);
+
+	const toggleSwitch = () =>
+		setIsMultipleTenant((previousState) => !previousState);
 
 	const {
 		visible,
@@ -39,6 +49,7 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 		floor,
 		sizeInFt,
 		bhk,
+		isMultipleTenant,
 	};
 
 	const handleAddRoomClick = () => {
@@ -58,6 +69,25 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 			</CardItem>
 			<CardItem style={{ paddingTop: 0, paddingBottom: 30 }}>
 				<Body>
+					<View style={{ flexDirection: 'row' }}>
+						<View style={{ flex: 1 }}>
+							<Text>MultipleTenant : </Text>
+						</View>
+						<View style={{ flex: 1 }}>
+							<Switch
+								trackColor={{
+									false: '#767577',
+									true: '#109FDA',
+								}}
+								thumbColor={
+									isMultipleTenant ? '#109FDA' : '#f4f3f4'
+								}
+								ios_backgroundColor="#3e3e3e"
+								onValueChange={toggleSwitch}
+								value={isMultipleTenant}
+							/>
+						</View>
+					</View>
 					<View style={{ flexDirection: 'row', marginTop: 5 }}>
 						<View style={{ flex: 1 }}>
 							<Item
@@ -75,46 +105,54 @@ const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
 								/>
 							</Item>
 						</View>
-						<View style={{ flex: 1 }}>
-							<Item
-								floatingLabel
-								style={{
-									borderColor: '#666',
-									width: '90%',
-									alignSelf: 'flex-end',
-								}}
-							>
-								<Label>Rent Amount</Label>
-								<Input
-									onChangeText={(val) => setRent(val)}
-									value={rent}
-									keyboardType="numeric"
-								/>
-							</Item>
-						</View>
+						{!isMultipleTenant && (
+							<View style={{ flex: 1 }}>
+								<Item
+									floatingLabel
+									style={{
+										borderColor: '#666',
+										width: '90%',
+										alignSelf: 'flex-end',
+									}}
+								>
+									<Label>Rent Amount</Label>
+									<Input
+										onChangeText={(val) => setRent(val)}
+										value={rent}
+										keyboardType="numeric"
+									/>
+								</Item>
+							</View>
+						)}
 					</View>
 					<View style={{ flexDirection: 'row', marginTop: 5 }}>
 						<View style={{ flex: 1 }}>
 							<TextInputCommon
-								label="Security Amount"
+								label="Floor"
 								style={{
 									width: '90%',
 									alignSelf: 'flex-start',
 								}}
-								onChangeText={(val) => setSecurity(val)}
-								value={security}
-								keyboardType="numeric"
-							/>
-						</View>
-						<View style={{ flex: 1 }}>
-							<TextInputCommon
-								label="Floor"
-								style={{ width: '90%', alignSelf: 'flex-end' }}
 								keyboardType="numeric"
 								onChangeText={(val) => setFloor(val)}
 								value={floor}
 							/>
 						</View>
+
+						{!isMultipleTenant && (
+							<View style={{ flex: 1 }}>
+								<TextInputCommon
+									label="Security Amount"
+									style={{
+										width: '90%',
+										alignSelf: 'flex-end',
+									}}
+									onChangeText={(val) => setSecurity(val)}
+									value={security}
+									keyboardType="numeric"
+								/>
+							</View>
+						)}
 					</View>
 					<View style={{ flexDirection: 'row', marginTop: 5 }}>
 						<View style={{ flex: 1 }}>

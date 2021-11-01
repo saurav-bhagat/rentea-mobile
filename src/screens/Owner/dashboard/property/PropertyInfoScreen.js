@@ -10,7 +10,6 @@ import { navigate } from '../../../../navigation/rootNavigation';
 const PropertyInfoScreen = ({ route, navigation }) => {
 	const { propertyInfo } = route.params;
 	const roomListData = propertyInfo.rooms;
-
 	return (
 		<View style={propertiesScreenStyles.propertyInfoContainer}>
 			<CrossPlatformHeader
@@ -22,12 +21,17 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 			<ScrollView style={{ flex: 1 }}>
 				<View style={propertiesScreenStyles.propertyTitleContainer}>
 					<Text style={propertiesScreenStyles.propertyTitle}>
+						<Text
+							style={propertiesScreenStyles.propertyHeadingText}
+						>
+							Building Name :{' '}
+						</Text>
 						{propertyInfo.name}
 					</Text>
 				</View>
 
 				<View style={propertiesScreenStyles.maintainerContainer}>
-					<Text style={{ fontWeight: 'bold' }}>
+					<Text style={propertiesScreenStyles.maintainerDetailsText}>
 						Maintainer Details:{' '}
 					</Text>
 					<View
@@ -58,15 +62,15 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 							}
 							title="Add Room"
 							raised
-						></Button>
+						/>
 					</View>
 				</View>
 
 				<View style={propertiesScreenStyles.roomsList}>
 					{roomListData.map((item, i) => (
 						<ListItem
-							Component={TouchableOpacity}
 							key={i}
+							Component={TouchableOpacity}
 							bottomDivider
 							containerStyle={
 								propertiesScreenStyles.listContainer
@@ -82,30 +86,47 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 								<ListItem.Title>
 									Room No: {item.roomNo}
 								</ListItem.Title>
-								<View
-									style={propertiesScreenStyles.listSubtitle}
-								>
-									{item.tenants.length > 0 ? (
-										<>
-											<Text style={{ marginRight: 90 }}>
-												{item.tenants[0].name}
-											</Text>
-											<Text>
-												Due Date:{' '}
-												{format(
-													new Date(
-														item.tenants[0].rentDueDate
-													),
-													'dd MMM yyyy'
-												)}
-											</Text>
-										</>
-									) : (
-										<Text>No Tenant Added</Text>
-									)}
-								</View>
+
+								{item.tenants.length > 0 &&
+									item.tenants.map((tenant) => {
+										return (
+											<View
+												key={tenant._id}
+												style={
+													propertiesScreenStyles.tenantDetailContainer
+												}
+											>
+												<View
+													style={
+														propertiesScreenStyles.tenantDetailContainerCol1
+													}
+												>
+													<Text>{tenant.name}</Text>
+												</View>
+												<View
+													style={
+														propertiesScreenStyles.tenantDetailContainerCol2
+													}
+												>
+													<Text>
+														Due Date:{' '}
+														{format(
+															new Date(
+																tenant.rentDueDate
+															),
+															'dd MMM yyyy'
+														)}
+													</Text>
+												</View>
+											</View>
+										);
+									})}
+								{item.tenants.length === 0 && (
+									<View style={{ marginTop: 10 }}>
+										<Text>No Tenant added yet</Text>
+									</View>
+								)}
 							</ListItem.Content>
-							<ListItem.Chevron />
 						</ListItem>
 					))}
 				</View>

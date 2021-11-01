@@ -1,44 +1,99 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { ScrollView, View } from 'react-native';
+import { Button } from 'react-native-elements';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
 
-import AddTenantScreen from '../tenant/AddTenantScreen';
 import TenantInfoScreen from '../tenant/TenantInfoScreen';
 import RoomDetailsScreen from './RoomDetailsScreen';
 
-import { roomInfoScreenStyles } from './RoomInfoStyle';
-
 const RoomInfoScreen = ({ route }) => {
-	const [isTenant, setIsTenant] = useState(false);
 	const { singleRoomData, propertyInfo } = route.params;
-
 	return (
-		<View>
+		<ScrollView>
 			<CrossPlatformHeader
 				title="Room Info"
 				backCallback={() => {
 					navigate('PropertyInfo');
 				}}
 			/>
-			{singleRoomData.tenants.length > 0 ? (
-				<>
-					<RoomDetailsScreen
-						singleRoomData={singleRoomData}
-						propertyInfo={propertyInfo}
-					/>
+
+			<>
+				<RoomDetailsScreen
+					singleRoomData={singleRoomData}
+					propertyInfo={propertyInfo}
+				/>
+				{singleRoomData.isMultipleTenant && (
+					<View
+						style={{
+							flexDirection: 'row',
+							justifyContent: 'flex-end',
+							marginTop: 10,
+							marginBottom: 10,
+							marginRight: 20,
+						}}
+					>
+						<Button
+							title="Add Tenant"
+							buttonStyle={{
+								backgroundColor: '#fff',
+								borderRadius: 20,
+							}}
+							titleStyle={{
+								color: '#109FDA',
+								fontSize: 15,
+							}}
+							onPress={() => {
+								navigate('UpdateTenantInfo', {
+									singleRoomData,
+									propertyInfo,
+									showAddTenantScreenFlag: true,
+								});
+							}}
+							raised
+						/>
+					</View>
+				)}
+				{!singleRoomData.isMultipleTenant &&
+					singleRoomData.tenants.length < 1 && (
+						<View
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'flex-end',
+								marginTop: 10,
+								marginBottom: 10,
+								marginRight: 20,
+							}}
+						>
+							<Button
+								title="Add Tenant"
+								buttonStyle={{
+									backgroundColor: '#fff',
+									borderRadius: 20,
+								}}
+								titleStyle={{
+									color: '#109FDA',
+									fontSize: 15,
+								}}
+								onPress={() => {
+									navigate('UpdateTenantInfo', {
+										singleRoomData,
+										propertyInfo,
+										showAddTenantScreenFlag: true,
+									});
+								}}
+								raised
+							/>
+						</View>
+					)}
+				{singleRoomData.tenants.length > 0 && (
 					<TenantInfoScreen
 						singleRoomData={singleRoomData}
 						propertyInfo={propertyInfo}
 					/>
-				</>
-			) : (
-				<AddTenantScreen
-					singleRoomData={singleRoomData}
-					propertyInfo={propertyInfo}
-				/>
-			)}
-		</View>
+				)}
+			</>
+		</ScrollView>
 	);
 };
 

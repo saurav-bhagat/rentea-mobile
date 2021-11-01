@@ -19,6 +19,7 @@ export const validateCount = (obj) => {
 		}
 		return e > 0;
 	});
+	console.log('result is ', result);
 	return result;
 };
 
@@ -81,10 +82,16 @@ export const isValidBankDetails = ({
 };
 
 export const validateRoomFields = (
-	{ roomNo, rent, security, floor, sizeInFt, bhk },
+	{ roomNo, rent, security, floor, sizeInFt, bhk, isMultipleTenant },
 	floorCount
 ) => {
-	if (validateCount({ roomNo, rent, security, floor, sizeInFt, bhk })) {
+	if (!roomNo) {
+		return false;
+	}
+	if (
+		!isMultipleTenant &&
+		validateCount({ rent, security, floor, sizeInFt, bhk })
+	) {
 		if (
 			bhk > 0 &&
 			bhk < 10 &&
@@ -96,6 +103,18 @@ export const validateRoomFields = (
 			return true;
 		}
 	}
+	if (isMultipleTenant && validateCount({ floor, sizeInFt, bhk })) {
+		if (
+			bhk > 0 &&
+			bhk < 10 &&
+			floor > 0 &&
+			floor <= floorCount &&
+			sizeInFt >= 100
+		) {
+			return true;
+		}
+	}
+
 	console.log('Room details validation failed');
 	return false;
 };

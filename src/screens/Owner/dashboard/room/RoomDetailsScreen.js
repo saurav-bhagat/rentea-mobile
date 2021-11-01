@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import { Card, CardItem, Body, Button } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import { View, Text } from 'react-native';
+import { Card, CardItem, Body } from 'native-base';
+
 import { navigate } from '../../../../navigation/rootNavigation';
 import { roomDetailStyles } from '../room/RoomDetailsStyle';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
-	const tenant = singleRoomData.tenants[0];
 	return (
-		<ScrollView contentContainerStyle={roomDetailStyles.roomInfoContainer}>
+		<View style={roomDetailStyles.roomInfoContainer}>
 			<Text style={roomDetailStyles.roomInfoTitle}>
 				Room Details for {singleRoomData.roomNo}
 			</Text>
@@ -32,14 +31,18 @@ export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 							}}
 							name={'edit'}
 						/>
-						<Text>Room No.: {singleRoomData.roomNo}</Text>
+						<Text>Room No : {singleRoomData.roomNo}</Text>
 						<Text>Rent Amount: {singleRoomData.rent}</Text>
 						<Text>Room Size: {singleRoomData.roomSize}</Text>
 						<Text>Floor: {singleRoomData.floor}</Text>
 						<Text>BHK: {singleRoomData.type.split('')[0]}</Text>
+						<Text>
+							MultipleTenantAllowed :{' '}
+							{singleRoomData.isMultipleTenant ? 'Yes' : 'No'}
+						</Text>
 					</Body>
 				</CardItem>
 			</Card>
-		</ScrollView>
+		</View>
 	);
 }
