@@ -16,6 +16,7 @@ import { verifyOtp } from '../../redux/actions';
 import { sendOtp } from '../../redux/actions';
 import SnackBar from '../../components/common/SnackBar';
 import useSnack from '../../components/common/useSnack';
+import * as Notifications from 'expo-notifications';
 
 const OTPScreen = ({ route }) => {
 	const dispatch = useDispatch();
@@ -31,6 +32,18 @@ const OTPScreen = ({ route }) => {
 		text,
 		setText,
 	} = useSnack();
+	//sending this notificaton from backend now
+
+	// async function schedulePushNotification() {
+	// 	await Notifications.scheduleNotificationAsync({
+	// 		content: {
+	// 			title: 'You just logged in',
+	// 			body: 'That is great',
+	// 			data: { data: 'goes here' },
+	// 		},
+	// 		trigger: { seconds: 1 },
+	// 	});
+	// }
 
 	const handleOTPSubmit = (code) => {
 		if (!code || code.length != 6) {
@@ -41,6 +54,7 @@ const OTPScreen = ({ route }) => {
 		}
 		if (code.length === 6) {
 			dispatch(verifyOtp(phoneNumber, code));
+			// schedulePushNotification();
 		} else {
 			// alert('Invalid otp');
 			setVisible(true);

@@ -22,11 +22,15 @@ import AddBuildingFabButton from '../../../../components/owner/building/AddBuild
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
+import useNotification from '../../../../components/common/useNotification';
+import { addExpoPushToken } from '../../../../redux/actions';
 
 const PropertiesScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const navigation = useNavigation();
 	const isFocused = useIsFocused();
+	const { expoPushToken: token } = useSelector((state) => state.userDetail);
+	const { expoPushToken } = useNotification();
 
 	const buildingAdded = 'buildings added successfully';
 	const tenantAdded = 'tenant added successfully';
@@ -76,6 +80,14 @@ const PropertiesScreen = ({ route }) => {
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
 	}, [isFocused]);
+
+	useEffect(() => {
+		if (token === '' && expoPushToken) {
+			//as soon as user comes on property dashboard and there is no expo token in redux
+			//the expo token saves in database
+			dispatch(addExpoPushToken(expoPushToken));
+		}
+	}, [expoPushToken]);
 
 	if (loading) {
 		return (
