@@ -83,6 +83,8 @@ const PropertiesScreen = ({ route }) => {
 
 	useEffect(() => {
 		if (token === '' && expoPushToken) {
+			//as soon as user comes on property dashboard and there is no expo token in redux
+			//the expo token saves in database
 			dispatch(addExpoPushToken(expoPushToken));
 		}
 	}, [expoPushToken]);
