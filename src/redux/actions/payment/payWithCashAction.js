@@ -6,6 +6,7 @@ import {
 	PAY_WITH_CASH_REQUEST,
 	PAY_WITH_CASH_SUCCESS,
 } from './payWithActionTypes';
+import { getOwnerDashboard } from '../ownerActions/dashboardAction';
 
 export const payWithCashRequest = () => {
 	return {
@@ -33,7 +34,6 @@ export const payWithCash = (paymentDetail) => {
 		const { auth } = getState();
 		const { amount, tenantUserId, rentDueDate } = paymentDetail;
 		const body = { amount, tenantUserId, rentDueDate };
-
 		axios
 			.post(`${API_URL}/owner/pay-with-cash`, body, {
 				headers: {
@@ -41,8 +41,9 @@ export const payWithCash = (paymentDetail) => {
 					Authorization: `Bearer ${auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				dispatch(payWithCashSuccess(response.data.msg));
+				await dispatch(getOwnerDashboard());
 				navigate('Properties', { payWithCashResponse: true });
 			})
 			.catch((err) => {

@@ -9,6 +9,7 @@ import {
 } from './addBuildingTypes';
 import { navigate } from '../../../navigation/rootNavigation';
 import { setRoomDetails } from './addRoomAction';
+import { getOwnerDashboard } from './dashboardAction';
 
 export const addBuildingRequest = () => {
 	return {
@@ -105,6 +106,7 @@ export const saveBuildingData = (buildingObj) => {
 					dispatch(setFirstLoginFalse());
 					// The action setRoomDetails empty the room reducer for next room field
 					dispatch(setRoomDetails());
+					await dispatch(getOwnerDashboard());
 					firstLogin
 						? navigate('ownerDashboard')
 						: navigate('Properties');

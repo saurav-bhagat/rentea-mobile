@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { API_URL } from '@env';
 import { navigate } from '../../../navigation/rootNavigation';
+import { getOwnerDashboard } from './dashboardAction';
 
 export const updateTenantRequest = () => {
 	return {
@@ -42,8 +43,9 @@ export const updateTenantDetails = (tenantDetails) => {
 					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				dispatch(updateTenantSuccess());
+				await dispatch(getOwnerDashboard());
 				navigate('Properties');
 				console.log('Tenant details updated successfully.');
 			})

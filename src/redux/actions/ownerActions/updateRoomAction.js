@@ -45,6 +45,7 @@ export const updateRoomDetail = (roomData) => {
 			})
 			.then(async (response) => {
 				dispatch(updateRoomDataSuccess());
+				await dispatch(getOwnerDashboard());
 				navigate('Properties');
 				console.log('Room details updated successfully.');
 			})

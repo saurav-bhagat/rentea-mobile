@@ -79,7 +79,7 @@ const PropertiesScreen = ({ route }) => {
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
-	}, [isFocused]);
+	}, []);
 
 	useEffect(() => {
 		if (token === '' && expoPushToken) {

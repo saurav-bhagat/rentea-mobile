@@ -14,7 +14,11 @@ const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 	const tenants = singleRoomData.tenants;
 
 	const handlePayWithCash = (tenant) => {
-		const { _id: tenantUserId, rent: amount, rentDueDate } = tenant;
+		const { _id: tenantUserId, rentDueDate } = tenant;
+		let { rent: amount } = tenant;
+		if (!singleRoomData.isMultipleTenant) {
+			amount = singleRoomData.rent;
+		}
 		dispatch(payWithCash({ tenantUserId, amount, rentDueDate }));
 	};
 
