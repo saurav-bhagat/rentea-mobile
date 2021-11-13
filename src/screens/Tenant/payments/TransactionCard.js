@@ -2,10 +2,15 @@ import { Card, Body, CardItem } from 'native-base';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { format } from 'date-fns';
-
 import { paymentHisStyles } from './paymentHisStyles';
 
 const TransactionCard = ({ data }) => {
+	let time;
+	if (data._id) {
+		time = new Date(
+			parseInt(data._id.toString().substring(0, 8), 16) * 1000
+		);
+	}
 	return (
 		<Card>
 			<CardItem>
@@ -42,6 +47,17 @@ const TransactionCard = ({ data }) => {
 										style={paymentHisStyles.boldValue}
 									></Text>
 									{data.paymentMode}
+								</Text>
+							</View>
+						)}
+						{data._id && (
+							<View>
+								<Text>
+									Time :{' '}
+									{format(
+										new Date(time),
+										'dd MMM yyyy ,hh:mm a'
+									)}
 								</Text>
 							</View>
 						)}
