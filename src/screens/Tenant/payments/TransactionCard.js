@@ -7,9 +7,11 @@ import { paymentHisStyles } from './paymentHisStyles';
 const TransactionCard = ({ data }) => {
 	let time;
 	if (data._id) {
+		//  extracting date+time from incoming mongodb id
 		time = new Date(
 			parseInt(data._id.toString().substring(0, 8), 16) * 1000
 		);
+		time = format(new Date(time), 'dd MMM yyyy ,hh:mm a');
 	}
 	return (
 		<Card>
@@ -52,13 +54,7 @@ const TransactionCard = ({ data }) => {
 						)}
 						{data._id && (
 							<View>
-								<Text>
-									Time :{' '}
-									{format(
-										new Date(time),
-										'dd MMM yyyy ,hh:mm a'
-									)}
-								</Text>
+								<Text>Time : {time}</Text>
 							</View>
 						)}
 					</View>
