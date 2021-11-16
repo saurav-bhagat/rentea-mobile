@@ -2,6 +2,7 @@ import {
 	PAY_WITH_CASH_FAIL,
 	PAY_WITH_CASH_REQUEST,
 	PAY_WITH_CASH_SUCCESS,
+	SET_PAY_WITH_CASH_RESPONSE_FOR_SNACK,
 } from '../../actions/payment/payWithActionTypes';
 
 const initialState = {
@@ -27,6 +28,11 @@ const payWithCashReducer = (state = initialState, action) => {
 				...state,
 				msg: action.payload,
 				loading: false,
+			};
+		case SET_PAY_WITH_CASH_RESPONSE_FOR_SNACK:
+			return {
+				...state,
+				msg: action.payload,
 			};
 		default:
 			return state;

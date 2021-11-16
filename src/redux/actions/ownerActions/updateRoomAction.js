@@ -28,7 +28,7 @@ export const updateRoomDataFail = () => {
 	};
 };
 
-export const updateRoomDetail = (roomData) => {
+export const updateRoomDetail = (roomData, buildingId) => {
 	console.log(API_URL);
 	return (dispatch, getState) => {
 		dispatch(updateRoomDataRequest());
@@ -46,7 +46,10 @@ export const updateRoomDetail = (roomData) => {
 			.then(async (response) => {
 				dispatch(updateRoomDataSuccess());
 				await dispatch(getOwnerDashboard());
-				navigate('Properties');
+				await navigate('RoomInfo', {
+					buildingId,
+					roomId: roomData.roomId,
+				});
 				console.log('Room details updated successfully.');
 			})
 			.catch((error) => {

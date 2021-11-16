@@ -6,10 +6,7 @@ import {
 	TouchableOpacity,
 	ActivityIndicator,
 } from 'react-native';
-import { Button } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/core';
-import { useIsFocused } from '@react-navigation/native';
 
 import {
 	userLogout,
@@ -27,8 +24,7 @@ import { addExpoPushToken } from '../../../../redux/actions';
 
 const PropertiesScreen = ({ route }) => {
 	const dispatch = useDispatch();
-	const navigation = useNavigation();
-	const isFocused = useIsFocused();
+
 	const { expoPushToken: token } = useSelector((state) => state.userDetail);
 	const { expoPushToken } = useNotification();
 
@@ -50,10 +46,6 @@ const PropertiesScreen = ({ route }) => {
 
 	const { msg } = useSelector((state) => state.buildingDetails);
 	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
-	let payWithCashResponse;
-	if (route && route.params) {
-		payWithCashResponse = route.params.payWithCashResponse;
-	}
 
 	useEffect(() => {
 		if (msg === buildingAdded) {
@@ -64,18 +56,6 @@ const PropertiesScreen = ({ route }) => {
 			setText('Tenant added successfully.');
 		}
 	}, [msg, tenantMsg]);
-
-	useEffect(() => {
-		if (payWithCashResponse) {
-			setVisible(true);
-			payWithCashResponse = null;
-			setText('Payment successfully updated');
-		} else if (payWithCashResponse === false) {
-			setVisible(true);
-			payWithCashResponse = null;
-			setText('Error while payment updation');
-		}
-	}, [payWithCashResponse]);
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());

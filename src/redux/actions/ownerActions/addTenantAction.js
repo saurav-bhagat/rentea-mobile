@@ -49,7 +49,10 @@ export const addTenant = (tenantData) => {
 				// to update the dashboard in the redux store
 				await dispatch(getOwnerDashboard());
 
-				setTimeout(() => navigate('Properties'), 1000);
+				await navigate('RoomInfo', {
+					buildingId: tenantData.buildId,
+					roomId: tenantData.roomId,
+				});
 			})
 			.catch((error) => {
 				console.log('Error while adding tenant: ', error.response.data);

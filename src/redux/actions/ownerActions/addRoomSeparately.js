@@ -47,7 +47,9 @@ export const addRoomSeparately = (roomDetails) => {
 			.then(async (response) => {
 				dispatch(addRoomSuccess());
 				await dispatch(getOwnerDashboard());
-				navigate('Properties');
+				await navigate('PropertyInfo', {
+					buildingId: roomDetails.buildingId,
+				});
 				console.log('Rooms added successfully.');
 			})
 			.catch((error) => {

@@ -2,14 +2,33 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
 
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
 
 const PropertyInfoScreen = ({ route, navigation }) => {
-	const { propertyInfo } = route.params;
-	const roomListData = propertyInfo.rooms;
+	const { properties } = useSelector((state) => state.ownerDashbhoard);
+	let { propertyInfo } = route.params;
+	let roomListData = propertyInfo.rooms;
+	const { buildingId } = route.params;
+	if (buildingId) {
+		for (
+			let buildingDataIndex = 0;
+			buildingDataIndex <
+			properties.ownerDashboardResult.buildings.length;
+			buildingDataIndex++
+		) {
+			let buildingData =
+				properties.ownerDashboardResult.buildings[buildingDataIndex];
+			if (buildingData._id === buildingId) {
+				propertyInfo = buildingData;
+				break;
+			}
+		}
+		roomListData = propertyInfo.rooms;
+	}
 	return (
 		<View style={propertiesScreenStyles.propertyInfoContainer}>
 			<CrossPlatformHeader

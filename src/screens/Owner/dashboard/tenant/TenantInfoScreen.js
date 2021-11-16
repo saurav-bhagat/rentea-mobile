@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { Card, CardItem, Body, Button } from 'native-base';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,16 +12,41 @@ const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 	const { loading } = useSelector((state) => state.payWithCash);
 	const dispatch = useDispatch();
 	const tenants = singleRoomData.tenants;
-
+	// console.log(singleRoomData._id, propertyInfo._id);
 	const handlePayWithCash = (tenant) => {
 		const { _id: tenantUserId, rentDueDate } = tenant;
 		let { rent: amount } = tenant;
 		if (!singleRoomData.isMultipleTenant) {
 			amount = singleRoomData.rent;
 		}
-		dispatch(payWithCash({ tenantUserId, amount, rentDueDate }));
+		dispatch(
+			payWithCash({
+				tenantUserId,
+				amount,
+				rentDueDate,
+				roomId: singleRoomData._id,
+				buildingId: propertyInfo._id,
+			})
+		);
 	};
+	const showConfirmDialog = (tenant) => {
+		return Alert.alert(
+			'Are your sure?',
+			'Are you sure you want to proceed?',
+			[
+				{
+					text: 'Yes',
+					onPress: () => {
+						handlePayWithCash(tenant);
+					},
+				},
 
+				{
+					text: 'No',
+				},
+			]
+		);
+	};
 	return (
 		<View style={{ marginTop: 10, marginHorizontal: 20 }}>
 			<Text style={tenantInfoStyles.tenantInfoTitle}>
@@ -76,7 +101,7 @@ const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 									>
 										<Button
 											onPress={() => {
-												handlePayWithCash(tenant);
+												showConfirmDialog(tenant);
 											}}
 											style={{
 												backgroundColor: '#109FDA',

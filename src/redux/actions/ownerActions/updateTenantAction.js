@@ -29,7 +29,7 @@ export const updateTenantFail = () => {
 	};
 };
 
-export const updateTenantDetails = (tenantDetails) => {
+export const updateTenantDetails = (tenantDetails, roomId, buildingId) => {
 	return (dispatch, getState) => {
 		dispatch(updateTenantRequest());
 		const state = getState();
@@ -46,7 +46,10 @@ export const updateTenantDetails = (tenantDetails) => {
 			.then(async (response) => {
 				dispatch(updateTenantSuccess());
 				await dispatch(getOwnerDashboard());
-				navigate('Properties');
+				await navigate('RoomInfo', {
+					buildingId,
+					roomId,
+				});
 				console.log('Tenant details updated successfully.');
 			})
 			.catch((error) => {
