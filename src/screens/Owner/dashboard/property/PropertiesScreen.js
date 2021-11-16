@@ -29,7 +29,6 @@ const PropertiesScreen = ({ route }) => {
 	const { expoPushToken } = useNotification();
 
 	const buildingAdded = 'buildings added successfully';
-	const tenantAdded = 'tenant added successfully';
 
 	const {
 		visible,
@@ -45,17 +44,13 @@ const PropertiesScreen = ({ route }) => {
 	);
 
 	const { msg } = useSelector((state) => state.buildingDetails);
-	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
 
 	useEffect(() => {
 		if (msg === buildingAdded) {
 			setVisible(true);
 			setText('Building added successfully.');
-		} else if (tenantMsg === tenantAdded) {
-			setVisible(true);
-			setText('Tenant added successfully.');
 		}
-	}, [msg, tenantMsg]);
+	}, [msg]);
 
 	useEffect(() => {
 		dispatch(getOwnerDashboard());

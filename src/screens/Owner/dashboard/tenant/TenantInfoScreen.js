@@ -12,7 +12,7 @@ const TenantInfoScreen = ({ singleRoomData, propertyInfo }) => {
 	const { loading } = useSelector((state) => state.payWithCash);
 	const dispatch = useDispatch();
 	const tenants = singleRoomData.tenants;
-	// console.log(singleRoomData._id, propertyInfo._id);
+
 	const handlePayWithCash = (tenant) => {
 		const { _id: tenantUserId, rentDueDate } = tenant;
 		let { rent: amount } = tenant;

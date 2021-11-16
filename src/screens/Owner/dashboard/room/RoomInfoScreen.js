@@ -13,7 +13,9 @@ import { setPayWithCashResponseForSnack } from '../../../../redux/actions/paymen
 
 const RoomInfoScreen = ({ route }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
-	const { msg } = useSelector((state) => state.payWithCash);
+	const { msg: payWithCashResponseMsg } = useSelector(
+		(state) => state.payWithCash
+	);
 	const {
 		visible,
 		text,
@@ -23,21 +25,63 @@ const RoomInfoScreen = ({ route }) => {
 		onDismissSnackBar,
 	} = useSnack();
 	const dispatch = useDispatch();
+	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+	const { msg: tenantUpdateMsg } = useSelector((state) => state.updateTenant);
+	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
 
 	let { singleRoomData, propertyInfo } = route.params;
 	const { buildingId, roomId } = route.params;
 
+	const tenantAdded = 'tenant added successfully';
+	const transactionSuccessMsg = 'Transaction successfull';
+	const tenantUpdate = 'tenant details updated successfully';
+	const roomUpdate = 'room updated successfully';
+	const defaultState = 'default state';
+
 	useEffect(() => {
-		if (msg === 'Transaction successfull') {
+		if (payWithCashResponseMsg === transactionSuccessMsg) {
 			setVisible(true);
 			setText('Payment successfully updated');
 			dispatch(setPayWithCashResponseForSnack());
-		} else if (msg !== 'Transaction successfull' && msg !== '') {
+		} else if (
+			payWithCashResponseMsg &&
+			payWithCashResponseMsg !== transactionSuccessMsg &&
+			payWithCashResponseMsg !== ''
+		) {
+			console.log(
+				'Error while paying with cash is ',
+				payWithCashResponseMsg
+			);
 			setVisible(true);
 			setText('Error while payment updation');
 			dispatch(setPayWithCashResponseForSnack());
+		} else if (tenantMsg === tenantAdded) {
+			setVisible(true);
+			setText('Tenant added successfully.');
+		} else if (tenantMsg !== defaultState && tenantMsg !== tenantAdded) {
+			console.log('tenant msg is ', tenantAdded, tenantMsg);
+			setVisible(true);
+			setText('Error while adding tenant.');
+		} else if (tenantUpdateMsg === tenantUpdate) {
+			setVisible(true);
+			setText('Tenant Detail updated successfully.');
+		} else if (
+			tenantUpdateMsg !== defaultState &&
+			tenantUpdateMsg !== tenantUpdate
+		) {
+			setVisible(true);
+			setText('Error while updating tenant.');
+		} else if (updateRoomInfoMsg === roomUpdate) {
+			setVisible(true);
+			setText('Room details updated successfully');
+		} else if (
+			updateRoomInfoMsg !== roomUpdate &&
+			updateRoomInfoMsg !== defaultState
+		) {
+			setVisible(true);
+			setText('Error while updating room info');
 		}
-	}, [msg]);
+	}, [payWithCashResponseMsg, tenantMsg, tenantUpdateMsg, updateRoomInfoMsg]);
 
 	if (buildingId && roomId) {
 		for (

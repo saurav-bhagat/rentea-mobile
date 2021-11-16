@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
@@ -7,12 +7,40 @@ import { useSelector } from 'react-redux';
 import { propertiesScreenStyles } from './PropertiesScreenStyles';
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
+import SnackBar from '../../../../components/common/SnackBar';
+import useSnack from '../../../../components/common/useSnack';
 
 const PropertyInfoScreen = ({ route, navigation }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
+	const { msg: roomAddedMsg } = useSelector(
+		(state) => state.addRoomSeparately
+	);
+	const {
+		visible,
+		text,
+		setVisible,
+		setText,
+		onToggleSnackBar,
+		onDismissSnackBar,
+	} = useSnack();
 	let { propertyInfo } = route.params;
 	let roomListData = propertyInfo.rooms;
 	const { buildingId } = route.params;
+	const roomAdded = 'room added successfully';
+	const defaultState = 'default state';
+
+	useEffect(() => {
+		if (roomAddedMsg === roomAdded) {
+			setVisible(true);
+			setText('Room added successfully');
+		} else if (
+			roomAddedMsg !== roomAdded &&
+			roomAddedMsg !== defaultState
+		) {
+			setVisible(true);
+			setText('Error while adding room');
+		}
+	}, [roomAddedMsg]);
 	if (buildingId) {
 		for (
 			let buildingDataIndex = 0;
@@ -149,6 +177,12 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 						</ListItem>
 					))}
 				</View>
+				<SnackBar
+					visible={visible}
+					text={text}
+					onDismissSnackBar={onDismissSnackBar}
+					onToggleSnackBar={onToggleSnackBar}
+				/>
 			</ScrollView>
 		</View>
 	);
