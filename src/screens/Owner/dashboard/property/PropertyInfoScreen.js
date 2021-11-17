@@ -10,6 +10,9 @@ import { navigate } from '../../../../navigation/rootNavigation';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 
+const roomAdded = 'room added successfully';
+const defaultState = 'default state';
+
 const PropertyInfoScreen = ({ route, navigation }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
 	const { msg: roomAddedMsg } = useSelector(
@@ -23,16 +26,14 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 		onToggleSnackBar,
 		onDismissSnackBar,
 	} = useSnack();
-	let { propertyInfo } = route.params;
+	let { propertyInfo, buildingId } = route.params;
 	let roomListData = propertyInfo.rooms;
-	const { buildingId } = route.params;
-	const roomAdded = 'room added successfully';
-	const defaultState = 'default state';
 
 	useEffect(() => {
+		// Integrating Snack  after adding room
 		if (roomAddedMsg === roomAdded) {
 			setVisible(true);
-			setText('Room added successfully');
+			setText(roomAdded);
 		} else if (
 			roomAddedMsg !== roomAdded &&
 			roomAddedMsg !== defaultState
@@ -41,20 +42,13 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 			setText('Error while adding room');
 		}
 	}, [roomAddedMsg]);
+
+	// when navigating after adding room (addRoomAction)
 	if (buildingId) {
-		for (
-			let buildingDataIndex = 0;
-			buildingDataIndex <
-			properties.ownerDashboardResult.buildings.length;
-			buildingDataIndex++
-		) {
-			let buildingData =
-				properties.ownerDashboardResult.buildings[buildingDataIndex];
-			if (buildingData._id === buildingId) {
-				propertyInfo = buildingData;
-				break;
-			}
-		}
+		propertyInfo = properties.ownerDashboardResult.buildings.filter(
+			(building) => building._id === buildingId
+		);
+		propertyInfo = propertyInfo[0];
 		roomListData = propertyInfo.rooms;
 	}
 	return (

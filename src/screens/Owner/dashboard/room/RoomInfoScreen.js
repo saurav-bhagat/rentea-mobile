@@ -11,6 +11,12 @@ import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import { setPayWithCashResponseForSnack } from '../../../../redux/actions/payment/payWithCashAction';
 
+const tenantAdded = 'tenant added successfully';
+const transactionSuccessMsg = 'Transaction successfull';
+const tenantUpdate = 'tenant details updated successfully';
+const roomUpdate = 'room updated successfully';
+const defaultState = 'default state';
+
 const RoomInfoScreen = ({ route }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
 	const { msg: payWithCashResponseMsg } = useSelector(
@@ -29,16 +35,10 @@ const RoomInfoScreen = ({ route }) => {
 	const { msg: tenantUpdateMsg } = useSelector((state) => state.updateTenant);
 	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
 
-	let { singleRoomData, propertyInfo } = route.params;
-	const { buildingId, roomId } = route.params;
-
-	const tenantAdded = 'tenant added successfully';
-	const transactionSuccessMsg = 'Transaction successfull';
-	const tenantUpdate = 'tenant details updated successfully';
-	const roomUpdate = 'room updated successfully';
-	const defaultState = 'default state';
+	let { singleRoomData, propertyInfo, buildingId, roomId } = route.params;
 
 	useEffect(() => {
+		//  Integrating Snack after payingWithCash
 		if (payWithCashResponseMsg === transactionSuccessMsg) {
 			setVisible(true);
 			setText('Payment successfully updated');
@@ -55,14 +55,20 @@ const RoomInfoScreen = ({ route }) => {
 			setVisible(true);
 			setText('Error while payment updation');
 			dispatch(setPayWithCashResponseForSnack());
-		} else if (tenantMsg === tenantAdded) {
+		}
+
+		//  Integrating Snack  after adding tenant
+		if (tenantMsg === tenantAdded) {
 			setVisible(true);
 			setText('Tenant added successfully.');
 		} else if (tenantMsg !== defaultState && tenantMsg !== tenantAdded) {
 			console.log('tenant msg is ', tenantAdded, tenantMsg);
 			setVisible(true);
 			setText('Error while adding tenant.');
-		} else if (tenantUpdateMsg === tenantUpdate) {
+		}
+
+		//   Integrating Snack after updating tenantDetails
+		if (tenantUpdateMsg === tenantUpdate) {
 			setVisible(true);
 			setText('Tenant Detail updated successfully.');
 		} else if (
@@ -71,7 +77,10 @@ const RoomInfoScreen = ({ route }) => {
 		) {
 			setVisible(true);
 			setText('Error while updating tenant.');
-		} else if (updateRoomInfoMsg === roomUpdate) {
+		}
+
+		//   Integrating Snack after updating roomInfo
+		if (updateRoomInfoMsg === roomUpdate) {
 			setVisible(true);
 			setText('Room details updated successfully');
 		} else if (
@@ -83,33 +92,20 @@ const RoomInfoScreen = ({ route }) => {
 		}
 	}, [payWithCashResponseMsg, tenantMsg, tenantUpdateMsg, updateRoomInfoMsg]);
 
+	// when navigating after adding tenant (addTenantAction),
+	// updating tenant (updateTenantAction),
+	// updating roomInfo (updateRoomInfoAction) and
+	// payWithCash (payWithCashAction).
 	if (buildingId && roomId) {
-		for (
-			let buildingDataIndex = 0;
-			buildingDataIndex <
-			properties.ownerDashboardResult.buildings.length;
-			buildingDataIndex++
-		) {
-			let buildingData =
-				properties.ownerDashboardResult.buildings[buildingDataIndex];
-			if (buildingData._id === buildingId) {
-				propertyInfo = buildingData;
-				break;
-			}
-		}
+		propertyInfo = properties.ownerDashboardResult.buildings.filter(
+			(building) => building._id === buildingId
+		);
+		propertyInfo = propertyInfo[0];
 		if (propertyInfo) {
-			let roomsData = propertyInfo.rooms;
-			for (
-				let roomDataIndex = 0;
-				roomDataIndex < roomsData.length;
-				roomDataIndex++
-			) {
-				let roomData = roomsData[roomDataIndex];
-				if (roomData._id === roomId) {
-					singleRoomData = roomData;
-					break;
-				}
-			}
+			singleRoomData = propertyInfo.rooms.filter(
+				(roomData) => roomData._id === roomId
+			);
+			singleRoomData = singleRoomData[0];
 		}
 	}
 
