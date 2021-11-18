@@ -88,7 +88,13 @@ const AddTenantScreen = ({ route }) => {
 			securityAmount: security,
 		};
 		if (isValidTenantData(tenantData)) {
-			dispatch(updateTenantDetails(tenantData));
+			dispatch(
+				updateTenantDetails(
+					tenantData,
+					(roomId = roomData._id),
+					(buildingId = propertyInfo._id)
+				)
+			);
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);

@@ -5,7 +5,9 @@ import {
 	PAY_WITH_CASH_FAIL,
 	PAY_WITH_CASH_REQUEST,
 	PAY_WITH_CASH_SUCCESS,
+	SET_PAY_WITH_CASH_RESPONSE_FOR_SNACK,
 } from './payWithActionTypes';
+import { getOwnerDashboard } from '../ownerActions/dashboardAction';
 
 export const payWithCashRequest = () => {
 	return {
@@ -27,13 +29,20 @@ export const payWithCashFail = (respMsg) => {
 	};
 };
 
+export const setPayWithCashResponseForSnack = () => {
+	return {
+		type: 'SET_PAY_WITH_CASH_RESPONSE_FOR_SNACK',
+		payload: '',
+	};
+};
+
 export const payWithCash = (paymentDetail) => {
 	return (dispatch, getState) => {
 		dispatch(payWithCashRequest());
 		const { auth } = getState();
-		const { amount, tenantUserId, rentDueDate } = paymentDetail;
+		const { amount, tenantUserId, rentDueDate, roomId, buildingId } =
+			paymentDetail;
 		const body = { amount, tenantUserId, rentDueDate };
-
 		axios
 			.post(`${API_URL}/owner/pay-with-cash`, body, {
 				headers: {
@@ -41,14 +50,21 @@ export const payWithCash = (paymentDetail) => {
 					Authorization: `Bearer ${auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				dispatch(payWithCashSuccess(response.data.msg));
-				navigate('Properties', { payWithCashResponse: true });
+				await dispatch(getOwnerDashboard());
+				await navigate('RoomInfo', {
+					roomId,
+					buildingId,
+				});
 			})
 			.catch((err) => {
 				dispatch(payWithCashFail(err.response.data.err));
 				alert('Error while paying with cash ');
-				navigate('Properties', { payWithCashResponse: false });
+				navigate('RoomInfo', {
+					roomId,
+					buildingId,
+				});
 			});
 	};
 };

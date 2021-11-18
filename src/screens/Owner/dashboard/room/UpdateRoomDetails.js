@@ -70,7 +70,9 @@ export default function UpdateRoomDetails({ route }) {
 		dataForValidation.rent = rentAmount.toString();
 		if (validateRoomFieldsForUpdate(dataForValidation)) {
 			//TODO: floor number shouldn't be updated to more than the capacity of building
-			dispatch(updateRoomDetail(roomData));
+			dispatch(
+				updateRoomDetail(roomData, (buildingId = propertyInfo._id))
+			);
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);

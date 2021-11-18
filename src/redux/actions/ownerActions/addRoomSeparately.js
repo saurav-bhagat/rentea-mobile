@@ -8,6 +8,7 @@ import { navigate } from '../../../navigation/rootNavigation';
 
 import axios from 'axios';
 import { API_URL } from '@env';
+import { getOwnerDashboard } from './dashboardAction';
 
 export const addRoomRequest = () => {
 	return {
@@ -43,9 +44,12 @@ export const addRoomSeparately = (roomDetails) => {
 					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				dispatch(addRoomSuccess());
-				navigate('Properties');
+				await dispatch(getOwnerDashboard());
+				await navigate('PropertyInfo', {
+					buildingId: roomDetails.buildingId,
+				});
 				console.log('Rooms added successfully.');
 			})
 			.catch((error) => {

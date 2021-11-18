@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { API_URL } from '@env';
 import { navigate } from '../../../navigation/rootNavigation';
+import { getOwnerDashboard } from './dashboardAction';
 
 export const updateTenantRequest = () => {
 	return {
@@ -28,7 +29,7 @@ export const updateTenantFail = () => {
 	};
 };
 
-export const updateTenantDetails = (tenantDetails) => {
+export const updateTenantDetails = (tenantDetails, roomId, buildingId) => {
 	return (dispatch, getState) => {
 		dispatch(updateTenantRequest());
 		const state = getState();
@@ -42,9 +43,13 @@ export const updateTenantDetails = (tenantDetails) => {
 					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				dispatch(updateTenantSuccess());
-				navigate('Properties');
+				await dispatch(getOwnerDashboard());
+				await navigate('RoomInfo', {
+					buildingId,
+					roomId,
+				});
 				console.log('Tenant details updated successfully.');
 			})
 			.catch((error) => {

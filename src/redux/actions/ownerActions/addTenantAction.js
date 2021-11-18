@@ -42,14 +42,17 @@ export const addTenant = (tenantData) => {
 					Authorization: `Bearer ${auth.userInfo.accessToken}`,
 				},
 			})
-			.then((response) => {
+			.then(async (response) => {
 				console.log('Tenant Added: ', response.data);
 				dispatch(addTenantSuccess(response.data));
 
 				// to update the dashboard in the redux store
-				dispatch(getOwnerDashboard());
+				await dispatch(getOwnerDashboard());
 
-				setTimeout(() => navigate('Properties'), 1000);
+				await navigate('RoomInfo', {
+					buildingId: tenantData.buildId,
+					roomId: tenantData.roomId,
+				});
 			})
 			.catch((error) => {
 				console.log('Error while adding tenant: ', error.response.data);

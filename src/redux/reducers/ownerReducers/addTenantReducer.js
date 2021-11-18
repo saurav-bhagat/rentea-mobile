@@ -37,7 +37,7 @@ const addTenantReducer = (state = initialState, action) => {
 		default:
 			return {
 				...state,
-				tenantMsg: 'default  state',
+				tenantMsg: 'default state',
 			};
 	}
 };
