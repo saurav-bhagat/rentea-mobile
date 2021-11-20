@@ -52,7 +52,6 @@ export const getTenantDashboard = () => {
 					error.response.data
 				);
 				dispatch(getDashboardFailure(error.response.data));
-				await dispatch(getOwnerDashboard());
 			});
 	};
 };
