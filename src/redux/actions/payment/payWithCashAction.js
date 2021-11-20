@@ -8,6 +8,7 @@ import {
 	SET_PAY_WITH_CASH_RESPONSE_FOR_SNACK,
 } from './payWithActionTypes';
 import { getOwnerDashboard } from '../ownerActions/dashboardAction';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 export const payWithCashRequest = () => {
 	return {
@@ -37,17 +38,17 @@ export const setPayWithCashResponseForSnack = () => {
 };
 
 export const payWithCash = (paymentDetail) => {
-	return (dispatch, getState) => {
+	return async (dispatch) => {
 		dispatch(payWithCashRequest());
-		const { auth } = getState();
 		const { amount, tenantUserId, rentDueDate, roomId, buildingId } =
 			paymentDetail;
 		const body = { amount, tenantUserId, rentDueDate };
+		const token = await getToken();
 		axios
 			.post(`${API_URL}/owner/pay-with-cash`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {

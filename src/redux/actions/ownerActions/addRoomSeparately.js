@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
 	ADD_ROOM_REQUEST,
 	ADD_ROOM_SUCCESS,
@@ -6,9 +7,9 @@ import {
 
 import { navigate } from '../../../navigation/rootNavigation';
 
-import axios from 'axios';
 import { API_URL } from '@env';
 import { getOwnerDashboard } from './dashboardAction';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 export const addRoomRequest = () => {
 	return {
@@ -31,17 +32,16 @@ export const addRoomFail = () => {
 };
 
 export const addRoomSeparately = (roomDetails) => {
-	return (dispatch, getState) => {
+	return async (dispatch) => {
 		dispatch(addRoomRequest());
-		const state = getState();
 
 		const body = { ...roomDetails };
-
+		const token = await getToken();
 		axios
 			.put(`${API_URL}/owner/add-rooms`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {

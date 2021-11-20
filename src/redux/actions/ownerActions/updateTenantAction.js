@@ -1,13 +1,14 @@
+import axios from 'axios';
 import {
 	UPDATE_TENANT_REQUEST,
 	UPDATE_TENANT_SUCCESS,
 	UPDATE_TENANT_FAIL,
 } from './updateTenantActionTypes';
 
-import axios from 'axios';
 import { API_URL } from '@env';
 import { navigate } from '../../../navigation/rootNavigation';
 import { getOwnerDashboard } from './dashboardAction';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 export const updateTenantRequest = () => {
 	return {
@@ -30,17 +31,16 @@ export const updateTenantFail = () => {
 };
 
 export const updateTenantDetails = (tenantDetails, roomId, buildingId) => {
-	return (dispatch, getState) => {
+	return async (dispatch) => {
 		dispatch(updateTenantRequest());
-		const state = getState();
 
 		const body = { ...tenantDetails };
-
+		const token = await getToken();
 		axios
 			.put(`${API_URL}/owner/update-tenant-info`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {

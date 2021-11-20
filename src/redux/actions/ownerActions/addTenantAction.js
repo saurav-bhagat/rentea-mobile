@@ -8,6 +8,7 @@ import {
 	ADD_TENANT_SUCCESS,
 } from './addEntitiesTypes';
 import { getOwnerDashboard } from './dashboardAction';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 const addTenantRequest = () => {
 	return {
@@ -30,16 +31,17 @@ const addTenantFailure = (error) => {
 };
 
 export const addTenant = (tenantData) => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		dispatch(addTenantRequest());
 		const { auth } = getState();
 		const ownerId = auth.userInfo.userDetails.ownerId;
 		const tenantToRegister = { ...tenantData, ownerId };
+		const token = await getToken();
 		axios
 			.post(`${API_URL}/owner/register-tenant`, tenantToRegister, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {

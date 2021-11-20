@@ -6,6 +6,8 @@ import {
 	ADD_BANK_DETAILS_REQUEST,
 	ADD_BANK_DETAILS_SUCCESS,
 } from './addBankDetailsType';
+import { getToken } from '../../../helpers/checkTokenExpiry';
+import { getOwnerDashboard } from './dashboardAction';
 
 export const addBankDetailsRequest = () => {
 	return {
@@ -27,7 +29,7 @@ export const addBankDetailsFail = () => {
 };
 
 export const addBankDetailsData = (bankDetails) => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		dispatch(addBankDetailsRequest());
 		const state = getState();
 
@@ -36,15 +38,17 @@ export const addBankDetailsData = (bankDetails) => {
 			...bankDetails,
 		};
 		const { firstLogin } = state.auth.userInfo;
+		const token = await getToken();
 		axios
 			.post(`${API_URL}/owner/add-bank-info`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {
 				dispatch(addBankDetailsSuccess(bankDetails));
+				await dispatch(getOwnerDashboard());
 				firstLogin
 					? navigate('AddBuildingForm')
 					: navigate('ownerDashboard');

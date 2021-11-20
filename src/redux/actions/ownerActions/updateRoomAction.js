@@ -7,6 +7,7 @@ import {
 	UPDATE_ROOM_DATA_FAIL,
 } from './updateRoomActionTypes';
 import { getOwnerDashboard } from './dashboardAction';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 export const updateRoomDataRequest = () => {
 	return {
@@ -30,17 +31,16 @@ export const updateRoomDataFail = () => {
 
 export const updateRoomDetail = (roomData, buildingId) => {
 	console.log(API_URL);
-	return (dispatch, getState) => {
+	return async (dispatch) => {
 		dispatch(updateRoomDataRequest());
-		const state = getState();
 
 		const body = { ...roomData };
-
+		const token = await getToken();
 		axios
 			.put(`${API_URL}/owner/update-room-details`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {

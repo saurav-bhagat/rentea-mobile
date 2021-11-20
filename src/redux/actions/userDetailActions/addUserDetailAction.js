@@ -6,6 +6,7 @@ import {
 	ADD_EXPO_PUSH_TOKEN_FAIL,
 	ADD_EXPO_PUSH_TOKEN_SUCCESS,
 } from '../authActions/authTypes';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 export const addUserDetailRequest = () => {
 	return {
@@ -45,7 +46,7 @@ export const addExpoPushTokenFail = () => {
 };
 
 export const addUserDetail = (userData) => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		dispatch(addUserDetailRequest());
 		const { auth } = getState();
 		const body = {
@@ -54,12 +55,12 @@ export const addUserDetail = (userData) => {
 			email: userData.email,
 			expoPushToken: userData.expoPushToken,
 		};
-
+		const token = await getToken();
 		axios
 			.put(`${API_URL}/auth/update-basic-info`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {
@@ -77,7 +78,7 @@ export const addUserDetail = (userData) => {
 };
 
 export const addExpoPushToken = (token) => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		dispatch(addExpoPushTokenRequest());
 		const { auth } = getState();
 
@@ -85,11 +86,12 @@ export const addExpoPushToken = (token) => {
 			_id: auth.userInfo.userDetails.ownerId,
 			expoPushToken: token,
 		};
+		const accessToken = await getToken();
 		axios
 			.put(`${API_URL}/auth/update-basic-info`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${accessToken}`,
 				},
 			})
 			.then(async (response) => {
