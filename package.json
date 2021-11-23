@@ -33,6 +33,7 @@
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
     "expo-updates": "~0.5.4",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "native-base": "^2.15.2",
     "paytm_allinone_react-native": "^1.0.9",

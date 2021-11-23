@@ -1,7 +1,7 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@env';
 import { setFirstLoginFalse } from '../authActions/authAction';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
 	ADD_BUILDING_ERROR,
 	ADD_BUILDING_REQUEST,
@@ -10,6 +10,7 @@ import {
 import { navigate } from '../../../navigation/rootNavigation';
 import { setRoomDetails } from './addRoomAction';
 import { getOwnerDashboard } from './dashboardAction';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 export const addBuildingRequest = () => {
 	return {
@@ -35,7 +36,7 @@ export const addBuildingError = () => {
 };
 
 export const saveBuildingData = (buildingObj) => {
-	return (dispatch, getState) => {
+	return async (dispatch, getState) => {
 		dispatch(addBuildingRequest());
 		const state = getState();
 		const { buildingName, district, pinCode, stateAddress, street } =
@@ -76,20 +77,15 @@ export const saveBuildingData = (buildingObj) => {
 				},
 			],
 		};
+		const token = await getToken();
 		axios
 			.post(`${API_URL}/owner/add-property`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${state.auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then(async (response) => {
-				if (
-					response.status === 403 &&
-					response.body.err === 'jwt expired'
-				) {
-					await dispatch(refreshToken());
-				}
 				dispatch(addBuildingSuccess(buildingObj));
 
 				try {

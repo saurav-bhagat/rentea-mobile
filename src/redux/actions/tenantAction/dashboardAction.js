@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { API_URL } from '@env';
-import { refreshToken } from '../authActions/authAction';
 import {
 	GET_TENANT_DASHBOARD_FAILURE,
 	GET_TENANT_DASHBOARD_REQUEST,
 	GET_TENANT_DASHBOARD_SUCCESS,
 } from './dashboardType';
+import { getToken } from '../../../helpers/checkTokenExpiry';
 
 const getDashboardRequest = () => {
 	return {
@@ -34,11 +34,12 @@ export const getTenantDashboard = () => {
 		const body = {
 			userId: auth.userInfo.userDetails._id,
 		};
+		const token = await getToken();
 		axios
 			.post(`${API_URL}/tenant/dashboard`, body, {
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${auth.userInfo.accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			})
 			.then((response) => {
@@ -46,20 +47,11 @@ export const getTenantDashboard = () => {
 				dispatch(getDashboardSuccess(response.data.tenantDetails));
 			})
 			.catch(async (error) => {
-				if (
-					error.response.status === 403 &&
-					error.response.data.err === 'jwt expired'
-				) {
-					console.log('callilng refreshToken');
-					await dispatch(refreshToken());
-					await dispatch(getTenantDashboard());
-				} else {
-					console.log(
-						'Error while getting tenant dashboard: ',
-						error.response.data
-					);
-					dispatch(getDashboardFailure(error.response.data));
-				}
+				console.log(
+					'Error while getting tenant dashboard: ',
+					error.response.data
+				);
+				dispatch(getDashboardFailure(error.response.data));
 			});
 	};
 };
