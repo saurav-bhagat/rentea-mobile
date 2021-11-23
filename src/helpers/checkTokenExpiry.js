@@ -27,7 +27,7 @@ const getVerifiedTokens = async (accessToken, refreshToken) => {
 		return accessToken;
 	} else {
 		if (!isTokenExpired(refreshToken)) {
-			console.log('in refresh token');
+			console.log('Access token expired, refreshing now');
 			const response = await getAccessTokenUsingRefreshToken(
 				refreshToken
 			);
