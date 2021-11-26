@@ -3,81 +3,59 @@ import { ScaledSheet } from 'react-native-size-matters';
 export const loginStyles = ScaledSheet.create({
 	loginContainer: {
 		flex: 1,
-		backgroundColor: '#fff',
+		marginHorizontal: '40@mvs0.3',
+		marginTop: '100@s',
 	},
-	login_logo: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
+	loginContainer_row1_txt: {
+		fontSize: '30@ms0.3',
+		fontFamily: 'interLight',
 	},
-	header: {
-		borderColor: '#f2f2f2',
-		borderTopWidth: 1,
-		borderLeftWidth: 1,
-		borderRightWidth: 1,
-		paddingTop: '20@ms',
-		borderTopLeftRadius: 20,
-		borderTopRightRadius: 20,
+	loginContainer_row2_txt: {
+		fontSize: '26@ms0.3',
+		fontFamily: 'interLight',
 	},
-	panelHeader: {
-		alignItems: 'center',
+	loginContainer_row3_txt: {
+		fontSize: '25@ms0.3',
+		fontFamily: 'interLight',
 	},
-	panelHandle: {
-		width: '35@s',
-		height: '5@vs',
-		borderRadius: 4,
-		backgroundColor: '#00000040',
-		marginBottom: '10@ms',
+	loginBtnText: {
+		backgroundColor: '#109ED9',
+		borderRadius: 10,
+		paddingTop: 10,
+		paddingBottom: 10,
+		fontFamily: 'interLight',
 	},
-	sheetContainer: {
-		flex: 1,
+	loginBtnContainer: {
+		borderRadius: 10,
+		elevation: 40,
 	},
-	loginComponentContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	loginText: {
-		fontSize: '27@s',
-		color: '#666666',
-		marginBottom: '40@ms',
-	},
-	phoneInputContainer: {
-		width: '80%',
-	},
-	phoneInputBox: {
-		paddingLeft: '20@ms',
-		height: '45@ms',
-	},
-	loginContinueButton: {
-		width: '100%',
-		marginTop: '38@ms',
-		backgroundColor: '#109FDA',
-		justifyContent: 'center',
-		height: '45@ms',
-	},
-	loginContinueButton_text: {
-		color: '#fff',
-		fontSize: '18@s',
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-		letterSpacing: 1,
-	},
-	loginFooterTextContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginTop: '10@s',
-		width: '80%',
-	},
-	login_footer_text: {
-		color: '#bbb',
-		fontSize: '10@ms0.3',
-	},
-
-	login_footer_underline: {
-		marginLeft: '3@s',
+	privacyAndAgreementsText: {
+		color: '#109ED9',
+		textAlign: 'center',
 		textDecorationLine: 'underline',
-		fontSize: '10@ms0.3',
-		position: 'relative',
-		top: '2@s',
+		fontFamily: 'interLight',
+	},
+	countryCodePlusPhoneNumberContainer: {
+		borderWidth: 1,
+		borderStyle: 'solid',
+		borderRadius: 10,
+		marginTop: '30@ms0.3',
+	},
+	countryCodeContainer: {
+		paddingLeft: 20,
+		paddingTop: 15,
+		paddingBottom: 5,
+	},
+	countryCodeText: {
+		fontFamily: 'interLight',
+	},
+	phoneNumberContainer: {
+		marginTop: '10@mvs0.3',
+		borderWidth: 1,
+		borderStyle: 'solid',
+		borderBottomWidth: 0,
+		borderLeftWidth: 0,
+		borderRightWidth: 0,
+		marginBottom: -20,
 	},
 });
