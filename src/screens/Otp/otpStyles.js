@@ -47,22 +47,17 @@ export const otpStyles = ScaledSheet.create({
 		marginRight: '10%',
 	},
 	otpKeyPadContainer: {
-		flex: 1,
 		padding: 20,
 		paddingTop: 40,
-	},
-	otpKeyPadRow: {
 		flexDirection: 'row',
-		height: '50@vs',
+		flexWrap: 'wrap',
 	},
-	otpKeyPadCol: {
-		flex: 1,
-		textAlign: 'center',
-		paddingLeft: '15%',
+	key: {
 		fontSize: '20@ms0.3',
+		fontFamily: 'interLight',
+		textAlign: 'center',
 	},
-	key: { fontSize: '20@ms0.3', fontFamily: 'interLight' },
-	sendAgainContainer: { marginBottom: '15%' },
+	sendAgainContainer: { marginTop: '35@s' },
 	sendAgainTxt: {
 		textAlign: 'center',
 		color: '#109ED9',

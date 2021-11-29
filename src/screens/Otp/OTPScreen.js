@@ -9,6 +9,7 @@ import useSnack from '../../components/common/useSnack';
 import { verifyOtp } from '../../redux/actions';
 import { sendOtp } from '../../redux/actions';
 import { otpStyles } from './otpStyles';
+import CustomKeyboard from './CustomKeyboard';
 
 const OtpScreen = ({ route }) => {
 	const dispatch = useDispatch();
@@ -25,11 +26,13 @@ const OtpScreen = ({ route }) => {
 	const [otpValues, setOtpValues] = useState([]);
 	const [sendAgainTextFlag, setSendAgainTextFlag] = useState(false);
 	const { phoneNumber } = route.params;
+	const otpInputBox = [1, 2, 3, 4, 5, 6];
 
 	useEffect(() => {
 		setVisible(true);
 		setText('OTP is sent to your device.');
 	}, []);
+
 	const resendOTP = () => {
 		const resend = true;
 		const newOtpValues = [];
@@ -39,17 +42,6 @@ const OtpScreen = ({ route }) => {
 		setSendAgainTextFlag(!sendAgainTextFlag);
 		setRandom(Math.random().toString());
 		dispatch(sendOtp(phoneNumber, resend));
-	};
-
-	const setValueInOtpTxt = (value) => {
-		otpValues.length !== 6 &&
-			value !== -1 &&
-			setOtpValues([...otpValues, value]);
-		if (value === -1) {
-			const newOtpValues = [...otpValues];
-			newOtpValues.pop();
-			setOtpValues(newOtpValues);
-		}
 	};
 
 	const handleOTPSubmit = () => {
@@ -114,107 +106,7 @@ const OtpScreen = ({ route }) => {
 				/>
 			</View>
 
-			<View style={otpStyles.otpKeyPadContainer}>
-				<View style={otpStyles.otpKeyPadRow}>
-					<TouchableOpacity
-						onPress={() => {
-							setValueInOtpTxt('1');
-						}}
-						style={otpStyles.otpKeyPadCol}
-					>
-						<Text style={otpStyles.key}>1</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => {
-							setValueInOtpTxt('2');
-						}}
-						style={otpStyles.otpKeyPadCol}
-					>
-						<Text style={otpStyles.key}>2</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => {
-							setValueInOtpTxt('3');
-						}}
-						style={otpStyles.otpKeyPadCol}
-					>
-						<Text style={otpStyles.key}>3</Text>
-					</TouchableOpacity>
-				</View>
-				<View style={otpStyles.otpKeyPadRow}>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('4');
-						}}
-					>
-						<Text style={otpStyles.key}>4</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('5');
-						}}
-					>
-						<Text style={otpStyles.key}>5</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('6');
-						}}
-					>
-						<Text style={otpStyles.key}>6</Text>
-					</TouchableOpacity>
-				</View>
-				<View style={otpStyles.otpKeyPadRow}>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('7');
-						}}
-					>
-						<Text style={otpStyles.key}>7</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('8');
-						}}
-					>
-						<Text style={otpStyles.key}>8</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('9');
-						}}
-					>
-						<Text style={otpStyles.key}>9</Text>
-					</TouchableOpacity>
-				</View>
-				<View style={otpStyles.otpKeyPadRow}>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-					></TouchableOpacity>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt('0');
-						}}
-					>
-						<Text style={otpStyles.key}>0</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={otpStyles.otpKeyPadCol}
-						onPress={() => {
-							setValueInOtpTxt(-1);
-						}}
-					>
-						<Text style={otpStyles.key}>X</Text>
-					</TouchableOpacity>
-				</View>
-			</View>
+			<CustomKeyboard setOtpValues={setOtpValues} otpValues={otpValues} />
 
 			<TouchableOpacity style={otpStyles.sendAgainContainer}>
 				<Text style={otpStyles.sendAgainTxt} onPress={resendOTP}>
