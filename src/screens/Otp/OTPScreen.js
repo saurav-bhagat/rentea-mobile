@@ -1,29 +1,19 @@
-import React, { useState } from 'react';
-import {
-	View,
-	Text,
-	Alert,
-	ActivityIndicator,
-	KeyboardAvoidingView,
-} from 'react-native';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import CountDown from 'react-native-countdown-component';
-import { Button } from 'native-base';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button } from 'react-native-elements';
 
-import { otpStyles } from './otpStyles';
-import { verifyOtp } from '../../redux/actions';
-import { sendOtp } from '../../redux/actions';
 import SnackBar from '../../components/common/SnackBar';
 import useSnack from '../../components/common/useSnack';
-import * as Notifications from 'expo-notifications';
+import { verifyOtp } from '../../redux/actions';
+import { sendOtp } from '../../redux/actions';
+import { otpStyles } from './otpStyles';
 
-const OTPScreen = ({ route }) => {
+const OtpScreen = ({ route }) => {
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
-	const [code, setCode] = useState();
 	const [random, setRandom] = useState(Math.random().toString());
-	const { phoneNumber } = route.params;
 	const {
 		visible,
 		onToggleSnackBar,
@@ -32,99 +22,205 @@ const OTPScreen = ({ route }) => {
 		text,
 		setText,
 	} = useSnack();
-	//sending this notificaton from backend now
+	const [otpValues, setOtpValues] = useState([]);
+	const [sendAgainTextFlag, setSendAgainTextFlag] = useState(false);
+	const { phoneNumber } = route.params;
 
-	// async function schedulePushNotification() {
-	// 	await Notifications.scheduleNotificationAsync({
-	// 		content: {
-	// 			title: 'You just logged in',
-	// 			body: 'That is great',
-	// 			data: { data: 'goes here' },
-	// 		},
-	// 		trigger: { seconds: 1 },
-	// 	});
-	// }
-
-	const handleOTPSubmit = (code) => {
-		if (!code || code.length != 6) {
-			// alert('OTP not valid');
-			setVisible(true);
-			setText('Invalid OTP');
-			return;
-		}
-		if (code.length === 6) {
-			dispatch(verifyOtp(phoneNumber, code));
-			// schedulePushNotification();
-		} else {
-			// alert('Invalid otp');
-			setVisible(true);
-			setText('Invalid OTP');
-		}
-	};
-
-	const resendOTP = () => {
-		const resend = true;
-		// Alert.alert('Login Code Sent', 'OTP is sent to your device.', [
-		// 	{ text: 'OK' },
-		// ]);
+	useEffect(() => {
 		setVisible(true);
 		setText('OTP is sent to your device.');
+	}, []);
+	const resendOTP = () => {
+		const resend = true;
+		const newOtpValues = [];
+		setOtpValues(newOtpValues);
+		setVisible(true);
+		setText('OTP is sent to your device.');
+		setSendAgainTextFlag(!sendAgainTextFlag);
 		setRandom(Math.random().toString());
 		dispatch(sendOtp(phoneNumber, resend));
 	};
 
+	const setValueInOtpTxt = (value) => {
+		otpValues.length !== 6 &&
+			value !== -1 &&
+			setOtpValues([...otpValues, value]);
+		if (value === -1) {
+			const newOtpValues = [...otpValues];
+			newOtpValues.pop();
+			setOtpValues(newOtpValues);
+		}
+	};
+
+	const handleOTPSubmit = () => {
+		const otp = otpValues.reduce((prev, curr) => prev + curr);
+		dispatch(verifyOtp(phoneNumber, otp));
+	};
+
 	return (
-		<KeyboardAvoidingView style={otpStyles.otpContainer}>
-			<Text style={otpStyles.otpEnterText}>
-				Enter OTP received on your mobile:
-			</Text>
-			<OTPInputView
-				style={{ width: '80%', height: 200 }}
-				pinCount={6}
-				// code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-				onCodeChanged={(code) => {
-					setCode(code);
-				}}
-				autoFocusOnLoad
-				codeInputFieldStyle={otpStyles.underlineStyleBase}
-				codeInputHighlightStyle={otpStyles.underlineStyleHighLighted}
-				// onCodeFilled={(code) => {
-				// 	handleOTPSubmit(code);
-				// }}
+		<View style={otpStyles.otpContainer}>
+			<CountDown
+				id={random}
+				style={{ marginLeft: '-1%' }}
+				until={59}
+				onFinish={() => setSendAgainTextFlag(!sendAgainTextFlag)}
+				size={15}
+				digitStyle={{ backgroundColor: '#fff' }}
+				digitTxtStyle={otpStyles.countDownDigitTextStyle}
+				timeToShow={['M', 'S']}
+				timeLabels={{ m: null, s: null }}
+				showSeparator
+				separatorStyle={{ color: '#000000', fontSize: 23 }}
 			/>
-			<View style={otpStyles.resendContainer}>
-				<Text style={otpStyles.resendText}>
-					Didn't Receive OTP ? Resend in
+
+			<View style={otpStyles.verificationTextContainer}>
+				<Text style={otpStyles.verificationTextrow}>
+					Type the verification code
 				</Text>
-				<CountDown
-					id={random}
-					style={otpStyles.countDownContainer}
-					until={60}
-					onFinish={() => resendOTP()}
-					size={15}
-					digitStyle={{ backgroundColor: '#eff2ed' }}
-					digitTxtStyle={{ color: '#109FDA' }}
-					timeToShow={['S']}
-					timeLabels={{ m: null, s: null }}
-				/>
-				<Text style={otpStyles.sText}>s</Text>
+				<Text style={otpStyles.verificationTextrow}>
+					we've sent you
+				</Text>
 			</View>
-			<Button
-				rounded
-				transparent
-				style={otpStyles.loginContinueButton}
-				onPress={() => {
-					handleOTPSubmit(code);
-				}}
-			>
-				{authState.loading ? (
-					<ActivityIndicator color="#ffffff" size="large" />
-				) : (
-					<Text style={otpStyles.loginContinueButton_text}>
-						Continue
-					</Text>
-				)}
-			</Button>
+
+			<View style={otpStyles.otpTextBoxContainer}>
+				<View style={otpStyles.otpTextBox}>
+					<Text style={otpStyles.otpText}>{otpValues[0]}</Text>
+				</View>
+				<View style={otpStyles.otpTextBox}>
+					<Text style={otpStyles.otpText}>{otpValues[1]}</Text>
+				</View>
+				<View style={otpStyles.otpTextBox}>
+					<Text style={otpStyles.otpText}>{otpValues[2]}</Text>
+				</View>
+				<View style={otpStyles.otpTextBox}>
+					<Text style={otpStyles.otpText}>{otpValues[3]}</Text>
+				</View>
+				<View style={otpStyles.otpTextBox}>
+					<Text style={otpStyles.otpText}>{otpValues[4]}</Text>
+				</View>
+				<View style={otpStyles.otpTextBox}>
+					<Text style={otpStyles.otpText}>{otpValues[5]}</Text>
+				</View>
+			</View>
+
+			<View>
+				<Button
+					title="Continue"
+					titleStyle={{ fontFamily: 'interRegular' }}
+					loading={authState.loading ? true : false}
+					onPress={handleOTPSubmit}
+					buttonStyle={otpStyles.continueBtnStyle}
+					disabled={otpValues.length !== 6}
+				/>
+			</View>
+
+			<View style={otpStyles.otpKeyPadContainer}>
+				<View style={otpStyles.otpKeyPadRow}>
+					<TouchableOpacity
+						onPress={() => {
+							setValueInOtpTxt('1');
+						}}
+						style={otpStyles.otpKeyPadCol}
+					>
+						<Text style={otpStyles.key}>1</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {
+							setValueInOtpTxt('2');
+						}}
+						style={otpStyles.otpKeyPadCol}
+					>
+						<Text style={otpStyles.key}>2</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {
+							setValueInOtpTxt('3');
+						}}
+						style={otpStyles.otpKeyPadCol}
+					>
+						<Text style={otpStyles.key}>3</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={otpStyles.otpKeyPadRow}>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('4');
+						}}
+					>
+						<Text style={otpStyles.key}>4</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('5');
+						}}
+					>
+						<Text style={otpStyles.key}>5</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('6');
+						}}
+					>
+						<Text style={otpStyles.key}>6</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={otpStyles.otpKeyPadRow}>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('7');
+						}}
+					>
+						<Text style={otpStyles.key}>7</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('8');
+						}}
+					>
+						<Text style={otpStyles.key}>8</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('9');
+						}}
+					>
+						<Text style={otpStyles.key}>9</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={otpStyles.otpKeyPadRow}>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+					></TouchableOpacity>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt('0');
+						}}
+					>
+						<Text style={otpStyles.key}>0</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={otpStyles.otpKeyPadCol}
+						onPress={() => {
+							setValueInOtpTxt(-1);
+						}}
+					>
+						<Text style={otpStyles.key}>X</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+
+			<TouchableOpacity style={otpStyles.sendAgainContainer}>
+				<Text style={otpStyles.sendAgainTxt} onPress={resendOTP}>
+					{sendAgainTextFlag && 'Send again'}
+				</Text>
+			</TouchableOpacity>
 
 			<SnackBar
 				text={text}
@@ -132,8 +228,8 @@ const OTPScreen = ({ route }) => {
 				onDismissSnackBar={onDismissSnackBar}
 				onToggleSnackBar={onToggleSnackBar}
 			/>
-		</KeyboardAvoidingView>
+		</View>
 	);
 };
 
-export default OTPScreen;
+export default OtpScreen;

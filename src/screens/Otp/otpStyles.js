@@ -3,62 +3,70 @@ import { ScaledSheet } from 'react-native-size-matters';
 export const otpStyles = ScaledSheet.create({
 	otpContainer: {
 		flex: 1,
-		marginTop: '25%',
-		alignItems: 'center',
-		width: '90%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
+		paddingTop: '120@s',
+		backgroundColor: '#fff',
 	},
-	resendContainer: {
-		marginTop: '-60@ms',
-		flex: 0.1,
-		width: '80%',
+	countDownDigitTextStyle: {
+		color: '#000000',
+		fontSize: '25@ms0.3',
+		fontFamily: 'interLight',
+		fontWeight: 'normal',
+	},
+	verificationTextContainer: {
+		marginTop: '10@s',
+	},
+	verificationTextrow: {
+		textAlign: 'center',
+		fontSize: '15@ms0.3',
+		fontFamily: 'interLight',
+	},
+	otpTextBoxContainer: {
 		flexDirection: 'row',
-		alignItems: 'center',
+		marginTop: '40@s',
+		marginBottom: '40@s',
+		paddingLeft: '50@ms',
 	},
-	resendText: {
-		fontSize: '15@ms0.3',
-		color: '#777777',
-	},
-	sText: {
-		fontSize: '15@ms0.3',
-		color: '#777777',
-		marginLeft: '-2.3%',
-	},
-	countDownContainer: {
-		marginLeft: '-1%',
-	},
-	otpEnterText: {
-		fontSize: '28@ms0.3',
-		color: '#666666',
-	},
-	underlineStyleBase: {
-		width: '26@s',
-		height: '45@vs',
-		borderWidth: 0,
-		borderBottomWidth: 2,
-		borderColor: '#666666',
-		color: '#109FDA',
-		fontSize: '22@ms0.3',
-	},
-
-	underlineStyleHighLighted: {
-		borderColor: '#000',
-	},
-	loginContinueButton: {
-		width: '100%',
+	otpTextBox: {
+		backgroundColor: '#E5E5E5',
 		borderWidth: 1,
-		borderColor: '#ddd',
-		marginTop: '37@s',
-		backgroundColor: '#109FDA',
-		justifyContent: 'center',
-		height: '47@s',
+		borderStyle: 'solid',
+		borderRadius: 5,
+		borderColor: '#E5E5E5',
+		padding: 8,
+		marginRight: 10,
+		width: '35@vs',
 	},
-	loginContinueButton_text: {
-		color: '#fff',
+	otpText: {
+		textAlign: 'center',
+		fontFamily: 'interLight',
+	},
+	continueBtnStyle: {
+		backgroundColor: '#109ED9',
+		borderRadius: 10,
+		marginLeft: '15%',
+		marginRight: '10%',
+	},
+	otpKeyPadContainer: {
+		flex: 1,
+		padding: 20,
+		paddingTop: 40,
+	},
+	otpKeyPadRow: {
+		flexDirection: 'row',
+		height: '50@vs',
+	},
+	otpKeyPadCol: {
+		flex: 1,
+		textAlign: 'center',
+		paddingLeft: '15%',
 		fontSize: '20@ms0.3',
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-		letterSpacing: 1,
+	},
+	key: { fontSize: '20@ms0.3', fontFamily: 'interLight' },
+	sendAgainContainer: { marginBottom: '15%' },
+	sendAgainTxt: {
+		textAlign: 'center',
+		color: '#109ED9',
+		fontSize: '15@ms0.3',
+		fontFamily: 'interRegular',
 	},
 });

@@ -93,7 +93,7 @@ const LoginComponent = () => {
 							paddingTop: 5,
 							paddingLeft: 10,
 						}}
-						inputStyle={{}}
+						inputStyle={{ fontFamily: 'interLight' }}
 						placeholder="Phone number ..."
 					/>
 				</View>
@@ -122,6 +122,7 @@ const LoginComponent = () => {
 			>
 				<Button
 					title="Login"
+					titleStyle={{ fontFamily: 'interRegular' }}
 					loading={authState.loading ? true : false}
 					onPress={() => {
 						handleLoginContinue();
