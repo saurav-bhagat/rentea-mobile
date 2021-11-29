@@ -2,8 +2,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const otpStyles = ScaledSheet.create({
 	otpContainer: {
-		flex: 1,
-		paddingTop: '120@s',
+		paddingTop: '10@s',
 		backgroundColor: '#fff',
 	},
 	countDownDigitTextStyle: {
