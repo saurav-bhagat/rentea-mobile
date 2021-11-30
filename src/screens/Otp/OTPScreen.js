@@ -51,7 +51,7 @@ const OtpScreen = ({ route }) => {
 	};
 
 	return (
-		<View>
+		<View style={otpStyles.otpScreenSection}>
 			<CrossPlatformHeader
 				profile={false}
 				backCallback={() => {

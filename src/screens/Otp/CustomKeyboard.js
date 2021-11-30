@@ -31,7 +31,13 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 		<View style={otpStyles.otpKeyPadContainer}>
 			{keyValues.map((key, index) => {
 				return (
-					<View key={index} style={{ width: 100 }}>
+					<View
+						key={index}
+						style={{
+							width: 50,
+							marginHorizontal: '8%',
+						}}
+					>
 						<TouchableOpacity
 							onPress={() => {
 								setValueInOtpTxt(key);

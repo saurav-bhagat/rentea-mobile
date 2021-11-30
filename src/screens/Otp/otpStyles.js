@@ -1,9 +1,14 @@
 import { ScaledSheet } from 'react-native-size-matters';
 
 export const otpStyles = ScaledSheet.create({
-	otpContainer: {
-		paddingTop: '10@s',
+	otpScreenSection: {
+		flex: 1,
 		backgroundColor: '#fff',
+		paddingHorizontal: '4%',
+	},
+	otpContainer: {
+		flex: 1,
+		paddingTop: '10%',
 	},
 	countDownDigitTextStyle: {
 		color: '#000000',
@@ -23,7 +28,7 @@ export const otpStyles = ScaledSheet.create({
 		flexDirection: 'row',
 		marginTop: '40@s',
 		marginBottom: '40@s',
-		paddingLeft: '50@ms',
+		paddingHorizontal: '8%',
 	},
 	otpTextBox: {
 		backgroundColor: '#E5E5E5',
@@ -42,21 +47,22 @@ export const otpStyles = ScaledSheet.create({
 	continueBtnStyle: {
 		backgroundColor: '#109ED9',
 		borderRadius: 10,
-		marginLeft: '15%',
-		marginRight: '10%',
+		marginHorizontal: '8%',
 	},
 	otpKeyPadContainer: {
-		padding: 20,
-		paddingTop: 40,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
+		marginTop: '8%',
+		paddingHorizontal: '4%',
 	},
 	key: {
 		fontSize: '20@ms0.3',
 		fontFamily: 'interLight',
 		textAlign: 'center',
 	},
-	sendAgainContainer: { marginTop: '35@s' },
+	sendAgainContainer: {
+		marginTop: '20%',
+	},
 	sendAgainTxt: {
 		textAlign: 'center',
 		color: '#109ED9',
