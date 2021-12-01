@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
-
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Clipboard from 'expo-clipboard';
-import { Button } from 'native-base';
-
 import { useIsFocused } from '@react-navigation/native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { ownerBankDetailsStyles } from './ownerBankDetailsStyle';
 
+import { ownerBankDetailsStyles } from './ownerBankDetailsStyle';
 import { isValidBankDetails } from '../../../helpers/addBuildingValidation';
 import { addBankDetailsData } from '../../../redux/actions/ownerActions/addBankDetailsAction';
-
 import { navigate } from '../../../navigation/rootNavigation';
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 
@@ -28,8 +23,8 @@ const OwnerBankDetailsScreen = () => {
 	const isFocused = useIsFocused();
 
 	const { firstLogin } = useSelector((state) => state.auth.userInfo);
-	// This useEffect for changing firstLogin true to false
-	useEffect(() => {}, [isFocused]);
+
+	useEffect(() => { }, [isFocused]);
 	const handleOwnerBankDetailsSubmit = () => {
 		if (accountNumber === confirmAccountNumber) {
 			let formData = {
@@ -51,21 +46,21 @@ const OwnerBankDetailsScreen = () => {
 	};
 
 	return (
-		<KeyboardAwareScrollView>
-			<CrossPlatformHeader title="Bank Details" profile={false} />
+		<View style={{ backgroundColor: '#ffffff', flex:1 }}>
+			<CrossPlatformHeader title="" profile={false} />
 			<View style={ownerBankDetailsStyles.oudsContainer}>
 				<View style={ownerBankDetailsStyles.oudsTextContainer}>
 					<Text style={ownerBankDetailsStyles.oudsShortText}>
-						Enter your bank details below.
+						Add Bank
 					</Text>
-					<Text style={ownerBankDetailsStyles.oudsAsteriskText}>
-						* Mandatory field.
+					<Text style={ownerBankDetailsStyles.oudsdetailsText}>
+						Enter your Bank details
 					</Text>
 				</View>
 
 				<View style={ownerBankDetailsStyles.oudsFormContainer}>
 					<TextInput
-						style={ownerBankDetailsStyles.oudsPhoneInputBox}
+						style={ownerBankDetailsStyles.bankDetailsInput}
 						placeholderTextColor={'#aaa'}
 						placeholder="Account Name*"
 						onChangeText={(val) => setAccountName(val)}
@@ -77,9 +72,9 @@ const OwnerBankDetailsScreen = () => {
 						onBlur={() => Clipboard.setString('')}
 						onFocus={() => Clipboard.setString('')}
 						onSelectionChange={() => Clipboard.setString('')}
-						style={ownerBankDetailsStyles.oudsPhoneInputBox}
+						style={ownerBankDetailsStyles.bankDetailsInput}
 						placeholderTextColor={'#aaa'}
-						placeholder="Bank Account Number*"
+						placeholder="Account Number*"
 						onChangeText={(val) => setAccountNumber(val)}
 						keyboardType="numeric"
 					/>
@@ -89,29 +84,17 @@ const OwnerBankDetailsScreen = () => {
 						onBlur={() => Clipboard.setString('')}
 						onFocus={() => Clipboard.setString('')}
 						onSelectionChange={() => Clipboard.setString('')}
-						style={ownerBankDetailsStyles.oudsPhoneInputBox}
+						style={ownerBankDetailsStyles.bankDetailsInput}
 						placeholderTextColor={'#aaa'}
 						placeholder="Confirm Account Number*"
 						onChangeText={(val) => setConfirmAccountNumber(val)}
 						keyboardType="numeric"
 					/>
 					<TextInput
-						style={ownerBankDetailsStyles.oudsPhoneInputBox}
+						style={ownerBankDetailsStyles.bankDetailsInput}
 						placeholderTextColor={'#aaa'}
 						placeholder="IFSC*"
 						onChangeText={(val) => setIfsc(val)}
-					/>
-					<TextInput
-						style={ownerBankDetailsStyles.oudsPhoneInputBox}
-						placeholderTextColor={'#aaa'}
-						placeholder="Bank Name*"
-						onChangeText={(val) => setBankName(val)}
-					/>
-					<TextInput
-						style={ownerBankDetailsStyles.oudsPhoneInputBox}
-						placeholderTextColor={'#aaa'}
-						placeholder="Beneficiary Name"
-						onChangeText={(val) => setBeneficiaryName(val)}
 					/>
 					<View
 						style={{
@@ -119,9 +102,25 @@ const OwnerBankDetailsScreen = () => {
 							justifyContent: 'space-between',
 						}}
 					>
-						<Button
-							rounded
-							transparent
+						<TouchableOpacity
+							style={ownerBankDetailsStyles.oudsContinueButton}
+							onPress={() =>
+								firstLogin
+									? navigate('AddBuildingForm')
+									: navigate('ownerDashboard')
+							}
+						>
+							<Text
+								style={[
+									ownerBankDetailsStyles.oudsContinueButton_text,
+									{color: '#acadae'}
+								]}
+							>
+								Skip
+							</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity
 							style={ownerBankDetailsStyles.oudsContinueButton}
 							onPress={() => handleOwnerBankDetailsSubmit()}
 						>
@@ -139,29 +138,11 @@ const OwnerBankDetailsScreen = () => {
 									Continue
 								</Text>
 							)}
-						</Button>
-						<Button
-							rounded
-							transparent
-							style={ownerBankDetailsStyles.oudsContinueButton}
-							onPress={() =>
-								firstLogin
-									? navigate('AddBuildingForm')
-									: navigate('ownerDashboard')
-							}
-						>
-							<Text
-								style={
-									ownerBankDetailsStyles.oudsContinueButton_text
-								}
-							>
-								skip
-							</Text>
-						</Button>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</View>
-		</KeyboardAwareScrollView>
+		</View>
 	);
 };
 

@@ -5,26 +5,27 @@ export const ownerBankDetailsStyles = ScaledSheet.create({
 		marginTop: '2%',
 		width: '85%',
 		marginLeft: 'auto',
-		marginRight: 'auto',
+		marginRight: 'auto'
 	},
-	oudsTextContainer: {},
+	oudsTextContainer: {
+		marginBottom: 40
+	},
 	oudsShortText: {
-		fontSize: '14@ms0.3',
+		fontSize: '45@ms0.3',
 		color: '#666666',
 	},
-	oudsAsteriskText: {
-		fontSize: '12@ms0.3',
+	oudsdetailsText: {
+		fontSize: '15@ms0.3',
 		color: '#888888',
 	},
 	oudsFormContainer: {},
-	oudsPhoneInputBox: {
+	bankDetailsInput: {
 		paddingLeft: '20@ms',
-		height: '48@ms',
-		marginTop: '12%',
-		borderWidth: 0.1,
-		borderColor: '#ddd',
-		borderRadius: 25,
-		padding: '8@ms',
+		height: '47@ms',
+		marginTop: '6%',
+		borderWidth: 0.5,
+		borderColor: '#109ED9',
+		borderRadius: 12,
 		backgroundColor: 'white',
 		shadowColor: '#000',
 		shadowOffset: {
@@ -33,28 +34,16 @@ export const ownerBankDetailsStyles = ScaledSheet.create({
 		},
 		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
-		elevation: 8,
+		elevation: 1,
 	},
 	oudsContinueButton: {
-		width: '45%',
-		marginTop: '35@ms',
-		backgroundColor: '#109FDA',
+		marginTop: '55@ms',
 		justifyContent: 'center',
-		height: '50@ms',
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
-		shadowOpacity: 0.3,
-		shadowRadius: 4.65,
-		elevation: 8,
 	},
 	oudsContinueButton_text: {
-		color: '#fff',
-		fontSize: '15@ms0.3',
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
+		color: '#109ED9',
+		fontSize: '18@ms0.3',
+		fontWeight: '500',
 		letterSpacing: 1,
 	},
 });
