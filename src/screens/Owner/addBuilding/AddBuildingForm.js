@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Button, Header, Left, Right, Body, Title } from 'native-base';
+import { Button } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Counter from 'react-native-counters';
+
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
 import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
@@ -19,7 +19,6 @@ import useSnack from '../../../components/common/useSnack';
 import { setFirstLoginFalse } from '../../../redux/actions';
 
 const AddBuildingForm = () => {
-	const navigation = useNavigation();
 	const dispatch = useDispatch();
 	const addBuildingState = useSelector((state) => state.buildingDetails);
 	const authState = useSelector((state) => state.auth);
@@ -27,9 +26,9 @@ const AddBuildingForm = () => {
 	const [roomCount, setRoomCount] = useState('');
 	const [floorCount, setFloorCount] = useState('');
 	const [stateAddress, setStateAddress] = useState('');
-	const [pinCode, setPinCode] = useState('');
+	const [pinCode, setPinCode] = useState('835210');
 	const [street, setStreet] = useState('');
-	const [district, setDistrict] = useState('');
+	const [district, setDistrict] = useState('Khunti');
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 	const { firstLogin } = useSelector((state) => state.auth.userInfo);
@@ -41,6 +40,14 @@ const AddBuildingForm = () => {
 		text,
 		setText,
 	} = useSnack();
+
+	const handleRoomCounter = (number, type) => {
+		setRoomCount(number);
+	};
+
+	const handleFloorCounter = (number, type) => {
+		setFloorCount(number);
+	};
 
 	const handleAddBuildingFormSubmit = () => {
 		const formData = {
@@ -88,148 +95,80 @@ const AddBuildingForm = () => {
 	};
 	return (
 		<ScrollView
-			contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white' }}
+			contentContainerStyle={{ flexGrow: 1, backgroundColor: '#e5e5e5' }}
 			nestedScrollEnabled={true}
 		>
 			{!authState.userInfo.firstLogin ? (
 				<CrossPlatformHeader
-					title="Building Details"
+					title="Add Apartment"
 					backCallback={() => navigate('Properties')}
 					profile={false}
 				/>
 			) : (
-				<CrossPlatformHeader title="Building Details" profile={false} />
+				<CrossPlatformHeader title="Add Apartment" profile={false} />
 			)}
 
-			<View style={addBuildingFormstyles.addBFcontainer}>
-				<View style={addBuildingFormstyles.addBFormContainer}>
+			<ScrollView
+				contentContainerStyle={addBuildingFormstyles.addBFcontainer}
+				nestedScrollEnabled={true}
+			>
+				<View style={addBuildingFormstyles.addBFCard}>
 					<TextInputCommon
-						label="Building Name"
+						label="Apartment Name"
 						name="buildingName"
 						onChangeText={(val) => setBuildingName(val)}
+						style={addBuildingFormstyles.textItemStyle}
+						inputStyle={addBuildingFormstyles.inputStyle}
 					/>
-					<View style={{ flexDirection: 'row', marginTop: 30 }}>
-						<View style={{ flex: 1 }}>
-							<TextInputCommon
-								label="Number of Rooms"
-								style={{
-									width: '80%',
-									alignSelf: 'flex-start',
-								}}
-								name="roomCount"
-								onChangeText={(val) => setRoomCount(val)}
-								value={roomCount}
-								keyboardType="numeric"
-							/>
-						</View>
-						<View style={{ flex: 1 }}>
-							<TextInputCommon
-								label="Number of Floors"
-								style={{ width: '80%', alignSelf: 'flex-end' }}
-								name="floorCount"
-								onChangeText={(val) => setFloorCount(val)}
-								value={floorCount}
-								keyboardType="numeric"
-							/>
-						</View>
-					</View>
-
-					<View style={{ marginTop: 30 }}>
-						<SelectStatePicker
-							onValueChange={(val) => setStateAddress(val)}
-							stateAddress={stateAddress}
-						/>
-					</View>
-
-					<View style={{ flexDirection: 'row', marginTop: 30 }}>
-						<View style={{ flex: 1 }}>
-							<TextInputCommon
-								label="District"
-								style={{
-									width: '90%',
-									alignSelf: 'flex-start',
-								}}
-								name="district"
-								onChangeText={(val) => setDistrict(val)}
-							/>
-						</View>
-						<View style={{ flex: 1 }}>
-							<TextInputCommon
-								label="Pincode"
-								style={{ width: '90%', alignSelf: 'flex-end' }}
-								name="pincode"
-								onChangeText={(val) => setPinCode(val)}
-								keyboardType="numeric"
-							/>
-						</View>
-					</View>
 
 					<TextInputCommon
-						label="Street/Locality"
-						style={{ marginTop: 30 }}
-						name="street"
+						label="Plot No/Locality"
+						name="plotnum"
 						onChangeText={(val) => setStreet(val)}
+						style={addBuildingFormstyles.textItemStyle}
+						inputStyle={addBuildingFormstyles.inputStyle}
 					/>
 
-					<Text
-						style={{ fontSize: 22, marginTop: 35, color: '#666' }}
-					>
-						Maintainer:
-					</Text>
-
-					<AddMaintainerSection
-						setMaintainerName={setMaintainerName}
-						setMaintainerPhone={setMaintainerPhone}
+					<TextInputCommon
+						label="Select Address"
+						name="address"
+						onChangeText={(val) => setStateAddress(val)}
+						style={addBuildingFormstyles.textItemStyle}
+						inputStyle={addBuildingFormstyles.inputStyle}
 					/>
 
-					<AddRoomSection
-						roomCount={roomCount}
-						floorCount={floorCount}
-					/>
-					<View
-						style={{
-							flexDirection: 'row',
-							justifyContent: 'space-between',
-						}}
-					>
-						<Button
-							style={
-								addBuildingFormstyles.submitBuildingDetailsButton
-							}
-							onPress={handleAddBuildingFormSubmit}
-						>
-							{addBuildingState.loading ? (
-								<ActivityIndicator
-									color="#ffffff"
-									size="large"
-								/>
-							) : (
-								<Text
-									style={
-										addBuildingFormstyles.submitBuildingDetailsButton_text
-									}
-								>
-									Submit
-								</Text>
-							)}
-						</Button>
-						<Button
-							onPress={skipAddBuilding}
-							style={
-								addBuildingFormstyles.skipBuildingDetailButton
-							}
-						>
+					<View style={addBuildingFormstyles.roomAndFloorC}>
+						<View>
 							<Text
-								style={
-									addBuildingFormstyles.skipBuildingDetailButton_text
-								}
+								style={addBuildingFormstyles.roomAndFloorText}
 							>
-								Skip
+								Total Floors
 							</Text>
-						</Button>
+							<Counter
+								start={1}
+								onChange={(number, type) =>
+									handleFloorCounter(number, type)
+								}
+								buttonStyle={{ borderRadius: 25 }}
+							/>
+						</View>
+						<View>
+							<Text
+								style={addBuildingFormstyles.roomAndFloorText}
+							>
+								Total Rooms
+							</Text>
+							<Counter
+								start={1}
+								onChange={(number, type) =>
+									handleRoomCounter(number, type)
+								}
+								buttonStyle={{ borderRadius: 25 }}
+							/>
+						</View>
 					</View>
 				</View>
-			</View>
+			</ScrollView>
 
 			<SnackBar
 				text={text}

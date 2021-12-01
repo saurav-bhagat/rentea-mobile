@@ -5964,6 +5964,14 @@ react-native-countdown-component@^2.7.1:
     prop-types "^15.5.8"
     sprintf-js "^1.1.1"
 
+react-native-counters@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-counters/-/react-native-counters-1.2.0.tgz#1848125ff27774a1e6dc32ba8a5738c452a1eb47"
+  integrity sha512-KFcpyopqFXOb2iw1qbVJRbxmJStK8jcf/zlEJ/PAy6sV4M82xGImRFy+Y1jqdm6Eherg34LR2ay4KYoA3wB/8g==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-text "^1.0.8"
+
 react-native-dotenv@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-3.1.1.tgz#03fa95f6a4a883a7975a7a936e5de319ed638253"
@@ -6092,6 +6100,11 @@ react-native-size-matters@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.0.tgz#01bfd0d59454318f4e0b13fe9c1eb0523d70f2e0"
   integrity sha512-8/C0htHrFWeUm9N8JegmadovUfgTWkGBkDPZ1N3YkXtDWb+98Ya2gThiKcu445r8c7YhcrBfnHz/mYsXIusaOQ==
+
+react-native-text@^1.0.8:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-text/-/react-native-text-1.2.2.tgz#26f398e19522be160500de57e8e98ad177a1f6e5"
+  integrity sha512-pw6qY88hH5EXhnBzkN4KuRVdpjc0TZtL94/0oznDSXdowTf8Lrqsxg8LTlSrypBWNiWa8++6zfDz6dEfbHw45A==
 
 react-native-unimodules@~0.13.3:
   version "0.13.3"

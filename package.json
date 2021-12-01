@@ -43,6 +43,7 @@
     "react-native-actions-sheet": "^0.4.9",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-countdown-component": "^2.7.1",
+    "react-native-counters": "^1.2.0",
     "react-native-dotenv": "^3.0.0",
     "react-native-elements": "^3.4.1",
     "react-native-gesture-handler": "^1.10.3",

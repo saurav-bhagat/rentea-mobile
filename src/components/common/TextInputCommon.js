@@ -9,12 +9,13 @@ const TextInputCommon = ({
 	value,
 	onChangeText,
 	keyboardType,
+	inputStyle,
 }) => {
 	return (
 		<Item floatingLabel style={[{ borderColor: '#666' }, style]}>
 			<Label style={{ fontSize: 13 }}>{label}</Label>
 			<Input
-				style={styles.inputStyle}
+				style={[styles.defaultInputStyle, inputStyle]}
 				onChangeText={onChangeText}
 				value={value}
 				keyboardType={keyboardType}
@@ -24,7 +25,7 @@ const TextInputCommon = ({
 };
 
 const styles = StyleSheet.create({
-	inputStyle: {},
+	defaultInputStyle: {},
 });
 
 export default TextInputCommon;
