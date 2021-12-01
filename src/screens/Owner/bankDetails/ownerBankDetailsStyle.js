@@ -5,10 +5,10 @@ export const ownerBankDetailsStyles = ScaledSheet.create({
 		marginTop: '2%',
 		width: '85%',
 		marginLeft: 'auto',
-		marginRight: 'auto'
+		marginRight: 'auto',
 	},
 	oudsTextContainer: {
-		marginBottom: 40
+		marginBottom: 40,
 	},
 	oudsShortText: {
 		fontSize: '45@ms0.3',

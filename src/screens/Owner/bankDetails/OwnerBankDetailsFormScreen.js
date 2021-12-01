@@ -24,7 +24,7 @@ const OwnerBankDetailsScreen = () => {
 
 	const { firstLogin } = useSelector((state) => state.auth.userInfo);
 
-	useEffect(() => { }, [isFocused]);
+	useEffect(() => {}, [isFocused]);
 	const handleOwnerBankDetailsSubmit = () => {
 		if (accountNumber === confirmAccountNumber) {
 			let formData = {
@@ -46,7 +46,7 @@ const OwnerBankDetailsScreen = () => {
 	};
 
 	return (
-		<View style={{ backgroundColor: '#ffffff', flex:1 }}>
+		<View style={{ backgroundColor: '#ffffff', flex: 1 }}>
 			<CrossPlatformHeader title="" profile={false} />
 			<View style={ownerBankDetailsStyles.oudsContainer}>
 				<View style={ownerBankDetailsStyles.oudsTextContainer}>
@@ -113,7 +113,7 @@ const OwnerBankDetailsScreen = () => {
 							<Text
 								style={[
 									ownerBankDetailsStyles.oudsContinueButton_text,
-									{color: '#acadae'}
+									{ color: '#acadae' },
 								]}
 							>
 								Skip
