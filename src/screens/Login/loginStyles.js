@@ -33,8 +33,8 @@ export const loginStyles = ScaledSheet.create({
 	privacyAndAgreementsText: {
 		color: '#109ED9',
 		textAlign: 'center',
-		textDecorationLine: 'underline',
-		fontFamily: 'interLight',
+		fontFamily: 'interRegular',
+		fontSize: 10,
 	},
 	countryCodePlusPhoneNumberContainer: {
 		borderWidth: 1,
@@ -58,5 +58,9 @@ export const loginStyles = ScaledSheet.create({
 		borderLeftWidth: 0,
 		borderRightWidth: 0,
 		marginBottom: -20,
+	},
+	policyAndTermContainer: {
+		marginTop: 50,
+		flexDirection: 'row',
 	},
 });

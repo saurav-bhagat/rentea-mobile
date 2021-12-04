@@ -69,4 +69,9 @@ export const otpStyles = ScaledSheet.create({
 		fontSize: '15@ms0.3',
 		fontFamily: 'interRegular',
 	},
+	editBtnTxt: {
+		color: '#109ED9',
+		fontFamily: 'interRegular',
+		fontSize: 12,
+	},
 });

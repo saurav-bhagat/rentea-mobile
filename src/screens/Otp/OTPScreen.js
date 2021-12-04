@@ -78,7 +78,17 @@ const OtpScreen = ({ route }) => {
 						Type the verification code
 					</Text>
 					<Text style={otpStyles.verificationTextrow}>
-						we've sent you
+						we've sent you the +91
+					</Text>
+					<Text style={otpStyles.verificationTextrow}>
+						{phoneNumber.substr(0, 6)}****
+						<TouchableOpacity
+							onPress={() => {
+								navigate('Login');
+							}}
+						>
+							<Text style={otpStyles.editBtnTxt}> edit</Text>
+						</TouchableOpacity>
 					</Text>
 				</View>
 

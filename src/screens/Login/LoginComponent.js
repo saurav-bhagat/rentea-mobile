@@ -19,19 +19,33 @@ const view = async (fileUrl) => {
 	}
 };
 
-const viewPrivacyAndAgreements = async () => {
+const viewPrivacyPolicy = async () => {
+	try {
+		await view(
+			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/Privacy_Policy_RenTea_hpwm0f.pdf'
+		);
+	} catch (error) {
+		console.log('Error while fetching privacy and policy');
+	}
+};
+
+const viewTermsAndCondition = async () => {
 	try {
 		await view(
 			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Terms_and_Conditions_ovwnum.pdf'
 		);
-		await view(
-			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/Privacy_Policy_RenTea_hpwm0f.pdf'
-		);
+	} catch (error) {
+		console.log('Error while fetching Terms and condition');
+	}
+};
+
+const viewRefundPolicy = async () => {
+	try {
 		await view(
 			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Refund_and_Cancellation_fro5lp.pdf'
 		);
 	} catch (error) {
-		console.log('error while fetching privacy and agreements');
+		console.log('Error while fetching refund policy');
 	}
 };
 
@@ -101,23 +115,7 @@ const LoginComponent = () => {
 
 			<View
 				style={{
-					marginTop: 15,
-				}}
-			>
-				<TouchableOpacity
-					onPress={() => {
-						viewPrivacyAndAgreements();
-					}}
-				>
-					<Text style={loginStyles.privacyAndAgreementsText}>
-						Privacy and agreements
-					</Text>
-				</TouchableOpacity>
-			</View>
-
-			<View
-				style={{
-					marginTop: 20,
+					marginTop: 30,
 				}}
 			>
 				<Button
@@ -131,13 +129,50 @@ const LoginComponent = () => {
 					containerStyle={loginStyles.loginBtnContainer}
 				/>
 			</View>
-			<SnackBar
-				visible={visible}
-				text={text}
-				onDismissSnackBar={onDismissSnackBar}
-				onToggleSnackBar={onToggleSnackBar}
-				bottom={45}
-			/>
+
+			<View style={loginStyles.policyAndTermContainer}>
+				<View style={{ flex: 1 }}>
+					<TouchableOpacity
+						onPress={() => {
+							viewPrivacyPolicy();
+						}}
+					>
+						<Text style={loginStyles.privacyAndAgreementsText}>
+							Privacy policy
+						</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={{ flex: 2 }}>
+					<TouchableOpacity
+						onPress={() => {
+							viewTermsAndCondition();
+						}}
+					>
+						<Text style={loginStyles.privacyAndAgreementsText}>
+							Terms and condition
+						</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={{ flex: 1 }}>
+					<TouchableOpacity
+						onPress={() => {
+							viewRefundPolicy();
+						}}
+					>
+						<Text style={loginStyles.privacyAndAgreementsText}>
+							Refund policy
+						</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+			<View style={{ flex: 1 }}>
+				<SnackBar
+					visible={visible}
+					text={text}
+					onDismissSnackBar={onDismissSnackBar}
+					onToggleSnackBar={onToggleSnackBar}
+				/>
+			</View>
 		</View>
 	);
 };

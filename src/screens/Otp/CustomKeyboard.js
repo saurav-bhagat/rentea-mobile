@@ -34,8 +34,7 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 					<View
 						key={index}
 						style={{
-							width: 50,
-							marginHorizontal: '8%',
+							width: 100,
 						}}
 					>
 						<TouchableOpacity
