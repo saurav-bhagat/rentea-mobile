@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Counter from 'react-native-counters';
+import { Button } from 'react-native-paper';
 
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
@@ -17,6 +17,8 @@ import { navigate } from '../../../navigation/rootNavigation';
 import SnackBar from '../../../components/common/SnackBar';
 import useSnack from '../../../components/common/useSnack';
 import { setFirstLoginFalse } from '../../../redux/actions';
+import AddRoomForm from './AddRoomForm';
+import AddRoomCard from './AddRoomCard';
 
 const AddBuildingForm = () => {
 	const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const AddBuildingForm = () => {
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 	const { firstLogin } = useSelector((state) => state.auth.userInfo);
+
 	const {
 		visible,
 		onToggleSnackBar,
@@ -40,14 +43,6 @@ const AddBuildingForm = () => {
 		text,
 		setText,
 	} = useSnack();
-
-	const handleRoomCounter = (number, type) => {
-		setRoomCount(number);
-	};
-
-	const handleFloorCounter = (number, type) => {
-		setFloorCount(number);
-	};
 
 	const handleAddBuildingFormSubmit = () => {
 		const formData = {
@@ -93,6 +88,7 @@ const AddBuildingForm = () => {
 			firstLogin ? navigate('ownerDashboard') : navigate('Properties');
 		}
 	};
+
 	return (
 		<ScrollView
 			contentContainerStyle={{ flexGrow: 1, backgroundColor: '#e5e5e5' }}
@@ -145,9 +141,9 @@ const AddBuildingForm = () => {
 								Total Floors
 							</Text>
 							<Counter
-								start={1}
+								start={0}
 								onChange={(number, type) =>
-									handleFloorCounter(number, type)
+									setFloorCount(number)
 								}
 								buttonStyle={{ borderRadius: 25 }}
 							/>
@@ -159,14 +155,29 @@ const AddBuildingForm = () => {
 								Total Rooms
 							</Text>
 							<Counter
-								start={1}
+								start={0}
 								onChange={(number, type) =>
-									handleRoomCounter(number, type)
+									setRoomCount(number)
 								}
 								buttonStyle={{ borderRadius: 25 }}
 							/>
 						</View>
+						{/* Room and Floor section ends */}
 					</View>
+
+					{/* <AddRoomCard /> */}
+
+					{/* <AddRoomForm floorCount={floorCount} /> */}
+
+					<Button
+						mode="contained"
+						onPress={handleAddBuildingFormSubmit}
+						style={{ backgroundColor: '#109ED9', marginTop: 12 }}
+					>
+						Submit
+					</Button>
+
+					{/* Building Form Card ends */}
 				</View>
 			</ScrollView>
 
