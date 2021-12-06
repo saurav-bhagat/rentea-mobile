@@ -32,14 +32,20 @@ export default function CrossPlatformHeader({
 			transparent
 			androidStatusBarColor="#109FDA"
 			iosBarStyle="default"
-			style={{ marginTop: 10 }}
+			style={{
+				marginTop: 10,
+				backgroundColor: '#fff',
+			}}
 		>
 			<Left>
 				{backCallback && (
 					<Button transparent onPress={backCallback}>
 						<Icon
 							name="chevron-back-outline"
-							style={{ fontSize: 22, color: '#109FDA' }}
+							style={{
+								fontSize: 22,
+								color: '#109FDA',
+							}}
 						/>
 					</Button>
 				)}
@@ -54,7 +60,9 @@ export default function CrossPlatformHeader({
 					<Avatar
 						rounded
 						title={userName}
-						containerStyle={{ backgroundColor: '#109FDA' }}
+						containerStyle={{
+							backgroundColor: '#109FDA',
+						}}
 						onPress={() =>
 							navigation.navigate('Profile', { userType })
 						}
