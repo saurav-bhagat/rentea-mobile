@@ -3,8 +3,9 @@ import { ScaledSheet } from 'react-native-size-matters';
 export const loginStyles = ScaledSheet.create({
 	loginContainer: {
 		flex: 1,
-		marginHorizontal: '40@mvs0.3',
-		marginTop: '100@s',
+		paddingHorizontal: '40@mvs0.3',
+		paddingTop: '100@s',
+		backgroundColor: '#fff',
 	},
 	loginContainer_row1_txt: {
 		fontSize: '30@ms0.3',
@@ -32,8 +33,8 @@ export const loginStyles = ScaledSheet.create({
 	privacyAndAgreementsText: {
 		color: '#109ED9',
 		textAlign: 'center',
-		textDecorationLine: 'underline',
-		fontFamily: 'interLight',
+		fontFamily: 'interRegular',
+		fontSize: 10,
 	},
 	countryCodePlusPhoneNumberContainer: {
 		borderWidth: 1,
@@ -57,5 +58,9 @@ export const loginStyles = ScaledSheet.create({
 		borderLeftWidth: 0,
 		borderRightWidth: 0,
 		marginBottom: -20,
+	},
+	policyAndTermContainer: {
+		marginTop: 50,
+		flexDirection: 'row',
 	},
 });
