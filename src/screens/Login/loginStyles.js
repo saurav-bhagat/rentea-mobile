@@ -60,7 +60,7 @@ export const loginStyles = ScaledSheet.create({
 		marginBottom: -20,
 	},
 	policyAndTermContainer: {
-		marginTop: 50,
+		marginTop: '100%',
 		flexDirection: 'row',
 	},
 });

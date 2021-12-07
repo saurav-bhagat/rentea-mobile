@@ -41,4 +41,33 @@ export const addBuildingFormstyles = ScaledSheet.create({
 		marginVertical: '15@ms',
 		paddingVertical: '10@ms',
 	},
+	addRoomFormModalContainer: {
+		backgroundColor: '#fff',
+		padding: 30,
+		marginHorizontal: 20,
+		borderRadius: 15,
+	},
+	submitBtn: {
+		backgroundColor: '#109ED9',
+		marginTop: 12,
+		alignSelf: 'flex-start',
+		borderRadius: 10,
+	},
+	submitBtnTxt: {
+		paddingHorizontal: 10,
+		fontFamily: 'interSemiBold',
+	},
+	roomDetailRow: { flexDirection: 'row' },
+	roomDtlCol: { flex: 1 },
+	roomDtlColTxt1: { fontFamily: 'interBold', color: '#109ED9' },
+	roomDtlColTxt2: {
+		fontFamily: 'interBold',
+		color: '#109ED9',
+		textAlign: 'center',
+	},
+	roomDtlColTxt3: {
+		fontFamily: 'interBold',
+		color: '#109ED9',
+		textAlign: 'center',
+	},
 });

@@ -80,5 +80,7 @@ const HeaderStyle = StyleSheet.create({
 		width: 270,
 		textAlign: 'center',
 		right: Platform.OS != 'ios' ? 25 : 0,
+		fontFamily: 'interRegular',
+		marginTop: 30,
 	},
 });

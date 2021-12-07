@@ -1,2 +1,4 @@
 export const SET_ROOM_DETAILS = 'SET_ROOM_DETAILS';
 export const SET_ROOM_DATA = 'SET_ROOM_DATA';
+export const UPDATE_ROOM_DATA = 'UPDATE_ROOM_DATA';
+export const REMOVE_ROOM_DATA = 'REMOVE_ROOM_DATA';

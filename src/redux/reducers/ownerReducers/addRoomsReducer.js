@@ -2,6 +2,8 @@ import { find } from 'lodash';
 import {
 	SET_ROOM_DATA,
 	SET_ROOM_DETAILS,
+	UPDATE_ROOM_DATA,
+	REMOVE_ROOM_DATA,
 } from '../../actions/ownerActions/addRoomActionTypes';
 
 const initialState = {
@@ -23,6 +25,22 @@ export const addRoomsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				roomDetails: [],
+			};
+		case UPDATE_ROOM_DATA:
+			return {
+				...state,
+				roomDetails: state.roomDetails.map((roomDetail) =>
+					roomDetail._id === action.payload._id
+						? action.payload.updatedRoomObj
+						: roomDetail
+				),
+			};
+		case REMOVE_ROOM_DATA:
+			return {
+				...state,
+				roomDetails: state.roomDetails.filter(
+					(roomDetail) => roomDetail._id !== action.payload._id
+				),
 			};
 		default:
 			return state;
