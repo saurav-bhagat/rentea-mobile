@@ -57,17 +57,4 @@ export const addBuildingFormstyles = ScaledSheet.create({
 		paddingHorizontal: 10,
 		fontFamily: 'interSemiBold',
 	},
-	roomDetailRow: { flexDirection: 'row' },
-	roomDtlCol: { flex: 1 },
-	roomDtlColTxt1: { fontFamily: 'interBold', color: '#109ED9' },
-	roomDtlColTxt2: {
-		fontFamily: 'interBold',
-		color: '#109ED9',
-		textAlign: 'center',
-	},
-	roomDtlColTxt3: {
-		fontFamily: 'interBold',
-		color: '#109ED9',
-		textAlign: 'center',
-	},
 });

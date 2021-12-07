@@ -14,28 +14,32 @@ const AddRoomCard = ({ roomDetail, floorCount }) => {
 	return (
 		<View style={addRoomCardStyles.addRoomContainer}>
 			<View style={addRoomCardStyles.addRoomRow}>
-				<View style={addRoomCardStyles.addRoomCol}>
+				<View style={addRoomCardStyles.addRoomCol1}>
 					<Text style={addRoomCardStyles.roomDtlTxt}>
 						{roomDetail.roomNo}
 					</Text>
 				</View>
-				<View style={addRoomCardStyles.addRoomCol}>
-					<Icon
-						name={'edit'}
-						color="#fff"
-						onPress={() => {
-							setModalVisible(true);
-						}}
-					/>
-				</View>
-				<View style={addRoomCardStyles.addRoomCol}>
-					<Icon
-						name={'delete'}
-						color="#fff"
-						onPress={() => {
-							dispatch(removeRoomData(roomDetail._id));
-						}}
-					/>
+				<View style={addRoomCardStyles.addRoomCol2}>
+					<View>
+						<Icon
+							name={'edit'}
+							color="#fff"
+							onPress={() => {
+								setModalVisible(true);
+							}}
+							size={20}
+						/>
+					</View>
+					<View>
+						<Icon
+							name={'delete'}
+							color="#fff"
+							onPress={() => {
+								dispatch(removeRoomData(roomDetail._id));
+							}}
+							size={20}
+						/>
+					</View>
 				</View>
 			</View>
 

@@ -4,7 +4,8 @@ export const addRoomCardStyles = ScaledSheet.create({
 	addRoomContainer: {
 		flex: 1,
 		backgroundColor: '#109ED9',
-		padding: 15,
+		paddingVertical: 15,
+		paddingHorizontal: 10,
 		borderRadius: 10,
 		marginVertical: 15,
 	},
@@ -18,8 +19,16 @@ export const addRoomCardStyles = ScaledSheet.create({
 	addRoomRow: {
 		flexDirection: 'row',
 	},
-	addRoomCol: {
-		flex: 1,
+	addRoomCol1: {
+		flex: 3,
 	},
-	roomDtlTxt: { color: '#ffffff', fontSize: 15 },
+	addRoomCol2: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+	roomDtlTxt: {
+		color: '#ffffff',
+		fontSize: 15,
+	},
 });

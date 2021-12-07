@@ -2,7 +2,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const addRoomFormStyles = ScaledSheet.create({
 	headerContainer: {
-		paddingVertical: 20,
+		paddingBottom: 20,
 	},
 	headerTxt: {
 		fontFamily: 'interRegular',
@@ -33,4 +33,34 @@ export const addRoomFormStyles = ScaledSheet.create({
 	roomDetailCol2: { flex: 1, marginLeft: '5%' },
 	multipleTenantContainer: { flexDirection: 'row', marginTop: '5%' },
 	multipleTxt: { color: '#109ED9', fontFamily: 'interRegular' },
+
+	addRoomContainer: {
+		marginVertical: '15@ms',
+		paddingVertical: '10@ms',
+	},
+	textItemStyle: {
+		marginBottom: '17@ms',
+	},
+	inputStyle: {},
+	rentSecurityContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		marginVertical: 10,
+	},
+	rentTxtInptContainer: {
+		height: 40,
+		marginVertical: 12,
+		marginRight: 12,
+		borderBottomWidth: 0.6,
+		padding: 10,
+		flex: 1,
+	},
+	securityTxtInptContainer: {
+		height: 40,
+		marginVertical: 12,
+		marginLeft: 12,
+		borderBottomWidth: 0.6,
+		padding: 10,
+		flex: 1,
+	},
 });

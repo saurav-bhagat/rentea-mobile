@@ -30,7 +30,6 @@ const AddBuildingForm = () => {
 	const [district, setDistrict] = useState('Khunti');
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
-	const { firstLogin } = useSelector((state) => state.auth.userInfo);
 	const [modalVisible, setModalVisible] = useState(false);
 	const {
 		visible,
@@ -62,13 +61,8 @@ const AddBuildingForm = () => {
 	};
 
 	const handleCounter = (number, type) => {
-		if (floorCount >= 1) {
-			setRoomCount(number);
-			type === '+' && setModalVisible(true);
-		} else {
-			setText('Please enter floor number before adding room');
-			setVisible(true);
-		}
+		setRoomCount(number);
+		type === '+' && setModalVisible(true);
 	};
 
 	return (
@@ -158,37 +152,6 @@ const AddBuildingForm = () => {
 							{/* Room and Floor section ends */}
 						</View>
 
-						{roomDetails.length > 0 && (
-							<View style={addBuildingFormstyles.roomDetailRow}>
-								<View style={addBuildingFormstyles.roomDtlCol}>
-									<Text
-										style={
-											addBuildingFormstyles.roomDtlColTxt1
-										}
-									>
-										Room no:
-									</Text>
-								</View>
-								<View style={addBuildingFormstyles.roomDtlCol}>
-									<Text
-										style={
-											addBuildingFormstyles.roomDtlColTxt2
-										}
-									>
-										Edit
-									</Text>
-								</View>
-								<View style={addBuildingFormstyles.roomDtlCol}>
-									<Text
-										style={
-											addBuildingFormstyles.roomDtlColTxt3
-										}
-									>
-										Delete
-									</Text>
-								</View>
-							</View>
-						)}
 						{roomDetails.map((roomDetail, i) => {
 							return (
 								<AddRoomCard
