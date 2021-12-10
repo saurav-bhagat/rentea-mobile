@@ -21,8 +21,11 @@ import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import useNotification from '../../../../components/common/useNotification';
 import { addExpoPushToken } from '../../../../redux/actions';
+import { Button } from 'react-native-elements/dist/buttons/Button';
+import { useNavigation } from '@react-navigation/core';
 
 const PropertiesScreen = ({ route }) => {
+	const navigation = useNavigation();
 	const dispatch = useDispatch();
 
 	const { expoPushToken: token } = useSelector((state) => state.userDetail);
@@ -38,6 +41,7 @@ const PropertiesScreen = ({ route }) => {
 		onToggleSnackBar,
 		onDismissSnackBar,
 	} = useSnack();
+	//snackbar needs to move to the redesigned dashboard component
 
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
@@ -67,7 +71,6 @@ const PropertiesScreen = ({ route }) => {
 	if (loading) {
 		return (
 			<View style={{ flex: 1 }}>
-				<CrossPlatformHeader title="Properties" />
 				{/* <Button
 					onPress={() => {
 						dispatch(refreshToken());
@@ -123,8 +126,11 @@ const PropertiesScreen = ({ route }) => {
 			dispatch(userLogout());
 		};
 		return (
-			<View style={{ flex: 1 }}>
-				<CrossPlatformHeader title="Properties" />
+			<View
+				style={{
+					flex: 1,
+				}}
+			>
 				<ScrollView
 					contentContainerStyle={
 						propertiesScreenStyles.propertiesContainer
@@ -132,7 +138,6 @@ const PropertiesScreen = ({ route }) => {
 				>
 					<PropertyList properties={properties} />
 				</ScrollView>
-				<AddBuildingFabButton />
 				<SnackBar
 					visible={visible}
 					text={text}
