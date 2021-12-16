@@ -15,6 +15,7 @@ import SnackBar from '../../../components/common/SnackBar';
 import useSnack from '../../../components/common/useSnack';
 import AddRoomForm from './AddRoomForm';
 import AddRoomCard from './AddRoomCard';
+import CustomCounter from './CustomCounter';
 
 const AddBuildingForm = () => {
 	const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const AddBuildingForm = () => {
 	const { loading } = useSelector((state) => state.buildingDetails);
 	const { roomDetails } = useSelector((state) => state.addRoomDetails);
 	const [buildingName, setBuildingName] = useState('');
-	const [roomCount, setRoomCount] = useState('');
+	const [roomCount, setRoomCount] = useState(0);
 	const [floorCount, setFloorCount] = useState('');
 	const [stateAddress, setStateAddress] = useState('');
 	const [pinCode, setPinCode] = useState('835210');
@@ -39,7 +40,6 @@ const AddBuildingForm = () => {
 		text,
 		setText,
 	} = useSnack();
-
 	const handleAddBuildingFormSubmit = () => {
 		const formData = {
 			buildingName,
@@ -58,11 +58,6 @@ const AddBuildingForm = () => {
 			setText('Enter fields properly.');
 			setVisible(true);
 		}
-	};
-
-	const handleCounter = (number, type) => {
-		setRoomCount(number);
-		type === '+' && setModalVisible(true);
 	};
 
 	return (
@@ -141,12 +136,11 @@ const AddBuildingForm = () => {
 								>
 									Total Rooms
 								</Text>
-								<Counter
-									start={0}
-									onChange={(number, type) =>
-										handleCounter(number, type)
-									}
-									buttonStyle={{ borderRadius: 25 }}
+
+								<CustomCounter
+									count={roomCount}
+									setCounter={setRoomCount}
+									setModalVisible={setModalVisible}
 								/>
 							</View>
 							{/* Room and Floor section ends */}
@@ -167,6 +161,7 @@ const AddBuildingForm = () => {
 								visible={modalVisible}
 								onDismiss={() => {
 									setModalVisible(false);
+									setRoomCount((prev) => prev - 1);
 								}}
 								contentContainerStyle={
 									addBuildingFormstyles.addRoomFormModalContainer

@@ -10,7 +10,7 @@ import { addBuildingStyles } from './addBuildingStyles';
 const AddBuilding = () => {
 	const { buildingDetails } = useSelector((state) => state.buildingDetails);
 
-	const handleBuildingSubmit = async () => {
+	const handleContinueAndSkipBtn = async () => {
 		let userInfo = await AsyncStorage.getItem('userInfo');
 		userInfo = JSON.parse(userInfo);
 		userInfo.firstLogin = false;
@@ -79,7 +79,7 @@ const AddBuilding = () => {
 							buttonStyle={addBuildingStyles.skipBtn}
 							disabled={buildingDetails.length !== 0}
 							disabledStyle={addBuildingStyles.skipBtn}
-							onPress={() => navigate('ownerDashboard')}
+							onPress={handleContinueAndSkipBtn}
 						/>
 					</View>
 					<View style={{ flex: 1 }}>
@@ -90,9 +90,7 @@ const AddBuilding = () => {
 							buttonStyle={addBuildingStyles.continueBtn}
 							disabledStyle={addBuildingStyles.continueBtn}
 							disabled={buildingDetails.length === 0}
-							onPress={() => {
-								handleBuildingSubmit();
-							}}
+							onPress={handleContinueAndSkipBtn}
 						/>
 					</View>
 				</View>

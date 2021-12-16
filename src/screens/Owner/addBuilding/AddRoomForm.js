@@ -50,6 +50,7 @@ const AddRoomForm = ({ floorCount, roomDetail, dismissAddRoomForm }) => {
 	const [loader, setLoader] = useState(false);
 
 	const currentRoomData = {
+		_id: new Date() + 'dean_winchester',
 		roomNo,
 		sizeInFt: 3000,
 		bhk: selectedType,
