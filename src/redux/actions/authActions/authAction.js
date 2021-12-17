@@ -17,7 +17,6 @@ import {
 	REFRESH_TOKEN_SUCCESS,
 	REFRESH_TOKEN_FAIL,
 } from './authTypes';
-import { clearBuildingDetails } from '..';
 
 export const sentOtpRequest = () => {
 	return {
@@ -105,7 +104,6 @@ export const userLogout = () => {
 		try {
 			AsyncStorage.removeItem('userInfo');
 			dispatch(setUserLogout());
-			dispatch(clearBuildingDetails());
 		} catch (err) {
 			console.log('Error while logout');
 		}

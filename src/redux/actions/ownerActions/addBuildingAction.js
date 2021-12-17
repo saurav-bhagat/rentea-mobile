@@ -99,6 +99,8 @@ export const saveBuildingData = (buildingObj) => {
 					// The action setRoomDetails empty the room reducer for next room field
 					dispatch(setRoomDetails());
 					!firstLogin && (await dispatch(getOwnerDashboard()));
+					// The action clearBuidlingDetails clear addbuildingdetail reducer for 2 user in one device
+					!firstLogin && dispatch(clearBuildingDetails());
 					firstLogin
 						? navigate('AddBuilding')
 						: navigate('Properties');

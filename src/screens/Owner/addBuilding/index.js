@@ -1,16 +1,23 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { navigate } from '../../../navigation/rootNavigation';
 import { addBuildingStyles } from './addBuildingStyles';
+import { clearBuildingDetails } from '../../../redux/actions';
 
 const AddBuilding = () => {
 	const { buildingDetails } = useSelector((state) => state.buildingDetails);
-
-	const handleContinueAndSkipBtn = async () => {
+	const dispatch = useDispatch();
+	const handleContinueAndSkipBtn = async (continueBtnFlag) => {
+		// The action clearBuidlingDetails clear addbuildingdetail reducer for 2 user in one device
+		if (continueBtnFlag) {
+			setTimeout(() => {
+				dispatch(clearBuildingDetails());
+			}, 1000);
+		}
 		let userInfo = await AsyncStorage.getItem('userInfo');
 		userInfo = JSON.parse(userInfo);
 		userInfo.firstLogin = false;
@@ -79,7 +86,9 @@ const AddBuilding = () => {
 							buttonStyle={addBuildingStyles.skipBtn}
 							disabled={buildingDetails.length !== 0}
 							disabledStyle={addBuildingStyles.skipBtn}
-							onPress={handleContinueAndSkipBtn}
+							onPress={() => {
+								handleContinueAndSkipBtn(false);
+							}}
 						/>
 					</View>
 					<View style={{ flex: 1 }}>
@@ -90,7 +99,9 @@ const AddBuilding = () => {
 							buttonStyle={addBuildingStyles.continueBtn}
 							disabledStyle={addBuildingStyles.continueBtn}
 							disabled={buildingDetails.length === 0}
-							onPress={handleContinueAndSkipBtn}
+							onPress={() => {
+								handleContinueAndSkipBtn(true);
+							}}
 						/>
 					</View>
 				</View>
