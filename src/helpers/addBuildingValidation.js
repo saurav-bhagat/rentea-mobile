@@ -19,7 +19,6 @@ export const validateCount = (obj) => {
 		}
 		return e >= 0;
 	});
-	console.log('result is ', result);
 	return result;
 };
 
