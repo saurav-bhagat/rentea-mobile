@@ -17,6 +17,7 @@ import {
 	ADD_BUILDING_ERROR,
 	ADD_BUILDING_REQUEST,
 	ADD_BUILDING_SUCCESS,
+	CLEAR_BUILDING_DETAILS,
 } from '../../actions/ownerActions/addBuildingTypes';
 
 const initialState = {
@@ -47,6 +48,13 @@ export const addBuildingReducer = (state = initialState, action) => {
 			return {
 				...state,
 				msg: action.msg,
+				loading: false,
+			};
+		case CLEAR_BUILDING_DETAILS:
+			return {
+				...state,
+				buildingDetails: [],
+				msg: '',
 				loading: false,
 			};
 		default:
