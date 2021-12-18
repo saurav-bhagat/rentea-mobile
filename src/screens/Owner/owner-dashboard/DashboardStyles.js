@@ -1,5 +1,6 @@
 import { Platform, StatusBar } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
 
 export const dashboardStyles = ScaledSheet.create({
 	dashBoardContainer: {
@@ -49,16 +50,28 @@ export const dashboardStyles = ScaledSheet.create({
 		marginLeft: 10,
 		fontSize: 15,
 	},
+	dashboardHomeContainer: {
+		flex: 1,
+	},
 	buttonView: {
 		flex: 1,
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		justifyContent: 'space-between',
 	},
+	dashboardButtonStyle: {
+		height: 60,
+		borderBottomColor: '#109ED9',
+	},
 	dashboardButton: {
 		color: '#000',
 		flexGrow: 5,
 		backgroundColor: '#FEFEFE',
+	},
+	summaryContainer: {
+		flex: 6,
+		marginHorizontal: 30,
+		marginTop: -15,
 	},
 	propertiesButton: {
 		flexGrow: 5,
@@ -89,12 +102,21 @@ export const dashboardStyles = ScaledSheet.create({
 	},
 	boxView: {
 		backgroundColor: '#FFF',
-		height: 100,
-		width: 160,
+		height: Dimensions.get('window').height / 8,
+		width: Dimensions.get('window').width / 2.5,
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'row',
 		borderRadius: 10,
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 0,
+			height: 3,
+		},
+		shadowOpacity: 0.29,
+		shadowRadius: 4.65,
+
+		elevation: 7,
 	},
 	boxTextView: {
 		flex: 1,
@@ -114,6 +136,15 @@ export const dashboardStyles = ScaledSheet.create({
 		fontSize: 24,
 		marginBottom: 5,
 	},
+	notificationContentText: {
+		fontFamily: 'OpenSans_600SemiBold',
+		fontSize: 14,
+		color: '#B8B8B8',
+	},
+	notificationHeadingText: {
+		fontFamily: 'OpenSans_600SemiBold',
+		fontSize: 16,
+	},
 	randomNotificationView: {
 		width: '100%',
 		backgroundColor: '#fff',
@@ -123,5 +154,17 @@ export const dashboardStyles = ScaledSheet.create({
 		justifyContent: 'space-evenly',
 		alignItems: 'center',
 		marginTop: 5,
+	},
+	OpenSans_600SemiBold: {
+		fontFamily: 'OpenSans_600SemiBold',
+	},
+	notificationContainer: {
+		flex: 3,
+	},
+	summaryIcons: {
+		flex: 1,
+		fontSize: 40,
+		color: '#109ED9',
+		marginLeft: 7,
 	},
 });

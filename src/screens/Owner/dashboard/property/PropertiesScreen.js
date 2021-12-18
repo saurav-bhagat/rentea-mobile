@@ -144,6 +144,7 @@ const PropertiesScreen = ({ route }) => {
 					onDismissSnackBar={onDismissSnackBar}
 					onToggleSnackBar={onToggleSnackBar}
 				/>
+				<AddBuildingFabButton />
 			</View>
 		);
 	}

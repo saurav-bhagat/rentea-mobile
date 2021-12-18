@@ -26,7 +26,7 @@ import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails
 import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
 
 import { IntroSlider } from '../screens/Introslides/IntroSlider';
-import Dashboard from '../screens/Owner/redesigned-dashboard/Dashboard';
+import Dashboard from '../screens/Owner/owner-dashboard/Dashboard';
 const { Screen, Navigator } = createStackNavigator();
 
 /**

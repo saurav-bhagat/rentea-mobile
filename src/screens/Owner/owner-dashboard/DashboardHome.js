@@ -1,47 +1,92 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-native-elements/dist/buttons/Button';
-import { Text, View } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome5';
 import { dashboardStyles } from './DashboardStyles';
 import { ScrollView } from 'react-native-gesture-handler';
 import PropertiesScreen from '../dashboard/property/PropertiesScreen';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
+import { getOwnerDashboard } from '../../../redux/actions/ownerActions/dashboardAction';
 
 const DashboardHome = () => {
+	const dispatch = useDispatch();
 	const [showDashboard, setShowDashboard] = useState(true);
+	const [summaryDetails, setSummaryDetails] = useState({
+		propertiesNo: 0,
+		rooms: 0,
+		vacantRooms: 0,
+		totalTenants: 0,
+	});
 	const navigation = useNavigation();
 
+	const { properties, error, loading } = useSelector(
+		(state) => state.ownerDashbhoard
+	);
+
+	const getSummaryViewDetails = () => {
+		if (Object.keys(properties).length !== 0) {
+			console.log(properties);
+			const buildings = properties.ownerDashboardResult.buildings;
+			let numberOfRooms = 0;
+			let numberOfTenants = 0;
+			let numberOfVacantRooms = 0;
+			for (const building of buildings) {
+				for (const room of building.rooms) {
+					numberOfTenants += room.tenants.length;
+					if (room.tenants.length === 0) {
+						numberOfVacantRooms += 1;
+					}
+				}
+				numberOfRooms += building.rooms.length;
+			}
+			setSummaryDetails({
+				propertiesNo: properties.ownerDashboardResult.buildings.length,
+				rooms: numberOfRooms,
+				totalTenants: numberOfTenants,
+				vacantRooms: numberOfVacantRooms,
+			});
+		}
+	};
+
+	useEffect(() => {
+		dispatch(getOwnerDashboard());
+	}, []);
+
+	useEffect(() => {
+		if (!error) {
+			getSummaryViewDetails();
+		}
+	}, [properties]);
 	return (
-		<View style={{ flex: 1 }}>
+		<View style={dashboardStyles.dashboardHomeContainer}>
 			<View style={dashboardStyles.buttonView}>
 				<Button
 					type="clear"
 					containerStyle={dashboardStyles.dashboardButton}
 					title="Dashboard"
-					buttonStyle={{
-						height: 60,
-						borderBottomColor: '#109ED9',
-						borderBottomWidth: showDashboard ? 2 : 0,
-					}}
-					titleStyle={{ fontFamily: 'OpenSans_600SemiBold' }}
+					buttonStyle={[
+						dashboardStyles.dashboardButtonStyle,
+						{ borderBottomWidth: showDashboard ? 2 : 0 },
+					]}
+					titleStyle={dashboardStyles.OpenSans_600SemiBold}
 					onPress={() => setShowDashboard(true)}
 				/>
 				<Button
 					type="clear"
 					containerStyle={dashboardStyles.propertiesButton}
 					title="My Properties"
-					buttonStyle={{
-						height: 60,
-						borderBottomColor: '#109ED9',
-						borderBottomWidth: showDashboard ? 0 : 2,
-					}}
-					titleStyle={{ fontFamily: 'OpenSans_600SemiBold' }}
+					buttonStyle={[
+						dashboardStyles.dashboardButtonStyle,
+						{ borderBottomWidth: showDashboard ? 0 : 2 },
+					]}
+					titleStyle={dashboardStyles.OpenSans_600SemiBold}
 					onPress={() => setShowDashboard(false)}
 				/>
 			</View>
 			{showDashboard ? (
-				<View style={{ flex: 6, marginHorizontal: 30, marginTop: -15 }}>
+				<View style={dashboardStyles.summaryContainer}>
 					<Text style={dashboardStyles.summaryText}>Summary</Text>
 					<Text style={dashboardStyles.summaryCaptionText}>
 						Key statistics of your account
@@ -50,16 +95,18 @@ const DashboardHome = () => {
 						<View style={dashboardStyles.boxView}>
 							<Icons
 								name="home-city"
-								style={{
-									flex: 1,
-									fontSize: 40,
-									color: '#109ED9',
-									marginLeft: 7,
-								}}
+								style={dashboardStyles.summaryIcons}
 							/>
 							<View style={dashboardStyles.boxTextView}>
 								<Text style={dashboardStyles.boxQuantityText}>
-									5
+									{loading ? (
+										<ActivityIndicator
+											color="#109FDA"
+											size="small"
+										/>
+									) : (
+										summaryDetails.propertiesNo
+									)}
 								</Text>
 								<Text
 									style={
@@ -73,16 +120,18 @@ const DashboardHome = () => {
 						<View style={dashboardStyles.boxView}>
 							<FontAwesomeIcons
 								name="door-open"
-								style={{
-									flex: 1,
-									fontSize: 40,
-									color: '#109ED9',
-									marginLeft: 7,
-								}}
+								style={dashboardStyles.summaryIcons}
 							/>
 							<View style={dashboardStyles.boxTextView}>
 								<Text style={dashboardStyles.boxQuantityText}>
-									50
+									{loading ? (
+										<ActivityIndicator
+											color="#109FDA"
+											size="small"
+										/>
+									) : (
+										summaryDetails.rooms
+									)}
 								</Text>
 								<Text
 									style={
@@ -96,16 +145,21 @@ const DashboardHome = () => {
 						<View style={dashboardStyles.boxView}>
 							<FontAwesomeIcons
 								name="door-open"
-								style={{
-									flex: 1,
-									fontSize: 40,
-									color: '#F78585',
-									marginLeft: 7,
-								}}
+								style={[
+									dashboardStyles.summaryIcons,
+									{ color: '#F78585' },
+								]}
 							/>
 							<View style={dashboardStyles.boxTextView}>
 								<Text style={dashboardStyles.boxQuantityText}>
-									22
+									{loading ? (
+										<ActivityIndicator
+											color="#109FDA"
+											size="small"
+										/>
+									) : (
+										summaryDetails.vacantRooms
+									)}
 								</Text>
 								<Text
 									style={
@@ -119,16 +173,21 @@ const DashboardHome = () => {
 						<View style={dashboardStyles.boxView}>
 							<FontAwesomeIcons
 								name="users"
-								style={{
-									flex: 1,
-									fontSize: 40,
-									color: '#65C466',
-									marginLeft: 7,
-								}}
+								style={[
+									dashboardStyles.summaryIcons,
+									{ color: '#65C466' },
+								]}
 							/>
 							<View style={dashboardStyles.boxTextView}>
 								<Text style={dashboardStyles.boxQuantityText}>
-									28
+									{loading ? (
+										<ActivityIndicator
+											color="#109FDA"
+											size="small"
+										/>
+									) : (
+										summaryDetails.totalTenants
+									)}
 								</Text>
 								<Text
 									style={
@@ -145,7 +204,7 @@ const DashboardHome = () => {
 							type="solid"
 							title="Add Property"
 							containerStyle={dashboardStyles.addPropertyButton}
-							titleStyle={{ fontFamily: 'OpenSans_600SemiBold' }}
+							titleStyle={dashboardStyles.OpenSans_600SemiBold}
 							onPress={() =>
 								navigation.navigate('AddBuildingForm')
 							}
@@ -154,11 +213,11 @@ const DashboardHome = () => {
 							type="solid"
 							title="Add Tenants"
 							containerStyle={dashboardStyles.addPropertyButton}
-							titleStyle={{ fontFamily: 'OpenSans_600SemiBold' }}
+							titleStyle={dashboardStyles.OpenSans_600SemiBold}
 							onPress={() => setShowDashboard(false)}
 						/>
 					</View>
-					<View style={{ flex: 3 }}>
+					<View style={dashboardStyles.notificationContainer}>
 						<ScrollView>
 							<Text
 								style={dashboardStyles.recentNotificationText}
@@ -175,19 +234,16 @@ const DashboardHome = () => {
 								/>
 								<View>
 									<Text
-										style={{
-											fontFamily: 'OpenSans_600SemiBold',
-											fontSize: 16,
-										}}
+										style={
+											dashboardStyles.notificationHeadingText
+										}
 									>
 										Notification
 									</Text>
 									<Text
-										style={{
-											fontFamily: 'OpenSans_600SemiBold',
-											fontSize: 14,
-											color: '#B8B8B8',
-										}}
+										style={
+											dashboardStyles.notificationContentText
+										}
 									>
 										Key statistics of your account.
 									</Text>
@@ -203,19 +259,16 @@ const DashboardHome = () => {
 								/>
 								<View>
 									<Text
-										style={{
-											fontFamily: 'OpenSans_600SemiBold',
-											fontSize: 16,
-										}}
+										style={
+											dashboardStyles.notificationHeadingText
+										}
 									>
 										Notification
 									</Text>
 									<Text
-										style={{
-											fontFamily: 'OpenSans_600SemiBold',
-											fontSize: 14,
-											color: '#B8B8B8',
-										}}
+										style={
+											dashboardStyles.notificationContentText
+										}
 									>
 										Key statistics of your account.
 									</Text>
