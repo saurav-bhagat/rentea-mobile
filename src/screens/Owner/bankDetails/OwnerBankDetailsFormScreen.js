@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Clipboard from 'expo-clipboard';
 import { useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-native-paper';
 
 import { ownerBankDetailsStyles } from './ownerBankDetailsStyle';
 import { isValidBankDetails } from '../../../helpers/addBuildingValidation';
@@ -106,7 +107,7 @@ const OwnerBankDetailsScreen = () => {
 							style={ownerBankDetailsStyles.oudsContinueButton}
 							onPress={() =>
 								firstLogin
-									? navigate('AddBuildingForm')
+									? navigate('AddBuilding')
 									: navigate('ownerDashboard')
 							}
 						>

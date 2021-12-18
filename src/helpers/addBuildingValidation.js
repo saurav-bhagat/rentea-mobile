@@ -17,9 +17,8 @@ export const validateCount = (obj) => {
 		if (obj && obj.rent && obj.rent.length > 0) {
 			return true;
 		}
-		return e > 0;
+		return e >= 0;
 	});
-	console.log('result is ', result);
 	return result;
 };
 
@@ -95,22 +94,15 @@ export const validateRoomFields = (
 		if (
 			bhk > 0 &&
 			bhk < 10 &&
-			floor > 0 &&
+			floor >= 0 &&
 			floor <= floorCount &&
-			security >= rent &&
-			sizeInFt >= 100
+			security >= rent
 		) {
 			return true;
 		}
 	}
 	if (isMultipleTenant && validateCount({ floor, sizeInFt, bhk })) {
-		if (
-			bhk > 0 &&
-			bhk < 10 &&
-			floor > 0 &&
-			floor <= floorCount &&
-			sizeInFt >= 100
-		) {
+		if (bhk > 0 && bhk < 10 && floor >= 0 && floor <= floorCount) {
 			return true;
 		}
 	}

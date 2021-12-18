@@ -1,15 +1,21 @@
 import { ScaledSheet } from 'react-native-size-matters';
 
 export const addBuildingStyles = ScaledSheet.create({
-	addBContainer: {
+	addBuildingContainer: {
 		flex: 1,
-		paddingTop: '2%',
+		paddingTop: '25%',
 		backgroundColor: 'white',
-		width: '85%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		justifyContent: 'space-between',
+		paddingHorizontal: '10%',
 	},
+	addBuildingRow1Txt: { fontSize: 42, color: '#666666' },
+	addBuildingRow2Txt: { fontSize: 16, marginTop: 10, color: '#888888' },
+	addBuildingRow3Txt: { fontSize: 10, marginTop: 10, color: '#999999' },
+	skipAndContinueContainer: {
+		flexDirection: 'row',
+		marginTop: '5%',
+	},
+	skipBtn: { justifyContent: 'flex-start', borderColor: '#fff' },
+	continueBtn: { justifyContent: 'flex-end', borderColor: '#fff' },
 	addBTextContainer: {
 		marginBottom: '28@ms',
 	},
@@ -38,5 +44,22 @@ export const addBuildingStyles = ScaledSheet.create({
 		marginLeft: 4,
 		top: 2,
 		fontSize: '22@s',
+	},
+	addBtn: {
+		borderColor: '#109ED9',
+		borderWidth: 1.2,
+		borderRadius: 5,
+	},
+	buildingDetailContainer: {
+		borderColor: '#404040',
+		borderWidth: 0.3,
+		borderRadius: 5,
+		paddingHorizontal: 20,
+		paddingVertical: 10,
+		marginBottom: 10,
+	},
+	buidlingDetailTxt: {
+		color: '#109ED9',
+		fontFamily: 'interRegular',
 	},
 });

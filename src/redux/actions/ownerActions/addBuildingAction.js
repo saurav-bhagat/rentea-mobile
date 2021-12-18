@@ -6,6 +6,7 @@ import {
 	ADD_BUILDING_ERROR,
 	ADD_BUILDING_REQUEST,
 	ADD_BUILDING_SUCCESS,
+	CLEAR_BUILDING_DETAILS,
 } from './addBuildingTypes';
 import { navigate } from '../../../navigation/rootNavigation';
 import { setRoomDetails } from './addRoomAction';
@@ -32,6 +33,12 @@ export const addBuildingError = () => {
 	return {
 		type: ADD_BUILDING_ERROR,
 		msg: 'Error while saving building',
+	};
+};
+
+export const clearBuildingDetails = () => {
+	return {
+		type: CLEAR_BUILDING_DETAILS,
 	};
 };
 
@@ -70,10 +77,6 @@ export const saveBuildingData = (buildingObj) => {
 					name: buildingName,
 					address: `Street no - ${street} ${district} ${stateAddress} ${pinCode}`,
 					rooms,
-					maintainerDetail: {
-						name: buildingObj.maintainerName,
-						phoneNumber: buildingObj.maintainerPhone,
-					},
 				},
 			],
 		};
@@ -92,19 +95,14 @@ export const saveBuildingData = (buildingObj) => {
 					let userInfo = await AsyncStorage.getItem('userInfo');
 					userInfo = JSON.parse(userInfo);
 					const firstLogin = userInfo.firstLogin;
-					userInfo.firstLogin = false;
-					await AsyncStorage.setItem(
-						'userInfo',
-						JSON.stringify(userInfo)
-					);
-
 					console.log('building added successfully');
-					dispatch(setFirstLoginFalse());
 					// The action setRoomDetails empty the room reducer for next room field
 					dispatch(setRoomDetails());
-					await dispatch(getOwnerDashboard());
+					!firstLogin && (await dispatch(getOwnerDashboard()));
+					// The action clearBuidlingDetails clear addbuildingdetail reducer for 2 user in one device
+					!firstLogin && dispatch(clearBuildingDetails());
 					firstLogin
-						? navigate('ownerDashboard')
+						? navigate('AddBuilding')
 						: navigate('Properties');
 				} catch (err) {
 					alert('error while saving to async storage');

@@ -43,8 +43,11 @@
     "react-native": "~0.63.4",
     "react-native-actions-sheet": "^0.4.9",
     "react-native-app-intro-slider": "^4.0.4",
+    "react-native-bouncy-checkbox": "^2.1.7",
     "react-native-countdown-component": "^2.7.1",
+    "react-native-counters": "^1.2.0",
     "react-native-dotenv": "^3.0.0",
+    "react-native-dropdown-picker": "^5.2.3",
     "react-native-elements": "^3.4.1",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
@@ -64,7 +67,8 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
