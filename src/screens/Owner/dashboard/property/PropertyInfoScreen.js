@@ -10,6 +10,8 @@ import { navigate } from '../../../../navigation/rootNavigation';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 
+import SVGRoom from '../../../../../assets/icons/roomIcon.svg';
+
 const roomAdded = 'room added successfully';
 const defaultState = 'default state';
 
@@ -28,6 +30,22 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 	} = useSnack();
 	let { propertyInfo, buildingId } = route.params;
 	let roomListData = propertyInfo.rooms;
+	let roomDataWithFloorNumber = [];
+
+	const setRoomDataWithFloorNo = () => {
+		for (const roomData of roomListData) {
+			const floorNo = parseInt([roomData.floor]);
+			roomDataWithFloorNumber[floorNo] = [];
+			for (const roomDataInfo of roomListData) {
+				if (floorNo === parseInt([roomDataInfo.floor])) {
+					roomDataWithFloorNumber[floorNo].push(roomDataInfo);
+				}
+			}
+		}
+	};
+
+	// Filtering room data with floor number
+	setRoomDataWithFloorNo();
 
 	useEffect(() => {
 		// Integrating Snack  after adding room
@@ -50,126 +68,160 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 		);
 		propertyInfo = propertyInfo[0];
 		roomListData = propertyInfo.rooms;
+		setRoomDataWithFloorNo();
 	}
 	return (
 		<View style={propertiesScreenStyles.propertyInfoContainer}>
 			<CrossPlatformHeader
-				title="PropertyInfo"
+				title=""
 				backCallback={() => {
 					navigate('Properties');
 				}}
+				profile={false}
 			/>
-			<ScrollView style={{ flex: 1 }}>
-				<View style={propertiesScreenStyles.propertyTitleContainer}>
-					<Text style={propertiesScreenStyles.propertyTitle}>
-						<Text
-							style={propertiesScreenStyles.propertyHeadingText}
-						>
-							Building Name :{' '}
-						</Text>
-						{propertyInfo.name}
-					</Text>
-				</View>
+			<ScrollView>
+				<View style={{ marginTop: 10 }}>
+					{roomDataWithFloorNumber.map((roomDataWithFLoor, i) => {
+						return (
+							<View key={i}>
+								<View
+									style={
+										propertiesScreenStyles.roomsAndAddRoomBtnContainer
+									}
+								>
+									<Text
+										style={propertiesScreenStyles.roomsText}
+									>
+										Floor {i}
+									</Text>
+									<View
+										style={
+											propertiesScreenStyles.addRoomBtnContainer
+										}
+									>
+										<Button
+											buttonStyle={
+												propertiesScreenStyles.addRoomBtn
+											}
+											titleStyle={
+												propertiesScreenStyles.addRoomTitle
+											}
+											onPress={() =>
+												navigate('UpdateRoomDetails', {
+													propertyInfo,
+												})
+											}
+											title="Add Room"
+										/>
+									</View>
+								</View>
 
-				<View style={propertiesScreenStyles.maintainerContainer}>
-					<Text style={propertiesScreenStyles.maintainerDetailsText}>
-						Maintainer Details:{' '}
-					</Text>
-					<View
-						style={propertiesScreenStyles.maintainerInfoContainer}
-					>
-						<Text style={propertiesScreenStyles.maintainerName}>
-							Name: Shivam Gupta
-						</Text>
-						<Text style={propertiesScreenStyles.maintainerName}>
-							Phone: +91 9876543210
-						</Text>
-					</View>
-				</View>
-				<View
-					style={propertiesScreenStyles.roomsAndAddRoomBtnContainer}
-				>
-					<Text style={propertiesScreenStyles.roomsText}>
-						Rooms:{' '}
-					</Text>
-					<View style={propertiesScreenStyles.addRoomBtnContainer}>
-						<Button
-							buttonStyle={{
-								backgroundColor: '#FFF',
-							}}
-							titleStyle={{ color: '#109FDA' }}
-							onPress={() =>
-								navigate('UpdateRoomDetails', { propertyInfo })
-							}
-							title="Add Room"
-							raised
-						/>
-					</View>
-				</View>
-
-				<View style={propertiesScreenStyles.roomsList}>
-					{roomListData.map((item, i) => (
-						<ListItem
-							key={i}
-							Component={TouchableOpacity}
-							bottomDivider
-							containerStyle={
-								propertiesScreenStyles.listContainer
-							}
-							onPress={() => {
-								navigation.navigate('RoomInfo', {
-									singleRoomData: item,
-									propertyInfo,
-								});
-							}}
-						>
-							<ListItem.Content>
-								<ListItem.Title>
-									Room No: {item.roomNo}
-								</ListItem.Title>
-
-								{item.tenants.length > 0 &&
-									item.tenants.map((tenant) => {
-										return (
-											<View
-												key={tenant._id}
+								<View style={propertiesScreenStyles.roomsList}>
+									{roomDataWithFLoor.map((item, i) => (
+										<ListItem
+											key={i}
+											Component={TouchableOpacity}
+											bottomDivider
+											containerStyle={
+												propertiesScreenStyles.listContainer
+											}
+											onPress={() => {
+												navigation.navigate(
+													'RoomInfo',
+													{
+														singleRoomData: item,
+														propertyInfo,
+													}
+												);
+											}}
+										>
+											<ListItem.Content
 												style={
-													propertiesScreenStyles.tenantDetailContainer
+													propertiesScreenStyles.roomInfoContainer
 												}
 											>
 												<View
 													style={
-														propertiesScreenStyles.tenantDetailContainerCol1
+														propertiesScreenStyles.roomInfoContainerRow1
 													}
 												>
-													<Text>{tenant.name}</Text>
+													<SVGRoom />
 												</View>
 												<View
-													style={
-														propertiesScreenStyles.tenantDetailContainerCol2
-													}
+													style={{
+														flex:
+															item.tenants
+																.length === 0
+																? 3
+																: 4,
+													}}
 												>
-													<Text>
-														Due Date:{' '}
-														{format(
-															new Date(
-																tenant.rentDueDate
-															),
-															'dd MMM yyyy'
-														)}
+													<Text
+														style={
+															propertiesScreenStyles.roomNotTxt
+														}
+													>
+														Room No {item.roomNo}
 													</Text>
+													{item.tenants.length > 0 &&
+														item.tenants.map(
+															(tenant) => {
+																return (
+																	<View
+																		key={
+																			tenant._id
+																		}
+																	>
+																		<View
+																			style={
+																				propertiesScreenStyles.tenantDetailContainerCol1
+																			}
+																		>
+																			<Text
+																				style={{
+																					color: '#979797',
+																				}}
+																			>
+																				{
+																					tenant.name
+																				}{' '}
+																				|
+																				Due{' '}
+																				{format(
+																					new Date(
+																						tenant.rentDueDate
+																					),
+																					'dd/MM/YYY'
+																				)}
+																			</Text>
+																		</View>
+																	</View>
+																);
+															}
+														)}
 												</View>
-											</View>
-										);
-									})}
-								{item.tenants.length === 0 && (
-									<View style={{ marginTop: 10 }}>
-										<Text>No Tenant added yet</Text>
-									</View>
-								)}
-							</ListItem.Content>
-						</ListItem>
-					))}
+												{item.tenants.length === 0 && (
+													<View
+														style={
+															propertiesScreenStyles.roomInfoContainerRow3
+														}
+													>
+														<Text
+															style={
+																propertiesScreenStyles.vaccantTxt
+															}
+														>
+															Vaccant
+														</Text>
+													</View>
+												)}
+											</ListItem.Content>
+										</ListItem>
+									))}
+								</View>
+							</View>
+						);
+					})}
 				</View>
 				<SnackBar
 					visible={visible}
