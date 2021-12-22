@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { ListItem, Button } from 'react-native-elements';
 import { format } from 'date-fns';
@@ -17,9 +17,12 @@ const defaultState = 'default state';
 
 const PropertyInfoScreen = ({ route, navigation }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
+
+	const [roomDataWithFloorNumber, setRoomDataWithFloorNumber] = useState([]);
 	const { msg: roomAddedMsg } = useSelector(
 		(state) => state.addRoomSeparately
 	);
+
 	const {
 		visible,
 		text,
@@ -28,24 +31,33 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 		onToggleSnackBar,
 		onDismissSnackBar,
 	} = useSnack();
+
 	let { propertyInfo, buildingId } = route.params;
 	let roomListData = propertyInfo.rooms;
-	let roomDataWithFloorNumber = [];
-
-	const setRoomDataWithFloorNo = () => {
+	let tempRoomDataWithFloorNumber = [];
+	// After navigate from addRoomSeperately action
+	if (buildingId) {
+		propertyInfo = properties.ownerDashboardResult.buildings.filter(
+			(building) => building._id === buildingId
+		);
+		propertyInfo = propertyInfo[0];
+		roomListData = propertyInfo.rooms;
+	}
+	const setTempRoomDataWithFloorNo = () => {
 		for (const roomData of roomListData) {
 			const floorNo = parseInt([roomData.floor]);
-			roomDataWithFloorNumber[floorNo] = [];
-			for (const roomDataInfo of roomListData) {
-				if (floorNo === parseInt([roomDataInfo.floor])) {
-					roomDataWithFloorNumber[floorNo].push(roomDataInfo);
-				}
+			if (tempRoomDataWithFloorNumber[floorNo]) {
+				tempRoomDataWithFloorNumber[floorNo].push(roomData);
+			} else {
+				tempRoomDataWithFloorNumber[floorNo] = [roomData];
 			}
 		}
+		return tempRoomDataWithFloorNumber;
 	};
 
-	// Filtering room data with floor number
-	setRoomDataWithFloorNo();
+	useEffect(() => {
+		setRoomDataWithFloorNumber(setTempRoomDataWithFloorNo());
+	}, [roomListData.length]);
 
 	useEffect(() => {
 		// Integrating Snack  after adding room
@@ -61,15 +73,6 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 		}
 	}, [roomAddedMsg]);
 
-	// when navigating after adding room (addRoomAction)
-	if (buildingId) {
-		propertyInfo = properties.ownerDashboardResult.buildings.filter(
-			(building) => building._id === buildingId
-		);
-		propertyInfo = propertyInfo[0];
-		roomListData = propertyInfo.rooms;
-		setRoomDataWithFloorNo();
-	}
 	return (
 		<View style={propertiesScreenStyles.propertyInfoContainer}>
 			<CrossPlatformHeader
@@ -94,26 +97,31 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 									>
 										Floor {i}
 									</Text>
-									<View
-										style={
-											propertiesScreenStyles.addRoomBtnContainer
-										}
-									>
-										<Button
-											buttonStyle={
-												propertiesScreenStyles.addRoomBtn
+									{i === 0 && (
+										<View
+											style={
+												propertiesScreenStyles.addRoomBtnContainer
 											}
-											titleStyle={
-												propertiesScreenStyles.addRoomTitle
-											}
-											onPress={() =>
-												navigate('UpdateRoomDetails', {
-													propertyInfo,
-												})
-											}
-											title="Add Room"
-										/>
-									</View>
+										>
+											<Button
+												buttonStyle={
+													propertiesScreenStyles.addRoomBtn
+												}
+												titleStyle={
+													propertiesScreenStyles.addRoomTitle
+												}
+												onPress={() =>
+													navigate(
+														'UpdateRoomDetails',
+														{
+															propertyInfo,
+														}
+													)
+												}
+												title="Add Room"
+											/>
+										</View>
+									)}
 								</View>
 
 								<View style={propertiesScreenStyles.roomsList}>
@@ -186,7 +194,8 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 																					tenant.name
 																				}{' '}
 																				|
-																				Due{' '}
+																				Due
+																				Date{' '}
 																				{format(
 																					new Date(
 																						tenant.rentDueDate
@@ -222,13 +231,13 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 							</View>
 						);
 					})}
+					<SnackBar
+						visible={visible}
+						text={text}
+						onDismissSnackBar={onDismissSnackBar}
+						onToggleSnackBar={onToggleSnackBar}
+					/>
 				</View>
-				<SnackBar
-					visible={visible}
-					text={text}
-					onDismissSnackBar={onDismissSnackBar}
-					onToggleSnackBar={onToggleSnackBar}
-				/>
 			</ScrollView>
 		</View>
 	);
