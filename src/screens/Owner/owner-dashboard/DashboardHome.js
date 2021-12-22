@@ -27,26 +27,28 @@ const DashboardHome = () => {
 
 	const getSummaryViewDetails = () => {
 		if (Object.keys(properties).length !== 0) {
-			console.log(properties);
 			const buildings = properties.ownerDashboardResult.buildings;
-			let numberOfRooms = 0;
-			let numberOfTenants = 0;
-			let numberOfVacantRooms = 0;
-			for (const building of buildings) {
-				for (const room of building.rooms) {
-					numberOfTenants += room.tenants.length;
-					if (room.tenants.length === 0) {
-						numberOfVacantRooms += 1;
+			if (Array.isArray(buildings) && buildings.length) {
+				let numberOfRooms = 0;
+				let numberOfTenants = 0;
+				let numberOfVacantRooms = 0;
+				for (const building of buildings) {
+					for (const room of building.rooms) {
+						numberOfTenants += room.tenants.length;
+						if (room.tenants.length === 0) {
+							numberOfVacantRooms += 1;
+						}
 					}
+					numberOfRooms += building.rooms.length;
 				}
-				numberOfRooms += building.rooms.length;
+				setSummaryDetails({
+					propertiesNo:
+						properties.ownerDashboardResult.buildings.length,
+					rooms: numberOfRooms,
+					totalTenants: numberOfTenants,
+					vacantRooms: numberOfVacantRooms,
+				});
 			}
-			setSummaryDetails({
-				propertiesNo: properties.ownerDashboardResult.buildings.length,
-				rooms: numberOfRooms,
-				totalTenants: numberOfTenants,
-				vacantRooms: numberOfVacantRooms,
-			});
 		}
 	};
 

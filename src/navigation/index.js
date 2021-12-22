@@ -157,7 +157,7 @@ const RootRoutes = () => {
 										/>
 
 										<Screen
-											name="newDashboard"
+											name="OwnerDashboard"
 											component={Dashboard}
 										/>
 									</>
