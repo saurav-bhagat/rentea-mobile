@@ -26,6 +26,7 @@ import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails
 import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
 
 import { IntroSlider } from '../screens/Introslides/IntroSlider';
+import Dashboard from '../screens/Owner/owner-dashboard/Dashboard';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -126,7 +127,7 @@ const RootRoutes = () => {
 									<>
 										<Screen
 											name="ownerDashboard"
-											component={OwnerDashboardBottomTab}
+											component={Dashboard}
 										/>
 										<Screen
 											name="AddBuildingForm"
@@ -153,6 +154,11 @@ const RootRoutes = () => {
 										<Screen
 											name="OwnerBankDetail"
 											component={OwnerBankDetailScreen}
+										/>
+
+										<Screen
+											name="OwnerDashboard"
+											component={Dashboard}
 										/>
 									</>
 								)}

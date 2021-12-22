@@ -9,10 +9,11 @@ import PropertyInfoScreen from '../screens/Owner/dashboard/property/PropertyInfo
 import RoomInfoScreen from '../screens/Owner/dashboard/room/RoomInfoScreen';
 import OwnerPaymentInfoScreen from '../screens/Owner/dashboard/payment/OwnerPaymentInfoScreen';
 import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
+import DashboardHome from '../screens/Owner/owner-dashboard/DashboardHome';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
+//Need to change screen name from Properties to Dashboard in all Files.
 const PropertiesStack = () => (
 	<Stack.Navigator
 		screenOptions={({ route, navigation }) => ({
@@ -20,10 +21,9 @@ const PropertiesStack = () => (
 			gestureEnabled: true,
 		})}
 	>
-		<Stack.Screen name="Properties" component={PropertiesScreen} />
+		<Stack.Screen name="Properties" component={DashboardHome} />
 		<Stack.Screen name="PropertyInfo" component={PropertyInfoScreen} />
 		<Stack.Screen name="RoomInfo" component={RoomInfoScreen} />
-		<Stack.Screen name="AddBuildingForm" component={AddBuildingForm} />
 	</Stack.Navigator>
 );
 
