@@ -18,12 +18,15 @@ const useNotification = () => {
 	const responseListener = useRef();
 
 	useEffect(() => {
+		let cancel = false;
 		registerForPushNotificationsAsync().then((token) => {
+			if (cancel) return;
 			setExpoPushToken(token);
 		});
 
 		notificationListener.current =
 			Notifications.addNotificationReceivedListener((notification) => {
+				if (cancel) return;
 				setNotification(notification);
 			});
 
@@ -35,6 +38,7 @@ const useNotification = () => {
 			);
 
 		return () => {
+			cancel = true;
 			Notifications.removeNotificationSubscription(
 				notificationListener.current
 			);
