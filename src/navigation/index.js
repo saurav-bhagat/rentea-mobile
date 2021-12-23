@@ -116,7 +116,7 @@ const RootRoutes = () => {
 
 										<Screen
 											name="ownerDashboard"
-											component={OwnerDashboardBottomTab}
+											component={Dashboard}
 										/>
 										<Screen
 											name="Profile"
@@ -154,11 +154,6 @@ const RootRoutes = () => {
 										<Screen
 											name="OwnerBankDetail"
 											component={OwnerBankDetailScreen}
-										/>
-
-										<Screen
-											name="OwnerDashboard"
-											component={Dashboard}
 										/>
 									</>
 								)}
