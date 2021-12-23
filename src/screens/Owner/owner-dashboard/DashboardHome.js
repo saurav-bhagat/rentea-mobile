@@ -3,10 +3,19 @@ import { Button } from 'react-native-elements/dist/buttons/Button';
 import { Text, View, ActivityIndicator } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome5';
-import { dashboardStyles } from './DashboardStyles';
 import { ScrollView } from 'react-native-gesture-handler';
-import PropertiesScreen from '../dashboard/property/PropertiesScreen';
 import { useNavigation } from '@react-navigation/native';
+import {
+	useFonts,
+	OpenSans_600SemiBold,
+	OpenSans_600SemiBold_Italic,
+	OpenSans_700Bold,
+	OpenSans_700Bold_Italic,
+} from '@expo-google-fonts/open-sans';
+import { dashboardStyles } from './DashboardStyles';
+
+import PropertiesScreen from '../dashboard/property/PropertiesScreen';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { getOwnerDashboard } from '../../../redux/actions/ownerActions/dashboardAction';
 
@@ -61,231 +70,264 @@ const DashboardHome = () => {
 			getSummaryViewDetails();
 		}
 	}, [properties]);
-	return (
-		<View style={dashboardStyles.dashboardHomeContainer}>
-			<View style={dashboardStyles.buttonView}>
-				<Button
-					type="clear"
-					containerStyle={dashboardStyles.dashboardButton}
-					title="Dashboard"
-					buttonStyle={[
-						dashboardStyles.dashboardButtonStyle,
-						{ borderBottomWidth: showDashboard ? 2 : 0 },
-					]}
-					titleStyle={dashboardStyles.OpenSans_600SemiBold}
-					onPress={() => setShowDashboard(true)}
-				/>
-				<Button
-					type="clear"
-					containerStyle={dashboardStyles.propertiesButton}
-					title="My Properties"
-					buttonStyle={[
-						dashboardStyles.dashboardButtonStyle,
-						{ borderBottomWidth: showDashboard ? 0 : 2 },
-					]}
-					titleStyle={dashboardStyles.OpenSans_600SemiBold}
-					onPress={() => setShowDashboard(false)}
-				/>
+	let [fontsLoaded] = useFonts({
+		OpenSans_600SemiBold,
+		OpenSans_600SemiBold_Italic,
+		OpenSans_700Bold,
+		OpenSans_700Bold_Italic,
+	});
+
+	if (!fontsLoaded) {
+		return <ActivityIndicator color="#109FDA" size="large" />;
+	} else {
+		return (
+			<View style={dashboardStyles.dashboardHomeContainer}>
+				<View style={dashboardStyles.buttonView}>
+					<Button
+						type="clear"
+						containerStyle={dashboardStyles.dashboardButton}
+						title="Dashboard"
+						buttonStyle={[
+							dashboardStyles.dashboardButtonStyle,
+							{ borderBottomWidth: showDashboard ? 2 : 0 },
+						]}
+						titleStyle={dashboardStyles.OpenSans_600SemiBold}
+						onPress={() => setShowDashboard(true)}
+					/>
+					<Button
+						type="clear"
+						containerStyle={dashboardStyles.propertiesButton}
+						title="My Properties"
+						buttonStyle={[
+							dashboardStyles.dashboardButtonStyle,
+							{ borderBottomWidth: showDashboard ? 0 : 2 },
+						]}
+						titleStyle={dashboardStyles.OpenSans_600SemiBold}
+						onPress={() => setShowDashboard(false)}
+					/>
+				</View>
+				{showDashboard ? (
+					<View style={dashboardStyles.summaryContainer}>
+						<Text style={dashboardStyles.summaryText}>Summary</Text>
+						<Text style={dashboardStyles.summaryCaptionText}>
+							Key statistics of your account
+						</Text>
+						<View style={dashboardStyles.summaryView}>
+							<View style={dashboardStyles.boxView}>
+								<Icons
+									name="home-city"
+									style={dashboardStyles.summaryIcons}
+								/>
+								<View style={dashboardStyles.boxTextView}>
+									<Text
+										style={dashboardStyles.boxQuantityText}
+									>
+										{loading ? (
+											<ActivityIndicator
+												color="#109FDA"
+												size="small"
+											/>
+										) : (
+											summaryDetails.propertiesNo
+										)}
+									</Text>
+									<Text
+										style={
+											dashboardStyles.boxQuantityCaptionText
+										}
+									>
+										Properties
+									</Text>
+								</View>
+							</View>
+							<View style={dashboardStyles.boxView}>
+								<FontAwesomeIcons
+									name="door-open"
+									style={dashboardStyles.summaryIcons}
+								/>
+								<View style={dashboardStyles.boxTextView}>
+									<Text
+										style={dashboardStyles.boxQuantityText}
+									>
+										{loading ? (
+											<ActivityIndicator
+												color="#109FDA"
+												size="small"
+											/>
+										) : (
+											summaryDetails.rooms
+										)}
+									</Text>
+									<Text
+										style={
+											dashboardStyles.boxQuantityCaptionText
+										}
+									>
+										Rooms
+									</Text>
+								</View>
+							</View>
+							<View style={dashboardStyles.boxView}>
+								<FontAwesomeIcons
+									name="door-open"
+									style={[
+										dashboardStyles.summaryIcons,
+										{ color: '#F78585' },
+									]}
+								/>
+								<View style={dashboardStyles.boxTextView}>
+									<Text
+										style={dashboardStyles.boxQuantityText}
+									>
+										{loading ? (
+											<ActivityIndicator
+												color="#109FDA"
+												size="small"
+											/>
+										) : (
+											summaryDetails.vacantRooms
+										)}
+									</Text>
+									<Text
+										style={
+											dashboardStyles.boxQuantityCaptionText
+										}
+									>
+										Vacant Rooms
+									</Text>
+								</View>
+							</View>
+							<View style={dashboardStyles.boxView}>
+								<FontAwesomeIcons
+									name="users"
+									style={[
+										dashboardStyles.summaryIcons,
+										{ color: '#65C466' },
+									]}
+								/>
+								<View style={dashboardStyles.boxTextView}>
+									<Text
+										style={dashboardStyles.boxQuantityText}
+									>
+										{loading ? (
+											<ActivityIndicator
+												color="#109FDA"
+												size="small"
+											/>
+										) : (
+											summaryDetails.totalTenants
+										)}
+									</Text>
+									<Text
+										style={
+											dashboardStyles.boxQuantityCaptionText
+										}
+									>
+										Total Tenants
+									</Text>
+								</View>
+							</View>
+						</View>
+						<View style={dashboardStyles.buttonContainerView}>
+							<Button
+								type="solid"
+								title="Add Property"
+								containerStyle={
+									dashboardStyles.addPropertyButton
+								}
+								titleStyle={
+									dashboardStyles.OpenSans_600SemiBold
+								}
+								onPress={() =>
+									navigation.navigate('AddBuildingForm')
+								}
+							/>
+							<Button
+								type="solid"
+								title="Add Tenants"
+								containerStyle={
+									dashboardStyles.addPropertyButton
+								}
+								titleStyle={
+									dashboardStyles.OpenSans_600SemiBold
+								}
+								onPress={() => setShowDashboard(false)}
+							/>
+						</View>
+						<View style={dashboardStyles.notificationContainer}>
+							<ScrollView>
+								<Text
+									style={
+										dashboardStyles.recentNotificationText
+									}
+								>
+									Recent Notifications
+								</Text>
+								<View
+									style={
+										dashboardStyles.randomNotificationView
+									}
+								>
+									<FontAwesomeIcons
+										name="circle"
+										size={40}
+										style={{ color: '#E5E5E5' }}
+									/>
+									<View>
+										<Text
+											style={
+												dashboardStyles.notificationHeadingText
+											}
+										>
+											Notification
+										</Text>
+										<Text
+											style={
+												dashboardStyles.notificationContentText
+											}
+										>
+											Key statistics of your account.
+										</Text>
+									</View>
+								</View>
+								<View
+									style={
+										dashboardStyles.randomNotificationView
+									}
+								>
+									<FontAwesomeIcons
+										name="circle"
+										size={40}
+										style={{ color: '#E5E5E5' }}
+									/>
+									<View>
+										<Text
+											style={
+												dashboardStyles.notificationHeadingText
+											}
+										>
+											Notification
+										</Text>
+										<Text
+											style={
+												dashboardStyles.notificationContentText
+											}
+										>
+											Key statistics of your account.
+										</Text>
+									</View>
+								</View>
+							</ScrollView>
+						</View>
+					</View>
+				) : (
+					<View style={{ flex: 9 }}>
+						<PropertiesScreen />
+					</View>
+				)}
 			</View>
-			{showDashboard ? (
-				<View style={dashboardStyles.summaryContainer}>
-					<Text style={dashboardStyles.summaryText}>Summary</Text>
-					<Text style={dashboardStyles.summaryCaptionText}>
-						Key statistics of your account
-					</Text>
-					<View style={dashboardStyles.summaryView}>
-						<View style={dashboardStyles.boxView}>
-							<Icons
-								name="home-city"
-								style={dashboardStyles.summaryIcons}
-							/>
-							<View style={dashboardStyles.boxTextView}>
-								<Text style={dashboardStyles.boxQuantityText}>
-									{loading ? (
-										<ActivityIndicator
-											color="#109FDA"
-											size="small"
-										/>
-									) : (
-										summaryDetails.propertiesNo
-									)}
-								</Text>
-								<Text
-									style={
-										dashboardStyles.boxQuantityCaptionText
-									}
-								>
-									Properties
-								</Text>
-							</View>
-						</View>
-						<View style={dashboardStyles.boxView}>
-							<FontAwesomeIcons
-								name="door-open"
-								style={dashboardStyles.summaryIcons}
-							/>
-							<View style={dashboardStyles.boxTextView}>
-								<Text style={dashboardStyles.boxQuantityText}>
-									{loading ? (
-										<ActivityIndicator
-											color="#109FDA"
-											size="small"
-										/>
-									) : (
-										summaryDetails.rooms
-									)}
-								</Text>
-								<Text
-									style={
-										dashboardStyles.boxQuantityCaptionText
-									}
-								>
-									Rooms
-								</Text>
-							</View>
-						</View>
-						<View style={dashboardStyles.boxView}>
-							<FontAwesomeIcons
-								name="door-open"
-								style={[
-									dashboardStyles.summaryIcons,
-									{ color: '#F78585' },
-								]}
-							/>
-							<View style={dashboardStyles.boxTextView}>
-								<Text style={dashboardStyles.boxQuantityText}>
-									{loading ? (
-										<ActivityIndicator
-											color="#109FDA"
-											size="small"
-										/>
-									) : (
-										summaryDetails.vacantRooms
-									)}
-								</Text>
-								<Text
-									style={
-										dashboardStyles.boxQuantityCaptionText
-									}
-								>
-									Vacant Rooms
-								</Text>
-							</View>
-						</View>
-						<View style={dashboardStyles.boxView}>
-							<FontAwesomeIcons
-								name="users"
-								style={[
-									dashboardStyles.summaryIcons,
-									{ color: '#65C466' },
-								]}
-							/>
-							<View style={dashboardStyles.boxTextView}>
-								<Text style={dashboardStyles.boxQuantityText}>
-									{loading ? (
-										<ActivityIndicator
-											color="#109FDA"
-											size="small"
-										/>
-									) : (
-										summaryDetails.totalTenants
-									)}
-								</Text>
-								<Text
-									style={
-										dashboardStyles.boxQuantityCaptionText
-									}
-								>
-									Total Tenants
-								</Text>
-							</View>
-						</View>
-					</View>
-					<View style={dashboardStyles.buttonContainerView}>
-						<Button
-							type="solid"
-							title="Add Property"
-							containerStyle={dashboardStyles.addPropertyButton}
-							titleStyle={dashboardStyles.OpenSans_600SemiBold}
-							onPress={() =>
-								navigation.navigate('AddBuildingForm')
-							}
-						/>
-						<Button
-							type="solid"
-							title="Add Tenants"
-							containerStyle={dashboardStyles.addPropertyButton}
-							titleStyle={dashboardStyles.OpenSans_600SemiBold}
-							onPress={() => setShowDashboard(false)}
-						/>
-					</View>
-					<View style={dashboardStyles.notificationContainer}>
-						<ScrollView>
-							<Text
-								style={dashboardStyles.recentNotificationText}
-							>
-								Recent Notifications
-							</Text>
-							<View
-								style={dashboardStyles.randomNotificationView}
-							>
-								<FontAwesomeIcons
-									name="circle"
-									size={40}
-									style={{ color: '#E5E5E5' }}
-								/>
-								<View>
-									<Text
-										style={
-											dashboardStyles.notificationHeadingText
-										}
-									>
-										Notification
-									</Text>
-									<Text
-										style={
-											dashboardStyles.notificationContentText
-										}
-									>
-										Key statistics of your account.
-									</Text>
-								</View>
-							</View>
-							<View
-								style={dashboardStyles.randomNotificationView}
-							>
-								<FontAwesomeIcons
-									name="circle"
-									size={40}
-									style={{ color: '#E5E5E5' }}
-								/>
-								<View>
-									<Text
-										style={
-											dashboardStyles.notificationHeadingText
-										}
-									>
-										Notification
-									</Text>
-									<Text
-										style={
-											dashboardStyles.notificationContentText
-										}
-									>
-										Key statistics of your account.
-									</Text>
-								</View>
-							</View>
-						</ScrollView>
-					</View>
-				</View>
-			) : (
-				<View style={{ flex: 9 }}>
-					<PropertiesScreen />
-				</View>
-			)}
-		</View>
-	);
+		);
+	}
 };
 
 export default DashboardHome;

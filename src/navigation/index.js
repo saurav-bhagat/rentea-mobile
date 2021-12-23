@@ -155,11 +155,6 @@ const RootRoutes = () => {
 											name="OwnerBankDetail"
 											component={OwnerBankDetailScreen}
 										/>
-
-										<Screen
-											name="OwnerDashboard"
-											component={Dashboard}
-										/>
 									</>
 								)}
 							</>
