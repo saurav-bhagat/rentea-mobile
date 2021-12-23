@@ -234,7 +234,7 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 							style={propertiesScreenStyles.plsAddRoomContainer}
 						>
 							<Text style={propertiesScreenStyles.plsAddRoomTxt}>
-								Please add room using add room btn
+								Please add room using add room button
 							</Text>
 						</View>
 					)}
