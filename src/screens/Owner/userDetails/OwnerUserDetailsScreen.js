@@ -55,12 +55,12 @@ const OwnerUserDetailsScreen = () => {
 	const fetchStatesData = () => {
 		fetchStates().then((result) => {
 			setStateArray(result);
-			console.log(result);
+		}).catch((err)=>{
+			alert('error while fetching states, please try again')
 		});
 	}
 
 	const updateCitySelect = (stateName) => {
-		console.log('State', stateName);
 		const stateForCity = stateArray.filter(
 			(state) => state.name === stateName.name
 		);
@@ -68,7 +68,7 @@ const OwnerUserDetailsScreen = () => {
 			.then((response) => {
 				setCitiesArray(response);
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => alert('Error while fetching cities, please try again'));
 	};
 
 	useEffect(() => {
