@@ -73,36 +73,49 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	roomsAndAddRoomBtnContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		width: '95%',
+		marginHorizontal: '18@s',
 	},
 	roomsText: {
-		marginBottom: '20@s',
-		marginLeft: '30@s',
-		fontWeight: 'bold',
+		marginBottom: '10@s',
 		alignSelf: 'flex-end',
-		fontSize: '20@s',
+		fontSize: '15@s',
+		color: '#979797',
 	},
 	addRoomBtnContainer: {
 		flexDirection: 'row',
-		justifyContent: 'space-between',
-		marginBottom: '10@s',
-		marginLeft: '20@s',
+		alignContent: 'flex-end',
+		justifyContent: 'flex-end',
+		marginRight: '15@s',
 	},
 	roomNoAndAddTenantBtnRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		width: '95%',
 	},
-	tenantDetailContainer: {
-		flex: 1,
-		flexDirection: 'row',
-		marginTop: 10,
-		padding: 5,
-	},
+	tenantDetailContainer: {},
 	tenantDetailContainerCol1: {
-		flex: 1,
+		marginTop: 5,
 	},
-	tenantDetailContainerCol2: {
-		flex: 2,
+	roomNotTxt: {
+		color: '#414141',
+		fontSize: 18,
 	},
+	addRoomBtn: {
+		backgroundColor: '#efefef',
+	},
+	addRoomTitle: {
+		color: '#109FDA',
+		fontSize: '16@s',
+	},
+	roomInfoContainer: {
+		flexDirection: 'row',
+	},
+	roomInfoContainerRow1: { flex: 1 },
+	roomInfoContainerRow3: { flex: 1 },
+	vaccantTxt: {
+		color: '#F78585',
+		marginTop: 10,
+	},
+	plsAddRoomContainer: { flex: 1, marginTop: '20@s' },
+	plsAddRoomTxt: { textAlign: 'center' },
 });
