@@ -81,7 +81,12 @@ export const propertiesScreenStyles = ScaledSheet.create({
 		fontSize: '15@s',
 		color: '#979797',
 	},
-	addRoomBtnContainer: {},
+	addRoomBtnContainer: {
+		flexDirection: 'row',
+		alignContent: 'flex-end',
+		justifyContent: 'flex-end',
+		marginRight: '15@s',
+	},
 	roomNoAndAddTenantBtnRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -100,7 +105,7 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	},
 	addRoomTitle: {
 		color: '#109FDA',
-		fontSize: 13,
+		fontSize: '16@s',
 	},
 	roomInfoContainer: {
 		flexDirection: 'row',
@@ -111,4 +116,6 @@ export const propertiesScreenStyles = ScaledSheet.create({
 		color: '#F78585',
 		marginTop: 10,
 	},
+	plsAddRoomContainer: { flex: 1, marginTop: '20@s' },
+	plsAddRoomTxt: { textAlign: 'center' },
 });
