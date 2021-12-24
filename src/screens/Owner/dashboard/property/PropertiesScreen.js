@@ -24,14 +24,15 @@ import { addExpoPushToken } from '../../../../redux/actions';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import { useNavigation } from '@react-navigation/core';
 
+const buildingAdded = 'buildings added successfully';
+const buildingUpdated = 'Building updated successfully';
+
 const PropertiesScreen = ({ route }) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 
 	const { expoPushToken: token } = useSelector((state) => state.userDetail);
 	const { expoPushToken } = useNotification();
-
-	const buildingAdded = 'buildings added successfully';
 
 	const {
 		visible,
@@ -53,6 +54,9 @@ const PropertiesScreen = ({ route }) => {
 		if (msg === buildingAdded) {
 			setVisible(true);
 			setText('Building added successfully.');
+		} else if (msg === buildingUpdated) {
+			setVisible(true);
+			setText('Building updated successfully.');
 		}
 	}, [msg]);
 

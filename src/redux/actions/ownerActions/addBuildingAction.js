@@ -7,6 +7,9 @@ import {
 	ADD_BUILDING_REQUEST,
 	ADD_BUILDING_SUCCESS,
 	CLEAR_BUILDING_DETAILS,
+	UPDATE_BUILDING_REQUEST,
+	UPDATE_BUILDING_SUCCESS,
+	UPDATE_BUILDING_ERROR,
 } from './addBuildingTypes';
 import { navigate } from '../../../navigation/rootNavigation';
 import { setRoomDetails } from './addRoomAction';
@@ -39,6 +42,30 @@ export const addBuildingError = () => {
 export const clearBuildingDetails = () => {
 	return {
 		type: CLEAR_BUILDING_DETAILS,
+	};
+};
+
+export const updateBuildingRequest = () => {
+	return {
+		type: UPDATE_BUILDING_REQUEST,
+	};
+};
+
+export const updateBuildingSuccess = () => {
+	return {
+		type: UPDATE_BUILDING_SUCCESS,
+		payload: {
+			msg: 'Building updated successfully',
+		},
+	};
+};
+
+export const updateBuildingError = () => {
+	return {
+		type: UPDATE_BUILDING_ERROR,
+		payload: {
+			msg: 'Error while updating building',
+		},
 	};
 };
 
@@ -75,7 +102,7 @@ export const saveBuildingData = (buildingObj) => {
 			buildingsObj: [
 				{
 					name: buildingName,
-					address: `Street no - ${street} ${district} ${stateAddress} ${pinCode}`,
+					address: `Street no -${street},${stateAddress}`,
 					rooms,
 				},
 			],
@@ -118,6 +145,52 @@ export const saveBuildingData = (buildingObj) => {
 				dispatch(addBuildingError());
 				alert(
 					`Error while adding building is  :  ${error.response.data.err}`
+				);
+			});
+	};
+};
+
+export const updateBuildingData = (buildingObj) => {
+	return async (dispatch, getState) => {
+		dispatch(updateBuildingRequest());
+		const state = getState();
+		const {
+			buildingName,
+			district,
+			pinCode,
+			stateAddress,
+			street,
+			buildingId,
+		} = buildingObj;
+		const body = {
+			ownerId: state.auth.userInfo.userDetails.ownerId,
+			buildingId,
+			name: buildingName,
+			address: `Street no -${street},${stateAddress}`,
+		};
+		const token = await getToken();
+		axios
+			.put(`${API_URL}/owner/update-building`, body, {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then(async (response) => {
+				console.log('Building updated successfully.');
+				dispatch(updateBuildingSuccess());
+				await dispatch(getOwnerDashboard());
+				await navigate('Properties', { buildingUpdateFlag: true });
+			})
+			.catch((error) => {
+				console.log(
+					'error while updating building data is : ',
+					error.message,
+					state
+				);
+				dispatch(updateBuildingError());
+				alert(
+					`Error while updating building is  :  ${error.response.data.err}`
 				);
 			});
 	};
