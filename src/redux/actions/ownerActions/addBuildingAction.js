@@ -102,7 +102,7 @@ export const saveBuildingData = (buildingObj) => {
 			buildingsObj: [
 				{
 					name: buildingName,
-					address: `Street no -${street},${stateAddress}`,
+					address: `Street no - ${street},${stateAddress}`,
 					rooms,
 				},
 			],
@@ -166,7 +166,7 @@ export const updateBuildingData = (buildingObj) => {
 			ownerId: state.auth.userInfo.userDetails.ownerId,
 			buildingId,
 			name: buildingName,
-			address: `Street no -${street},${stateAddress}`,
+			address: `Street no - ${street},${stateAddress}`,
 		};
 		const token = await getToken();
 		axios

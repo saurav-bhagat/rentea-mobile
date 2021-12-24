@@ -50,10 +50,15 @@ const AddBuildingForm = ({ route }) => {
 	useEffect(() => {
 		if (buildingInfo) {
 			const { address } = buildingInfo;
+			// spliting because address is like
+			// address=street not - street ,address
 			let tempStreetPlusStateAddress = address.split(',');
 			setBuildingName(buildingInfo.name);
 			setRoomCount(buildingInfo.rooms.length);
-			setStreet(tempStreetPlusStateAddress[0].slice(11));
+			// slicing from 0 to 12 because address is like
+			// street no - streetNo
+			// first 12 characters are not our street number
+			setStreet(tempStreetPlusStateAddress[0].slice(12));
 			setStateAddress(tempStreetPlusStateAddress[1]);
 		}
 		if (rooms && rooms.length > 0) {
