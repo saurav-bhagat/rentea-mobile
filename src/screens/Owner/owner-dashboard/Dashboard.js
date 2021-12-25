@@ -6,6 +6,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView } from 'react-native-gesture-handler';
 import { dashboardStyles } from './DashboardStyles';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 import {
 	useFonts,
@@ -15,8 +16,9 @@ import {
 	OpenSans_700Bold_Italic,
 } from '@expo-google-fonts/open-sans';
 import OwnerDashboardBottomTab from '../../../navigation/OwnerDashboardBottomTab';
+import { DrawerActions } from '@react-navigation/native';
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
 	let [fontsLoaded] = useFonts({
 		OpenSans_600SemiBold,
 		OpenSans_600SemiBold_Italic,
@@ -24,6 +26,7 @@ const Dashboard = () => {
 		OpenSans_700Bold_Italic,
 	});
 
+	console.log(useDrawerStatus());
 	if (!fontsLoaded) {
 		return <ActivityIndicator color="#109FDA" size="large" />;
 	} else {
@@ -40,6 +43,7 @@ const Dashboard = () => {
 								icon={
 									<Icon name="menu" size={25} color="black" />
 								}
+								onPress={() => navigation.openDrawer()}
 							></Button>
 						</View>
 						<View
@@ -68,6 +72,11 @@ const Dashboard = () => {
 											size={25}
 											color="#fff"
 										/>
+									}
+									onPress={() =>
+										navigation.dispatch(
+											DrawerActions.openDrawer()
+										)
 									}
 								></Button>
 								<View style={{ flexDirection: 'column' }}>
