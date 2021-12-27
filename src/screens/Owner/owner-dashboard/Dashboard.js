@@ -16,7 +16,6 @@ import {
 	OpenSans_700Bold_Italic,
 } from '@expo-google-fonts/open-sans';
 import OwnerDashboardBottomTab from '../../../navigation/OwnerDashboardBottomTab';
-import { DrawerActions } from '@react-navigation/native';
 
 const Dashboard = ({ navigation }) => {
 	let [fontsLoaded] = useFonts({
@@ -26,7 +25,6 @@ const Dashboard = ({ navigation }) => {
 		OpenSans_700Bold_Italic,
 	});
 
-	console.log(useDrawerStatus());
 	if (!fontsLoaded) {
 		return <ActivityIndicator color="#109FDA" size="large" />;
 	} else {
@@ -72,11 +70,6 @@ const Dashboard = ({ navigation }) => {
 											size={25}
 											color="#fff"
 										/>
-									}
-									onPress={() =>
-										navigation.dispatch(
-											DrawerActions.openDrawer()
-										)
 									}
 								></Button>
 								<View style={{ flexDirection: 'column' }}>
