@@ -4,7 +4,6 @@ export const otpStyles = ScaledSheet.create({
 	otpScreenSection: {
 		flex: 1,
 		backgroundColor: '#fff',
-		paddingHorizontal: '4%',
 	},
 	otpContainer: {
 		flex: 1,
@@ -23,12 +22,15 @@ export const otpStyles = ScaledSheet.create({
 		textAlign: 'center',
 		fontSize: '15@ms0.3',
 		fontFamily: 'interLight',
+		marginBottom: '10@ms',
 	},
 	otpTextBoxContainer: {
 		flexDirection: 'row',
-		marginTop: '40@s',
-		marginBottom: '40@s',
-		paddingHorizontal: '8%',
+		marginVertical: '40@s',
+	},
+	otpInputSection: {
+		alignItems: 'center',
+		marginVertical: '15@ms',
 	},
 	otpTextBox: {
 		backgroundColor: '#E5E5E5',
@@ -46,14 +48,25 @@ export const otpStyles = ScaledSheet.create({
 	},
 	continueBtnStyle: {
 		backgroundColor: '#109ED9',
-		borderRadius: 10,
-		marginHorizontal: '8%',
+		borderRadius: 5,
+		paddingHorizontal: '60@ms',
+		paddingVertical: '12@ms',
 	},
 	otpKeyPadContainer: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginTop: '8%',
-		paddingHorizontal: '4%',
+		marginTop: '30@ms',
+		position: 'absolute',
+		bottom: 0,
+	},
+	numpadChild: {
+		width: '33%',
+		borderColor: '#aaa',
+		borderBottomWidth: 0.6,
+		borderLeftWidth: 0.6,
+	},
+	numpadTopBorder: {
+		borderTopWidth: 0.6,
 	},
 	key: {
 		fontSize: '20@ms0.3',
@@ -61,7 +74,7 @@ export const otpStyles = ScaledSheet.create({
 		textAlign: 'center',
 	},
 	sendAgainContainer: {
-		marginTop: '20%',
+		marginTop: '10%',
 	},
 	sendAgainTxt: {
 		textAlign: 'center',
@@ -73,5 +86,8 @@ export const otpStyles = ScaledSheet.create({
 		color: '#109ED9',
 		fontFamily: 'interRegular',
 		fontSize: 12,
+	},
+	backSpaceIcon: {
+		fontSize: '23@ms0.3',
 	},
 });
