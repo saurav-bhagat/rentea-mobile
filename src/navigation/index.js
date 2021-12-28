@@ -24,7 +24,7 @@ import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
 import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
-import { MyDrawer } from './MyDrawer';
+import { LeftNavbar } from './LeftNavbar';
 import { IntroSlider } from '../screens/Introslides/IntroSlider';
 import Dashboard from '../screens/Owner/owner-dashboard/Dashboard';
 const { Screen, Navigator } = createStackNavigator();
@@ -116,7 +116,7 @@ const RootRoutes = () => {
 
 										<Screen
 											name="ownerDashboard"
-											component={MyDrawer}
+											component={LeftNavbar}
 										/>
 										<Screen
 											name="Profile"
@@ -127,7 +127,7 @@ const RootRoutes = () => {
 									<>
 										<Screen
 											name="ownerDashboard"
-											component={MyDrawer}
+											component={LeftNavbar}
 										/>
 										<Screen
 											name="AddBuildingForm"
