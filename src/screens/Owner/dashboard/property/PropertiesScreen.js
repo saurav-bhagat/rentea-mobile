@@ -135,13 +135,7 @@ const PropertiesScreen = ({ route }) => {
 					flex: 1,
 				}}
 			>
-				<ScrollView
-					contentContainerStyle={
-						propertiesScreenStyles.propertiesContainer
-					}
-				>
-					<PropertyList properties={properties} />
-				</ScrollView>
+				<PropertyList properties={properties} />
 				<SnackBar
 					visible={visible}
 					text={text}

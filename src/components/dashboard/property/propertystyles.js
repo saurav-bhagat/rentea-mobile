@@ -4,6 +4,13 @@ export const propertyStyles = ScaledSheet.create({
 	propertyListContainer: {
 		paddingTop: '20@s',
 	},
+	scrollViewContentContainer: {
+		width: '100%',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		padding: '20@s',
+		alignItems: 'stretch',
+	},
 	singlePropertyButton: {
 		marginTop: '6%',
 		marginBottom: '6%',

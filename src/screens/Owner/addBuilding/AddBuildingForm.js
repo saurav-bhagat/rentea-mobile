@@ -51,14 +51,11 @@ const AddBuildingForm = ({ route }) => {
 		if (buildingInfo) {
 			const { address } = buildingInfo;
 			// spliting because address is like
-			// address=street not - street ,address
+			// address=street no - street ,address
 			let tempStreetPlusStateAddress = address.split(',');
 			setBuildingName(buildingInfo.name);
 			setRoomCount(buildingInfo.rooms.length);
-			// slicing from 0 to 12 because address is like
-			// street no - streetNo
-			// first 12 characters are not our street number
-			setStreet(tempStreetPlusStateAddress[0].slice(12));
+			setStreet(tempStreetPlusStateAddress[0]);
 			setStateAddress(tempStreetPlusStateAddress[1]);
 		}
 		if (rooms && rooms.length > 0) {
