@@ -46,7 +46,6 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 							onPress={() => {
 								setValueInOtpTxt(key);
 							}}
-							//style={{ marginVertical: 15 }}
 							style={otpStyles.keyBoardRow}
 						>
 							<Text style={otpStyles.key}>
