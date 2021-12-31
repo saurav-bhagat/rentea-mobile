@@ -7,7 +7,6 @@ export const otpStyles = ScaledSheet.create({
 	},
 	otpContainer: {
 		flex: 1,
-		paddingTop: '10%',
 	},
 	countDownDigitTextStyle: {
 		color: '#000000',
@@ -55,9 +54,6 @@ export const otpStyles = ScaledSheet.create({
 	otpKeyPadContainer: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginTop: '30@ms',
-		position: 'absolute',
-		bottom: 0,
 	},
 	numpadChild: {
 		width: '33%',
@@ -74,7 +70,9 @@ export const otpStyles = ScaledSheet.create({
 		textAlign: 'center',
 	},
 	sendAgainContainer: {
-		marginTop: '10%',
+		flex: 1,
+		justifyContent: 'flex-end',
+		paddingBottom: '10@s',
 	},
 	sendAgainTxt: {
 		textAlign: 'center',
@@ -90,4 +88,5 @@ export const otpStyles = ScaledSheet.create({
 	backSpaceIcon: {
 		fontSize: '23@ms0.3',
 	},
+	keyBoardRow: { marginVertical: '10@mvs0.5' },
 });

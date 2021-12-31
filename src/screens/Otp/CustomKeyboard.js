@@ -21,6 +21,7 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 	const setValueInOtpTxt = (value) => {
 		otpValues.length !== 6 &&
 			value !== '-1' &&
+			value !== '' &&
 			setOtpValues([...otpValues, value]);
 		if (value === '-1') {
 			const newOtpValues = [...otpValues];
@@ -45,7 +46,8 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 							onPress={() => {
 								setValueInOtpTxt(key);
 							}}
-							style={{ marginVertical: 15 }}
+							//style={{ marginVertical: 15 }}
+							style={otpStyles.keyBoardRow}
 						>
 							<Text style={otpStyles.key}>
 								{key === '-1' ? (
