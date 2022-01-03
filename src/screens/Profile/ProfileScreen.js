@@ -13,8 +13,15 @@ import { navigate } from '../../navigation/rootNavigation';
 export const ProfileScreen = ({ route }) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
+	const authState = useSelector((state) => state.auth);
 
-	const { userType } = route.params;
+	let userType;
+	if (route && route.params) {
+		userType = route.params.userType;
+	}
+	if (!userType && authState && authState.userInfo) {
+		userType = authState.userInfo.userDetails.userType;
+	}
 
 	let list = [
 		{
@@ -38,11 +45,11 @@ export const ProfileScreen = ({ route }) => {
 	return (
 		<View style={{ flex: 1 }}>
 			<CrossPlatformHeader
-				title="profile"
+				title="Profile"
 				profile={false}
 				backCallback={() =>
 					userType === 'Owner'
-						? navigation.navigate('ownerDashboard')
+						? navigation.goBack()
 						: navigation.navigate('TenantDashboard')
 				}
 			/>
