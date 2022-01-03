@@ -101,20 +101,15 @@ const AddBuildingForm = ({ route }) => {
 				}}
 				nestedScrollEnabled={true}
 			>
-				{!authState.userInfo.firstLogin ? (
-					<CrossPlatformHeader
-						title={
-							buildingInfo ? 'Update Apartment' : 'Add Apartment'
-						}
-						backCallback={() => navigate('Properties')}
-						profile={false}
-					/>
-				) : (
-					<CrossPlatformHeader
-						title="Add Apartment"
-						profile={false}
-					/>
-				)}
+				<CrossPlatformHeader
+					title={buildingInfo ? 'Update Apartment' : 'Add Apartment'}
+					backCallback={() => {
+						authState.userInfo.firstLogin
+							? navigate('AddBuilding')
+							: navigate('Properties');
+					}}
+					profile={false}
+				/>
 
 				<ScrollView
 					contentContainerStyle={addBuildingFormstyles.addBFcontainer}
