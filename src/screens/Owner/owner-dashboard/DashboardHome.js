@@ -9,7 +9,7 @@ import PropertiesScreen from '../dashboard/property/PropertiesScreen';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOwnerDashboard } from '../../../redux/actions/ownerActions/dashboardAction';
-
+import Notification from './Notification';
 const DashboardHome = ({ route }) => {
 	const dispatch = useDispatch();
 	const [showDashboard, setShowDashboard] = useState(true);
@@ -228,63 +228,7 @@ const DashboardHome = ({ route }) => {
 						/>
 					</View>
 					<View style={dashboardStyles.notificationContainer}>
-						<ScrollView>
-							<Text
-								style={dashboardStyles.recentNotificationText}
-							>
-								Recent Notifications
-							</Text>
-							<View
-								style={dashboardStyles.randomNotificationView}
-							>
-								<FontAwesomeIcons
-									name="circle"
-									size={40}
-									style={{ color: '#E5E5E5' }}
-								/>
-								<View>
-									<Text
-										style={
-											dashboardStyles.notificationHeadingText
-										}
-									>
-										Notification
-									</Text>
-									<Text
-										style={
-											dashboardStyles.notificationContentText
-										}
-									>
-										Key statistics of your account.
-									</Text>
-								</View>
-							</View>
-							<View
-								style={dashboardStyles.randomNotificationView}
-							>
-								<FontAwesomeIcons
-									name="circle"
-									size={40}
-									style={{ color: '#E5E5E5' }}
-								/>
-								<View>
-									<Text
-										style={
-											dashboardStyles.notificationHeadingText
-										}
-									>
-										Notification
-									</Text>
-									<Text
-										style={
-											dashboardStyles.notificationContentText
-										}
-									>
-										Key statistics of your account.
-									</Text>
-								</View>
-							</View>
-						</ScrollView>
+						{false && <Notification />}
 					</View>
 				</View>
 			) : (
