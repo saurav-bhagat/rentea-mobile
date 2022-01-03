@@ -75,13 +75,10 @@ const OtpScreen = ({ route }) => {
 
 				<View style={otpStyles.verificationTextContainer}>
 					<Text style={otpStyles.verificationTextrow}>
-						Type the verification code
+						Enter verification code
 					</Text>
 					<Text style={otpStyles.verificationTextrow}>
-						we've sent you the +91
-					</Text>
-					<Text style={otpStyles.verificationTextrow}>
-						{phoneNumber.substr(0, 6)}****
+						Sent on +91{phoneNumber.substr(0, 6)}****
 						<TouchableOpacity
 							onPress={() => {
 								navigate('Login');
@@ -91,49 +88,62 @@ const OtpScreen = ({ route }) => {
 						</TouchableOpacity>
 					</Text>
 				</View>
+				<View style={otpStyles.otpInputSection}>
+					<View style={otpStyles.otpTextBoxContainer}>
+						<View style={otpStyles.otpTextBox}>
+							<Text style={otpStyles.otpText}>
+								{otpValues[0]}
+							</Text>
+						</View>
+						<View style={otpStyles.otpTextBox}>
+							<Text style={otpStyles.otpText}>
+								{otpValues[1]}
+							</Text>
+						</View>
+						<View style={otpStyles.otpTextBox}>
+							<Text style={otpStyles.otpText}>
+								{otpValues[2]}
+							</Text>
+						</View>
+						<View style={otpStyles.otpTextBox}>
+							<Text style={otpStyles.otpText}>
+								{otpValues[3]}
+							</Text>
+						</View>
+						<View style={otpStyles.otpTextBox}>
+							<Text style={otpStyles.otpText}>
+								{otpValues[4]}
+							</Text>
+						</View>
+						<View style={otpStyles.otpTextBox}>
+							<Text style={otpStyles.otpText}>
+								{otpValues[5]}
+							</Text>
+						</View>
+					</View>
 
-				<View style={otpStyles.otpTextBoxContainer}>
-					<View style={otpStyles.otpTextBox}>
-						<Text style={otpStyles.otpText}>{otpValues[0]}</Text>
-					</View>
-					<View style={otpStyles.otpTextBox}>
-						<Text style={otpStyles.otpText}>{otpValues[1]}</Text>
-					</View>
-					<View style={otpStyles.otpTextBox}>
-						<Text style={otpStyles.otpText}>{otpValues[2]}</Text>
-					</View>
-					<View style={otpStyles.otpTextBox}>
-						<Text style={otpStyles.otpText}>{otpValues[3]}</Text>
-					</View>
-					<View style={otpStyles.otpTextBox}>
-						<Text style={otpStyles.otpText}>{otpValues[4]}</Text>
-					</View>
-					<View style={otpStyles.otpTextBox}>
-						<Text style={otpStyles.otpText}>{otpValues[5]}</Text>
+					<View>
+						<Button
+							title="Continue"
+							titleStyle={{ fontFamily: 'interRegular' }}
+							loading={authState.loading ? true : false}
+							onPress={handleOTPSubmit}
+							buttonStyle={otpStyles.continueBtnStyle}
+							disabled={otpValues.length !== 6}
+						/>
 					</View>
 				</View>
-
-				<View>
-					<Button
-						title="Continue"
-						titleStyle={{ fontFamily: 'interRegular' }}
-						loading={authState.loading ? true : false}
-						onPress={handleOTPSubmit}
-						buttonStyle={otpStyles.continueBtnStyle}
-						disabled={otpValues.length !== 6}
-					/>
-				</View>
-
-				<CustomKeyboard
-					setOtpValues={setOtpValues}
-					otpValues={otpValues}
-				/>
 
 				<TouchableOpacity style={otpStyles.sendAgainContainer}>
 					<Text style={otpStyles.sendAgainTxt} onPress={resendOTP}>
 						{sendAgainTextFlag && 'Send again'}
 					</Text>
 				</TouchableOpacity>
+
+				<CustomKeyboard
+					setOtpValues={setOtpValues}
+					otpValues={otpValues}
+				/>
 
 				<SnackBar
 					text={text}
