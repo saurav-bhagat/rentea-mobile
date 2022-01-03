@@ -6,7 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { navigate } from '../../../navigation/rootNavigation';
 import { addBuildingStyles } from './addBuildingStyles';
-import { clearBuildingDetails } from '../../../redux/actions';
+import {
+	clearBuildingDetails,
+	setFirstLoginFalse,
+} from '../../../redux/actions';
 
 const AddBuilding = () => {
 	const { buildingDetails } = useSelector((state) => state.buildingDetails);
@@ -22,7 +25,7 @@ const AddBuilding = () => {
 		userInfo = JSON.parse(userInfo);
 		userInfo.firstLogin = false;
 		await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-
+		await dispatch(setFirstLoginFalse());
 		// Todo : For now we manually navigate ownerDashboard but we have to optimize our stack in future
 		navigate('ownerDashboard');
 	};

@@ -2,7 +2,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const propertiesScreenStyles = ScaledSheet.create({
 	propertiesContainer: {
-		width: '85%',
+		width: '100%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		padding: '20@s',

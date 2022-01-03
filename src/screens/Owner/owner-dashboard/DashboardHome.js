@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOwnerDashboard } from '../../../redux/actions/ownerActions/dashboardAction';
 
-const DashboardHome = () => {
+const DashboardHome = ({ route }) => {
 	const dispatch = useDispatch();
 	const [showDashboard, setShowDashboard] = useState(true);
 	const [summaryDetails, setSummaryDetails] = useState({
@@ -24,7 +24,10 @@ const DashboardHome = () => {
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
 	);
-
+	let buildingUpdateFlag;
+	if (route && route.params) {
+		buildingUpdateFlag = route.params.buildingUpdateFlag;
+	}
 	const getSummaryViewDetails = () => {
 		if (Object.keys(properties).length !== 0) {
 			const buildings = properties.ownerDashboardResult.buildings;
@@ -51,9 +54,13 @@ const DashboardHome = () => {
 			}
 		}
 	};
-
+	// This useeffect order matter for building update
+	useEffect(() => {
+		setShowDashboard(false);
+	}, [buildingUpdateFlag]);
 	useEffect(() => {
 		dispatch(getOwnerDashboard());
+		setShowDashboard(true);
 	}, []);
 
 	useEffect(() => {
@@ -61,6 +68,7 @@ const DashboardHome = () => {
 			getSummaryViewDetails();
 		}
 	}, [properties]);
+
 	return (
 		<View style={dashboardStyles.dashboardHomeContainer}>
 			<View style={dashboardStyles.buttonView}>

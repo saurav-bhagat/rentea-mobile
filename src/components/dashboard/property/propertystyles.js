@@ -3,15 +3,18 @@ import { ScaledSheet } from 'react-native-size-matters';
 export const propertyStyles = ScaledSheet.create({
 	propertyListContainer: {
 		paddingTop: '20@s',
-		paddingHorizontal: '5@ms',
+	},
+	scrollViewContentContainer: {
+		width: '100%',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		padding: '20@s',
+		alignItems: 'stretch',
 	},
 	singlePropertyButton: {
-		height: '52@ms',
 		marginTop: '6%',
 		marginBottom: '6%',
 		justifyContent: 'center',
-		borderRadius: 25,
-		padding: '14@ms',
 		backgroundColor: 'white',
 		shadowColor: '#000',
 		shadowOffset: {
@@ -22,10 +25,27 @@ export const propertyStyles = ScaledSheet.create({
 		shadowRadius: 4.65,
 		elevation: 8,
 	},
-	singlePropertyButton_text: {
-		color: '#666666',
-		fontSize: '16@ms0.3',
-		textAlign: 'center',
-		letterSpacing: 1,
+	singlePropertyRow1: {
+		flexDirection: 'row',
+		padding: 20,
 	},
+	singlePropertyCol1: { flex: 1 },
+	singlePropertyCol2: { flex: 3 },
+	singlePropertyCol3: { flex: 1 },
+	buildingNoTxt: { fontSize: '16@s', fontFamily: 'interRegular' },
+	buildingAdrsTxt: { fontSize: '13@s', color: '#979797', marginTop: 5 },
+	editIcon: {
+		position: 'absolute',
+		right: 0,
+		fontSize: 20,
+		color: '#A6A6A6',
+	},
+	singlePropertyRow2: {
+		flexDirection: 'row',
+		paddingBottom: 20,
+		paddingHorizontal: 20,
+	},
+	totalRoomPlusVacantRoomContainer: { flex: 1 },
+	totRoomColor: { color: '#979797' },
+	vacantRoomColor: { color: '#F78585' },
 });
