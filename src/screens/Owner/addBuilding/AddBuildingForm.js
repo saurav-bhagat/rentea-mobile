@@ -1,183 +1,241 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/core';
-import { Button } from 'native-base';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import Counter from 'react-native-counters';
+import { Provider, Portal, Modal } from 'react-native-paper';
+import { Button } from 'react-native-elements';
 
-import BackIcon from '../../../components/common/BackIcon';
-import SelectStatePicker from '../../../components/owner/building/SelectStatePicker';
-import AddMaintainerSection from '../../../components/owner/maintainer/AddMaintainerSection';
-import AddRoomSection from './AddRoomsSection';
+import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import TextInputCommon from '../../../components/common/TextInputCommon';
+import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
+import { saveBuildingData, updateBuildingData } from '../../../redux/actions';
+import { addBuildingFormstyles } from './addBuildingFormStyles';
+import { navigate } from '../../../navigation/rootNavigation';
+import SnackBar from '../../../components/common/SnackBar';
+import useSnack from '../../../components/common/useSnack';
+import AddRoomForm from './AddRoomForm';
+import AddRoomCard from './AddRoomCard';
+import CustomCounter from './CustomCounter';
 
-import { setBuildingDetails } from '../../../redux/actions';
-
-
-const AddBuildingForm = () => {
-
-	const navigation = useNavigation();
+const AddBuildingForm = ({ route }) => {
 	const dispatch = useDispatch();
+	const authState = useSelector((state) => state.auth);
+	const { loading } = useSelector((state) => state.buildingDetails);
+	const { roomDetails } = useSelector((state) => state.addRoomDetails);
+	const [buildingName, setBuildingName] = useState('');
+	const [roomCount, setRoomCount] = useState(0);
+	const [floorCount, setFloorCount] = useState('');
+	const [stateAddress, setStateAddress] = useState('');
+	const [pinCode, setPinCode] = useState('835210');
+	const [street, setStreet] = useState('');
+	const [district, setDistrict] = useState('Khunti');
+	const [maintainerName, setMaintainerName] = useState('');
+	const [maintainerPhone, setMaintainerPhone] = useState('');
+	const [modalVisible, setModalVisible] = useState(false);
 
-	const [ buildingName, setBuildingName ] = useState('');
-	const [ roomCount, setRoomCount ] = useState('');
-	const [ floorCount, setFloorCount ] = useState('');
-	const [ stateAddress, setStateAddress ] = useState('');
-	const [ pinCode, setPinCode ] = useState('');
-	const [ street, setStreet ] = useState('');
-	const [ district, setDistrict ] = useState('');
-
-	const handleAddBuildingFormSubmit = () => {
-		console.log(`
-			Inside Submit:
-			Building Name is: ${buildingName},
-			Room count is: ${roomCount},
-			Floor Count is: ${floorCount},
-			Address is: ${street} , ${district} , 
-			${stateAddress}, ${pinCode}
-		`);
-		// call an action which will set this values to the store.
-		dispatch(setBuildingDetails({ buildingName, roomCount, floorCount, street, district, pinCode, stateAddress }))
+	const {
+		visible,
+		onToggleSnackBar,
+		onDismissSnackBar,
+		setVisible,
+		text,
+		setText,
+	} = useSnack();
+	let buildingInfo, rooms;
+	if (route.params) {
+		buildingInfo = route.params.buildingInfo;
+		rooms = buildingInfo.rooms;
 	}
 
-	return(
-		<ScrollView contentContainerStyle={{ flexGrow: 1, backgroundColor: 'white'}} nestedScrollEnabled={true}>
-			<View style={styles.addBFcontainer}>
-				<View style={styles.addBFHeader}>
-					<BackIcon onPress={() => navigation.navigate('AddBuilding')} />
-					<Text style={styles.addBFHeaderText}>Add Building Details</Text>
-				</View>
-				<View style={styles.addBFormContainer}>
-					<TextInputCommon  
-						label="Building Name" 
-						name="buildingName" 
-						onChangeText={(val) => setBuildingName(val)}
+	useEffect(() => {
+		if (buildingInfo) {
+			const { address } = buildingInfo;
+			// spliting because address is like
+			// address=street no - street ,address
+			let tempStreetPlusStateAddress = address.split(',');
+			setBuildingName(buildingInfo.name);
+			setRoomCount(buildingInfo.rooms.length);
+			setStreet(tempStreetPlusStateAddress[0]);
+			setStateAddress(tempStreetPlusStateAddress[1]);
+		}
+		if (rooms && rooms.length > 0) {
+			let tempFloorCount = 0;
+			for (const roomData of rooms) {
+				if (tempFloorCount < parseInt(roomData.floor)) {
+					tempFloorCount = roomData.floor;
+				}
+			}
+			setFloorCount(tempFloorCount);
+		}
+	}, [buildingInfo]);
+	const handleAddBuildingAndUpdateFormSubmit = () => {
+		const formData = {
+			buildingName,
+			roomCount,
+			floorCount,
+			street,
+			district,
+			pinCode,
+			stateAddress,
+			maintainerName,
+			maintainerPhone,
+		};
+		if (isValidBuildingData(formData)) {
+			if (buildingInfo) {
+				formData['buildingId'] = buildingInfo._id;
+				dispatch(updateBuildingData(formData));
+			} else {
+				dispatch(saveBuildingData(formData));
+			}
+		} else {
+			setText('Enter fields properly.');
+			setVisible(true);
+		}
+	};
+	return (
+		<Provider>
+			<ScrollView
+				contentContainerStyle={{
+					flexGrow: 1,
+					backgroundColor: '#ffff',
+				}}
+				nestedScrollEnabled={true}
+			>
+				{!authState.userInfo.firstLogin ? (
+					<CrossPlatformHeader
+						title={
+							buildingInfo ? 'Update Apartment' : 'Add Apartment'
+						}
+						backCallback={() => navigate('Properties')}
+						profile={false}
 					/>
-					<View style={{ flexDirection: 'row', marginTop:30 }}>
-						<View style={{ flex:1 }}>
-							<TextInputCommon
-								label="Number of Rooms" 
-								style={{ width: '80%', alignSelf: 'flex-start' }} 
-								name="roomCount" 
-								onChangeText={(val) => setRoomCount(val)}
-								value={roomCount}
-							/>
-						</View>
-						<View style={{ flex:1 }}>
-							<TextInputCommon  
-								label="Number of Floors" 
-								style={{ width: '80%', alignSelf: 'flex-end' }} 
-								name="floorCount" 
-								onChangeText={(val) => setFloorCount(val)}
-								value={floorCount}
-							/>
-						</View>
-					</View>
+				) : (
+					<CrossPlatformHeader
+						title="Add Apartment"
+						profile={false}
+					/>
+				)}
 
-					<View style={{ marginTop: 30 }}>
-						<SelectStatePicker 
-							onValueChange={(val) => setStateAddress(val)}
-							stateAddress={stateAddress}
+				<ScrollView
+					contentContainerStyle={addBuildingFormstyles.addBFcontainer}
+					nestedScrollEnabled={true}
+				>
+					<View style={addBuildingFormstyles.addBFCard}>
+						<TextInputCommon
+							label="Apartment Name"
+							name="buildingName"
+							onChangeText={(val) => setBuildingName(val)}
+							style={addBuildingFormstyles.textItemStyle}
+							inputStyle={addBuildingFormstyles.inputStyle}
+							value={buildingName}
 						/>
+
+						<TextInputCommon
+							label="Plot No/Locality"
+							name="plotnum"
+							onChangeText={(val) => setStreet(val)}
+							style={addBuildingFormstyles.textItemStyle}
+							inputStyle={addBuildingFormstyles.inputStyle}
+							value={street}
+						/>
+
+						<TextInputCommon
+							label="Address"
+							name="address"
+							onChangeText={(val) => setStateAddress(val)}
+							style={addBuildingFormstyles.textItemStyle}
+							inputStyle={addBuildingFormstyles.inputStyle}
+							value={stateAddress}
+						/>
+
+						{!buildingInfo && (
+							<View style={addBuildingFormstyles.roomAndFloorC}>
+								<View>
+									<Text
+										style={
+											addBuildingFormstyles.roomAndFloorText
+										}
+									>
+										Total Floors
+									</Text>
+									<Counter
+										start={0}
+										onChange={(number, type) =>
+											setFloorCount(number)
+										}
+										buttonStyle={{ borderRadius: 25 }}
+									/>
+								</View>
+								<View>
+									<Text
+										style={
+											addBuildingFormstyles.roomAndFloorText
+										}
+									>
+										Total Rooms
+									</Text>
+
+									<CustomCounter
+										count={roomCount}
+										setCounter={setRoomCount}
+										setModalVisible={setModalVisible}
+									/>
+								</View>
+								{/* Room and Floor section ends */}
+							</View>
+						)}
+						{roomDetails.map((roomDetail, i) => {
+							return (
+								<AddRoomCard
+									roomDetail={roomDetail}
+									floorCount={floorCount}
+									key={i}
+								/>
+							);
+						})}
+
+						<Portal>
+							<Modal
+								visible={modalVisible}
+								onDismiss={() => {
+									setModalVisible(false);
+									setRoomCount((prev) => prev - 1);
+								}}
+								contentContainerStyle={
+									addBuildingFormstyles.addRoomFormModalContainer
+								}
+							>
+								<AddRoomForm
+									floorCount={floorCount}
+									dismissAddRoomForm={() =>
+										setModalVisible(false)
+									}
+								/>
+							</Modal>
+						</Portal>
+
+						<Button
+							title={buildingInfo ? 'Update' : 'Add'}
+							onPress={handleAddBuildingAndUpdateFormSubmit}
+							buttonStyle={addBuildingFormstyles.submitBtn}
+							titleStyle={addBuildingFormstyles.submitBtnTxt}
+							loading={loading}
+						/>
+
+						{/* Building Form Card ends */}
 					</View>
+				</ScrollView>
 
-					<View style={{ flexDirection: 'row', marginTop:30 }}>
-						<View style={{ flex:1 }}>
-							<TextInputCommon  
-								label="District" 
-								style={{ width: '90%', alignSelf: 'flex-start' }} 
-								name="district" 
-								onChangeText={(val) => setDistrict(val)}
-							/>
-						</View>
-						<View style={{ flex:1 }}>
-							<TextInputCommon  
-								label="Pincode" 
-								style={{ width: '90%', alignSelf: 'flex-end' }} 
-								name="pincode" 
-								onChangeText={(val) => setPinCode(val)}
-							/>
-						</View>
-					</View>
-					
-					<TextInputCommon  
-						label="Street/Locality" 
-						style={{ marginTop:30 }} 
-						name="street"
-						onChangeText={(val) => setStreet(val)}
-					/>
-			
-					<Text style={{ fontSize: 22, marginTop: 35, color: '#666' }}>Maintainer:</Text>
-					
-					<AddMaintainerSection />
-
-					<AddRoomSection roomCount={roomCount} />
-
-					<Button 
-						rounded 
-						transparent 
-						style={styles.submitBuildingDetailsButton}
-						onPress={handleAddBuildingFormSubmit}
-					>
-						<Text style={styles.submitBuildingDetailsButton_text}>Submit</Text>
-					</Button>
-
-				</View>
-			</View>
-		</ScrollView>
+				<SnackBar
+					text={text}
+					visible={visible}
+					onDismissSnackBar={onDismissSnackBar}
+					onToggleSnackBar={onToggleSnackBar}
+					bottom={120}
+				/>
+			</ScrollView>
+		</Provider>
 	);
 };
-
-const styles = StyleSheet.create({
-	addBFcontainer: {
-		flex:1,
-		paddingTop: '13%',
-		width: '95%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		minHeight: '100%'
-	},
-	addBFHeader: {
-		flexDirection: 'row',
-		alignItems: 'flex-start',
-	},
-	addBFHeaderText: {
-		flex:1,
-		fontSize: 30,
-		letterSpacing: 1.3,
-		color: '#666666',
-		marginBottom: 0,
-	},
-	addBFormContainer:{
-		flex:1,
-		padding: 10
-	},
-	addBFormInput: {
-		borderBottomWidth: 1,
-		height: 40,
-    	margin: 12,
-	},
-	submitBuildingDetailsButton: {
-		width: '100%',
-		marginTop: 40,
-		backgroundColor: '#109FDA',
-		justifyContent: 'center',
-		height: 58,
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
-		shadowOpacity: 0.30,
-		shadowRadius: 4.65,
-		elevation: 8,
-	},
-	submitBuildingDetailsButton_text: {
-		color: '#fff',
-		fontSize: 22,
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-		letterSpacing: 1
-	},
-});
 
 export default AddBuildingForm;

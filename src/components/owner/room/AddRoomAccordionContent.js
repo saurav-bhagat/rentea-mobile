@@ -1,81 +1,204 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Switch } from 'react-native';
+
 import { Card, CardItem, Body, Item, Label, Input, Button } from 'native-base';
+import { useDispatch } from 'react-redux';
+
 import TextInputCommon from '../../common/TextInputCommon';
+import { roomAccordionStyles } from './addRoomAccordionStyles';
 
-const AddRoomAccordionContent = () => {
+import { saveRoomData } from '../../../redux/actions';
+import { validateRoomFields } from '../../../helpers/addBuildingValidation';
 
-	const [ roomNo, setRoomNo ] = useState('');
+import SnackBar from '../../common/SnackBar';
+import useSnack from '../../common/useSnack';
+
+const AddRoomAccordionContent = ({ isData, data, floorCount }) => {
+	const dispatch = useDispatch();
+	const [roomNo, setRoomNo] = isData ? useState(data.roomNo) : useState('');
+
+	const [rent, setRent] = isData ? useState(data.rent) : useState('');
+	const [security, setSecurity] = isData
+		? useState(data.security)
+		: useState('');
+
+	const [floor, setFloor] = isData ? useState(data.floor) : useState('');
+	const [sizeInFt, setSizeInFt] = isData
+		? useState(data.sizeInFt)
+		: useState('');
+
+	const [bhk, setBhk] = isData ? useState(data.bhk) : useState('');
+	const [isMultipleTenant, setIsMultipleTenant] = useState(false);
+
+	const toggleSwitch = () =>
+		setIsMultipleTenant((previousState) => !previousState);
+
+	const {
+		visible,
+		text,
+		setText,
+		setVisible,
+		onDismissSnackBar,
+		onToggleSnackBar,
+	} = useSnack();
+
+	const currentRoomData = {
+		roomNo,
+		rent,
+		security,
+		floor,
+		sizeInFt,
+		bhk,
+		isMultipleTenant,
+	};
+
+	const handleAddRoomClick = () => {
+		if (validateRoomFields(currentRoomData, floorCount)) {
+			dispatch(saveRoomData(currentRoomData));
+			setText(`Room ${roomNo} added in building`);
+		} else {
+			setText('Enter fields properly.');
+		}
+		setVisible(true);
+	};
 
 	return (
 		<Card style={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
-        	<CardItem header>
-            	<Text style={{ fontSize: 22 }}>Room {roomNo}</Text>
-            </CardItem>
-            <CardItem style={{ paddingTop: 0, paddingBottom: 30 }}>
-            	<Body>
-					<View style={{ flexDirection: 'row', marginTop:5 }}>
-						<View style={{ flex:1 }}>
-							<Item floatingLabel style={{ borderColor: '#666', width: '90%', alignSelf: 'flex-start' }}>
+			<CardItem header>
+				<Text style={{ fontSize: 22 }}>Room {roomNo}</Text>
+			</CardItem>
+			<CardItem style={{ paddingTop: 0, paddingBottom: 30 }}>
+				<Body>
+					<View style={{ flexDirection: 'row' }}>
+						<View style={{ flex: 1 }}>
+							<Text>MultipleTenant : </Text>
+						</View>
+						<View style={{ flex: 1 }}>
+							<Switch
+								trackColor={{
+									false: '#767577',
+									true: '#109FDA',
+								}}
+								thumbColor={
+									isMultipleTenant ? '#109FDA' : '#f4f3f4'
+								}
+								ios_backgroundColor="#3e3e3e"
+								onValueChange={toggleSwitch}
+								value={isMultipleTenant}
+							/>
+						</View>
+					</View>
+					<View style={{ flexDirection: 'row', marginTop: 5 }}>
+						<View style={{ flex: 1 }}>
+							<Item
+								floatingLabel
+								style={{
+									borderColor: '#666',
+									width: '90%',
+									alignSelf: 'flex-start',
+								}}
+							>
 								<Label>Room No.</Label>
-								<Input onChangeText={(e) => setRoomNo(e) }/>
+								<Input
+									onChangeText={(e) => setRoomNo(e)}
+									value={roomNo}
+								/>
 							</Item>
 						</View>
-						<View style={{ flex:1 }}>
-							<Item floatingLabel style={{ borderColor: '#666',  width: '90%', alignSelf: 'flex-end' }}>
-								<Label>Rent Amount</Label>
-								<Input />
-							</Item>
-						</View>
+						{!isMultipleTenant && (
+							<View style={{ flex: 1 }}>
+								<Item
+									floatingLabel
+									style={{
+										borderColor: '#666',
+										width: '90%',
+										alignSelf: 'flex-end',
+									}}
+								>
+									<Label>Rent Amount</Label>
+									<Input
+										onChangeText={(val) => setRent(val)}
+										value={rent}
+										keyboardType="numeric"
+									/>
+								</Item>
+							</View>
+						)}
 					</View>
 					<View style={{ flexDirection: 'row', marginTop: 5 }}>
-						<View style={{ flex:1 }}>
-							<TextInputCommon label="Security Amount" style={{ width: '90%', alignSelf: 'flex-start' }} />
+						<View style={{ flex: 1 }}>
+							<TextInputCommon
+								label="Floor"
+								style={{
+									width: '90%',
+									alignSelf: 'flex-start',
+								}}
+								keyboardType="numeric"
+								onChangeText={(val) => setFloor(val)}
+								value={floor}
+							/>
 						</View>
-						<View style={{ flex:1 }}>
-							<TextInputCommon label="Floor" style={{ width: '90%', alignSelf: 'flex-end' }} />
-						</View>
+
+						{!isMultipleTenant && (
+							<View style={{ flex: 1 }}>
+								<TextInputCommon
+									label="Security Amount"
+									style={{
+										width: '90%',
+										alignSelf: 'flex-end',
+									}}
+									onChangeText={(val) => setSecurity(val)}
+									value={security}
+									keyboardType="numeric"
+								/>
+							</View>
+						)}
 					</View>
 					<View style={{ flexDirection: 'row', marginTop: 5 }}>
-						<View style={{ flex:1 }}>
-							<TextInputCommon label="Size(sq. ft.)" style={{ width: '90%', alignSelf: 'flex-start' }} />
+						<View style={{ flex: 1 }}>
+							<TextInputCommon
+								label="Size(sq. ft.)"
+								style={{
+									width: '90%',
+									alignSelf: 'flex-start',
+								}}
+								onChangeText={(val) => setSizeInFt(val)}
+								value={sizeInFt}
+								keyboardType="numeric"
+							/>
 						</View>
-						<View style={{ flex:1 }}>
-							<TextInputCommon label="BHK" style={{ width: '90%', alignSelf: 'flex-end' }} />
+						<View style={{ flex: 1 }}>
+							<TextInputCommon
+								label="BHK"
+								style={{ width: '90%', alignSelf: 'flex-end' }}
+								onChangeText={(val) => setBhk(val)}
+								keyboardType="numeric"
+								value={bhk}
+							/>
 						</View>
 					</View>
-              	</Body>
-            </CardItem>
-            {/* <CardItem footer style={{ justifyContent: 'flex-end' }}>
-				<Button 
-					rounded 
-					transparent 
-					style={styles.addRoomButton} 
-					onPress={() => toggleModal()}
+				</Body>
+			</CardItem>
+			<CardItem footer style={{ justifyContent: 'flex-end' }}>
+				<Button
+					rounded
+					transparent
+					style={roomAccordionStyles.addRoomButton}
+					onPress={() => handleAddRoomClick()}
 				>
-						<Text style={styles.addRoomButton_text}>Submit</Text>
+					<Text style={roomAccordionStyles.addRoomButton_text}>
+						Add Room
+					</Text>
 				</Button>
-            </CardItem> */}
-        </Card>
+			</CardItem>
+			<SnackBar
+				text={text}
+				visible={visible}
+				onDismissSnackBar={onDismissSnackBar}
+				onToggleSnackBar={onToggleSnackBar}
+			/>
+		</Card>
 	);
 };
-
-const styles = StyleSheet.create({
-	addRoomButton: {
-		paddingHorizontal: 18,
-		borderWidth: 1,
-		borderColor: '#ddd',
-		marginTop: 10,
-		backgroundColor: '#109FDA',
-		alignSelf: 'center',
-		bottom: 5,
-	},
-	addRoomButton_text: {
-		color: '#fff',
-		fontSize: 17,
-		letterSpacing: 1,
-		textAlign: 'center'
-	},
-});
 
 export default AddRoomAccordionContent;

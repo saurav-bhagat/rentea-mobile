@@ -1,98 +1,180 @@
-import React from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { Item, Input, Button, Content } from 'native-base';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
+import { Input } from 'react-native-elements/dist/input/Input';
+import { useSelector, useDispatch } from 'react-redux';
+import * as Print from 'expo-print';
 
+import { sendOtp } from '../../redux/actions';
+import { validatePhone } from '../../helpers/addBuildingValidation';
+import SnackBar from '../../components/common/SnackBar';
+import useSnack from '../../components/common/useSnack';
+import { loginStyles } from './loginStyles';
 
-const LoginComponent = ({ navigation }) => {
+const view = async (fileUrl) => {
+	try {
+		await Print.printAsync({ uri: fileUrl });
+	} catch (err) {
+		console.log('Error while viewing pdf', err);
+	}
+};
 
+const viewPrivacyPolicy = async () => {
+	try {
+		await view(
+			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/Privacy_Policy_RenTea_hpwm0f.pdf'
+		);
+	} catch (error) {
+		console.log('Error while fetching privacy and policy');
+	}
+};
+
+const viewTermsAndCondition = async () => {
+	try {
+		await view(
+			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Terms_and_Conditions_ovwnum.pdf'
+		);
+	} catch (error) {
+		console.log('Error while fetching Terms and condition');
+	}
+};
+
+const viewRefundPolicy = async () => {
+	try {
+		await view(
+			'https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630601412/RenTea_Refund_and_Cancellation_fro5lp.pdf'
+		);
+	} catch (error) {
+		console.log('Error while fetching refund policy');
+	}
+};
+
+const LoginComponent = () => {
+	const dispatch = useDispatch();
+	const authState = useSelector((state) => state.auth);
+	const resend = false;
+
+	const [phone, setPhone] = useState('');
+
+	const {
+		visible,
+		text,
+		setVisible,
+		setText,
+		onToggleSnackBar,
+		onDismissSnackBar,
+	} = useSnack();
 
 	const handleLoginContinue = () => {
-		console.log('Function called here');
-		navigation.navigate('OTP');
-	}
+		if (validatePhone(phone)) {
+			dispatch(sendOtp(phone, resend));
+		} else {
+			setText('Enter a valid Phone Number');
+			setVisible(true);
+		}
+	};
 	return (
-		
-		<View style={styles.loginComponentContainer}>
-			<Text style={styles.loginText}>Log In/Sign Up</Text>
-					
-			<View style={styles.phoneInputContainer}>
-				<Item rounded>
-					<Input 
-						style={styles.phoneInputBox} 
-						placeholderTextColor={'#ccc'} 
-						placeholder='Enter Phone Number'
-						keyboardType='numeric'
-					/>
-				</Item>
-				<Button rounded transparent style={styles.loginContinueButton} onPress={() => handleLoginContinue()}>
-					<Text style={styles.loginContinueButton_text}>Continue</Text>
-				</Button>
+		<View style={loginStyles.loginContainer}>
+			<View>
+				<Text style={loginStyles.loginContainer_row1_txt}>Welcome</Text>
 			</View>
-			<View style={styles.loginFooterTextContainer}>
-				<Text style={styles.login_footer_text}>By clicking continue, you agree to our 
-					<Text style={styles.login_footer_underline}>Terms and Conditions</Text>
+
+			<View>
+				<Text style={loginStyles.loginContainer_row2_txt}>
+					Get started by{' '}
 				</Text>
-				<Text style={styles.login_footer_text}>and have read out 
-					<Text style={styles.login_footer_underline}>Privacy Policy</Text>
+			</View>
+
+			<View>
+				<Text style={loginStyles.loginContainer_row3_txt}>
+					creating your account
 				</Text>
+			</View>
+
+			<View style={loginStyles.countryCodePlusPhoneNumberContainer}>
+				<View style={loginStyles.countryCodeContainer}>
+					<Text style={loginStyles.countryCodeText}>India (+91)</Text>
+				</View>
+				<View style={loginStyles.phoneNumberContainer}>
+					<Input
+						value={phone}
+						onChangeText={(value) => {
+							setPhone(value);
+						}}
+						keyboardType="numeric"
+						inputContainerStyle={{
+							borderBottomWidth: 0,
+							paddingTop: 5,
+							paddingLeft: 10,
+						}}
+						inputStyle={{ fontFamily: 'interLight' }}
+						placeholder="Phone number ..."
+					/>
+				</View>
+			</View>
+
+			<View
+				style={{
+					marginTop: 30,
+				}}
+			>
+				<Button
+					title="Login"
+					titleStyle={{ fontFamily: 'interRegular' }}
+					loading={authState.loading ? true : false}
+					onPress={() => {
+						handleLoginContinue();
+					}}
+					buttonStyle={loginStyles.loginBtnText}
+					containerStyle={loginStyles.loginBtnContainer}
+				/>
+			</View>
+
+			<View style={loginStyles.policyAndTermContainer}>
+				<View style={{ flex: 1 }}>
+					<TouchableOpacity
+						onPress={() => {
+							viewPrivacyPolicy();
+						}}
+					>
+						<Text style={loginStyles.privacyAndAgreementsText}>
+							Privacy policy
+						</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={{ flex: 2 }}>
+					<TouchableOpacity
+						onPress={() => {
+							viewTermsAndCondition();
+						}}
+					>
+						<Text style={loginStyles.privacyAndAgreementsText}>
+							Terms and condition
+						</Text>
+					</TouchableOpacity>
+				</View>
+				<View style={{ flex: 1 }}>
+					<TouchableOpacity
+						onPress={() => {
+							viewRefundPolicy();
+						}}
+					>
+						<Text style={loginStyles.privacyAndAgreementsText}>
+							Refund policy
+						</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+			<View style={{ flex: 1 }}>
+				<SnackBar
+					visible={visible}
+					text={text}
+					onDismissSnackBar={onDismissSnackBar}
+					onToggleSnackBar={onToggleSnackBar}
+				/>
 			</View>
 		</View>
-		
 	);
 };
 
-
-const styles = StyleSheet.create({
-	loginComponentContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		paddingTop: 15,
-		paddingBottom: 15,
-		shadowColor: '#000',
-    	shadowOffset: { width: 0, height: 0 },
-    	shadowRadius: 5,
-    	shadowOpacity: 0.4
-	},
-	loginText: {
-		fontSize: 34,
-		color: '#666666',
-		marginBottom: 45
-	},
-	phoneInputContainer:{
-		width: '80%'
-	},
-	phoneInputBox: {
-		paddingLeft: 20,
-		height:50
-	},	
-	loginContinueButton: {
-		width: '100%',
-		marginTop: 40,
-		backgroundColor: '#109FDA',
-		justifyContent: 'center',
-		height: 50
-	},
-	loginContinueButton_text: {
-		color: '#fff',
-		fontSize: 22,
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-		letterSpacing: 1
-	},
-	loginFooterTextContainer:{
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginTop: 30,
-		width: '70%'
-	},
-	login_footer_text: {
-		color: '#bbb', 
-		fontSize: 11
-	},
-	login_footer_underline: {
-		textDecorationLine: 'underline' 
-	}
-});
-
 export default LoginComponent;
-

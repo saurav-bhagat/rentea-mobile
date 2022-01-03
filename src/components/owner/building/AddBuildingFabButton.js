@@ -4,30 +4,29 @@ import { Fab, Icon } from 'native-base';
 import { useNavigation } from '@react-navigation/core';
 
 const AddBuildingFabButton = () => {
-
 	const navigation = useNavigation();
 
 	return (
 		<Fab
 			active={true}
 			direction="up"
-			containerStyle={{ }}
+			containerStyle={{}}
 			style={styles.fabStyle}
 			position="bottomRight"
-			onPress={() => navigation.navigate('AddBuildingForm')}>
-				<Icon name="add" style={{ fontSize: 40	 }} />
-        </Fab>
+			onPress={() => navigation.navigate('AddBuildingForm')}
+		>
+			<Icon name="add" style={{ fontSize: 40 }} />
+		</Fab>
 	);
 };
 
 const styles = StyleSheet.create({
 	fabStyle: {
-		backgroundColor: '#109FDA', 
-		width: 80, 
-		height: 80, 
-		borderRadius: 50
-	}
+		backgroundColor: '#109FDA',
+		width: 50,
+		height: 50,
+		borderRadius: 50,
+	},
 });
 
 export default AddBuildingFabButton;
-

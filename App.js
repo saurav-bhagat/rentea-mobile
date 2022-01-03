@@ -1,12 +1,38 @@
-import React from 'react';
-import RootRoutes from './src/navigation';
+import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import store from './src/redux/store';
+import * as Font from 'expo-font';
+import { ActivityIndicator, View } from 'react-native';
 
-export default function App(){
-	return (
-		<Provider store={store}>
-			<RootRoutes />
-		</Provider>
-  	);
-};
+import RootRoutes from './src/navigation';
+import store from './src/redux/store';
+import fonts from './fonts';
+
+export default function App() {
+	const [fontLoading, setFontLoading] = useState(true);
+
+	useEffect(() => {
+		(async () => {
+			await Font.loadAsync(fonts);
+			setFontLoading(false);
+		})();
+	}, []);
+	if (fontLoading) {
+		return (
+			<View
+				style={{
+					flex: 1,
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<ActivityIndicator color="#109FDA" size="large" />
+			</View>
+		);
+	} else {
+		return (
+			<Provider store={store}>
+				<RootRoutes />
+			</Provider>
+		);
+	}
+}

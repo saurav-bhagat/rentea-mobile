@@ -1,25 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { Accordion } from "native-base";
+import { Accordion } from 'native-base';
 import { LogBox } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import AddRoomAccordionContent from './AddRoomAccordionContent';
 import AddRoomAccordionHeader from './AddRoomAccordionHeader';
 
+const AddRoomAccordion = ({ roomCount, floorCount }) => {
+	const roomsFormData = useSelector((state) => state.addRoomDetails);
+	const roomsInStore = roomsFormData.roomDetails;
 
-const AddRoomAccordion = ({ roomCount }) => {
+	const [dataArray, setDataArray] = useState([]);
 
-	const [ dataArray, setDataArray ] = useState([]);
+	const handleRoomAccordionClose = (item, index) => {
+		console.log('Accordion closed');
+	};
+
+	const handleRoomAccordionOpen = (item, index) => {
+		console.log('Accordion opened');
+	};
 
 	useEffect(() => {
 		LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 		let tempArray = [];
-		for(let i=0 ; i<roomCount ; i++){
-			tempArray.push({ title: "Room Name", content: <AddRoomAccordionContent /> });
+		let roomsPresentLength = roomsInStore.length; // end index of present rooms
+		let roomsStartLength = 0; // start index of present rooms
+
+		for (let i = 0; i < roomCount; i++) {
+			if (roomsPresentLength > 0) {
+				tempArray.push({
+					title: `Room ${i + 1}`,
+					content: (
+						<AddRoomAccordionContent
+							isData={true}
+							data={roomsInStore[roomsStartLength]}
+						/>
+					),
+				});
+				roomsStartLength++;
+			} else {
+				tempArray.push({
+					title: `Room ${i + 1}`,
+					content: (
+						<AddRoomAccordionContent
+							isData={false}
+							floorCount={floorCount}
+						/>
+					),
+				});
+			}
+			roomsPresentLength--;
 		}
 		setDataArray(tempArray);
-	}, [])
+	}, [roomsFormData]);
 
-	const renderHeader = (item, expanded) => <AddRoomAccordionHeader item={item} expanded={expanded} />
+	const renderHeader = (item, expanded) => (
+		<AddRoomAccordionHeader item={item} expanded={expanded} />
+	);
 	const renderContent = (item) => item.content;
 
 	return (
@@ -28,10 +65,14 @@ const AddRoomAccordion = ({ roomCount }) => {
 			animation={true}
 			expanded={[]}
 			renderHeader={(item, expanded) => renderHeader(item, expanded)}
-			renderContent={(e) =>renderContent(e)}
-			onAccordionOpen={(item, index) => console.log("")}
-			onAccordionClose={(item, index) => console.log("")}
-			style={{ backgroundColor: 'white'}}
+			renderContent={(e) => renderContent(e)}
+			onAccordionOpen={(item, index) =>
+				handleRoomAccordionOpen(item, index)
+			}
+			onAccordionClose={(item, index) =>
+				handleRoomAccordionClose(item, index)
+			}
+			style={{ backgroundColor: 'white' }}
 		/>
 	);
 };

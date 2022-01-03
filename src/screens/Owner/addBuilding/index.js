@@ -1,68 +1,115 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Button } from 'native-base';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
+import { useSelector, useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import BuildingAccordion from './BuildingAccordion';
-import AddBuildingFabButton from '../../../components/owner/building/AddBuildingFabButton';
+import { navigate } from '../../../navigation/rootNavigation';
+import { addBuildingStyles } from './addBuildingStyles';
+import {
+	clearBuildingDetails,
+	setFirstLoginFalse,
+} from '../../../redux/actions';
 
 const AddBuilding = () => {
-	return(
-		<View style={{ flex:1, backgroundColor: 'white' }} nestedScrollEnabled={true}>
-			<View style={styles.addBContainer}>
-				<View style={styles.addBTextContainer}> 
-					<Text style={styles.addBText}>Add Building </Text>
-					<Text>Click on the add button below to add building details</Text>
+	const { buildingDetails } = useSelector((state) => state.buildingDetails);
+	const dispatch = useDispatch();
+	const handleContinueAndSkipBtn = async (continueBtnFlag) => {
+		// The action clearBuidlingDetails clear addbuildingdetail reducer for 2 user in one device
+		if (continueBtnFlag) {
+			setTimeout(() => {
+				dispatch(clearBuildingDetails());
+			}, 1000);
+		}
+		let userInfo = await AsyncStorage.getItem('userInfo');
+		userInfo = JSON.parse(userInfo);
+		userInfo.firstLogin = false;
+		await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+		await dispatch(setFirstLoginFalse());
+		// Todo : For now we manually navigate ownerDashboard but we have to optimize our stack in future
+		navigate('ownerDashboard');
+	};
+
+	return (
+		<View style={addBuildingStyles.addBuildingContainer}>
+			<View>
+				<Text style={addBuildingStyles.addBuildingRow1Txt}>
+					Add Buildings
+				</Text>
+			</View>
+			<View>
+				<Text style={addBuildingStyles.addBuildingRow2Txt}>
+					Add Building/Property details
+				</Text>
+			</View>
+			<View>
+				<Text style={addBuildingStyles.addBuildingRow3Txt}>
+					Add Building/Property detailsAdd Building/Property
+					detailsAdd Building/Property details
+				</Text>
+			</View>
+			<View style={{ marginTop: 25 }}>
+				{buildingDetails.length > 0 &&
+					buildingDetails.map((buildingDetail, i) => {
+						return (
+							<TouchableOpacity
+								key={i}
+								style={
+									addBuildingStyles.buildingDetailContainer
+								}
+							>
+								<Text
+									style={addBuildingStyles.buidlingDetailTxt}
+								>
+									{buildingDetail.buildingName}
+								</Text>
+							</TouchableOpacity>
+						);
+					})}
+			</View>
+			<View style={{ marginTop: 40 }}>
+				<View>
+					<Button
+						title="Add Building"
+						type="outline"
+						titleStyle={{ fontFamily: 'interSemiBold' }}
+						onPress={() => {
+							navigate('AddBuildingForm');
+						}}
+						buttonStyle={addBuildingStyles.addBtn}
+					/>
 				</View>
-				<BuildingAccordion />
-				<Button rounded style={styles.addBSkipButton}>
-					<Text style={styles.addBSkipButtonText}>Skip</Text>
-					<Icon name="chevron-forward-outline" style={styles.forwardIcon} />
-				</Button>
-				<AddBuildingFabButton />
+
+				<View style={addBuildingStyles.skipAndContinueContainer}>
+					<View style={{ flex: 1 }}>
+						<Button
+							title="Skip"
+							type="outline"
+							titleStyle={{ fontFamily: 'interRegular' }}
+							buttonStyle={addBuildingStyles.skipBtn}
+							disabled={buildingDetails.length !== 0}
+							disabledStyle={addBuildingStyles.skipBtn}
+							onPress={() => {
+								handleContinueAndSkipBtn(false);
+							}}
+						/>
+					</View>
+					<View style={{ flex: 1 }}>
+						<Button
+							title="Continue"
+							type="outline"
+							titleStyle={{ fontFamily: 'interRegular' }}
+							buttonStyle={addBuildingStyles.continueBtn}
+							disabledStyle={addBuildingStyles.continueBtn}
+							disabled={buildingDetails.length === 0}
+							onPress={() => {
+								handleContinueAndSkipBtn(true);
+							}}
+						/>
+					</View>
+				</View>
 			</View>
 		</View>
 	);
 };
-
-const styles = StyleSheet.create({
-	addBContainer: {
-		flex:1,
-		paddingTop: '14%',
-		backgroundColor: 'white',
-		width: '85%',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-	},
-	addBTextContainer:{
-		marginBottom: 30
-	},
-	addBText: {
-		fontSize: 50,
-		letterSpacing: 1.3,
-		color: '#666666',
-		marginBottom: 0,
-	},
-	addBSkipButton: {
-		marginTop: 20,
-		backgroundColor: '#109FDA',
-		paddingHorizontal: 12,
-		justifyContent: 'center',
-		width: 120,
-		marginRight: 18,
-		position: 'absolute',
-		bottom: '5%'
-	},
-	addBSkipButtonText: {
-		color: '#fff',
-		fontSize: 19
-	},
-	forwardIcon: {
-		color: '#fff',
-		marginLeft: 4,
-		top: 2,
-		fontSize: 22,
-	}
-});
-
 export default AddBuilding;
