@@ -24,7 +24,7 @@ import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
 import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailScreen';
-
+import { LeftNavbar } from './LeftNavbar';
 import { IntroSlider } from '../screens/Introslides/IntroSlider';
 import Dashboard from '../screens/Owner/owner-dashboard/Dashboard';
 const { Screen, Navigator } = createStackNavigator();
@@ -86,6 +86,7 @@ const RootRoutes = () => {
 				screenOptions={({ route, navigation }) => ({
 					headerShown: false,
 					gestureEnabled: true,
+					cardStyle: {backgroundColor:'#fff'}
 				})}
 			>
 				{accessToken ? (
@@ -116,7 +117,7 @@ const RootRoutes = () => {
 
 										<Screen
 											name="ownerDashboard"
-											component={OwnerDashboardBottomTab}
+											component={LeftNavbar}
 										/>
 										<Screen
 											name="Profile"
@@ -127,7 +128,7 @@ const RootRoutes = () => {
 									<>
 										<Screen
 											name="ownerDashboard"
-											component={Dashboard}
+											component={LeftNavbar}
 										/>
 										<Screen
 											name="AddBuildingForm"
@@ -154,11 +155,6 @@ const RootRoutes = () => {
 										<Screen
 											name="OwnerBankDetail"
 											component={OwnerBankDetailScreen}
-										/>
-
-										<Screen
-											name="OwnerDashboard"
-											component={Dashboard}
 										/>
 									</>
 								)}

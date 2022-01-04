@@ -2,14 +2,15 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 export const userDetailsStyles = ScaledSheet.create({
 	oudsContainer: {
-		marginTop: '20%',
+		marginTop: '17%',
 		width: '85%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
+		marginBottom: '10%',
 	},
 	oudsTextContainer: {},
 	oudsWelcomeText: {
-		fontSize: '50@ms0.3',
+		fontSize: '38@ms0.3',
 		letterSpacing: 1.3,
 		color: '#666666',
 		marginBottom: '13@s',
@@ -88,6 +89,8 @@ export const userDetailsStyles = ScaledSheet.create({
 		shadowOpacity: 0.3,
 		shadowRadius: 4.65,
 		elevation: 8,
+		marginBottom: 15,
+
 	},
 	oudsContinueButton_text: {
 		color: '#fff',

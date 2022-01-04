@@ -116,7 +116,6 @@ const OwnerPaymentInfoScreen = () => {
 	}
 	return (
 		<View style={ownerPaymentStyles.ownerPaymentContainer}>
-			<CrossPlatformHeader title="Payment Info" />
 			<Tabs renderTabBar={renderTabBar}>
 				<Tab
 					tabStyle={{ backgroundColor: '#109FDA' }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Counter from 'react-native-counters';
@@ -8,7 +8,7 @@ import { Button } from 'react-native-elements';
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import TextInputCommon from '../../../components/common/TextInputCommon';
 import { isValidBuildingData } from '../../../helpers/addBuildingValidation';
-import { saveBuildingData } from '../../../redux/actions';
+import { saveBuildingData, updateBuildingData } from '../../../redux/actions';
 import { addBuildingFormstyles } from './addBuildingFormStyles';
 import { navigate } from '../../../navigation/rootNavigation';
 import SnackBar from '../../../components/common/SnackBar';
@@ -17,7 +17,7 @@ import AddRoomForm from './AddRoomForm';
 import AddRoomCard from './AddRoomCard';
 import CustomCounter from './CustomCounter';
 
-const AddBuildingForm = () => {
+const AddBuildingForm = ({ route }) => {
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
 	const { loading } = useSelector((state) => state.buildingDetails);
@@ -32,6 +32,7 @@ const AddBuildingForm = () => {
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
+
 	const {
 		visible,
 		onToggleSnackBar,
@@ -40,7 +41,34 @@ const AddBuildingForm = () => {
 		text,
 		setText,
 	} = useSnack();
-	const handleAddBuildingFormSubmit = () => {
+	let buildingInfo, rooms;
+	if (route.params) {
+		buildingInfo = route.params.buildingInfo;
+		rooms = buildingInfo.rooms;
+	}
+
+	useEffect(() => {
+		if (buildingInfo) {
+			const { address } = buildingInfo;
+			// spliting because address is like
+			// address=street no - street ,address
+			let tempStreetPlusStateAddress = address.split(',');
+			setBuildingName(buildingInfo.name);
+			setRoomCount(buildingInfo.rooms.length);
+			setStreet(tempStreetPlusStateAddress[0]);
+			setStateAddress(tempStreetPlusStateAddress[1]);
+		}
+		if (rooms && rooms.length > 0) {
+			let tempFloorCount = 0;
+			for (const roomData of rooms) {
+				if (tempFloorCount < parseInt(roomData.floor)) {
+					tempFloorCount = roomData.floor;
+				}
+			}
+			setFloorCount(tempFloorCount);
+		}
+	}, [buildingInfo]);
+	const handleAddBuildingAndUpdateFormSubmit = () => {
 		const formData = {
 			buildingName,
 			roomCount,
@@ -53,13 +81,17 @@ const AddBuildingForm = () => {
 			maintainerPhone,
 		};
 		if (isValidBuildingData(formData)) {
-			dispatch(saveBuildingData(formData));
+			if (buildingInfo) {
+				formData['buildingId'] = buildingInfo._id;
+				dispatch(updateBuildingData(formData));
+			} else {
+				dispatch(saveBuildingData(formData));
+			}
 		} else {
 			setText('Enter fields properly.');
 			setVisible(true);
 		}
 	};
-
 	return (
 		<Provider>
 			<ScrollView
@@ -71,7 +103,9 @@ const AddBuildingForm = () => {
 			>
 				{!authState.userInfo.firstLogin ? (
 					<CrossPlatformHeader
-						title="Add Apartment"
+						title={
+							buildingInfo ? 'Update Apartment' : 'Add Apartment'
+						}
 						backCallback={() => navigate('Properties')}
 						profile={false}
 					/>
@@ -93,6 +127,7 @@ const AddBuildingForm = () => {
 							onChangeText={(val) => setBuildingName(val)}
 							style={addBuildingFormstyles.textItemStyle}
 							inputStyle={addBuildingFormstyles.inputStyle}
+							value={buildingName}
 						/>
 
 						<TextInputCommon
@@ -101,51 +136,54 @@ const AddBuildingForm = () => {
 							onChangeText={(val) => setStreet(val)}
 							style={addBuildingFormstyles.textItemStyle}
 							inputStyle={addBuildingFormstyles.inputStyle}
+							value={street}
 						/>
 
 						<TextInputCommon
-							label="Select Address"
+							label="Address"
 							name="address"
 							onChangeText={(val) => setStateAddress(val)}
 							style={addBuildingFormstyles.textItemStyle}
 							inputStyle={addBuildingFormstyles.inputStyle}
+							value={stateAddress}
 						/>
 
-						<View style={addBuildingFormstyles.roomAndFloorC}>
-							<View>
-								<Text
-									style={
-										addBuildingFormstyles.roomAndFloorText
-									}
-								>
-									Total Floors
-								</Text>
-								<Counter
-									start={0}
-									onChange={(number, type) =>
-										setFloorCount(number)
-									}
-									buttonStyle={{ borderRadius: 25 }}
-								/>
-							</View>
-							<View>
-								<Text
-									style={
-										addBuildingFormstyles.roomAndFloorText
-									}
-								>
-									Total Rooms
-								</Text>
+						{!buildingInfo && (
+							<View style={addBuildingFormstyles.roomAndFloorC}>
+								<View>
+									<Text
+										style={
+											addBuildingFormstyles.roomAndFloorText
+										}
+									>
+										Total Floors
+									</Text>
+									<Counter
+										start={0}
+										onChange={(number, type) =>
+											setFloorCount(number)
+										}
+										buttonStyle={{ borderRadius: 25 }}
+									/>
+								</View>
+								<View>
+									<Text
+										style={
+											addBuildingFormstyles.roomAndFloorText
+										}
+									>
+										Total Rooms
+									</Text>
 
-								<CustomCounter
-									count={roomCount}
-									setCounter={setRoomCount}
-									setModalVisible={setModalVisible}
-								/>
+									<CustomCounter
+										count={roomCount}
+										setCounter={setRoomCount}
+										setModalVisible={setModalVisible}
+									/>
+								</View>
+								{/* Room and Floor section ends */}
 							</View>
-							{/* Room and Floor section ends */}
-						</View>
-
+						)}
 						{roomDetails.map((roomDetail, i) => {
 							return (
 								<AddRoomCard
@@ -177,8 +215,8 @@ const AddBuildingForm = () => {
 						</Portal>
 
 						<Button
-							title="Submit"
-							onPress={handleAddBuildingFormSubmit}
+							title={buildingInfo ? 'Update' : 'Add'}
+							onPress={handleAddBuildingAndUpdateFormSubmit}
 							buttonStyle={addBuildingFormstyles.submitBtn}
 							titleStyle={addBuildingFormstyles.submitBtnTxt}
 							loading={loading}

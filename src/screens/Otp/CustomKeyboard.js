@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome5';
 import { otpStyles } from './otpStyles';
 
 const CustomKeyboard = ({ setOtpValues, otpValues }) => {
@@ -20,6 +21,7 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 	const setValueInOtpTxt = (value) => {
 		otpValues.length !== 6 &&
 			value !== '-1' &&
+			value !== '' &&
 			setOtpValues([...otpValues, value]);
 		if (value === '-1') {
 			const newOtpValues = [...otpValues];
@@ -33,18 +35,28 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 				return (
 					<View
 						key={index}
-						style={{
-							width: 100,
-						}}
+						style={[
+							otpStyles.numpadChild,
+							index >= 0 && index <= 2
+								? otpStyles.numpadTopBorder
+								: null,
+						]}
 					>
 						<TouchableOpacity
 							onPress={() => {
 								setValueInOtpTxt(key);
 							}}
-							style={{ marginTop: 20 }}
+							style={otpStyles.keyBoardRow}
 						>
 							<Text style={otpStyles.key}>
-								{key === '-1' ? 'X' : key}
+								{key === '-1' ? (
+									<FontAwesomeIcons
+										name="backspace"
+										style={otpStyles.backSpaceIcon}
+									/>
+								) : (
+									key
+								)}
 							</Text>
 						</TouchableOpacity>
 					</View>

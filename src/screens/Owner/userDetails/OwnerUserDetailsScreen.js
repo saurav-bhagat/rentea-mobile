@@ -190,7 +190,6 @@ const OwnerUserDetailsScreen = () => {
 							placeholder="Pincode"
 							onChangeText={(val) => setPincode(val)}
 						/>
-
 						<Button
 							// rounded
 							transparent
