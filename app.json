@@ -11,11 +11,11 @@
     ],
     "ios": {
       "bundleIdentifier": "in.rentea.rentea",
-      "buildNumber": "0.0.2"
+      "buildNumber": "0.0.5"
     },
     "android": {
       "package": "in.rentea.rentea",
-      "versionCode": 1
+      "versionCode": 5
     }
   }
 }
