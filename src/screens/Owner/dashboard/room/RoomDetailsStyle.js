@@ -9,7 +9,7 @@ export const roomDetailStyles = ScaledSheet.create({
 	},
 	row1: { flexDirection: 'row', marginTop: '3@s' },
 	col1: { flex: 1, color: '#979797' },
-	col2: { flex: 4, paddingHorizontal: 10 },
+	col2: { flex: 6, paddingHorizontal: 10 },
 	rowInCol2: { flexDirection: 'row', marginTop: '3@s' },
 	col3: { flex: 1 },
 	roomNoTxt: { color: '#414141', fontSize: '18@s' },

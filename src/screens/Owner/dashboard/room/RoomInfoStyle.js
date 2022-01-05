@@ -35,4 +35,10 @@ export const roomInfoScreenStyles = ScaledSheet.create({
 		flex: 1,
 		color: '#979797',
 	},
+	noTenantTxt: {
+		textAlign: 'center',
+		marginTop: '20@mvs',
+		fontSize: '20@s',
+		fontFamily: 'interRegular',
+	},
 });

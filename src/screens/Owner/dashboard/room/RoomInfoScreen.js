@@ -83,7 +83,7 @@ const RoomInfoScreen = ({ route }) => {
 	return (
 		<ScrollView>
 			<CrossPlatformHeader
-				title=""
+				title="Room Details"
 				backCallback={() => {
 					navigate('PropertyInfo', { buildingId, roomId });
 				}}
@@ -118,7 +118,7 @@ const RoomInfoScreen = ({ route }) => {
 							/>
 						</View>
 					)}
-				{singleRoomData.tenants.length > 0 &&
+				{singleRoomData.tenants.length > 0 ? (
 					singleRoomData.tenants.map((tenant, i) => {
 						return (
 							<ListItem
@@ -161,7 +161,14 @@ const RoomInfoScreen = ({ route }) => {
 								</ListItem.Content>
 							</ListItem>
 						);
-					})}
+					})
+				) : (
+					<View>
+						<Text style={roomInfoScreenStyles.noTenantTxt}>
+							No Tenants :)
+						</Text>
+					</View>
+				)}
 				<SnackBar
 					visible={visible}
 					text={text}

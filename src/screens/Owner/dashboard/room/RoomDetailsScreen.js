@@ -25,7 +25,7 @@ export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 								Rent: {singleRoomData.rent}
 							</Text>
 							<Text style={roomDetailStyles.col1}>
-								Size: {singleRoomData.roomSize}
+								Size: {singleRoomData.roomSize + ' Sq.ft.'}
 							</Text>
 						</View>
 						<View style={roomDetailStyles.rowInCol2}>
