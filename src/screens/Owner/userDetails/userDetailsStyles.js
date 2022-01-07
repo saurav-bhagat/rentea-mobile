@@ -60,7 +60,7 @@ export const userDetailsStyles = ScaledSheet.create({
 		elevation: 8,
 	},
 	oudsFormContainer: {
-		width:'100%'
+		width: '100%',
 	},
 	oudsPhoneInputBox: {
 		paddingLeft: '20@ms',
@@ -90,7 +90,6 @@ export const userDetailsStyles = ScaledSheet.create({
 		shadowRadius: 4.65,
 		elevation: 8,
 		marginBottom: 15,
-
 	},
 	oudsContinueButton_text: {
 		color: '#fff',
@@ -106,8 +105,8 @@ export const userDetailsStyles = ScaledSheet.create({
 		justifyContent: 'space-between',
 	},
 	dropdownsRow: {
-		flexDirection: "row",
-		width: "100%",
+		flexDirection: 'row',
+		width: '100%',
 	},
 	dropdownBtnStyle: {
 		flexDirection: 'row',
@@ -124,7 +123,7 @@ export const userDetailsStyles = ScaledSheet.create({
 		elevation: 8,
 	},
 	dropdownBtnStyleDisabled: {
-		opacity:0.5,
+		opacity: 0.5,
 		flexDirection: 'row',
 		//paddingLeft: '20@ms',
 		flex: 1,
@@ -148,13 +147,13 @@ export const userDetailsStyles = ScaledSheet.create({
 		color: '#aaa',
 		textAlign: 'center',
 	},
-	dropdownDropdownStyle: { backgroundColor: "#EFEFEF" },
+	dropdownDropdownStyle: { backgroundColor: '#EFEFEF' },
 	dropdownRowStyle: {
-		backgroundColor: "#EFEFEF",
-		borderBottomColor: "#C5C5C5",
+		backgroundColor: '#EFEFEF',
+		borderBottomColor: '#C5C5C5',
 	},
 	dropdownRowTxtStyle: {
-		color: "#444",
-		textAlign: "left"
+		color: '#444',
+		textAlign: 'left',
 	},
 });

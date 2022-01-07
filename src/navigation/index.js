@@ -86,7 +86,7 @@ const RootRoutes = () => {
 				screenOptions={({ route, navigation }) => ({
 					headerShown: false,
 					gestureEnabled: true,
-					cardStyle: {backgroundColor:'#fff'}
+					cardStyle: { backgroundColor: '#fff' },
 				})}
 			>
 				{accessToken ? (

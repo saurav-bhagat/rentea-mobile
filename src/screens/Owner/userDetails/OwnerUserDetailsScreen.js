@@ -11,7 +11,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import {
 	fetchStates,
 	fetchCities,
-	defaultStatesList
+	defaultStatesList,
 } from '../../../redux/actions/getCityStateData';
 
 const OwnerUserDetailsScreen = () => {
@@ -32,7 +32,6 @@ const OwnerUserDetailsScreen = () => {
 	const { expoPushToken } = useNotification();
 
 	const handleUserDetailsSubmit = () => {
-
 		let formData = {
 			fName,
 			lName: fName,
@@ -53,12 +52,14 @@ const OwnerUserDetailsScreen = () => {
 	};
 
 	const fetchStatesData = () => {
-		fetchStates().then((result) => {
-			setStateArray(result);
-		}).catch((err)=>{
-			alert('error while fetching states, please try again')
-		});
-	}
+		fetchStates()
+			.then((result) => {
+				setStateArray(result);
+			})
+			.catch((err) => {
+				alert('error while fetching states, please try again');
+			});
+	};
 
 	const updateCitySelect = (stateName) => {
 		const stateForCity = stateArray.filter(
@@ -68,7 +69,9 @@ const OwnerUserDetailsScreen = () => {
 			.then((response) => {
 				setCitiesArray(response);
 			})
-			.catch((error) => alert('Error while fetching cities, please try again'));
+			.catch((error) =>
+				alert('Error while fetching cities, please try again')
+			);
 	};
 
 	useEffect(() => {
@@ -127,7 +130,7 @@ const OwnerUserDetailsScreen = () => {
 				</View>
 				<View style={userDetailsStyles.oudsRegionContainer}>
 					<View style={userDetailsStyles.dropdownsRow}>
-						{stateArray?.length >= 0 &&
+						{stateArray?.length >= 0 && (
 							<SelectDropdown
 								data={stateArray}
 								onSelect={(selectedItem, index) => {
@@ -137,7 +140,10 @@ const OwnerUserDetailsScreen = () => {
 									cityDropDownRef.current.reset();
 									updateCitySelect(selectedItem);
 								}}
-								buttonTextAfterSelection={(selectedItem, index) => {
+								buttonTextAfterSelection={(
+									selectedItem,
+									index
+								) => {
 									// text represented after item is selected
 									// if data array is an array of objects then return selectedItem.property to render after item is selected
 									return selectedItem.name;
@@ -148,14 +154,20 @@ const OwnerUserDetailsScreen = () => {
 									return item.name;
 								}}
 								buttonStyle={userDetailsStyles.dropdownBtnStyle}
-								buttonTextStyle={stat ? userDetailsStyles.dropdownBtnTxtStyleActive : userDetailsStyles.dropdownBtnTxtStyleInactive}
+								buttonTextStyle={
+									stat
+										? userDetailsStyles.dropdownBtnTxtStyleActive
+										: userDetailsStyles.dropdownBtnTxtStyleInactive
+								}
 								rowStyle={userDetailsStyles.dropdownRowStyle}
-								rowTextStyle={userDetailsStyles.dropdownRowTxtStyle}
+								rowTextStyle={
+									userDetailsStyles.dropdownRowTxtStyle
+								}
 								defaultButtonText="Select your state"
 							/>
-						}
+						)}
 						<View style={{ width: 12 }} />
-						{citiesArray?.length >= 0 &&
+						{citiesArray?.length >= 0 && (
 							<SelectDropdown
 								ref={cityDropDownRef}
 								data={citiesArray}
@@ -164,7 +176,10 @@ const OwnerUserDetailsScreen = () => {
 									console.log(selectedItem, index);
 									setCity(selectedItem.name);
 								}}
-								buttonTextAfterSelection={(selectedItem, index) => {
+								buttonTextAfterSelection={(
+									selectedItem,
+									index
+								) => {
 									// text represented after item is selected
 									// if data array is an array of objects then return selectedItem.property to render after item is selected
 									return selectedItem.name;
@@ -174,13 +189,23 @@ const OwnerUserDetailsScreen = () => {
 									// if data array is an array of objects then return item.property to represent item in dropdown
 									return item.name;
 								}}
-								buttonStyle={stat ? userDetailsStyles.dropdownBtnStyle : userDetailsStyles.dropdownBtnStyleDisabled}
-								buttonTextStyle={city ? userDetailsStyles.dropdownBtnTxtStyleActive : userDetailsStyles.dropdownBtnTxtStyleInactive}
+								buttonStyle={
+									stat
+										? userDetailsStyles.dropdownBtnStyle
+										: userDetailsStyles.dropdownBtnStyleDisabled
+								}
+								buttonTextStyle={
+									city
+										? userDetailsStyles.dropdownBtnTxtStyleActive
+										: userDetailsStyles.dropdownBtnTxtStyleInactive
+								}
 								rowStyle={userDetailsStyles.dropdownRowStyle}
-								rowTextStyle={userDetailsStyles.dropdownRowTxtStyle}
+								rowTextStyle={
+									userDetailsStyles.dropdownRowTxtStyle
+								}
 								defaultButtonText="Select your city"
 							/>
-						}
+						)}
 					</View>
 					<View style={userDetailsStyles.oudsFormContainer}>
 						<TextInput
@@ -197,7 +222,10 @@ const OwnerUserDetailsScreen = () => {
 							onPress={() => handleUserDetailsSubmit()}
 						>
 							{addUserState.loading ? (
-								<ActivityIndicator color="#ffffff" size="large" />
+								<ActivityIndicator
+									color="#ffffff"
+									size="large"
+								/>
 							) : (
 								<Text
 									style={
