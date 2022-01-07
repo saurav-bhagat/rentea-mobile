@@ -30,12 +30,13 @@ export const updateTenantFail = () => {
 	};
 };
 
-export const updateTenantDetails = (tenantDetails, roomId, buildingId) => {
+export const updateTenantDetails = (tenantDetails) => {
 	return async (dispatch) => {
 		dispatch(updateTenantRequest());
 
 		const body = { ...tenantDetails };
 		const token = await getToken();
+		const { buildingId, roomId, _id: tenantUserId } = tenantDetails;
 		axios
 			.put(`${API_URL}/owner/update-tenant-info`, body, {
 				headers: {
@@ -46,9 +47,10 @@ export const updateTenantDetails = (tenantDetails, roomId, buildingId) => {
 			.then(async (response) => {
 				dispatch(updateTenantSuccess());
 				await dispatch(getOwnerDashboard());
-				await navigate('RoomInfo', {
+				await navigate('TenantInfo', {
 					buildingId,
 					roomId,
+					tenantUserId,
 				});
 				console.log('Tenant details updated successfully.');
 			})

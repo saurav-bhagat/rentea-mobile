@@ -1,27 +1,24 @@
 import React, { useEffect } from 'react';
-import { ScrollView, View } from 'react-native';
-import { Button } from 'react-native-elements';
-import { useSelector, useDispatch } from 'react-redux';
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { Button, ListItem } from 'react-native-elements';
+import { useSelector } from 'react-redux';
+import { format } from 'date-fns';
+
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
-
-import TenantInfoScreen from '../tenant/TenantInfoScreen';
 import RoomDetailsScreen from './RoomDetailsScreen';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
-import { setPayWithCashResponseForSnack } from '../../../../redux/actions/payment/payWithCashAction';
+import { roomInfoScreenStyles } from './RoomInfoStyle';
 
 const tenantAdded = 'tenant added successfully';
-const transactionSuccessMsg = 'Transaction successfull';
-const tenantUpdate = 'tenant details updated successfully';
 const roomUpdate = 'room updated successfully';
 const defaultState = 'default state';
 
 const RoomInfoScreen = ({ route }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
-	const { msg: payWithCashResponseMsg } = useSelector(
-		(state) => state.payWithCash
-	);
+	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
 	const {
 		visible,
 		text,
@@ -30,33 +27,10 @@ const RoomInfoScreen = ({ route }) => {
 		onToggleSnackBar,
 		onDismissSnackBar,
 	} = useSnack();
-	const dispatch = useDispatch();
-	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
-	const { msg: tenantUpdateMsg } = useSelector((state) => state.updateTenant);
-	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
 
 	let { singleRoomData, propertyInfo, buildingId, roomId } = route.params;
 
 	useEffect(() => {
-		//  Integrating Snack after payingWithCash
-		if (payWithCashResponseMsg === transactionSuccessMsg) {
-			setVisible(true);
-			setText('Payment successfully updated');
-			dispatch(setPayWithCashResponseForSnack());
-		} else if (
-			payWithCashResponseMsg &&
-			payWithCashResponseMsg !== transactionSuccessMsg &&
-			payWithCashResponseMsg !== ''
-		) {
-			console.log(
-				'Error while paying with cash is ',
-				payWithCashResponseMsg
-			);
-			setVisible(true);
-			setText('Error while payment updation');
-			dispatch(setPayWithCashResponseForSnack());
-		}
-
 		//  Integrating Snack  after adding tenant
 		if (tenantMsg === tenantAdded) {
 			setVisible(true);
@@ -65,18 +39,6 @@ const RoomInfoScreen = ({ route }) => {
 			console.log('tenant msg is ', tenantAdded, tenantMsg);
 			setVisible(true);
 			setText('Error while adding tenant.');
-		}
-
-		//   Integrating Snack after updating tenantDetails
-		if (tenantUpdateMsg === tenantUpdate) {
-			setVisible(true);
-			setText('Tenant Detail updated successfully.');
-		} else if (
-			tenantUpdateMsg !== defaultState &&
-			tenantUpdateMsg !== tenantUpdate
-		) {
-			setVisible(true);
-			setText('Error while updating tenant.');
 		}
 
 		//   Integrating Snack after updating roomInfo
@@ -90,12 +52,10 @@ const RoomInfoScreen = ({ route }) => {
 			setVisible(true);
 			setText('Error while updating room info');
 		}
-	}, [payWithCashResponseMsg, tenantMsg, tenantUpdateMsg, updateRoomInfoMsg]);
+	}, [tenantMsg, updateRoomInfoMsg]);
 
 	// when navigating after adding tenant (addTenantAction),
-	// updating tenant (updateTenantAction),
-	// updating roomInfo (updateRoomInfoAction) and
-	// payWithCash (payWithCashAction).
+	// updating roomInfo (updateRoomInfoAction)
 	if (buildingId && roomId) {
 		propertyInfo = properties.ownerDashboardResult.buildings.filter(
 			(building) => building._id === buildingId
@@ -108,14 +68,26 @@ const RoomInfoScreen = ({ route }) => {
 			singleRoomData = singleRoomData[0];
 		}
 	}
+	// If we don't receive buildingId from params
+	// then we take it from property info
+	// for navigate back to propertyInfo screen
+	buildingId = propertyInfo._id;
 
+	const handleAddTenant = () => {
+		navigate('UpdateTenantInfo', {
+			singleRoomData,
+			propertyInfo,
+			showAddTenantScreenFlag: true,
+		});
+	};
 	return (
 		<ScrollView>
 			<CrossPlatformHeader
-				title="Room Info"
+				title="Room Details"
 				backCallback={() => {
-					navigate('PropertyInfo');
+					navigate('PropertyInfo', { buildingId, roomId });
 				}}
+				profile={false}
 			/>
 
 			<>
@@ -124,73 +96,78 @@ const RoomInfoScreen = ({ route }) => {
 					propertyInfo={propertyInfo}
 				/>
 				{singleRoomData.isMultipleTenant && (
-					<View
-						style={{
-							flexDirection: 'row',
-							justifyContent: 'flex-end',
-							marginTop: 10,
-							marginBottom: 10,
-							marginRight: 20,
-						}}
-					>
+					<View style={roomInfoScreenStyles.addTenantContainer}>
 						<Button
 							title="Add Tenant"
-							buttonStyle={{
-								backgroundColor: '#fff',
-								borderRadius: 20,
-							}}
-							titleStyle={{
-								color: '#109FDA',
-								fontSize: 15,
-							}}
-							onPress={() => {
-								navigate('UpdateTenantInfo', {
-									singleRoomData,
-									propertyInfo,
-									showAddTenantScreenFlag: true,
-								});
-							}}
+							buttonStyle={roomInfoScreenStyles.addTenantBtn}
+							titleStyle={roomInfoScreenStyles.addTenantTitle}
+							onPress={handleAddTenant}
 							raised
 						/>
 					</View>
 				)}
 				{!singleRoomData.isMultipleTenant &&
 					singleRoomData.tenants.length < 1 && (
-						<View
-							style={{
-								flexDirection: 'row',
-								justifyContent: 'flex-end',
-								marginTop: 10,
-								marginBottom: 10,
-								marginRight: 20,
-							}}
-						>
+						<View style={roomInfoScreenStyles.addTenantContainer}>
 							<Button
 								title="Add Tenant"
-								buttonStyle={{
-									backgroundColor: '#fff',
-									borderRadius: 20,
-								}}
-								titleStyle={{
-									color: '#109FDA',
-									fontSize: 15,
-								}}
-								onPress={() => {
-									navigate('UpdateTenantInfo', {
-										singleRoomData,
-										propertyInfo,
-										showAddTenantScreenFlag: true,
-									});
-								}}
+								buttonStyle={roomInfoScreenStyles.addTenantBtn}
+								titleStyle={roomInfoScreenStyles.addTenantTitle}
+								onPress={handleAddTenant}
 								raised
 							/>
 						</View>
 					)}
-				{singleRoomData.tenants.length > 0 && (
-					<TenantInfoScreen
-						singleRoomData={singleRoomData}
-						propertyInfo={propertyInfo}
-					/>
+				{singleRoomData.tenants.length > 0 ? (
+					singleRoomData.tenants.map((tenant, i) => {
+						return (
+							<ListItem
+								key={i}
+								Component={TouchableOpacity}
+								bottomDivider
+								containerStyle={roomInfoScreenStyles.cardStyle}
+								onPress={() => {
+									navigate('TenantInfo', {
+										singleRoomData,
+										propertyInfo,
+										tenant,
+									});
+								}}
+							>
+								<ListItem.Content>
+									<View style={roomInfoScreenStyles.row}>
+										<Text style={roomInfoScreenStyles.col1}>
+											Tenant name{' '}
+										</Text>
+										<Text style={roomInfoScreenStyles.col}>
+											{tenant.name}
+										</Text>
+									</View>
+									<View style={roomInfoScreenStyles.row}>
+										<Text style={roomInfoScreenStyles.col1}>
+											Due Date{' '}
+										</Text>
+										<Text style={roomInfoScreenStyles.col}>
+											{`${
+												singleRoomData.isMultipleTenant
+													? tenant.rent
+													: singleRoomData.rent
+											} rs  on ${format(
+												new Date(tenant.rentDueDate),
+												'dd/MM/yyyy'
+											)}`}
+										</Text>
+									</View>
+								</ListItem.Content>
+							</ListItem>
+						);
+					})
+				) : (
+					<View>
+						<Text style={roomInfoScreenStyles.noTenantTxt}>
+							No Tenants :)
+						</Text>
+					</View>
 				)}
 				<SnackBar
 					visible={visible}
