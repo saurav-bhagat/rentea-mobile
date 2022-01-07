@@ -40,8 +40,13 @@ export const setPayWithCashResponseForSnack = () => {
 export const payWithCash = (paymentDetail) => {
 	return async (dispatch) => {
 		dispatch(payWithCashRequest());
-		const { amount, tenantUserId, rentDueDate, roomId, buildingId } =
-			paymentDetail;
+		const { tenant, singleRoomData, propertyInfo } = paymentDetail;
+		const { _id: tenantUserId, rentDueDate } = tenant;
+		let { rent: amount } = tenant;
+		if (!singleRoomData.isMultipleTenant) {
+			amount = singleRoomData.rent;
+		}
+
 		const body = { amount, tenantUserId, rentDueDate };
 		const token = await getToken();
 		axios
@@ -54,9 +59,10 @@ export const payWithCash = (paymentDetail) => {
 			.then(async (response) => {
 				dispatch(payWithCashSuccess(response.data.msg));
 				await dispatch(getOwnerDashboard());
-				await navigate('RoomInfo', {
-					roomId,
-					buildingId,
+				await navigate('TenantInfo', {
+					roomId: singleRoomData._id,
+					buildingId: propertyInfo._id,
+					tenantUserId,
 				});
 			})
 			.catch((err) => {

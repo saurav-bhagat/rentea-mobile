@@ -1,21 +1,44 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Card, CardItem, Body } from 'native-base';
+import { Card } from 'react-native-elements';
 
 import { navigate } from '../../../../navigation/rootNavigation';
 import { roomDetailStyles } from '../room/RoomDetailsStyle';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import RoomIcon from '../../../../../assets/icons/roomIcon.svg';
 
 export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 	return (
 		<View style={roomDetailStyles.roomInfoContainer}>
-			<Text style={roomDetailStyles.roomInfoTitle}>
-				Room Details for {singleRoomData.roomNo}
-			</Text>
-
 			<Card>
-				<CardItem>
-					<Body>
+				<View style={roomDetailStyles.row1}>
+					<View style={roomDetailStyles.col1}>
+						<RoomIcon />
+					</View>
+					<View style={roomDetailStyles.col2}>
+						<Text style={roomDetailStyles.roomNoTxt}>
+							Room No {singleRoomData.roomNo}
+						</Text>
+
+						<View style={roomDetailStyles.rowInCol2}>
+							<Text style={roomDetailStyles.col1}>
+								Rent: {singleRoomData.rent}
+							</Text>
+							<Text style={roomDetailStyles.col1}>
+								Size: {singleRoomData.roomSize + ' Sq.ft.'}
+							</Text>
+						</View>
+						<View style={roomDetailStyles.rowInCol2}>
+							<Text style={roomDetailStyles.col1}>
+								Floor: {singleRoomData.floor}
+							</Text>
+							<Text style={roomDetailStyles.col1}>
+								BHK: {singleRoomData.type.split('')[0]}
+							</Text>
+						</View>
+					</View>
+
+					<View style={roomDetailStyles.col3}>
 						<FontAwesome5
 							onPress={() =>
 								navigate('UpdateRoomDetails', {
@@ -23,25 +46,17 @@ export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 									propertyInfo,
 								})
 							}
-							style={{
-								position: 'absolute',
-								right: 0,
-								fontSize: 25,
-								color: '#109FDA',
-							}}
+							style={roomDetailStyles.iconStyle}
 							name={'edit'}
 						/>
-						<Text>Room No : {singleRoomData.roomNo}</Text>
-						<Text>Rent Amount: {singleRoomData.rent}</Text>
-						<Text>Room Size: {singleRoomData.roomSize}</Text>
-						<Text>Floor: {singleRoomData.floor}</Text>
-						<Text>BHK: {singleRoomData.type.split('')[0]}</Text>
-						<Text>
-							MultipleTenantAllowed :{' '}
-							{singleRoomData.isMultipleTenant ? 'Yes' : 'No'}
-						</Text>
-					</Body>
-				</CardItem>
+					</View>
+				</View>
+				<View style={roomDetailStyles.row1}>
+					<Text style={roomDetailStyles.col1}>
+						MultipleTenant :{' '}
+						{singleRoomData.isMultipleTenant ? 'Yes' : 'No'}
+					</Text>
+				</View>
 			</Card>
 		</View>
 	);

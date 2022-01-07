@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
 import { Button } from 'native-base';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -86,15 +86,11 @@ const AddTenantScreen = ({ route }) => {
 			email,
 			phoneNumber: phone,
 			securityAmount: security,
+			roomId: roomData._id,
+			buildingId: propertyInfo._id,
 		};
 		if (isValidTenantData(tenantData)) {
-			dispatch(
-				updateTenantDetails(
-					tenantData,
-					(roomId = roomData._id),
-					(buildingId = propertyInfo._id)
-				)
-			);
+			dispatch(updateTenantDetails(tenantData));
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);
@@ -117,19 +113,25 @@ const AddTenantScreen = ({ route }) => {
 		}
 	}, [error]);
 
+	const handleGoBack = () => {
+		if (!showAddTenantScreenFlag) {
+			navigate('TenantInfo', {
+				singleRoomData: roomData,
+				propertyInfo: property,
+				tenant,
+			});
+		} else {
+			navigate('RoomInfo', {
+				singleRoomData: roomData,
+				propertyInfo: property,
+			});
+		}
+	};
 	return (
 		<View>
-			<CrossPlatformHeader
-				title="TenantInfo"
-				backCallback={() => {
-					navigate('RoomInfo', {
-						singleRoomData: roomData,
-						propertyInfo: property,
-					});
-				}}
-			/>
+			<CrossPlatformHeader backCallback={handleGoBack} />
 
-			<KeyboardAwareScrollView style={{ minHeight: '100%' }}>
+			<ScrollView contentContainerStyle={{ height: 700 }}>
 				<View style={addTenantStyles.addTenantContainer}>
 					<Text style={{ fontSize: 19 }}>
 						{!showAddTenantScreenFlag
@@ -200,7 +202,7 @@ const AddTenantScreen = ({ route }) => {
 					onDismissSnackBar={onDismissSnackBar}
 					onToggleSnackBar={onToggleSnackBar}
 				/>
-			</KeyboardAwareScrollView>
+			</ScrollView>
 		</View>
 	);
 };

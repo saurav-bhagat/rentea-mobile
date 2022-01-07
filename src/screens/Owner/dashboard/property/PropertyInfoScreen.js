@@ -9,13 +9,12 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import { navigate } from '../../../../navigation/rootNavigation';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
-
 import SVGRoom from '../../../../../assets/icons/roomIcon.svg';
 
 const roomAdded = 'room added successfully';
 const defaultState = 'default state';
 
-const PropertyInfoScreen = ({ route, navigation }) => {
+const PropertyInfoScreen = ({ route }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
 
 	const [roomDataWithFloorNumber, setRoomDataWithFloorNumber] = useState([]);
@@ -32,10 +31,12 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 		onDismissSnackBar,
 	} = useSnack();
 
-	let { propertyInfo, buildingId } = route.params;
+	let { propertyInfo, buildingId, roomId } = route.params;
 	let roomListData = propertyInfo.rooms;
 	let tempRoomDataWithFloorNumber = [];
+
 	// After navigate from addRoomSeperately action
+	// and callBack from roomInfo screen
 	if (buildingId) {
 		propertyInfo = properties.ownerDashboardResult.buildings.filter(
 			(building) => building._id === buildingId
@@ -57,7 +58,7 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 
 	useEffect(() => {
 		setRoomDataWithFloorNumber(setTempRoomDataWithFloorNo());
-	}, [roomListData.length]);
+	}, [roomListData.length, buildingId, roomId]);
 
 	useEffect(() => {
 		// Integrating Snack  after adding room
@@ -127,14 +128,10 @@ const PropertyInfoScreen = ({ route, navigation }) => {
 													propertiesScreenStyles.listContainer
 												}
 												onPress={() => {
-													navigation.navigate(
-														'RoomInfo',
-														{
-															singleRoomData:
-																item,
-															propertyInfo,
-														}
-													);
+													navigate('RoomInfo', {
+														singleRoomData: item,
+														propertyInfo,
+													});
 												}}
 											>
 												<ListItem.Content

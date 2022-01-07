@@ -10,6 +10,9 @@ import RoomInfoScreen from '../screens/Owner/dashboard/room/RoomInfoScreen';
 import OwnerPaymentInfoScreen from '../screens/Owner/dashboard/payment/OwnerPaymentInfoScreen';
 import AddBuildingForm from '../screens/Owner/addBuilding/AddBuildingForm';
 import DashboardHome from '../screens/Owner/owner-dashboard/DashboardHome';
+import TenantInfoScreen from '../screens/Owner/dashboard/tenant/TenantInfoScreen';
+import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
+import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,6 +27,9 @@ const PropertiesStack = () => (
 		<Stack.Screen name="Properties" component={DashboardHome} />
 		<Stack.Screen name="PropertyInfo" component={PropertyInfoScreen} />
 		<Stack.Screen name="RoomInfo" component={RoomInfoScreen} />
+		<Stack.Screen name="TenantInfo" component={TenantInfoScreen} />
+		<Stack.Screen name="UpdateRoomDetails" component={UpdateRoomDetails} />
+		<Stack.Screen name="UpdateTenantInfo" component={AddTenantScreen} />
 	</Stack.Navigator>
 );
 
