@@ -79,19 +79,19 @@ export const saveBuildingData = (buildingObj) => {
 			? state.addRoomDetails.roomDetails.map((room) => {
 					if (room.isMultipleTenant) {
 						return {
-							type: `${room.bhk}bhk`,
+							type: `${room.roomType}bhk`,
 							floor: room.floor,
 							roomNo: room.roomNo,
-							roomSize: room.sizeInFt,
+							roomSize: room.roomSize,
 							isMultipleTenant: room.isMultipleTenant,
 						};
 					} else {
 						return {
 							rent: room.rent,
-							type: `${room.bhk}bhk`,
+							type: `${room.roomType}bhk`,
 							floor: room.floor,
 							roomNo: room.roomNo,
-							roomSize: room.sizeInFt,
+							roomSize: room.roomSize,
 							isMultipleTenant: room.isMultipleTenant,
 						};
 					}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TextInput, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Checkbox } from 'react-native-paper';
 import { Button } from 'react-native-elements';
@@ -12,17 +12,24 @@ import { saveRoomData, updateRoomData } from '../../../redux/actions';
 import useSnack from '../../../components/common/useSnack';
 import SnackBar from '../../../components/common/SnackBar';
 import { addRoomFormStyles } from './addRoomFormStyle';
-
+import { addRoomSeparately } from '../../../redux/actions/ownerActions/addRoomSeparately';
 DropDownPicker.setListMode('SCROLLVIEW');
 
-const AddRoomForm = ({ floorCount, roomDetail, dismissAddRoomForm }) => {
+const AddRoomForm = ({
+	floorCount,
+	roomDetail,
+	dismissAddRoomForm,
+	addRoomSeparatelyFlag,
+	ownerId,
+	buildingId,
+}) => {
 	const [roomNo, setRoomNo] = useState(null);
 	const [rent, setRent] = useState(null);
 	const [security, setSecurity] = useState(null);
 	const [isMultipleTenant, setIsMultipleTenant] = useState(null);
 	const [selectedType, setSelectedType] = useState(null);
 	const [selectedFloor, setSelectedFloor] = useState(null);
-
+	const [roomSize, setRoomSize] = useState(null);
 	const [roomTypes, setRoomTypes] = useState([
 		{ label: '1BHK', value: 1 },
 		{ label: '2BHK', value: 2 },
@@ -50,10 +57,10 @@ const AddRoomForm = ({ floorCount, roomDetail, dismissAddRoomForm }) => {
 	const [loader, setLoader] = useState(false);
 
 	const currentRoomData = {
-		_id: new Date() + 'dean_winchester',
+		_id: new Date().getTime() + 'dean_winchester',
 		roomNo,
-		sizeInFt: 3000,
-		bhk: selectedType,
+		roomSize,
+		roomType: selectedType,
 		isMultipleTenant,
 		floor: selectedFloor,
 	};
@@ -115,6 +122,28 @@ const AddRoomForm = ({ floorCount, roomDetail, dismissAddRoomForm }) => {
 			}
 		}
 	};
+	const handleAddAndUpdateRoomSeperately = () => {
+		delete currentRoomData._id;
+		const roomData = {
+			ownerId,
+			buildingId,
+			rooms: [{ ...currentRoomData, type: selectedType }],
+		};
+		// adding room seperately
+		if (validateRoomFields(currentRoomData, selectedFloor)) {
+			console.log('current room data is ', roomData);
+			dispatch(addRoomSeparately(roomData));
+			setText(`Room ${roomNo} added successfully`);
+			setVisible(true);
+			setTimeout(() => {
+				setLoader(false);
+				dismissAddRoomForm();
+			}, 1000);
+		} else {
+			setText('Enter fields properly.');
+			setVisible(true);
+		}
+	};
 
 	const SelectRoomPlaceholder = {
 		label: 'Select room type...',
@@ -135,30 +164,51 @@ const AddRoomForm = ({ floorCount, roomDetail, dismissAddRoomForm }) => {
 					{roomDetail ? 'Update room details' : 'Add room details'}
 				</Text>
 			</View>
-			<TextInputCommon
-				label="Room Number"
-				name="roomNo"
-				value={roomNo}
-				onChangeText={(val) => setRoomNo(val)}
-				style={addRoomFormStyles.textItemStyle}
-				inputStyle={addRoomFormStyles.inputStyle}
-			/>
+			<View style={addRoomFormStyles.row}>
+				<View style={addRoomFormStyles.col}>
+					<TextInputCommon
+						label="Room no"
+						name="roomNo"
+						value={roomNo}
+						onChangeText={(val) => setRoomNo(val)}
+						style={addRoomFormStyles.textItemStyle}
+						inputStyle={{}}
+					/>
+				</View>
+				<View style={addRoomFormStyles.col}>
+					<TextInputCommon
+						label="Room size"
+						name="roomSize"
+						value={roomSize}
+						onChangeText={(val) => setRoomSize(val)}
+						style={addRoomFormStyles.textItemStyle}
+						inputStyle={addRoomFormStyles.inputStyle}
+					/>
+				</View>
+			</View>
+
 			{!isMultipleTenant && (
-				<View style={addRoomFormStyles.rentSecurityContainer}>
-					<TextInput
-						style={addRoomFormStyles.rentTxtInptContainer}
-						onChangeText={(val) => setRent(val)}
-						value={rent}
-						placeholder="Rent (INR)"
-						keyboardType="numeric"
-					/>
-					<TextInput
-						style={addRoomFormStyles.securityTxtInptContainer}
-						onChangeText={(val) => setSecurity(val)}
-						value={security}
-						placeholder="Security (INR)"
-						keyboardType="numeric"
-					/>
+				<View style={addRoomFormStyles.row}>
+					<View style={addRoomFormStyles.col}>
+						<TextInputCommon
+							label="Rent"
+							name="rent"
+							value={rent}
+							onChangeText={(val) => setRent(val)}
+							style={addRoomFormStyles.textItemStyle}
+							inputStyle={{}}
+						/>
+					</View>
+					<View style={addRoomFormStyles.col}>
+						<TextInputCommon
+							label="Security"
+							name="security"
+							value={security}
+							onChangeText={(val) => setSecurity(val)}
+							style={addRoomFormStyles.textItemStyle}
+							inputStyle={addRoomFormStyles.inputStyle}
+						/>
+					</View>
 				</View>
 			)}
 			<RNPickerSelect
@@ -199,7 +249,11 @@ const AddRoomForm = ({ floorCount, roomDetail, dismissAddRoomForm }) => {
 					title={roomDetail ? 'Update room' : 'Add room'}
 					buttonStyle={addRoomFormStyles.addRoomBtn}
 					titleStyle={addRoomFormStyles.addRoomBtnTxt}
-					onPress={handleAddAndUpdateRoom}
+					onPress={
+						!addRoomSeparatelyFlag
+							? handleAddAndUpdateRoom
+							: handleAddAndUpdateRoomSeperately
+					}
 					loading={loader}
 				/>
 			</View>

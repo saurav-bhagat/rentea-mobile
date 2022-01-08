@@ -205,6 +205,7 @@ const AddBuildingForm = ({ route }) => {
 									dismissAddRoomForm={() =>
 										setModalVisible(false)
 									}
+									addRoomSeparatelyFlag={false}
 								/>
 							</Modal>
 						</Portal>

@@ -63,4 +63,6 @@ export const addRoomFormStyles = ScaledSheet.create({
 		padding: 10,
 		flex: 1,
 	},
+	row: { flexDirection: 'row' },
+	col: { flex: 1, paddingRight: 20 },
 });
