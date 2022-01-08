@@ -7,12 +7,16 @@ import RNPickerSelect from 'react-native-picker-select';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TextInputCommon from '../../../components/common/TextInputCommon';
-import { validateRoomFields } from '../../../helpers/addBuildingValidation';
+import {
+	validateRoomFields,
+	validateRoomFieldsForUpdate,
+} from '../../../helpers/addBuildingValidation';
 import { saveRoomData, updateRoomData } from '../../../redux/actions';
 import useSnack from '../../../components/common/useSnack';
 import SnackBar from '../../../components/common/SnackBar';
 import { addRoomFormStyles } from './addRoomFormStyle';
 import { addRoomSeparately } from '../../../redux/actions/ownerActions/addRoomSeparately';
+import { updateRoomDetail } from '../../../redux/actions/ownerActions/updateRoomAction';
 DropDownPicker.setListMode('SCROLLVIEW');
 
 const AddRoomForm = ({
@@ -26,7 +30,7 @@ const AddRoomForm = ({
 	const [roomNo, setRoomNo] = useState(null);
 	const [rent, setRent] = useState(null);
 	const [security, setSecurity] = useState(null);
-	const [isMultipleTenant, setIsMultipleTenant] = useState(null);
+	const [isMultipleTenant, setIsMultipleTenant] = useState(false);
 	const [selectedType, setSelectedType] = useState(null);
 	const [selectedFloor, setSelectedFloor] = useState(null);
 	const [roomSize, setRoomSize] = useState(null);
@@ -37,8 +41,7 @@ const AddRoomForm = ({
 		{ label: '1RK', value: 0.5 },
 	]);
 
-	const floorNums = [...Array(floorCount + 1).keys()];
-
+	const floorNums = [...Array(parseInt(floorCount) + 1).keys()];
 	const [floors, setFloors] = useState(
 		floorNums.map((num) => {
 			return { label: num.toString(), value: num };
@@ -68,23 +71,42 @@ const AddRoomForm = ({
 		currentRoomData['rent'] = rent;
 		currentRoomData['security'] = security;
 	}
+	// for room update
+	if (rent) {
+		currentRoomData['rent'] = rent;
+	}
 	useEffect(() => {
 		if (roomDetail) {
-			const {
+			let {
 				roomNo,
-				bhk: selectedType,
+				// It came from  redux
+				roomType,
+				// It came from db
+				type,
 				rent,
 				security,
 				isMultipleTenant,
-				floor: selectedFloor,
+				floor,
+				roomSize,
 			} = roomDetail;
-
+			rent = rent.toString();
+			if (!roomType) {
+				roomType = parseInt(type.split('')[0]);
+			}
+			if (typeof floor === 'string') {
+				floor = parseInt(floor);
+			}
+			// Todo: Once we integrate security in backend then we ill remove this
+			if (!security) {
+				security = rent;
+			}
 			setRoomNo(roomNo);
-			setSelectedType(selectedType);
+			setSelectedType(roomType);
 			setRent(rent);
 			setSecurity(security);
 			setIsMultipleTenant(isMultipleTenant);
-			setSelectedFloor(selectedFloor);
+			setSelectedFloor(floor);
+			setRoomSize(roomSize);
 		}
 	}, [roomDetail]);
 
@@ -129,19 +151,41 @@ const AddRoomForm = ({
 			buildingId,
 			rooms: [{ ...currentRoomData, type: selectedType }],
 		};
-		// adding room seperately
-		if (validateRoomFields(currentRoomData, selectedFloor)) {
-			console.log('current room data is ', roomData);
-			dispatch(addRoomSeparately(roomData));
-			setText(`Room ${roomNo} added successfully`);
-			setVisible(true);
-			setTimeout(() => {
-				setLoader(false);
-				dismissAddRoomForm();
-			}, 1000);
+
+		if (!roomDetail) {
+			// adding room seperately
+			if (validateRoomFields(currentRoomData, selectedFloor)) {
+				dispatch(addRoomSeparately(roomData));
+				setText(`Room ${roomNo} added successfully`);
+				setVisible(true);
+				setTimeout(() => {
+					setLoader(false);
+					dismissAddRoomForm();
+				}, 1000);
+			} else {
+				setText('Enter fields properly.');
+				setVisible(true);
+			}
 		} else {
-			setText('Enter fields properly.');
-			setVisible(true);
+			// update room seperately
+			const roomData = {
+				roomId: roomDetail._id,
+				...currentRoomData,
+			};
+
+			if (validateRoomFieldsForUpdate(roomData)) {
+				//TODO: floor number shouldn't be updated to more than the capacity of building
+				dispatch(updateRoomDetail(roomData, buildingId));
+				setText(`Room ${roomNo} updated successfully`);
+				setVisible(true);
+				setTimeout(() => {
+					setLoader(false);
+					dismissAddRoomForm();
+				}, 1000);
+			} else {
+				setText('Enter fields properly');
+				setVisible(true);
+			}
 		}
 	};
 
