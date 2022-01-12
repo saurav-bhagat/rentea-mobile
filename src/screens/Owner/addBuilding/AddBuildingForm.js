@@ -24,7 +24,7 @@ const AddBuildingForm = ({ route }) => {
 	const { roomDetails } = useSelector((state) => state.addRoomDetails);
 	const [buildingName, setBuildingName] = useState('');
 	const [roomCount, setRoomCount] = useState(0);
-	const [floorCount, setFloorCount] = useState('');
+	const [floorCount, setFloorCount] = useState(0);
 	const [stateAddress, setStateAddress] = useState('');
 	const [pinCode, setPinCode] = useState('835210');
 	const [street, setStreet] = useState('');

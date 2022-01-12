@@ -10,7 +10,7 @@ export const addRoomFormStyles = ScaledSheet.create({
 		textAlign: 'center',
 	},
 	addRoomBtnContainer: {
-		marginTop: 20,
+		marginVertical: '20@ms',
 	},
 	addRoomBtn: {
 		width: 120,
