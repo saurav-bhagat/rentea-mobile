@@ -118,4 +118,10 @@ export const propertiesScreenStyles = ScaledSheet.create({
 	},
 	plsAddRoomContainer: { flex: 1, marginTop: '20@s' },
 	plsAddRoomTxt: { textAlign: 'center' },
+	addRoomFormModalContainer: {
+		backgroundColor: '#fff',
+		padding: 30,
+		marginHorizontal: 20,
+		borderRadius: 15,
+	},
 });

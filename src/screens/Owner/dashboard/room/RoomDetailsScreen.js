@@ -2,12 +2,15 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 
-import { navigate } from '../../../../navigation/rootNavigation';
 import { roomDetailStyles } from '../room/RoomDetailsStyle';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import RoomIcon from '../../../../../assets/icons/roomIcon.svg';
 
-export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
+export default function RoomDetailsScreen({
+	singleRoomData,
+	propertyInfo,
+	setUpdateRoomModalFlag,
+}) {
 	return (
 		<View style={roomDetailStyles.roomInfoContainer}>
 			<Card>
@@ -40,12 +43,7 @@ export default function RoomDetailsScreen({ singleRoomData, propertyInfo }) {
 
 					<View style={roomDetailStyles.col3}>
 						<FontAwesome5
-							onPress={() =>
-								navigate('UpdateRoomDetails', {
-									singleRoomData,
-									propertyInfo,
-								})
-							}
+							onPress={() => setUpdateRoomModalFlag()}
 							style={roomDetailStyles.iconStyle}
 							name={'edit'}
 						/>
