@@ -2,6 +2,11 @@ import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { compareAsc } from 'date-fns';
 import TransactionCard from '../../../Tenant/payments/TransactionCard';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { navigate } from '../../../../navigation/rootNavigation';
+import { ownerPaymentStyles } from './OwnerPaymentStyles';
+
+const upcomingColor = '#96E0FF';
 
 const UpcomingPayments = ({ data }) => {
 	const upComingPaymentData =
@@ -13,9 +18,24 @@ const UpcomingPayments = ({ data }) => {
 				);
 				if (result === 1) {
 					return (
-						<View key={i}>
-							<TransactionCard data={payment} />
-						</View>
+						<TouchableOpacity
+							key={i}
+							onPress={() =>
+								navigate('TransactionScreen', { payment })
+							}
+						>
+							<View
+								key={i}
+								style={
+									ownerPaymentStyles.transactionCardContainer
+								}
+							>
+								<TransactionCard
+									data={payment}
+									color={upcomingColor}
+								/>
+							</View>
+						</TouchableOpacity>
 					);
 				}
 			})

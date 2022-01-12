@@ -116,24 +116,41 @@ const OwnerPaymentInfoScreen = () => {
 	}
 	return (
 		<View style={ownerPaymentStyles.ownerPaymentContainer}>
-			<Tabs renderTabBar={renderTabBar}>
+			<Tabs
+				renderTabBar={renderTabBar}
+				tabContainerStyle={ownerPaymentStyles.tabContainerStyle}
+				style={ownerPaymentStyles.tabBackgroundColor}
+				tabBarUnderlineStyle={{ width: 0 }}
+			>
 				<Tab
-					tabStyle={{ backgroundColor: '#109FDA' }}
-					activeTabStyle={{ backgroundColor: '#109FDA' }}
 					heading="Pending"
+					tabStyle={ownerPaymentStyles.tabStyle}
+					activeTabStyle={[
+						ownerPaymentStyles.activeTabStyle,
+						{ marginLeft: 5 },
+					]}
+					textStyle={ownerPaymentStyles.textStyle}
+					activeTextStyle={ownerPaymentStyles.activeTextStyle}
 				>
 					<PendingPayments data={pendingPaymentData} />
 				</Tab>
 				<Tab
-					tabStyle={{ backgroundColor: '#109FDA' }}
-					activeTabStyle={{ backgroundColor: '#109FDA' }}
+					tabStyle={ownerPaymentStyles.tabStyle}
+					activeTabStyle={ownerPaymentStyles.activeTabStyle}
+					activeTextStyle={ownerPaymentStyles.activeTextStyle}
+					textStyle={ownerPaymentStyles.textStyle}
 					heading="Upcoming"
 				>
 					<UpcomingPayments data={upcomingPaymentData} />
 				</Tab>
 				<Tab
-					tabStyle={{ backgroundColor: '#109FDA' }}
-					activeTabStyle={{ backgroundColor: '#109FDA' }}
+					tabStyle={ownerPaymentStyles.tabStyle}
+					activeTabStyle={[
+						ownerPaymentStyles.activeTabStyle,
+						{ marginRight: 5 },
+					]}
+					textStyle={ownerPaymentStyles.textStyle}
+					activeTextStyle={ownerPaymentStyles.activeTextStyle}
 					heading="Completed"
 				>
 					<CompletedPayments data={completedPaymentData} />
