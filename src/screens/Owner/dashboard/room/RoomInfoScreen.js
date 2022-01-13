@@ -12,6 +12,7 @@ import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import { roomInfoScreenStyles } from './RoomInfoStyle';
 import AddRoomForm from '../../addBuilding/AddRoomForm';
+import AddTenantScreen from '../tenant/AddTenantScreen';
 
 const tenantAdded = 'tenant added successfully';
 const roomUpdate = 'room updated successfully';
@@ -22,6 +23,7 @@ const RoomInfoScreen = ({ route }) => {
 	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
 	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
 	const [updateRoomModal, setUpdateRoomModal] = useState(false);
+	const [addTenantModalFlag, setAddTenantModalFlag] = useState(false);
 	const {
 		visible,
 		text,
@@ -101,19 +103,13 @@ const RoomInfoScreen = ({ route }) => {
 						propertyInfo={propertyInfo}
 						setUpdateRoomModalFlag={() => setUpdateRoomModal(true)}
 					/>
-
+					{/* Modal for room details update */}
 					<Portal>
 						<Modal
 							visible={updateRoomModal}
 							onDismiss={() => setUpdateRoomModal(false)}
 							contentContainerStyle={
-								//propertiesScreenStyles.addRoomFormModalContainer
-								{
-									backgroundColor: '#fff',
-									padding: 30,
-									marginHorizontal: 20,
-									borderRadius: 15,
-								}
+								roomInfoScreenStyles.roomUpdateModalContainer
 							}
 						>
 							<AddRoomForm
@@ -134,7 +130,7 @@ const RoomInfoScreen = ({ route }) => {
 								title="Add Tenant"
 								buttonStyle={roomInfoScreenStyles.addTenantBtn}
 								titleStyle={roomInfoScreenStyles.addTenantTitle}
-								onPress={handleAddTenant}
+								onPress={() => setAddTenantModalFlag(true)}
 								raised
 							/>
 						</View>
@@ -152,11 +148,32 @@ const RoomInfoScreen = ({ route }) => {
 									titleStyle={
 										roomInfoScreenStyles.addTenantTitle
 									}
-									onPress={handleAddTenant}
+									onPress={() => setAddTenantModalFlag(true)}
 									raised
 								/>
 							</View>
 						)}
+
+					{/* Modal for add Tenant */}
+					<Portal>
+						<Modal
+							visible={addTenantModalFlag}
+							onDismiss={() => setAddTenantModalFlag(false)}
+							contentContainerStyle={
+								roomInfoScreenStyles.addTenantModalContainer
+							}
+						>
+							<AddTenantScreen
+								singleRoomData={singleRoomData}
+								propertyInfo={propertyInfo}
+								showAddTenantScreenFlag={true}
+								dismissAddAndUpdateTenantModal={() =>
+									setAddTenantModalFlag(false)
+								}
+							/>
+						</Modal>
+					</Portal>
+
 					{singleRoomData.tenants.length > 0 ? (
 						singleRoomData.tenants.map((tenant, i) => {
 							return (
@@ -224,6 +241,7 @@ const RoomInfoScreen = ({ route }) => {
 							</Text>
 						</View>
 					)}
+
 					<SnackBar
 						visible={visible}
 						text={text}
