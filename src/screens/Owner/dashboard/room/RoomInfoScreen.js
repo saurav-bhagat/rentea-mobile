@@ -78,14 +78,6 @@ const RoomInfoScreen = ({ route }) => {
 	// for navigate back to propertyInfo screen
 	buildingId = propertyInfo._id;
 
-	const handleAddTenant = () => {
-		navigate('UpdateTenantInfo', {
-			singleRoomData,
-			propertyInfo,
-			showAddTenantScreenFlag: true,
-		});
-	};
-
 	return (
 		<Provider>
 			<ScrollView>
@@ -219,9 +211,7 @@ const RoomInfoScreen = ({ route }) => {
 												style={roomInfoScreenStyles.col}
 											>
 												{`${
-													singleRoomData.isMultipleTenant
-														? tenant.rent
-														: singleRoomData.rent
+													tenant.rent
 												} rs  on ${format(
 													new Date(
 														tenant.rentDueDate

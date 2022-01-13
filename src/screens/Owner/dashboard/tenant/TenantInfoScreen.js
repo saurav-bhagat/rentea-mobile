@@ -211,9 +211,7 @@ const TenantInfoScreen = ({ route }) => {
 					<View style={tenantInfoStyles.row}>
 						<Text style={tenantInfoStyles.col1}>Rent</Text>
 						<Text style={tenantInfoStyles.col}>
-							{singleRoomData.isMultipleTenant
-								? tenantData.rent
-								: singleRoomData.rent}
+							{tenantData.rent}
 						</Text>
 					</View>
 					<View style={tenantInfoStyles.row}>

@@ -51,27 +51,16 @@ const AddTenantScreen = ({
 	} = useSnack();
 
 	const handleAddTenant = () => {
-		let tenantData;
-		if (isMultipleTenant) {
-			tenantData = {
-				name,
-				email,
-				phoneNumber: phone,
-				securityAmount: security,
-				roomId: roomData._id,
-				buildId: propertyInfo._id,
-				rent,
-			};
-		} else {
-			tenantData = {
-				name,
-				email,
-				phoneNumber: phone,
-				securityAmount: security,
-				roomId: roomData._id,
-				buildId: propertyInfo._id,
-			};
-		}
+		let tenantData = {
+			name,
+			email,
+			phoneNumber: phone,
+			securityAmount: security,
+			roomId: roomData._id,
+			buildId: propertyInfo._id,
+			rent: isMultipleTenant ? rent : roomData.rent,
+		};
+
 		if (isValidTenantData(tenantData)) {
 			dispatch(addTenant(tenantData));
 			setTimeout(() => {
@@ -92,6 +81,7 @@ const AddTenantScreen = ({
 			roomId: roomData._id,
 			buildingId: propertyInfo._id,
 			rent,
+			oldRent: tenant.rent,
 		};
 		if (isValidTenantData(tenantData)) {
 			dispatch(updateTenantDetails(tenantData));
@@ -110,10 +100,7 @@ const AddTenantScreen = ({
 			setPhone(tenant.phoneNumber);
 			setEmail(tenant.email);
 			setSecurity(tenant.securityAmount.toString());
-			const tempRent = singleRoomData.isMultipleTenant
-				? tenant.rent
-				: singleRoomData.rent;
-			setRent(tempRent.toString());
+			setRent(tenant.rent.toString());
 		}
 	}, [tenant]);
 
