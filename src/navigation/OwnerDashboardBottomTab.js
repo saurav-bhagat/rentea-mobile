@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-Ionicons.loadFont();
+import FontistoIcons from 'react-native-vector-icons/Fontisto';
+FontistoIcons.loadFont();
 
 import PropertiesScreen from '../screens/Owner/dashboard/property/PropertiesScreen';
 import PropertyInfoScreen from '../screens/Owner/dashboard/property/PropertyInfoScreen';
@@ -13,6 +13,7 @@ import DashboardHome from '../screens/Owner/owner-dashboard/DashboardHome';
 import TenantInfoScreen from '../screens/Owner/dashboard/tenant/TenantInfoScreen';
 import UpdateRoomDetails from '../screens/Owner/dashboard/room/UpdateRoomDetails';
 import AddTenantScreen from '../screens/Owner/dashboard/tenant/AddTenantScreen';
+import { ScaledSheet } from 'react-native-size-matters';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -41,20 +42,26 @@ export default OwnerDashboardBottomTab = () => {
 					let iconName;
 
 					if (route.name === 'Home') {
-						iconName = focused ? 'home-sharp' : 'home-outline';
+						iconName = 'home';
 					} else if (route.name === 'Payments') {
-						iconName = focused ? 'cash-sharp' : 'cash-outline';
+						iconName = 'wallet';
 					}
 
 					// You can return any component that you like here!
 					return (
-						<Ionicons name={iconName} size={size} color={color} />
+						<FontistoIcons
+							name={iconName}
+							size={size}
+							color={color}
+						/>
 					);
 				},
 			})}
 			tabBarOptions={{
 				activeTintColor: '#109FDA',
-				inactiveTintColor: 'gray',
+				inactiveTintColor: '#2c2c2c',
+				labelPosition: 'beside-icon',
+				labelStyle: bottomTabStyle.labelStyle,
 			}}
 		>
 			<Tab.Screen name="Home" component={PropertiesStack} />
@@ -62,3 +69,9 @@ export default OwnerDashboardBottomTab = () => {
 		</Tab.Navigator>
 	);
 };
+
+const bottomTabStyle = ScaledSheet.create({
+	labelStyle: {
+		fontSize: '13@s',
+	},
+});
