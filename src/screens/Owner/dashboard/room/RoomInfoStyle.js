@@ -41,4 +41,16 @@ export const roomInfoScreenStyles = ScaledSheet.create({
 		fontSize: '20@s',
 		fontFamily: 'interRegular',
 	},
+	roomUpdateModalContainer: {
+		backgroundColor: '#fff',
+		padding: 30,
+		marginHorizontal: 20,
+		borderRadius: 15,
+	},
+	addTenantModalContainer: {
+		backgroundColor: '#fff',
+		paddingVertical: 20,
+		marginHorizontal: 20,
+		borderRadius: 15,
+	},
 });
