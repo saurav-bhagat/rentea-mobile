@@ -88,4 +88,9 @@ export const ownerPaymentStyles = ScaledSheet.create({
 		borderRadius: 1,
 		borderColor: '#C0C0C0',
 	},
+	noPaymentsContainer: {
+		marginTop: '50%',
+		alignItems: 'center',
+	},
+	noPaymentText: { fontSize: 15, color: '#ADAFBB' },
 });

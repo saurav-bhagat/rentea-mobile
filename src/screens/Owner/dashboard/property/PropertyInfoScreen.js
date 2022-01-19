@@ -80,13 +80,13 @@ const PropertyInfoScreen = ({ route }) => {
 	return (
 		<Provider>
 			<View style={propertiesScreenStyles.propertyInfoContainer}>
-				<CrossPlatformHeader
+				{/* <CrossPlatformHeader
 					title="Room Info"
 					backCallback={() => {
 						navigate('Properties');
 					}}
 					profile={false}
-				/>
+				/> */}
 				<ScrollView>
 					<View style={{ marginTop: 10 }}>
 						<View

@@ -39,7 +39,11 @@ export default function CrossPlatformHeader({
 		>
 			<Left>
 				{backCallback && (
-					<Button transparent onPress={backCallback}>
+					<Button
+						transparent
+						style={HeaderStyle.buttonStyle}
+						onPress={backCallback}
+					>
 						<Icon
 							name="chevron-back-outline"
 							style={{
@@ -81,6 +85,11 @@ const HeaderStyle = StyleSheet.create({
 		textAlign: 'center',
 		right: Platform.OS != 'ios' ? 25 : 0,
 		fontFamily: 'interRegular',
-		marginTop: 30,
+	},
+	buttonStyle: {
+		backgroundColor: '#eeeeee',
+		borderColor: '#afafaf',
+		borderWidth: 0.5,
+		borderRadius: 10,
 	},
 });
