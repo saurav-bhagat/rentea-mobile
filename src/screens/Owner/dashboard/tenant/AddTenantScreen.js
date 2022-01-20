@@ -113,7 +113,8 @@ const AddTenantScreen = ({
 
 	return (
 		<View>
-			<ScrollView contentContainerStyle={{}}>
+			{/* <CrossPlatformHeader backCallback={handleGoBack} /> */}
+			<ScrollView contentContainerStyle={{ height: 700 }}>
 				<View style={addTenantStyles.addTenantContainer}>
 					<Text
 						style={{
