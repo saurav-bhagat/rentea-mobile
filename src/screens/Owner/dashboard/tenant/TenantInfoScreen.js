@@ -159,8 +159,7 @@ const TenantInfoScreen = ({ route }) => {
 		);
 	} else {
 		return (
-      <Provider>
-			<View>
+			<Provider>
 				{/* <CrossPlatformHeader
 					title="TenantInfo"
 					profile={false}
