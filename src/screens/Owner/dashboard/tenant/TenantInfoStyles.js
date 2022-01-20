@@ -41,4 +41,10 @@ export const tenantInfoStyles = ScaledSheet.create({
 		color: '#109ED9',
 		fontFamily: 'interBold',
 	},
+	tenantUpdateModalContainer: {
+		backgroundColor: '#fff',
+		paddingVertical: 20,
+		marginHorizontal: 20,
+		borderRadius: 15,
+	},
 });

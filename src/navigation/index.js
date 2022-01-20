@@ -27,6 +27,7 @@ import OwnerBankDetailScreen from '../screens/Owner/bankDetails/OwnerBankDetailS
 import { LeftNavbar } from './LeftNavbar';
 import { IntroSlider } from '../screens/Introslides/IntroSlider';
 import Dashboard from '../screens/Owner/owner-dashboard/Dashboard';
+import TransactionScreen from '../screens/Owner/dashboard/payment/TransactionScreen';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -123,6 +124,10 @@ const RootRoutes = () => {
 											name="Profile"
 											component={ProfileScreen}
 										/>
+										<Screen
+											name="TransactionScreen"
+											component={TransactionScreen}
+										/>
 									</>
 								) : (
 									<>
@@ -155,6 +160,10 @@ const RootRoutes = () => {
 										<Screen
 											name="OwnerBankDetail"
 											component={OwnerBankDetailScreen}
+										/>
+										<Screen
+											name="TransactionScreen"
+											component={TransactionScreen}
 										/>
 									</>
 								)}

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
+import { Provider, Portal, Modal } from 'react-native-paper';
 
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
 import { navigate } from '../../../../navigation/rootNavigation';
@@ -10,6 +11,8 @@ import RoomDetailsScreen from './RoomDetailsScreen';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import { roomInfoScreenStyles } from './RoomInfoStyle';
+import AddRoomForm from '../../addBuilding/AddRoomForm';
+import AddTenantScreen from '../tenant/AddTenantScreen';
 
 const tenantAdded = 'tenant added successfully';
 const roomUpdate = 'room updated successfully';
@@ -19,6 +22,8 @@ const RoomInfoScreen = ({ route }) => {
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
 	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
 	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
+	const [updateRoomModal, setUpdateRoomModal] = useState(false);
+	const [addTenantModalFlag, setAddTenantModalFlag] = useState(false);
 	const {
 		visible,
 		text,
@@ -73,110 +78,169 @@ const RoomInfoScreen = ({ route }) => {
 	// for navigate back to propertyInfo screen
 	buildingId = propertyInfo._id;
 
-	const handleAddTenant = () => {
-		navigate('UpdateTenantInfo', {
-			singleRoomData,
-			propertyInfo,
-			showAddTenantScreenFlag: true,
-		});
-	};
 	return (
-		<ScrollView>
-			<CrossPlatformHeader
-				title="Room Details"
-				backCallback={() => {
-					navigate('PropertyInfo', { buildingId, roomId });
-				}}
-				profile={false}
-			/>
-
-			<>
-				<RoomDetailsScreen
-					singleRoomData={singleRoomData}
-					propertyInfo={propertyInfo}
+		<Provider>
+			<ScrollView>
+				<CrossPlatformHeader
+					title="Room Details"
+					backCallback={() => {
+						navigate('PropertyInfo', { buildingId, roomId });
+					}}
+					profile={false}
 				/>
-				{singleRoomData.isMultipleTenant && (
-					<View style={roomInfoScreenStyles.addTenantContainer}>
-						<Button
-							title="Add Tenant"
-							buttonStyle={roomInfoScreenStyles.addTenantBtn}
-							titleStyle={roomInfoScreenStyles.addTenantTitle}
-							onPress={handleAddTenant}
-							raised
-						/>
-					</View>
-				)}
-				{!singleRoomData.isMultipleTenant &&
-					singleRoomData.tenants.length < 1 && (
+
+				<>
+					<RoomDetailsScreen
+						singleRoomData={singleRoomData}
+						propertyInfo={propertyInfo}
+						setUpdateRoomModalFlag={() => setUpdateRoomModal(true)}
+					/>
+					{/* Modal for room details update */}
+					<Portal>
+						<Modal
+							visible={updateRoomModal}
+							onDismiss={() => setUpdateRoomModal(false)}
+							contentContainerStyle={
+								roomInfoScreenStyles.roomUpdateModalContainer
+							}
+						>
+							<AddRoomForm
+								addRoomSeparatelyFlag={true}
+								dismissAddRoomForm={() =>
+									setUpdateRoomModal(false)
+								}
+								floorCount={singleRoomData.floor}
+								roomDetail={singleRoomData}
+								buildingId={propertyInfo._id}
+							/>
+						</Modal>
+					</Portal>
+
+					{singleRoomData.isMultipleTenant && (
 						<View style={roomInfoScreenStyles.addTenantContainer}>
 							<Button
 								title="Add Tenant"
 								buttonStyle={roomInfoScreenStyles.addTenantBtn}
 								titleStyle={roomInfoScreenStyles.addTenantTitle}
-								onPress={handleAddTenant}
+								onPress={() => setAddTenantModalFlag(true)}
 								raised
 							/>
 						</View>
 					)}
-				{singleRoomData.tenants.length > 0 ? (
-					singleRoomData.tenants.map((tenant, i) => {
-						return (
-							<ListItem
-								key={i}
-								Component={TouchableOpacity}
-								bottomDivider
-								containerStyle={roomInfoScreenStyles.cardStyle}
-								onPress={() => {
-									navigate('TenantInfo', {
-										singleRoomData,
-										propertyInfo,
-										tenant,
-									});
-								}}
+					{!singleRoomData.isMultipleTenant &&
+						singleRoomData.tenants.length < 1 && (
+							<View
+								style={roomInfoScreenStyles.addTenantContainer}
 							>
-								<ListItem.Content>
-									<View style={roomInfoScreenStyles.row}>
-										<Text style={roomInfoScreenStyles.col1}>
-											Tenant name{' '}
-										</Text>
-										<Text style={roomInfoScreenStyles.col}>
-											{tenant.name}
-										</Text>
-									</View>
-									<View style={roomInfoScreenStyles.row}>
-										<Text style={roomInfoScreenStyles.col1}>
-											Due Date{' '}
-										</Text>
-										<Text style={roomInfoScreenStyles.col}>
-											{`${
-												singleRoomData.isMultipleTenant
-													? tenant.rent
-													: singleRoomData.rent
-											} rs  on ${format(
-												new Date(tenant.rentDueDate),
-												'dd/MM/yyyy'
-											)}`}
-										</Text>
-									</View>
-								</ListItem.Content>
-							</ListItem>
-						);
-					})
-				) : (
-					<View>
-						<Text style={roomInfoScreenStyles.noTenantTxt}>
-							No Tenants :)
-						</Text>
-					</View>
-				)}
-				<SnackBar
-					visible={visible}
-					text={text}
-					onDismissSnackBar={onDismissSnackBar}
-					onToggleSnackBar={onToggleSnackBar}
-				/>
-			</>
-		</ScrollView>
+								<Button
+									title="Add Tenant"
+									buttonStyle={
+										roomInfoScreenStyles.addTenantBtn
+									}
+									titleStyle={
+										roomInfoScreenStyles.addTenantTitle
+									}
+									onPress={() => setAddTenantModalFlag(true)}
+									raised
+								/>
+							</View>
+						)}
+
+					{/* Modal for add Tenant */}
+					<Portal>
+						<Modal
+							visible={addTenantModalFlag}
+							onDismiss={() => setAddTenantModalFlag(false)}
+							contentContainerStyle={
+								roomInfoScreenStyles.addTenantModalContainer
+							}
+						>
+							<AddTenantScreen
+								singleRoomData={singleRoomData}
+								propertyInfo={propertyInfo}
+								showAddTenantScreenFlag={true}
+								dismissAddAndUpdateTenantModal={() =>
+									setAddTenantModalFlag(false)
+								}
+							/>
+						</Modal>
+					</Portal>
+
+					{singleRoomData.tenants.length > 0 ? (
+						singleRoomData.tenants.map((tenant, i) => {
+							return (
+								<ListItem
+									key={i}
+									Component={TouchableOpacity}
+									bottomDivider
+									containerStyle={
+										roomInfoScreenStyles.cardStyle
+									}
+									onPress={() => {
+										navigate('TenantInfo', {
+											singleRoomData,
+											propertyInfo,
+											tenant,
+										});
+									}}
+								>
+									<ListItem.Content>
+										<View style={roomInfoScreenStyles.row}>
+											<Text
+												style={
+													roomInfoScreenStyles.col1
+												}
+											>
+												Tenant name{' '}
+											</Text>
+											<Text
+												style={roomInfoScreenStyles.col}
+											>
+												{tenant.name}
+											</Text>
+										</View>
+										<View style={roomInfoScreenStyles.row}>
+											<Text
+												style={
+													roomInfoScreenStyles.col1
+												}
+											>
+												Due Date{' '}
+											</Text>
+											<Text
+												style={roomInfoScreenStyles.col}
+											>
+												{`${
+													tenant.rent
+												} rs  on ${format(
+													new Date(
+														tenant.rentDueDate
+													),
+													'dd/MM/yyyy'
+												)}`}
+											</Text>
+										</View>
+									</ListItem.Content>
+								</ListItem>
+							);
+						})
+					) : (
+						<View>
+							<Text style={roomInfoScreenStyles.noTenantTxt}>
+								No Tenants :)
+							</Text>
+						</View>
+					)}
+
+					<SnackBar
+						visible={visible}
+						text={text}
+						onDismissSnackBar={onDismissSnackBar}
+						onToggleSnackBar={onToggleSnackBar}
+					/>
+				</>
+			</ScrollView>
+		</Provider>
 	);
 };
 

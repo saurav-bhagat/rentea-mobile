@@ -10,7 +10,7 @@ export const addRoomFormStyles = ScaledSheet.create({
 		textAlign: 'center',
 	},
 	addRoomBtnContainer: {
-		marginTop: 20,
+		marginVertical: '20@ms',
 	},
 	addRoomBtn: {
 		width: 120,
@@ -63,4 +63,6 @@ export const addRoomFormStyles = ScaledSheet.create({
 		padding: 10,
 		flex: 1,
 	},
+	row: { flexDirection: 'row' },
+	col: { flex: 1, paddingRight: 20 },
 });

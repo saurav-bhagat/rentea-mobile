@@ -3,9 +3,16 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { format } from 'date-fns';
 import { paymentHisStyles } from './paymentHisStyles';
+import FaIcon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+import { transactionCardStyles } from './TransactionCardStyles';
 
-const TransactionCard = ({ data }) => {
+const TransactionCard = ({ data, color }) => {
+	const navigation = useNavigation();
 	let time;
+	if (color) {
+		data['color'] = color;
+	}
 	if (data._id) {
 		//  extracting date+time from incoming mongodb id
 		time = new Date(
@@ -14,49 +21,41 @@ const TransactionCard = ({ data }) => {
 		time = format(new Date(time), 'dd MMM yyyy ,hh:mm a');
 	}
 	return (
-		<Card>
-			<CardItem>
+		<Card style={transactionCardStyles.cardContainer} noShadow>
+			<CardItem
+				onPress={() =>
+					navigation.navigate('TransactionScreen', { data })
+				}
+				style={[
+					transactionCardStyles.cardItem,
+					{ backgroundColor: color },
+				]}
+			>
 				<Body>
-					<View style={{ width: '100%' }}>
-						<View>
-							<Text>Building Name : {data.buildingName}</Text>
-						</View>
-						<View>
-							<Text>Room Number : {data.roomNo}</Text>
-						</View>
-						<View>
-							<Text>Tenant Name : {data.tenantName}</Text>
-						</View>
-						<View>
-							<Text>
-								Date :{' '}
-								{format(new Date(data.txnDate), 'dd MMM, yyyy')}
-							</Text>
-						</View>
-						<View>
-							<Text>
-								Amount:{' '}
-								<Text style={paymentHisStyles.boldValue}>
-									{data.txnAmount}
-								</Text>
-							</Text>
-						</View>
-						{data.paymentMode && (
+					<View style={transactionCardStyles.cardBodyView}>
+						<FaIcon name="user-circle" size={45} color="#4c4c4c" />
+						<View style={transactionCardStyles.cardTextContainer}>
 							<View>
-								<Text>
-									Paid Through:{' '}
-									<Text
-										style={paymentHisStyles.boldValue}
-									></Text>
-									{data.paymentMode}
+								<Text
+									style={
+										transactionCardStyles.tenantTextStyle
+									}
+								>
+									{data.tenantName}
 								</Text>
 							</View>
-						)}
-						{data._id && (
 							<View>
-								<Text>Time : {time}</Text>
+								<Text
+									style={transactionCardStyles.dateTextStyle}
+								>
+									Due :{' '}
+									{format(
+										new Date(data.txnDate),
+										'dd MMM, yyyy'
+									)}
+								</Text>
 							</View>
-						)}
+						</View>
 					</View>
 				</Body>
 			</CardItem>

@@ -81,7 +81,7 @@ export const isValidBankDetails = ({
 };
 
 export const validateRoomFields = (
-	{ roomNo, rent, security, floor, sizeInFt, bhk, isMultipleTenant },
+	{ roomNo, rent, security, floor, roomSize, roomType, isMultipleTenant },
 	floorCount
 ) => {
 	if (!roomNo) {
@@ -89,11 +89,11 @@ export const validateRoomFields = (
 	}
 	if (
 		!isMultipleTenant &&
-		validateCount({ rent, security, floor, sizeInFt, bhk })
+		validateCount({ rent, security, floor, roomSize, roomType })
 	) {
 		if (
-			bhk > 0 &&
-			bhk < 10 &&
+			roomType > 0 &&
+			roomType < 10 &&
 			floor >= 0 &&
 			floor <= floorCount &&
 			security >= rent
@@ -101,8 +101,13 @@ export const validateRoomFields = (
 			return true;
 		}
 	}
-	if (isMultipleTenant && validateCount({ floor, sizeInFt, bhk })) {
-		if (bhk > 0 && bhk < 10 && floor >= 0 && floor <= floorCount) {
+	if (isMultipleTenant && validateCount({ floor, roomSize, roomType })) {
+		if (
+			roomType > 0 &&
+			roomType < 10 &&
+			floor >= 0 &&
+			floor <= floorCount
+		) {
 			return true;
 		}
 	}
@@ -118,7 +123,7 @@ export const validateRoomFieldsForUpdate = ({
 	roomType,
 }) => {
 	if (validateCount({ roomNo, rent, floor, roomSize, roomType })) {
-		if (roomType > 0 && roomType < 10 && floor > 0 && roomSize >= 100) {
+		if (roomType > 0 && roomType < 10 && floor >= 0 && roomSize >= 100) {
 			return true;
 		}
 	}
@@ -139,7 +144,7 @@ export const validateRoomFieldsForAddition = ({
 	const roomType = rooms[0].type;
 
 	if (validateCount({ roomNo, rent, floor, roomSize, roomType })) {
-		if (roomType > 0 && roomType < 10 && floor > 0 && roomSize >= 100) {
+		if (roomType > 0 && roomType < 10 && floor >= 0 && roomSize >= 100) {
 			return (
 				true &&
 				mongoIdRegex.test(ownerId) &&
