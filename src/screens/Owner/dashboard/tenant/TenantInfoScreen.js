@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import _ from 'lodash';
+import { Provider, Portal, Modal } from 'react-native-paper';
 
 import { tenantInfoStyles } from './TenantInfoStyles';
 import { payWithCash } from '../../../../redux/actions/payment/payWithCashAction';
@@ -13,6 +14,7 @@ import CrossPlatformHeader from '../../../../components/common/CrossPlatformHead
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 import { setPayWithCashResponseForSnack } from '../../../../redux/actions/payment/payWithCashAction';
+import AddTenantScreen from './AddTenantScreen';
 
 const transactionSuccessMsg = 'Transaction successfull';
 const tenantUpdate = 'tenant details updated successfully';
@@ -20,6 +22,7 @@ const defaultState = 'default state';
 
 const TenantInfoScreen = ({ route }) => {
 	const [tenantData, setTenantData] = useState();
+	const [updateTenantModalFLag, setUpdateTenantModalFlag] = useState(false);
 	const { loading, msg: payWithCashResponseMsg } = useSelector(
 		(state) => state.payWithCash
 	);
@@ -145,12 +148,7 @@ const TenantInfoScreen = ({ route }) => {
 	};
 
 	const handleTenantUpdate = () => {
-		navigate('UpdateTenantInfo', {
-			singleRoomData,
-			propertyInfo,
-			tenantInfo: tenantData,
-			showAddTenantScreenFlag: false,
-		});
+		setUpdateTenantModalFlag(true);
 	};
 
 	if (!tenantData) {
@@ -161,6 +159,7 @@ const TenantInfoScreen = ({ route }) => {
 		);
 	} else {
 		return (
+      <Provider>
 			<View>
 				{/* <CrossPlatformHeader
 					title="TenantInfo"
@@ -213,9 +212,7 @@ const TenantInfoScreen = ({ route }) => {
 					<View style={tenantInfoStyles.row}>
 						<Text style={tenantInfoStyles.col1}>Rent</Text>
 						<Text style={tenantInfoStyles.col}>
-							{singleRoomData.isMultipleTenant
-								? tenantData.rent
-								: singleRoomData.rent}
+							{tenantData.rent}
 						</Text>
 					</View>
 					<View style={tenantInfoStyles.row}>
@@ -252,6 +249,26 @@ const TenantInfoScreen = ({ route }) => {
 						loadingProps={{ color: '#109ED9' }}
 					/>
 				</Card>
+				{/* Modal for update Tenant */}
+				<Portal>
+					<Modal
+						visible={updateTenantModalFLag}
+						onDismiss={() => setUpdateTenantModalFlag(false)}
+						contentContainerStyle={
+							tenantInfoStyles.tenantUpdateModalContainer
+						}
+					>
+						<AddTenantScreen
+							singleRoomData={singleRoomData}
+							propertyInfo={propertyInfo}
+							showAddTenantScreenFlag={false}
+							dismissAddAndUpdateTenantModal={() =>
+								setUpdateTenantModalFlag(false)
+							}
+							tenantInfo={tenantData}
+						/>
+					</Modal>
+				</Portal>
 
 				<SnackBar
 					visible={visible}
@@ -262,7 +279,7 @@ const TenantInfoScreen = ({ route }) => {
 					// but when header is customize then we will fix it accordingly
 					bottom={-70}
 				/>
-			</View>
+			</Provider>
 		);
 	}
 };
