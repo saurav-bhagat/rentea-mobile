@@ -6,6 +6,7 @@ const userDetail = {
 	name: '',
 	phoneNumber: null,
 	userType: '',
+	address: '',
 	error: '',
 	loading: false,
 	expoPushToken: '',
