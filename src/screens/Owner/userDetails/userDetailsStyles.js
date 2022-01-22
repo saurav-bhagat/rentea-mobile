@@ -64,7 +64,6 @@ export const userDetailsStyles = ScaledSheet.create({
 	},
 	oudsPhoneInputBox: {
 		paddingLeft: '20@ms',
-		height: '52@ms',
 		marginTop: '8%',
 		borderWidth: 1,
 		borderColor: '#109FDA',
@@ -75,21 +74,12 @@ export const userDetailsStyles = ScaledSheet.create({
 		elevation: 8,
 	},
 	oudsContinueButton: {
-		width: '100%',
+		backgroundColor: '#109ED9',
 		borderRadius: 10,
+		paddingTop: 10,
+		paddingBottom: 10,
+		fontFamily: 'interLight',
 		marginTop: '30@ms',
-		backgroundColor: '#109FDA',
-		justifyContent: 'center',
-		height: '54@ms',
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
-		shadowOpacity: 0.3,
-		shadowRadius: 4.65,
-		elevation: 8,
-		marginBottom: 15,
 	},
 	oudsContinueButton_text: {
 		color: '#fff',

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Counter from 'react-native-counters';
 import { Provider, Portal, Modal } from 'react-native-paper';
 import { Button } from 'react-native-elements';
+import SelectDropdown from 'react-native-select-dropdown';
 
 import CrossPlatformHeader from '../../../components/common/CrossPlatformHeader';
 import TextInputCommon from '../../../components/common/TextInputCommon';
@@ -16,6 +17,10 @@ import useSnack from '../../../components/common/useSnack';
 import AddRoomForm from './AddRoomForm';
 import AddRoomCard from './AddRoomCard';
 import CustomCounter from './CustomCounter';
+import {
+	fetchStates,
+	fetchCities,
+} from '../../../redux/actions/getCityStateData';
 
 const AddBuildingForm = ({ route }) => {
 	const dispatch = useDispatch();
@@ -32,7 +37,10 @@ const AddBuildingForm = ({ route }) => {
 	const [maintainerName, setMaintainerName] = useState('');
 	const [maintainerPhone, setMaintainerPhone] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
-
+	const [stateArray, setStateArray] = useState([]);
+	const [citiesArray, setCitiesArray] = useState([]);
+	const [stat, setStat] = useState('');
+	const [city, setCity] = useState('');
 	const {
 		visible,
 		onToggleSnackBar,
@@ -46,7 +54,7 @@ const AddBuildingForm = ({ route }) => {
 		buildingInfo = route.params.buildingInfo;
 		rooms = buildingInfo.rooms;
 	}
-
+	const cityDropDownRef = useRef();
 	useEffect(() => {
 		if (buildingInfo) {
 			const { address } = buildingInfo;
@@ -92,6 +100,35 @@ const AddBuildingForm = ({ route }) => {
 			setVisible(true);
 		}
 	};
+
+	// Todo : New Ui for address
+	// const fetchStatesData = () => {
+	// 	fetchStates()
+	// 		.then((result) => {
+	// 			setStateArray(result);
+	// 		})
+	// 		.catch((err) => {
+	// 			alert('error while fetching states, please try again');
+	// 		});
+	// };
+
+	// const updateCitySelect = (stateName) => {
+	// 	const stateForCity = stateArray.filter(
+	// 		(state) => state.name === stateName.name
+	// 	);
+	// 	fetchCities(stateForCity[0].iso2)
+	// 		.then((response) => {
+	// 			setCitiesArray(response);
+	// 		})
+	// 		.catch((error) =>
+	// 			alert('Error while fetching cities, please try again')
+	// 		);
+	// };
+
+	// useEffect(() => {
+	// 	fetchStatesData();
+	// }, []);
+
 	return (
 		<Provider>
 			<ScrollView
@@ -142,7 +179,6 @@ const AddBuildingForm = ({ route }) => {
 							inputStyle={addBuildingFormstyles.inputStyle}
 							value={stateAddress}
 						/>
-
 						{!buildingInfo && (
 							<View style={addBuildingFormstyles.roomAndFloorC}>
 								<View>
@@ -209,6 +245,97 @@ const AddBuildingForm = ({ route }) => {
 								/>
 							</Modal>
 						</Portal>
+
+						{/* Todo : New Ui for add address Field */}
+						{/* <View style={userDetailsStyles.oudsRegionContainer}>
+					<View style={userDetailsStyles.dropdownsRow}>
+						{stateArray?.length >= 0 && (
+							<SelectDropdown
+								data={stateArray}
+								onSelect={(selectedItem, index) => {
+									console.log(selectedItem, index);
+									setStat(selectedItem.name);
+									setCity('');
+									cityDropDownRef.current.reset();
+									updateCitySelect(selectedItem);
+								}}
+								buttonTextAfterSelection={(
+									selectedItem,
+									index
+								) => {
+									// text represented after item is selected
+									// if data array is an array of objects then return selectedItem.property to render after item is selected
+									return selectedItem.name;
+								}}
+								rowTextForSelection={(item, index) => {
+									// text represented for each item in dropdown
+									// if data array is an array of objects then return item.property to represent item in dropdown
+									return item.name;
+								}}
+								buttonStyle={userDetailsStyles.dropdownBtnStyle}
+								buttonTextStyle={
+									stat
+										? userDetailsStyles.dropdownBtnTxtStyleActive
+										: userDetailsStyles.dropdownBtnTxtStyleInactive
+								}
+								rowStyle={userDetailsStyles.dropdownRowStyle}
+								rowTextStyle={
+									userDetailsStyles.dropdownRowTxtStyle
+								}
+								defaultButtonText="Select your state"
+							/>
+						)}
+						<View style={{ width: 12 }} />
+						{citiesArray?.length >= 0 && (
+							<SelectDropdown
+								ref={cityDropDownRef}
+								data={citiesArray}
+								disabled={!stat}
+								onSelect={(selectedItem, index) => {
+									console.log(selectedItem, index);
+									setCity(selectedItem.name);
+								}}
+								buttonTextAfterSelection={(
+									selectedItem,
+									index
+								) => {
+									// text represented after item is selected
+									// if data array is an array of objects then return selectedItem.property to render after item is selected
+									return selectedItem.name;
+								}}
+								rowTextForSelection={(item, index) => {
+									// text represented for each item in dropdown
+									// if data array is an array of objects then return item.property to represent item in dropdown
+									return item.name;
+								}}
+								buttonStyle={
+									stat
+										? userDetailsStyles.dropdownBtnStyle
+										: userDetailsStyles.dropdownBtnStyleDisabled
+								}
+								buttonTextStyle={
+									city
+										? userDetailsStyles.dropdownBtnTxtStyleActive
+										: userDetailsStyles.dropdownBtnTxtStyleInactive
+								}
+								rowStyle={userDetailsStyles.dropdownRowStyle}
+								rowTextStyle={
+									userDetailsStyles.dropdownRowTxtStyle
+								}
+								defaultButtonText="Select your city"
+							/>
+						)}
+					</View>
+					<View style={userDetailsStyles.oudsFormContainer}>
+						<TextInput
+							value={pincode}
+							style={userDetailsStyles.oudsPhoneInputBox}
+							placeholderTextColor={'#aaa'}
+							placeholder="Pincode"
+							onChangeText={(val) => setPincode(val)}
+						/>
+					</View>
+				</View> */}
 
 						<Button
 							title={buildingInfo ? 'Update' : 'Add'}
