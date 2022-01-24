@@ -51,9 +51,10 @@ export const addUserDetail = (userData) => {
 		const { auth } = getState();
 		const body = {
 			_id: auth.userInfo.userDetails.ownerId,
-			name: `${userData.fName} ${userData.lName}`,
+			name: userData.name,
 			email: userData.email,
 			expoPushToken: userData.expoPushToken,
+			address: userData.address,
 		};
 		const token = await getToken();
 		axios
@@ -64,7 +65,7 @@ export const addUserDetail = (userData) => {
 				},
 			})
 			.then(async (response) => {
-				console.log('response after updating user details', response);
+				console.log('userDetail updated successfully!');
 				dispatch(addUserDetailSuccess(response.data.updatedUserInfo));
 				navigate('OwnerBankDetailForm');
 			})

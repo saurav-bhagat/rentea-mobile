@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, ActivityIndicator } from 'react-native';
-import { Button } from 'native-base';
+import { View, Text, TextInput } from 'react-native';
+import { Button } from 'react-native-elements';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { userDetailsStyles } from './userDetailsStyles';
 import { isValidUserDetails } from '../../../helpers/addBuildingValidation';
@@ -11,21 +12,19 @@ import useNotification from '../../../components/common/useNotification';
 const OwnerUserDetailsScreen = () => {
 	const dispatch = useDispatch();
 	const addUserState = useSelector((state) => state.userDetail);
-	const [fName, setFName] = useState('');
-	const [lName, setLName] = useState('');
+	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
-
+	const [address, setAddress] = useState('');
 	const { expoPushToken } = useNotification();
 
 	const handleUserDetailsSubmit = () => {
 		let formData = {
-			fName,
-			lName,
+			name,
 			email,
+			address,
 			expoPushToken,
 		};
 		if (isValidUserDetails(formData)) {
-			// dispatch SaveUserDetails Action, remove console.log
 			dispatch(addUserDetail(formData));
 		} else {
 			alert('Enter fields properly');
@@ -37,28 +36,22 @@ const OwnerUserDetailsScreen = () => {
 			<View style={userDetailsStyles.oudsContainer}>
 				<View style={userDetailsStyles.oudsTextContainer}>
 					<Text style={userDetailsStyles.oudsWelcomeText}>
-						Welcome!
+						Get Started
 					</Text>
 					<Text style={userDetailsStyles.oudsShortText}>
-						Enter your details below.
+						Enter your details
 					</Text>
-					<Text style={userDetailsStyles.oudsAsteriskText}>
+					{/* <Text style={userDetailsStyles.oudsAsteriskText}>
 						* Mandatory field.
-					</Text>
+					</Text> */}
 				</View>
 
 				<View style={userDetailsStyles.oudsFormContainer}>
 					<TextInput
 						style={userDetailsStyles.oudsPhoneInputBox}
 						placeholderTextColor={'#aaa'}
-						placeholder="First Name*"
-						onChangeText={(val) => setFName(val)}
-					/>
-					<TextInput
-						style={userDetailsStyles.oudsPhoneInputBox}
-						placeholderTextColor={'#aaa'}
-						placeholder="Last Name*"
-						onChangeText={(val) => setLName(val)}
+						placeholder="Full Name*"
+						onChangeText={(val) => setName(val)}
 					/>
 					<TextInput
 						style={userDetailsStyles.oudsPhoneInputBox}
@@ -66,25 +59,32 @@ const OwnerUserDetailsScreen = () => {
 						placeholder="Email ID*"
 						onChangeText={(val) => setEmail(val)}
 					/>
-
+				</View>
+				<View style={userDetailsStyles.oudsTextContainer}>
+					<Text style={userDetailsStyles.oudsShortText2}>
+						Enter your personal address
+					</Text>
+				</View>
+				<View style={userDetailsStyles.oudsFormContainer}>
+					<TextInput
+						value={address}
+						style={userDetailsStyles.oudsPhoneInputBox}
+						placeholderTextColor={'#aaa'}
+						placeholder="Address"
+						onChangeText={(val) => setAddress(val)}
+						multiline
+						numberOfLines={4}
+						textAlignVertical="top"
+					/>
+				</View>
+				<View>
 					<Button
-						rounded
-						transparent
-						style={userDetailsStyles.oudsContinueButton}
+						title="Continue"
 						onPress={() => handleUserDetailsSubmit()}
-					>
-						{addUserState.loading ? (
-							<ActivityIndicator color="#ffffff" size="large" />
-						) : (
-							<Text
-								style={
-									userDetailsStyles.oudsContinueButton_text
-								}
-							>
-								Continue
-							</Text>
-						)}
-					</Button>
+						loading={addUserState.loading}
+						buttonStyle={userDetailsStyles.oudsContinueButton}
+						containerStyle={{ borderRadius: 10 }}
+					/>
 				</View>
 			</View>
 		</KeyboardAwareScrollView>
