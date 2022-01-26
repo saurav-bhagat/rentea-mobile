@@ -16,8 +16,8 @@ const slides = [
 	},
 	{
 		key: 2,
-		title: 'Find Properties to Rent',
-		text: 'Enable location to search.\nRentable Properties nearby',
+		title: '\t\t\tHandle Tenant Queries',
+		text: 'Owners can easily handle all the tenant \nqueries through the app.',
 		image: require('./../../images/intro/find-rent.png'),
 	},
 	{
