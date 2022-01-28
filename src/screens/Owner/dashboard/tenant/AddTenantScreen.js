@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, CheckBox } from 'react-native-elements';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,6 +13,7 @@ import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 
 import { updateTenantDetails } from '../../../../redux/actions/ownerActions/updateTenantAction';
+import { Input, Item, Label } from 'native-base';
 
 const AddTenantScreen = ({
 	singleRoomData,
@@ -40,6 +42,15 @@ const AddTenantScreen = ({
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
 	const [rent, setRent] = useState('');
+	const [monthEndOne, setMonthEndOne] = useState(false);
+	const [date, setDate] = useState(new Date());
+	const [showDatePicker, setShowDatePicker] = useState(false);
+
+	const onDateChange = (event, selectedDate) => {
+		const currentDate = selectedDate || date;
+		setShowDatePicker(Platform.OS === 'ios');
+		setDate(currentDate);
+	};
 
 	const {
 		text,
@@ -186,6 +197,61 @@ const AddTenantScreen = ({
 							<View style={addTenantStyles.col}></View>
 						</View>
 					)}
+					<View style={addTenantStyles.row}>
+						<View style={addTenantStyles.col}>
+							<Item
+								floatingLabel
+								style={{ borderColor: '#666', marginTop: 25 }}
+							>
+								<Label style={{ fontSize: 13 }}>
+									Rent starting date:
+								</Label>
+								<Input
+									onTouchStart={() => setShowDatePicker(true)}
+									name="rentStartDate"
+									style={{ marginTop: 25 }}
+									value={date.toLocaleDateString()}
+								/>
+							</Item>
+							{showDatePicker && (
+								<DateTimePicker
+									testID="dateTimePicker"
+									value={date}
+									mode="date"
+									is24Hour={true}
+									display="default"
+									onChange={onDateChange}
+								/>
+							)}
+						</View>
+					</View>
+
+					<View style={addTenantStyles.row}>
+						<View
+							style={[
+								addTenantStyles.col,
+								{ marginTop: 20 },
+								{ display: 'flex' },
+								{ alignItems: 'center' },
+							]}
+						>
+							<Text style={addTenantStyles.rentDateEndText}>
+								By default join date will be considered as end
+								of month, if you want start of every month i.e.
+								1st to be month end. Please check this below
+								field:
+							</Text>
+							<CheckBox
+								containerStyle={
+									addTenantStyles.checkoxContainer
+								}
+								center
+								title="Choose 1st as month end."
+								checked={monthEndOne}
+								onPress={() => setMonthEndOne(!monthEndOne)}
+							/>
+						</View>
+					</View>
 					<View style={addTenantStyles.row}>
 						<View style={addTenantStyles.col}>
 							<Button

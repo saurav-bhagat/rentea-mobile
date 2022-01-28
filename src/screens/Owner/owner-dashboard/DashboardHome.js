@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOwnerDashboard } from '../../../redux/actions/ownerActions/dashboardAction';
 import Notification from './Notification';
+import DashboardHeader from './DashboardHeader';
 const DashboardHome = ({ route }) => {
 	const dispatch = useDispatch();
 	const [showDashboard, setShowDashboard] = useState(true);
@@ -71,6 +72,9 @@ const DashboardHome = ({ route }) => {
 
 	return (
 		<View style={dashboardStyles.dashboardHomeContainer}>
+			<View style={{ flex: showDashboard ? 2 : 3 }}>
+				<DashboardHeader />
+			</View>
 			<View style={dashboardStyles.buttonView}>
 				<Button
 					type="clear"

@@ -160,7 +160,7 @@ const TenantInfoScreen = ({ route }) => {
 	} else {
 		return (
 			<Provider>
-				{/* <CrossPlatformHeader
+				<CrossPlatformHeader
 					title="TenantInfo"
 					profile={false}
 					backCallback={() => {
@@ -171,7 +171,7 @@ const TenantInfoScreen = ({ route }) => {
 							roomId,
 						});
 					}}
-				/> */}
+				/>
 
 				<Card>
 					<View style={tenantInfoStyles.updateTenantContainer}>

@@ -1,9 +1,12 @@
+import { StatusBar } from 'react-native';
+import { Platform } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 
 export const ownerPaymentStyles = ScaledSheet.create({
 	ownerPaymentContainer: {
 		flex: 1,
 		marginTop: 20,
+		backgroundColor: '#fff',
 	},
 	transactionCardContainer: {
 		marginTop: 10,

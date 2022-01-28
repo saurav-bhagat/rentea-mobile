@@ -81,13 +81,13 @@ const RoomInfoScreen = ({ route }) => {
 	return (
 		<Provider>
 			<ScrollView>
-				{/* <CrossPlatformHeader
+				<CrossPlatformHeader
 					title="Room Details"
 					backCallback={() => {
 						navigate('PropertyInfo', { buildingId, roomId });
 					}}
 					profile={false}
-				/> */}
+				/>
 
 				<>
 					<RoomDetailsScreen

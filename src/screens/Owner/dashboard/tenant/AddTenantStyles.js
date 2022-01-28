@@ -19,4 +19,14 @@ export const addTenantStyles = ScaledSheet.create({
 	},
 	row: { flexDirection: 'row' },
 	col: { flex: 1, paddingRight: 20 },
+	datePickerStyle: {
+		width: 200,
+		marginTop: 20,
+	},
+	rentDateEndText: { fontSize: '11.5@s' },
+	checkoxContainer: {
+		marginTop: '15@ms',
+		width: '100%',
+		borderRadius: 50,
+	},
 });
