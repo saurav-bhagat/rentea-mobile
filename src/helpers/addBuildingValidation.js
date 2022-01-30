@@ -49,8 +49,8 @@ export const isValidBuildingData = ({
 	return false;
 };
 
-export const isValidUserDetails = ({ fName, lName, email }) => {
-	if (validateText({ fName, lName, email })) {
+export const isValidUserDetails = ({ name, email, address }) => {
+	if (validateText({ name, email, address })) {
 		return true;
 	}
 	console.log('User details validation failed');

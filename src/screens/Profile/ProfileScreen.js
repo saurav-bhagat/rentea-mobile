@@ -14,7 +14,7 @@ export const ProfileScreen = ({ route }) => {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
 	const authState = useSelector((state) => state.auth);
-
+	const { ownerDashbhoard } = useSelector((state) => state);
 	let userType;
 	if (route && route.params) {
 		userType = route.params.userType;
@@ -29,9 +29,9 @@ export const ProfileScreen = ({ route }) => {
 		},
 	];
 	if (userType === 'Owner') {
-		const ownerDashboardResult = useSelector(
-			(state) => state.ownerDashbhoard.properties.ownerDashboardResult
-		);
+		const ownerDashboardResult =
+			ownerDashbhoard.properties.ownerDashboardResult;
+
 		let accountName;
 		if (ownerDashboardResult && ownerDashboardResult.accountName) {
 			accountName = ownerDashboardResult.accountName;

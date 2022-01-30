@@ -87,7 +87,7 @@ const LoginComponent = () => {
 
 			<View>
 				<Text style={loginStyles.loginContainer_row3_txt}>
-					creating your account
+					creating your account or login
 				</Text>
 			</View>
 
