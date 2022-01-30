@@ -1,5 +1,3 @@
-import { StatusBar } from 'react-native';
-import { Platform } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 
 export const ownerPaymentStyles = ScaledSheet.create({

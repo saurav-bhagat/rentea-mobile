@@ -203,8 +203,8 @@ const AddTenantScreen = ({
 								floatingLabel
 								style={{ borderColor: '#666', marginTop: 25 }}
 							>
-								<Label style={{ fontSize: 13 }}>
-									Rent starting date:
+								<Label style={{ fontSize: 16 }}>
+									Tenant Join date / Rent will start from::
 								</Label>
 								<Input
 									onTouchStart={() => setShowDatePicker(true)}
@@ -236,10 +236,9 @@ const AddTenantScreen = ({
 							]}
 						>
 							<Text style={addTenantStyles.rentDateEndText}>
-								By default join date will be considered as end
-								of month, if you want start of every month i.e.
-								1st to be month end. Please check this below
-								field:
+								By default next due date will be one month from
+								the Join date. If you want the due date to be at
+								the 1st of every month, please check below
 							</Text>
 							<CheckBox
 								containerStyle={
