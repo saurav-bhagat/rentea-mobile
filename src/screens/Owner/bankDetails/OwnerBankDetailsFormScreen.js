@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Clipboard from 'expo-clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-native-paper';
@@ -35,7 +35,6 @@ const OwnerBankDetailsScreen = () => {
 				bankName,
 				beneficiaryName,
 			};
-
 			if (isValidBankDetails(formData)) {
 				dispatch(addBankDetailsData(formData));
 			} else {
@@ -67,6 +66,12 @@ const OwnerBankDetailsScreen = () => {
 						onChangeText={(val) => setAccountName(val)}
 					/>
 					<TextInput
+						style={ownerBankDetailsStyles.bankDetailsInput}
+						placeholderTextColor={'#aaa'}
+						placeholder="Bank Name*"
+						onChangeText={(val) => setBankName(val)}
+					/>
+					<TextInput
 						secureTextEntry={true}
 						contextMenuHidden={true}
 						selectTextOnFocus={false}
@@ -96,6 +101,12 @@ const OwnerBankDetailsScreen = () => {
 						placeholderTextColor={'#aaa'}
 						placeholder="IFSC*"
 						onChangeText={(val) => setIfsc(val)}
+					/>
+					<TextInput
+						style={ownerBankDetailsStyles.bankDetailsInput}
+						placeholderTextColor={'#aaa'}
+						placeholder="Beneficiary Name*"
+						onChangeText={(val) => setBeneficiaryName(val)}
 					/>
 					<View
 						style={{
