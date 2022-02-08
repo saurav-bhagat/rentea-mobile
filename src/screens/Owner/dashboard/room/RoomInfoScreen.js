@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
-import { format } from 'date-fns';
+import { format, intervalToDuration } from 'date-fns';
 import { Provider, Portal, Modal } from 'react-native-paper';
 
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
@@ -199,27 +199,55 @@ const RoomInfoScreen = ({ route }) => {
 												{tenant.name}
 											</Text>
 										</View>
-										<View style={roomInfoScreenStyles.row}>
-											<Text
-												style={
-													roomInfoScreenStyles.col1
-												}
+
+										{/* only show rent if rentDueDate is after the 15 day */}
+										{intervalToDuration({
+											start: new Date(),
+											end: new Date(tenant.rentDueDate),
+										}).days <= 15 && (
+											<View
+												style={roomInfoScreenStyles.row}
 											>
-												Due Date{' '}
-											</Text>
-											<Text
-												style={roomInfoScreenStyles.col}
-											>
-												{`${
-													tenant.rent
-												} rs  on ${format(
-													new Date(
-														tenant.rentDueDate
-													),
-													'dd/MM/yyyy'
-												)}`}
-											</Text>
-										</View>
+												<Text
+													style={
+														roomInfoScreenStyles.col1
+													}
+												>
+													Due Date{' '}
+												</Text>
+												<View>
+													{tenant.rent.map((r, i) => {
+														return (
+															<View key={i}>
+																<Text
+																	style={
+																		roomInfoScreenStyles.col
+																	}
+																>
+																	{intervalToDuration(
+																		{
+																			start: new Date(),
+																			end: new Date(
+																				tenant.rentDueDate
+																			),
+																		}
+																	).days <=
+																		15 &&
+																		`${
+																			r.amount
+																		} rs  on ${format(
+																			new Date(
+																				tenant.rentDueDate
+																			),
+																			'dd/MM/yyyy'
+																		)}`}
+																</Text>
+															</View>
+														);
+													})}
+												</View>
+											</View>
+										)}
 									</ListItem.Content>
 								</ListItem>
 							);

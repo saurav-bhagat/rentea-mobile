@@ -47,4 +47,6 @@ export const tenantInfoStyles = ScaledSheet.create({
 		marginHorizontal: 20,
 		borderRadius: 15,
 	},
+	tenantRentDataRow: { flexDirection: 'row' },
+	tenantRentDataCol: { flex: 1, color: '#979797' },
 });

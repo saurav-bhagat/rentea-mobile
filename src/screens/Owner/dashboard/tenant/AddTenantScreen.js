@@ -69,7 +69,9 @@ const AddTenantScreen = ({
 			securityAmount: security,
 			roomId: roomData._id,
 			buildId: propertyInfo._id,
-			rent: isMultipleTenant ? rent : roomData.rent,
+			rent,
+			joinDate: date,
+			isTenantDueDateStartWithFirstDayOfMonth: monthEndOne,
 		};
 
 		if (isValidTenantData(tenantData)) {

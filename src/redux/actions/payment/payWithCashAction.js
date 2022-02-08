@@ -40,14 +40,27 @@ export const setPayWithCashResponseForSnack = () => {
 export const payWithCash = (paymentDetail) => {
 	return async (dispatch) => {
 		dispatch(payWithCashRequest());
-		const { tenant, singleRoomData, propertyInfo } = paymentDetail;
+		const {
+			tenant,
+			singleRoomData,
+			propertyInfo,
+			monthRentId,
+			monthName,
+			amount,
+		} = paymentDetail;
 		const { _id: tenantUserId, rentDueDate } = tenant;
-		let { rent: amount } = tenant;
-		if (!singleRoomData.isMultipleTenant) {
-			amount = singleRoomData.rent;
-		}
+		//let { rent: amount } = tenant;
+		// if (!singleRoomData.isMultipleTenant) {
+		// 	amount = singleRoomData.rent;
+		// }
 
-		const body = { amount, tenantUserId, rentDueDate };
+		const body = {
+			amount,
+			tenantUserId,
+			rentDueDate,
+			_id: monthRentId,
+			month: monthName,
+		};
 		const token = await getToken();
 		axios
 			.post(`${API_URL}/owner/pay-with-cash`, body, {
