@@ -255,88 +255,99 @@ const TenantInfoScreen = ({ route }) => {
 						)}
 					</Card>
 					<View>
-						{tenantRentData.map((monthRent, i) => {
-							return (
-								<Card key={i}>
-									<View
-										style={
-											tenantInfoStyles.tenantRentDataRow
-										}
-									>
-										<Text
-											style={
-												tenantInfoStyles.tenantRentDataCol
-											}
-										>
-											Month
-										</Text>
-										<Text
-											style={
-												tenantInfoStyles.tenantRentDataCol
-											}
-										>
-											Amount
-										</Text>
-										<Text
-											style={
-												tenantInfoStyles.tenantRentDataCol
-											}
-										>
-											Payment Mode
-										</Text>
-									</View>
-									<View
-										style={
-											tenantInfoStyles.tenantRentDataRow
-										}
-									>
-										<Text
-											style={
-												tenantInfoStyles.tenantRentDataCol
-											}
-										>
-											{monthRent.month}
-										</Text>
-										<Text
-											style={
-												tenantInfoStyles.tenantRentDataCol
-											}
-										>
-											{monthRent.amount}
-										</Text>
+						{intervalToDuration({
+							start: new Date(),
+							end: new Date(tenantData.rentDueDate),
+						}).days <= 15 &&
+							tenantRentData.map((monthRent, i) => {
+								return (
+									<Card key={i}>
 										<View
 											style={
-												tenantInfoStyles.tenantRentDataCol
+												tenantInfoStyles.tenantRentDataRow
 											}
 										>
-											<Button
-												title="Paid with cash"
-												containerStyle={
-													tenantInfoStyles.paidWithCashContainer
+											<Text
+												style={
+													tenantInfoStyles.tenantRentDataCol
 												}
-												buttonStyle={
-													tenantInfoStyles.paidWithCashBtn
-												}
-												titleStyle={
-													tenantInfoStyles.paidWithCashTitle
-												}
-												onPress={() =>
-													showConfirmDialog(
-														monthRent._id,
-														monthRent.month,
-														monthRent.amount
-													)
-												}
-												loading={loading}
-												loadingProps={{
-													color: '#109ED9',
-												}}
-											/>
+											>
+												Month
+											</Text>
+											<Text
+												style={[
+													tenantInfoStyles.tenantRentDataCol,
+													{ flex: 2 },
+												]}
+											>
+												Amount
+											</Text>
+											<Text
+												style={[
+													tenantInfoStyles.tenantRentDataCol,
+													{ flex: 3 },
+												]}
+											>
+												Payment Mode
+											</Text>
 										</View>
-									</View>
-								</Card>
-							);
-						})}
+										<View
+											style={
+												tenantInfoStyles.tenantRentDataRow
+											}
+										>
+											<Text
+												style={[
+													tenantInfoStyles.tenantRentDataCol,
+													tenantInfoStyles.tenantRentDataColModifier,
+												]}
+											>
+												{monthRent.month}
+											</Text>
+											<Text
+												style={[
+													tenantInfoStyles.tenantRentDataCol,
+													tenantInfoStyles.tenantRentDataColModifier,
+												]}
+											>
+												{monthRent.amount}
+											</Text>
+											<View
+												style={[
+													tenantInfoStyles.tenantRentDataCol,
+													{
+														flex: 2,
+													},
+												]}
+											>
+												<Button
+													title="Paid with cash"
+													containerStyle={
+														tenantInfoStyles.paidWithCashContainer
+													}
+													buttonStyle={
+														tenantInfoStyles.paidWithCashBtn
+													}
+													titleStyle={
+														tenantInfoStyles.paidWithCashTitle
+													}
+													onPress={() =>
+														showConfirmDialog(
+															monthRent._id,
+															monthRent.month,
+															monthRent.amount
+														)
+													}
+													loading={loading}
+													loadingProps={{
+														color: '#109ED9',
+													}}
+												/>
+											</View>
+										</View>
+									</Card>
+								);
+							})}
 					</View>
 				</ScrollView>
 				{/* Modal for update Tenant */}

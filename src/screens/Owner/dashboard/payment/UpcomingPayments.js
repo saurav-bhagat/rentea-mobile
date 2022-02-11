@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
-import { compareAsc } from 'date-fns';
+import { compareAsc, intervalToDuration } from 'date-fns';
 import TransactionCard from '../../../Tenant/payments/TransactionCard';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -13,11 +13,11 @@ const UpcomingPayments = ({ data }) => {
 	const upcomingPayTransactions =
 		data && data.length
 			? data.reduce((payData, item) => {
-					const result = compareAsc(
-						new Date(item.txnDate),
-						new Date()
-					);
-					if (result === 1) {
+					const result = intervalToDuration({
+						start: new Date(),
+						end: new Date(item.txnDate),
+					});
+					if (result.days <= 15) {
 						payData.push(item);
 					}
 					return payData;

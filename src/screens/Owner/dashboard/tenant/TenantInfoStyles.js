@@ -30,9 +30,9 @@ export const tenantInfoStyles = ScaledSheet.create({
 		color: '#109FDA',
 	},
 	paidWithCashContainer: {
-		marginTop: '20@s',
-		marginLeft: 'auto',
-		marginRight: 'auto',
+		// marginTop: '20@s',
+		// marginLeft: 'auto',
+		// marginRight: 'auto',
 	},
 	paidWithCashBtn: {
 		backgroundColor: '#fff',
@@ -48,5 +48,14 @@ export const tenantInfoStyles = ScaledSheet.create({
 		borderRadius: 15,
 	},
 	tenantRentDataRow: { flexDirection: 'row' },
-	tenantRentDataCol: { flex: 1, color: '#979797' },
+	tenantRentDataCol: {
+		flex: 1,
+		color: '#979797',
+		textAlign: 'center',
+	},
+	tenantRentDataColModifier: {
+		color: '#000',
+		fontFamily: 'interSemiBold',
+		marginTop: 10,
+	},
 });

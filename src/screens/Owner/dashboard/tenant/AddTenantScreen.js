@@ -93,8 +93,8 @@ const AddTenantScreen = ({
 			securityAmount: security,
 			roomId: roomData._id,
 			buildingId: propertyInfo._id,
-			rent,
-			oldRent: tenant.rent,
+			//rent,
+			//oldRent: tenant.rent,
 		};
 		if (isValidTenantData(tenantData)) {
 			dispatch(updateTenantDetails(tenantData));
@@ -182,77 +182,90 @@ const AddTenantScreen = ({
 						</View>
 					</View>
 
-					{((isMultipleTenant && showAddTenantScreenFlag) ||
-						(isMultipleTenant && !showAddTenantScreenFlag) ||
-						(!isMultipleTenant && !showAddTenantScreenFlag)) && (
+					{
+						// ((isMultipleTenant && showAddTenantScreenFlag) ||
+						// (isMultipleTenant && !showAddTenantScreenFlag) ||
+						// 	(!isMultipleTenant && !showAddTenantScreenFlag))
+						showAddTenantScreenFlag && (
+							<View style={addTenantStyles.row}>
+								<View style={addTenantStyles.col}>
+									<TextInputCommon
+										label="Rent"
+										name="rent"
+										onChangeText={(val) => setRent(val)}
+										value={rent}
+										keyboardType="numeric"
+										style={{ marginTop: 25 }}
+									/>
+								</View>
+								<View style={addTenantStyles.col}></View>
+							</View>
+						)
+					}
+					{showAddTenantScreenFlag && (
 						<View style={addTenantStyles.row}>
 							<View style={addTenantStyles.col}>
-								<TextInputCommon
-									label="Rent"
-									name="rent"
-									onChangeText={(val) => setRent(val)}
-									value={rent}
-									keyboardType="numeric"
-									style={{ marginTop: 25 }}
-								/>
+								<Item
+									floatingLabel
+									style={{
+										borderColor: '#666',
+										marginTop: 25,
+									}}
+								>
+									<Label style={{ fontSize: 16 }}>
+										Tenant Join date / Rent will start
+										from::
+									</Label>
+									<Input
+										onTouchStart={() =>
+											setShowDatePicker(true)
+										}
+										name="rentStartDate"
+										style={{ marginTop: 25 }}
+										value={date.toLocaleDateString()}
+									/>
+								</Item>
+								{showDatePicker && (
+									<DateTimePicker
+										testID="dateTimePicker"
+										value={date}
+										mode="date"
+										is24Hour={true}
+										display="default"
+										onChange={onDateChange}
+									/>
+								)}
 							</View>
-							<View style={addTenantStyles.col}></View>
 						</View>
 					)}
-					<View style={addTenantStyles.row}>
-						<View style={addTenantStyles.col}>
-							<Item
-								floatingLabel
-								style={{ borderColor: '#666', marginTop: 25 }}
+					{showAddTenantScreenFlag && (
+						<View style={addTenantStyles.row}>
+							<View
+								style={[
+									addTenantStyles.col,
+									{ marginTop: 20 },
+									{ display: 'flex' },
+									{ alignItems: 'center' },
+								]}
 							>
-								<Label style={{ fontSize: 16 }}>
-									Tenant Join date / Rent will start from::
-								</Label>
-								<Input
-									onTouchStart={() => setShowDatePicker(true)}
-									name="rentStartDate"
-									style={{ marginTop: 25 }}
-									value={date.toLocaleDateString()}
+								<Text style={addTenantStyles.rentDateEndText}>
+									By default next due date will be one month
+									from the Join date. If you want the due date
+									to be at the 1st of every month, please
+									check below
+								</Text>
+								<CheckBox
+									containerStyle={
+										addTenantStyles.checkoxContainer
+									}
+									center
+									title="Choose 1st as month end."
+									checked={monthEndOne}
+									onPress={() => setMonthEndOne(!monthEndOne)}
 								/>
-							</Item>
-							{showDatePicker && (
-								<DateTimePicker
-									testID="dateTimePicker"
-									value={date}
-									mode="date"
-									is24Hour={true}
-									display="default"
-									onChange={onDateChange}
-								/>
-							)}
+							</View>
 						</View>
-					</View>
-
-					<View style={addTenantStyles.row}>
-						<View
-							style={[
-								addTenantStyles.col,
-								{ marginTop: 20 },
-								{ display: 'flex' },
-								{ alignItems: 'center' },
-							]}
-						>
-							<Text style={addTenantStyles.rentDateEndText}>
-								By default next due date will be one month from
-								the Join date. If you want the due date to be at
-								the 1st of every month, please check below
-							</Text>
-							<CheckBox
-								containerStyle={
-									addTenantStyles.checkoxContainer
-								}
-								center
-								title="Choose 1st as month end."
-								checked={monthEndOne}
-								onPress={() => setMonthEndOne(!monthEndOne)}
-							/>
-						</View>
-					</View>
+					)}
 					<View style={addTenantStyles.row}>
 						<View style={addTenantStyles.col}>
 							<Button
