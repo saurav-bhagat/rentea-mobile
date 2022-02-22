@@ -117,7 +117,6 @@ export default function UpdateRoomDetails({ route }) {
 			setIsMultipleTenant(singleRoomData.isMultipleTenant);
 		}
 	}, [singleRoomData]);
-
 	return (
 		<ScrollView>
 			{singleRoomData ? (

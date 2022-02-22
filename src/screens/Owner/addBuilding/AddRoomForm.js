@@ -217,6 +217,7 @@ const AddRoomForm = ({
 						onChangeText={(val) => setRoomNo(val)}
 						style={addRoomFormStyles.textItemStyle}
 						inputStyle={{}}
+						keyboardType="numeric"
 					/>
 				</View>
 				<View style={addRoomFormStyles.col}>
@@ -227,6 +228,7 @@ const AddRoomForm = ({
 						onChangeText={(val) => setRoomSize(val)}
 						style={addRoomFormStyles.textItemStyle}
 						inputStyle={addRoomFormStyles.inputStyle}
+						keyboardType="numeric"
 					/>
 				</View>
 			</View>
@@ -241,6 +243,7 @@ const AddRoomForm = ({
 							onChangeText={(val) => setRent(val)}
 							style={addRoomFormStyles.textItemStyle}
 							inputStyle={{}}
+							keyboardType="numeric"
 						/>
 					</View>
 					<View style={addRoomFormStyles.col}>
@@ -251,6 +254,7 @@ const AddRoomForm = ({
 							onChangeText={(val) => setSecurity(val)}
 							style={addRoomFormStyles.textItemStyle}
 							inputStyle={addRoomFormStyles.inputStyle}
+							keyboardType="numeric"
 						/>
 					</View>
 				</View>

@@ -19,9 +19,9 @@ export default function CrossPlatformHeader({
 
 	if (authState && authState.userInfo) {
 		let name, tenantName;
-
-		userType = authState.userInfo.userDocument.userType;
-		name = authState.userInfo.userDocument.name;
+		// console.log(authState);
+		//userType = authState.userInfo.userDocument.userType;
+		//name = authState.userInfo.userDocument.name;
 
 		if (userType === 'Tenant') {
 			tenantName = authState.userInfo.userDetails.tenantName;

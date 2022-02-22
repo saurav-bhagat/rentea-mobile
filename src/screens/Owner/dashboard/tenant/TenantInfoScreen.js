@@ -158,7 +158,9 @@ const TenantInfoScreen = ({ route }) => {
 		setUpdateTenantModalFlag(true);
 	};
 	// filter only non paid data
-	const tenantRentData = tenant.rent.filter((rentData) => !rentData.isPaid);
+	const tenantRentData = tenantData?.rent.filter(
+		(rentData) => !rentData.isPaid
+	);
 	if (!tenantData) {
 		return (
 			<View>
@@ -237,118 +239,101 @@ const TenantInfoScreen = ({ route }) => {
 								)}
 							</Text>
 						</View>
-						{intervalToDuration({
-							start: new Date(),
-							end: new Date(tenantData.rentDueDate),
-						}).days <= 15 && (
-							<View style={tenantInfoStyles.row}>
-								<Text style={tenantInfoStyles.col1}>
-									Due Date
-								</Text>
-								<Text style={tenantInfoStyles.col}>
-									{format(
-										new Date(tenantData.rentDueDate),
-										'dd MMM yyyy'
-									)}
-								</Text>
-							</View>
-						)}
 					</Card>
 					<View>
-						{intervalToDuration({
-							start: new Date(),
-							end: new Date(tenantData.rentDueDate),
-						}).days <= 15 &&
-							tenantRentData.map((monthRent, i) => {
-								return (
-									<Card key={i}>
-										<View
+						{tenantRentData.map((monthRent, i) => {
+							return (
+								<Card key={i}>
+									<View
+										style={
+											tenantInfoStyles.tenantRentDataRow
+										}
+									>
+										<Text
 											style={
-												tenantInfoStyles.tenantRentDataRow
+												tenantInfoStyles.tenantRentDataCol
 											}
 										>
-											<Text
-												style={
-													tenantInfoStyles.tenantRentDataCol
+											Month
+										</Text>
+										<Text
+											style={[
+												tenantInfoStyles.tenantRentDataCol,
+												{ flex: 2 },
+											]}
+										>
+											Amount
+										</Text>
+										<Text
+											style={[
+												tenantInfoStyles.tenantRentDataCol,
+												{ flex: 3 },
+											]}
+										>
+											Payment Mode
+										</Text>
+									</View>
+									<View
+										style={
+											tenantInfoStyles.tenantRentDataRow
+										}
+									>
+										<Text
+											style={[
+												tenantInfoStyles.tenantRentDataCol,
+												tenantInfoStyles.tenantRentDataColModifier,
+											]}
+										>
+											{monthRent.month}
+										</Text>
+										<Text
+											style={[
+												tenantInfoStyles.tenantRentDataCol,
+												tenantInfoStyles.tenantRentDataColModifier,
+											]}
+										>
+											{monthRent.amount}
+										</Text>
+										<View
+											style={[
+												tenantInfoStyles.tenantRentDataCol,
+												{
+													flex: 2,
+												},
+											]}
+										>
+											<Button
+												title="Paid with cash"
+												containerStyle={
+													tenantInfoStyles.paidWithCashContainer
 												}
-											>
-												Month
-											</Text>
-											<Text
-												style={[
-													tenantInfoStyles.tenantRentDataCol,
-													{ flex: 2 },
-												]}
-											>
-												Amount
-											</Text>
-											<Text
-												style={[
-													tenantInfoStyles.tenantRentDataCol,
-													{ flex: 3 },
-												]}
-											>
-												Payment Mode
-											</Text>
+												buttonStyle={
+													tenantInfoStyles.paidWithCashBtn
+												}
+												titleStyle={
+													tenantInfoStyles.paidWithCashTitle
+												}
+												onPress={() =>
+													showConfirmDialog(
+														monthRent._id,
+														monthRent.month,
+														monthRent.amount
+													)
+												}
+												loading={loading}
+												loadingProps={{
+													color: '#109ED9',
+												}}
+											/>
 										</View>
-										<View
-											style={
-												tenantInfoStyles.tenantRentDataRow
-											}
-										>
-											<Text
-												style={[
-													tenantInfoStyles.tenantRentDataCol,
-													tenantInfoStyles.tenantRentDataColModifier,
-												]}
-											>
-												{monthRent.month}
-											</Text>
-											<Text
-												style={[
-													tenantInfoStyles.tenantRentDataCol,
-													tenantInfoStyles.tenantRentDataColModifier,
-												]}
-											>
-												{monthRent.amount}
-											</Text>
-											<View
-												style={[
-													tenantInfoStyles.tenantRentDataCol,
-													{
-														flex: 2,
-													},
-												]}
-											>
-												<Button
-													title="Paid with cash"
-													containerStyle={
-														tenantInfoStyles.paidWithCashContainer
-													}
-													buttonStyle={
-														tenantInfoStyles.paidWithCashBtn
-													}
-													titleStyle={
-														tenantInfoStyles.paidWithCashTitle
-													}
-													onPress={() =>
-														showConfirmDialog(
-															monthRent._id,
-															monthRent.month,
-															monthRent.amount
-														)
-													}
-													loading={loading}
-													loadingProps={{
-														color: '#109ED9',
-													}}
-												/>
-											</View>
-										</View>
-									</Card>
-								);
-							})}
+									</View>
+								</Card>
+							);
+						})}
 					</View>
+					{tenantData?.rent[tenantData?.rent.length - 1].isPaid && (
+						<Text style={{ margin: 100 }}>No payments</Text>
+					)}
 				</ScrollView>
 				{/* Modal for update Tenant */}
 				<Portal>

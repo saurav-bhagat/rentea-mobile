@@ -106,6 +106,27 @@ const TransactionScreen = ({ route }) => {
 							{data.buildingName}{' '}
 						</Text>
 					</View>
+					<View
+						style={[
+							ownerPaymentStyles.dataFieldContainer,
+							{ marginTop: 10 },
+						]}
+					>
+						<Text
+							style={
+								ownerPaymentStyles.leftSideTransactionTextStyle
+							}
+						>
+							rentMonth
+						</Text>
+						<Text
+							style={
+								ownerPaymentStyles.rightSideTransactionTextStyle
+							}
+						>
+							{data.rentMonth}{' '}
+						</Text>
+					</View>
 					<View style={ownerPaymentStyles.horizontalRow}></View>
 					<View
 						style={[

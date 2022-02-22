@@ -103,17 +103,19 @@ const OwnerPaymentInfoScreen = () => {
 					if (!rent[j].isPaid) {
 						pendingPaymentData.push({
 							txnAmount: rent[j].amount,
-							txnDate,
+							txnDate: rent[j].rentDueDate,
 							tenantName,
 							roomNo,
 							buildingName,
+							rentMonth: rent[j].month,
 						});
 						upcomingPaymentData.push({
 							txnAmount: rent[j].amount,
-							txnDate,
+							txnDate: rent[j].rentDueDate,
 							tenantName,
 							roomNo,
 							buildingName,
+							rentMonth: rent[j].month,
 						});
 					}
 				}

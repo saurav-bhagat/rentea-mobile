@@ -77,7 +77,12 @@ const RoomInfoScreen = ({ route }) => {
 	// then we take it from property info
 	// for navigate back to propertyInfo screen
 	buildingId = propertyInfo._id;
+	let tempTenantWithRentAndMonth;
 
+	// only show tenant rent which do not paid rent
+	const filterTenantRentArray = (tenant) => {
+		tempTenantWithRentAndMonth = tenant.rent.filter((t) => !t.isPaid);
+	};
 	return (
 		<Provider>
 			<ScrollView>
@@ -200,11 +205,15 @@ const RoomInfoScreen = ({ route }) => {
 											</Text>
 										</View>
 
-										{/* only show rent if rentDueDate is after the 15 day */}
-										{intervalToDuration({
-											start: new Date(),
-											end: new Date(tenant.rentDueDate),
-										}).days <= 15 && (
+										{/* Hide due date tag in case of tenant.rent[lastItem].isPaid===true */}
+										{!(
+											tenant.rentDueDate ===
+											(tenant.rent[tenant.rent.length - 1]
+												.isPaid &&
+												tenant.rent[
+													tenant.rent.length - 1
+												].rentDueDate)
+										) && (
 											<View
 												style={roomInfoScreenStyles.row}
 											>
@@ -216,35 +225,31 @@ const RoomInfoScreen = ({ route }) => {
 													Due Date{' '}
 												</Text>
 												<View>
-													{tenant.rent.map((r, i) => {
-														return (
-															<View key={i}>
-																<Text
-																	style={
-																		roomInfoScreenStyles.col
-																	}
-																>
-																	{intervalToDuration(
-																		{
-																			start: new Date(),
-																			end: new Date(
-																				tenant.rentDueDate
-																			),
-																		}
-																	).days <=
-																		15 &&
-																		`${
-																			r.amount
-																		} rs  on ${format(
-																			new Date(
-																				tenant.rentDueDate
-																			),
-																			'dd/MM/yyyy'
-																		)}`}
-																</Text>
-															</View>
-														);
-													})}
+													{
+														(filterTenantRentArray(
+															tenant
+														),
+														tempTenantWithRentAndMonth.map(
+															(r, i) => {
+																return (
+																	<View
+																		key={i}
+																	>
+																		<Text
+																			style={
+																				roomInfoScreenStyles.col
+																			}
+																		>
+																			{`
+																		${r.amount} rs  on ${format(new Date(r.rentDueDate), 'dd/MM/yyyy')}
+																		
+																		`}
+																		</Text>
+																	</View>
+																);
+															}
+														))
+													}
 												</View>
 											</View>
 										)}
