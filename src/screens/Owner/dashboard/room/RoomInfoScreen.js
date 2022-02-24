@@ -206,13 +206,8 @@ const RoomInfoScreen = ({ route }) => {
 										</View>
 
 										{/* Hide due date tag in case of tenant.rent[lastItem].isPaid===true */}
-										{!(
-											tenant.rentDueDate ===
-											(tenant.rent[tenant.rent.length - 1]
-												.isPaid &&
-												tenant.rent[
-													tenant.rent.length - 1
-												].rentDueDate)
+										{!tenant.rent.every(
+											(r) => r.isPaid === true
 										) && (
 											<View
 												style={roomInfoScreenStyles.row}
@@ -222,9 +217,9 @@ const RoomInfoScreen = ({ route }) => {
 														roomInfoScreenStyles.col1
 													}
 												>
-													Due Date{' '}
+													Due date :{' '}
 												</Text>
-												<View>
+												<View style={{ flex: 2 }}>
 													{
 														(filterTenantRentArray(
 															tenant
@@ -232,20 +227,23 @@ const RoomInfoScreen = ({ route }) => {
 														tempTenantWithRentAndMonth.map(
 															(r, i) => {
 																return (
-																	<View
+																	<Text
 																		key={i}
+																		style={{
+																			textAlign:
+																				'right',
+																			marginTop: 10,
+																		}}
 																	>
-																		<Text
-																			style={
-																				roomInfoScreenStyles.col
-																			}
-																		>
-																			{`
-																		${r.amount} rs  on ${format(new Date(r.rentDueDate), 'dd/MM/yyyy')}
-																		
-																		`}
-																		</Text>
-																	</View>
+																		{`${
+																			r.amount
+																		} rs  on ${format(
+																			new Date(
+																				r.rentDueDate
+																			),
+																			'dd MMM yyyy'
+																		)}`}
+																	</Text>
 																);
 															}
 														))

@@ -12,7 +12,6 @@ const upcomingColor = '#96E0FF';
 
 const TransactionScreen = ({ route }) => {
 	const { payment: data } = route.params;
-
 	let iconColor, iconName;
 	if (data.color === upcomingColor) {
 		iconColor = '#109ED9';
@@ -52,7 +51,7 @@ const TransactionScreen = ({ route }) => {
 								ownerPaymentStyles.leftSideTransactionTextStyle
 							}
 						>
-							Date
+							{data.paymentMode ? 'Paid on ' : 'Due date '}
 						</Text>
 						<Text
 							style={

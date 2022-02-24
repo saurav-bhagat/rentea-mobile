@@ -35,10 +35,13 @@ export const tenantInfoStyles = ScaledSheet.create({
 		// marginRight: 'auto',
 	},
 	paidWithCashBtn: {
-		backgroundColor: '#fff',
+		marginTop: 10,
+		marginBottom: 10,
+		backgroundColor: '#109ED9',
+		borderRadius: 20,
 	},
 	paidWithCashTitle: {
-		color: '#109ED9',
+		color: '#fff',
 		fontFamily: 'interBold',
 	},
 	tenantUpdateModalContainer: {
