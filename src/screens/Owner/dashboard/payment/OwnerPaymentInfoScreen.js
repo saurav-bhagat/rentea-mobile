@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { Tab, Tabs, DefaultTabBar } from 'native-base';
 import { useSelector } from 'react-redux';
 import PendingPayments from './PendingPayments';
 import UpcomingPayments from './UpcomingPayments';
 import CompletedPayments from './CompletedPayments';
-
 import { ownerPaymentStyles } from './OwnerPaymentStyles';
-import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
+import { useNavigation } from '@react-navigation/native';
+import DashboardHeader from '../../owner-dashboard/DashboardHeader';
 
 const renderTabBar = (props) => {
 	props.tabStyle = Object.create(props.tabStyle);
@@ -15,6 +15,7 @@ const renderTabBar = (props) => {
 };
 
 const OwnerPaymentInfoScreen = () => {
+	const navigation = useNavigation();
 	const { ownerDashboardResult } = useSelector(
 		(state) => state.ownerDashbhoard.properties
 	);
@@ -26,6 +27,7 @@ const OwnerPaymentInfoScreen = () => {
 	let upcomingPaymentData = [];
 	let tenantPlusRentContainer = [];
 	let paymentDetailsContainer = [];
+	let pendingAndUpcomingPaymentDataContainer = [];
 	if (ownerBuilding && ownerBuilding.length) {
 		for (
 			let buildingIndex = 0;
@@ -73,16 +75,8 @@ const OwnerPaymentInfoScreen = () => {
 								roomNo,
 								buildingName,
 							});
-
-						pendingPaymentData.push({
-							txnAmount: isMultipleTenant ? tenantRent : rent,
-							txnDate: rentDueDate,
-							tenantName,
-							roomNo,
-							buildingName,
-						});
-						upcomingPaymentData.push({
-							txnAmount: isMultipleTenant ? tenantRent : rent,
+						pendingAndUpcomingPaymentDataContainer.push({
+							txnAmount: tenantRent,
 							txnDate: rentDueDate,
 							tenantName,
 							roomNo,
@@ -92,7 +86,41 @@ const OwnerPaymentInfoScreen = () => {
 				}
 			}
 		}
-
+		if (pendingAndUpcomingPaymentDataContainer.length) {
+			for (
+				let i = 0;
+				i < pendingAndUpcomingPaymentDataContainer.length;
+				i++
+			) {
+				const {
+					txnAmount: rent,
+					txnDate,
+					tenantName,
+					roomNo,
+					buildingName,
+				} = pendingAndUpcomingPaymentDataContainer[i];
+				for (let j = 0; j < rent.length; j++) {
+					if (!rent[j].isPaid) {
+						pendingPaymentData.push({
+							txnAmount: rent[j].amount,
+							txnDate: rent[j].rentDueDate,
+							tenantName,
+							roomNo,
+							buildingName,
+							rentMonth: rent[j].month,
+						});
+						upcomingPaymentData.push({
+							txnAmount: rent[j].amount,
+							txnDate: rent[j].rentDueDate,
+							tenantName,
+							roomNo,
+							buildingName,
+							rentMonth: rent[j].month,
+						});
+					}
+				}
+			}
+		}
 		if (paymentDetailsContainer.length) {
 			for (let i = 0; i < paymentDetailsContainer.length; i++) {
 				const { paymentDetails, tenantName, roomNo, buildingName } =
@@ -114,49 +142,53 @@ const OwnerPaymentInfoScreen = () => {
 			}
 		}
 	}
+
 	return (
-		<View style={ownerPaymentStyles.ownerPaymentContainer}>
-			<Tabs
-				renderTabBar={renderTabBar}
-				tabContainerStyle={ownerPaymentStyles.tabContainerStyle}
-				style={ownerPaymentStyles.tabBackgroundColor}
-				tabBarUnderlineStyle={{ width: 0 }}
-			>
-				<Tab
-					heading="Pending"
-					tabStyle={ownerPaymentStyles.tabStyle}
-					activeTabStyle={[
-						ownerPaymentStyles.activeTabStyle,
-						{ marginLeft: 5 },
-					]}
-					textStyle={ownerPaymentStyles.textStyle}
-					activeTextStyle={ownerPaymentStyles.activeTextStyle}
+		<>
+			<DashboardHeader usedInPaymentScreen={true} />
+			<SafeAreaView style={ownerPaymentStyles.ownerPaymentContainer}>
+				<Tabs
+					renderTabBar={renderTabBar}
+					tabContainerStyle={ownerPaymentStyles.tabContainerStyle}
+					style={ownerPaymentStyles.tabBackgroundColor}
+					tabBarUnderlineStyle={{ width: 0 }}
 				>
-					<PendingPayments data={pendingPaymentData} />
-				</Tab>
-				<Tab
-					tabStyle={ownerPaymentStyles.tabStyle}
-					activeTabStyle={ownerPaymentStyles.activeTabStyle}
-					activeTextStyle={ownerPaymentStyles.activeTextStyle}
-					textStyle={ownerPaymentStyles.textStyle}
-					heading="Upcoming"
-				>
-					<UpcomingPayments data={upcomingPaymentData} />
-				</Tab>
-				<Tab
-					tabStyle={ownerPaymentStyles.tabStyle}
-					activeTabStyle={[
-						ownerPaymentStyles.activeTabStyle,
-						{ marginRight: 5 },
-					]}
-					textStyle={ownerPaymentStyles.textStyle}
-					activeTextStyle={ownerPaymentStyles.activeTextStyle}
-					heading="Completed"
-				>
-					<CompletedPayments data={completedPaymentData} />
-				</Tab>
-			</Tabs>
-		</View>
+					<Tab
+						heading="Pending"
+						tabStyle={ownerPaymentStyles.tabStyle}
+						activeTabStyle={[
+							ownerPaymentStyles.activeTabStyle,
+							{ marginLeft: 5 },
+						]}
+						textStyle={ownerPaymentStyles.textStyle}
+						activeTextStyle={ownerPaymentStyles.activeTextStyle}
+					>
+						<PendingPayments data={pendingPaymentData} />
+					</Tab>
+					<Tab
+						tabStyle={ownerPaymentStyles.tabStyle}
+						activeTabStyle={ownerPaymentStyles.activeTabStyle}
+						activeTextStyle={ownerPaymentStyles.activeTextStyle}
+						textStyle={ownerPaymentStyles.textStyle}
+						heading="Upcoming"
+					>
+						<UpcomingPayments data={upcomingPaymentData} />
+					</Tab>
+					<Tab
+						tabStyle={ownerPaymentStyles.tabStyle}
+						activeTabStyle={[
+							ownerPaymentStyles.activeTabStyle,
+							{ marginRight: 5 },
+						]}
+						textStyle={ownerPaymentStyles.textStyle}
+						activeTextStyle={ownerPaymentStyles.activeTextStyle}
+						heading="Completed"
+					>
+						<CompletedPayments data={completedPaymentData} />
+					</Tab>
+				</Tabs>
+			</SafeAreaView>
+		</>
 	);
 };
 

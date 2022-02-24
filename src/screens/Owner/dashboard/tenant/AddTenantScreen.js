@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, CheckBox } from 'react-native-elements';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,6 +13,7 @@ import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 
 import { updateTenantDetails } from '../../../../redux/actions/ownerActions/updateTenantAction';
+import { Input, Item, Label } from 'native-base';
 
 const AddTenantScreen = ({
 	singleRoomData,
@@ -40,6 +42,15 @@ const AddTenantScreen = ({
 	const [email, setEmail] = useState('');
 	const [security, setSecurity] = useState('');
 	const [rent, setRent] = useState('');
+	const [monthEndOne, setMonthEndOne] = useState(false);
+	const [date, setDate] = useState(new Date());
+	const [showDatePicker, setShowDatePicker] = useState(false);
+
+	const onDateChange = (event, selectedDate) => {
+		const currentDate = selectedDate || date;
+		setShowDatePicker(Platform.OS === 'ios');
+		setDate(currentDate);
+	};
 
 	const {
 		text,
@@ -58,7 +69,9 @@ const AddTenantScreen = ({
 			securityAmount: security,
 			roomId: roomData._id,
 			buildId: propertyInfo._id,
-			rent: isMultipleTenant ? rent : roomData.rent,
+			rent,
+			joinDate: date,
+			isTenantDueDateStartWithFirstDayOfMonth: monthEndOne,
 		};
 
 		if (isValidTenantData(tenantData)) {
@@ -80,8 +93,8 @@ const AddTenantScreen = ({
 			securityAmount: security,
 			roomId: roomData._id,
 			buildingId: propertyInfo._id,
-			rent,
-			oldRent: tenant.rent,
+			//rent,
+			//oldRent: tenant.rent,
 		};
 		if (isValidTenantData(tenantData)) {
 			dispatch(updateTenantDetails(tenantData));
@@ -169,21 +182,88 @@ const AddTenantScreen = ({
 						</View>
 					</View>
 
-					{((isMultipleTenant && showAddTenantScreenFlag) ||
-						(isMultipleTenant && !showAddTenantScreenFlag) ||
-						(!isMultipleTenant && !showAddTenantScreenFlag)) && (
+					{
+						// ((isMultipleTenant && showAddTenantScreenFlag) ||
+						// (isMultipleTenant && !showAddTenantScreenFlag) ||
+						// 	(!isMultipleTenant && !showAddTenantScreenFlag))
+						showAddTenantScreenFlag && (
+							<View style={addTenantStyles.row}>
+								<View style={addTenantStyles.col}>
+									<TextInputCommon
+										label="Rent"
+										name="rent"
+										onChangeText={(val) => setRent(val)}
+										value={rent}
+										keyboardType="numeric"
+										style={{ marginTop: 25 }}
+									/>
+								</View>
+								<View style={addTenantStyles.col}></View>
+							</View>
+						)
+					}
+					{showAddTenantScreenFlag && (
 						<View style={addTenantStyles.row}>
 							<View style={addTenantStyles.col}>
-								<TextInputCommon
-									label="Rent"
-									name="rent"
-									onChangeText={(val) => setRent(val)}
-									value={rent}
-									keyboardType="numeric"
-									style={{ marginTop: 25 }}
+								<Item
+									floatingLabel
+									style={{
+										borderColor: '#666',
+										marginTop: 25,
+									}}
+								>
+									<Label style={{ fontSize: 16 }}>
+										Tenant Join date / Rent will start
+										from::
+									</Label>
+									<Input
+										onTouchStart={() =>
+											setShowDatePicker(true)
+										}
+										name="rentStartDate"
+										style={{ marginTop: 25 }}
+										value={date.toLocaleDateString()}
+									/>
+								</Item>
+								{showDatePicker && (
+									<DateTimePicker
+										testID="dateTimePicker"
+										value={date}
+										mode="date"
+										is24Hour={true}
+										display="default"
+										onChange={onDateChange}
+									/>
+								)}
+							</View>
+						</View>
+					)}
+					{showAddTenantScreenFlag && (
+						<View style={addTenantStyles.row}>
+							<View
+								style={[
+									addTenantStyles.col,
+									{ marginTop: 20 },
+									{ display: 'flex' },
+									{ alignItems: 'center' },
+								]}
+							>
+								<Text style={addTenantStyles.rentDateEndText}>
+									By default next due date will be one month
+									from the Join date. If you want the due date
+									to be at the 1st of every month, please
+									check below
+								</Text>
+								<CheckBox
+									containerStyle={
+										addTenantStyles.checkoxContainer
+									}
+									center
+									title="Choose 1st as month end."
+									checked={monthEndOne}
+									onPress={() => setMonthEndOne(!monthEndOne)}
 								/>
 							</View>
-							<View style={addTenantStyles.col}></View>
 						</View>
 					)}
 					<View style={addTenantStyles.row}>

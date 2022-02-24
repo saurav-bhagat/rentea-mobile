@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
 import { useSelector } from 'react-redux';
-import { format } from 'date-fns';
+import { format, intervalToDuration } from 'date-fns';
 import { Provider, Portal, Modal } from 'react-native-paper';
 
 import CrossPlatformHeader from '../../../../components/common/CrossPlatformHeader';
@@ -77,17 +77,22 @@ const RoomInfoScreen = ({ route }) => {
 	// then we take it from property info
 	// for navigate back to propertyInfo screen
 	buildingId = propertyInfo._id;
+	let tempTenantWithRentAndMonth;
 
+	// only show tenant rent which do not paid rent
+	const filterTenantRentArray = (tenant) => {
+		tempTenantWithRentAndMonth = tenant.rent.filter((t) => !t.isPaid);
+	};
 	return (
 		<Provider>
 			<ScrollView>
-				{/* <CrossPlatformHeader
+				<CrossPlatformHeader
 					title="Room Details"
 					backCallback={() => {
 						navigate('PropertyInfo', { buildingId, roomId });
 					}}
 					profile={false}
-				/> */}
+				/>
 
 				<>
 					<RoomDetailsScreen
@@ -199,27 +204,53 @@ const RoomInfoScreen = ({ route }) => {
 												{tenant.name}
 											</Text>
 										</View>
-										<View style={roomInfoScreenStyles.row}>
-											<Text
-												style={
-													roomInfoScreenStyles.col1
-												}
+
+										{/* Hide due date tag in case of tenant.rent[lastItem].isPaid===true */}
+										{!tenant.rent.every(
+											(r) => r.isPaid === true
+										) && (
+											<View
+												style={roomInfoScreenStyles.row}
 											>
-												Due Date{' '}
-											</Text>
-											<Text
-												style={roomInfoScreenStyles.col}
-											>
-												{`${
-													tenant.rent
-												} rs  on ${format(
-													new Date(
-														tenant.rentDueDate
-													),
-													'dd/MM/yyyy'
-												)}`}
-											</Text>
-										</View>
+												<Text
+													style={
+														roomInfoScreenStyles.col1
+													}
+												>
+													Due date :{' '}
+												</Text>
+												<View style={{ flex: 2 }}>
+													{
+														(filterTenantRentArray(
+															tenant
+														),
+														tempTenantWithRentAndMonth.map(
+															(r, i) => {
+																return (
+																	<Text
+																		key={i}
+																		style={{
+																			textAlign:
+																				'right',
+																			marginTop: 10,
+																		}}
+																	>
+																		{`${
+																			r.amount
+																		} rs  on ${format(
+																			new Date(
+																				r.rentDueDate
+																			),
+																			'dd MMM yyyy'
+																		)}`}
+																	</Text>
+																);
+															}
+														))
+													}
+												</View>
+											</View>
+										)}
 									</ListItem.Content>
 								</ListItem>
 							);

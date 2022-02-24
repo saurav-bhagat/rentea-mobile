@@ -20,6 +20,7 @@ const TransactionCard = ({ data, color }) => {
 		);
 		time = format(new Date(time), 'dd MMM yyyy ,hh:mm a');
 	}
+
 	return (
 		<Card style={transactionCardStyles.cardContainer} noShadow>
 			<CardItem
@@ -48,7 +49,7 @@ const TransactionCard = ({ data, color }) => {
 								<Text
 									style={transactionCardStyles.dateTextStyle}
 								>
-									Due :{' '}
+									{data.paymentMode ? 'Paid on' : 'Due Date'}{' '}
 									{format(
 										new Date(data.txnDate),
 										'dd MMM, yyyy'

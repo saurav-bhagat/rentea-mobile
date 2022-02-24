@@ -22,21 +22,27 @@ export default function RoomDetailsScreen({
 						<Text style={roomDetailStyles.roomNoTxt}>
 							Room No {singleRoomData.roomNo}
 						</Text>
-
-						<View style={roomDetailStyles.rowInCol2}>
+						{/* Todo : Not showing for now but we show it in our feature release */}
+						{/* <View style={roomDetailStyles.rowInCol2}>
 							<Text style={roomDetailStyles.col1}>
 								Rent: {singleRoomData.rent}
 							</Text>
 							<Text style={roomDetailStyles.col1}>
 								Size: {singleRoomData.roomSize + ' Sq.ft.'}
 							</Text>
-						</View>
+						</View> */}
 						<View style={roomDetailStyles.rowInCol2}>
 							<Text style={roomDetailStyles.col1}>
 								Floor: {singleRoomData.floor}
 							</Text>
 							<Text style={roomDetailStyles.col1}>
 								BHK: {singleRoomData.type.split('')[0]}
+							</Text>
+						</View>
+						<View style={roomDetailStyles.rowInCol2}>
+							<Text style={roomDetailStyles.col1}>
+								MultipleTenant :{' '}
+								{singleRoomData.isMultipleTenant ? 'Yes' : 'No'}
 							</Text>
 						</View>
 					</View>
@@ -48,12 +54,6 @@ export default function RoomDetailsScreen({
 							name={'edit'}
 						/>
 					</View>
-				</View>
-				<View style={roomDetailStyles.row1}>
-					<Text style={roomDetailStyles.col1}>
-						MultipleTenant :{' '}
-						{singleRoomData.isMultipleTenant ? 'Yes' : 'No'}
-					</Text>
 				</View>
 			</Card>
 		</View>

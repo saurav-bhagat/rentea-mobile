@@ -8,7 +8,7 @@ export const dashboardStyles = ScaledSheet.create({
 		paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
 	},
 	topView: {
-		flex: 1.5,
+		flex: 2,
 		backgroundColor: '#109ED9',
 		width: '100%',
 		height: '200@s',
@@ -176,5 +176,10 @@ export const dashboardStyles = ScaledSheet.create({
 		fontSize: '35@mvs',
 		color: '#109ED9',
 		marginLeft: '10@s',
+	},
+	topViewForPayment: {
+		backgroundColor: '#109ED9',
+		width: '100%',
+		height: '153@s',
 	},
 });

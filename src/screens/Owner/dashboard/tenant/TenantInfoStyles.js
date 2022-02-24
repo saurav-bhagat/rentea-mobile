@@ -30,15 +30,18 @@ export const tenantInfoStyles = ScaledSheet.create({
 		color: '#109FDA',
 	},
 	paidWithCashContainer: {
-		marginTop: '20@s',
-		marginLeft: 'auto',
-		marginRight: 'auto',
+		// marginTop: '20@s',
+		// marginLeft: 'auto',
+		// marginRight: 'auto',
 	},
 	paidWithCashBtn: {
-		backgroundColor: '#fff',
+		marginTop: 10,
+		marginBottom: 10,
+		backgroundColor: '#109ED9',
+		borderRadius: 20,
 	},
 	paidWithCashTitle: {
-		color: '#109ED9',
+		color: '#fff',
 		fontFamily: 'interBold',
 	},
 	tenantUpdateModalContainer: {
@@ -46,5 +49,16 @@ export const tenantInfoStyles = ScaledSheet.create({
 		paddingVertical: 20,
 		marginHorizontal: 20,
 		borderRadius: 15,
+	},
+	tenantRentDataRow: { flexDirection: 'row' },
+	tenantRentDataCol: {
+		flex: 1,
+		color: '#979797',
+		textAlign: 'center',
+	},
+	tenantRentDataColModifier: {
+		color: '#000',
+		fontFamily: 'interSemiBold',
+		marginTop: 10,
 	},
 });

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import * as Clipboard from 'expo-clipboard';
 import { useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,115 +46,121 @@ const OwnerBankDetailsScreen = () => {
 	};
 
 	return (
-		<View style={{ backgroundColor: '#ffffff', flex: 1 }}>
-			<CrossPlatformHeader title="" profile={false} />
-			<View style={ownerBankDetailsStyles.oudsContainer}>
-				<View style={ownerBankDetailsStyles.oudsTextContainer}>
-					<Text style={ownerBankDetailsStyles.oudsShortText}>
-						Add Bank
-					</Text>
-					<Text style={ownerBankDetailsStyles.oudsdetailsText}>
-						Enter your Bank details
-					</Text>
-				</View>
+		<ScrollView>
+			<View style={{ backgroundColor: '#ffffff', flex: 1 }}>
+				<CrossPlatformHeader title="" profile={false} />
+				<View style={ownerBankDetailsStyles.oudsContainer}>
+					<View style={ownerBankDetailsStyles.oudsTextContainer}>
+						<Text style={ownerBankDetailsStyles.oudsShortText}>
+							Add Bank
+						</Text>
+						<Text style={ownerBankDetailsStyles.oudsdetailsText}>
+							Enter your Bank details
+						</Text>
+					</View>
 
-				<View style={ownerBankDetailsStyles.oudsFormContainer}>
-					<TextInput
-						style={ownerBankDetailsStyles.bankDetailsInput}
-						placeholderTextColor={'#aaa'}
-						placeholder="Account Name*"
-						onChangeText={(val) => setAccountName(val)}
-					/>
-					<TextInput
-						style={ownerBankDetailsStyles.bankDetailsInput}
-						placeholderTextColor={'#aaa'}
-						placeholder="Bank Name*"
-						onChangeText={(val) => setBankName(val)}
-					/>
-					<TextInput
-						secureTextEntry={true}
-						contextMenuHidden={true}
-						selectTextOnFocus={false}
-						onBlur={() => Clipboard.setString('')}
-						onFocus={() => Clipboard.setString('')}
-						onSelectionChange={() => Clipboard.setString('')}
-						style={ownerBankDetailsStyles.bankDetailsInput}
-						placeholderTextColor={'#aaa'}
-						placeholder="Account Number*"
-						onChangeText={(val) => setAccountNumber(val)}
-						keyboardType="numeric"
-					/>
-					<TextInput
-						contextMenuHidden
-						selectTextOnFocus={false}
-						onBlur={() => Clipboard.setString('')}
-						onFocus={() => Clipboard.setString('')}
-						onSelectionChange={() => Clipboard.setString('')}
-						style={ownerBankDetailsStyles.bankDetailsInput}
-						placeholderTextColor={'#aaa'}
-						placeholder="Confirm Account Number*"
-						onChangeText={(val) => setConfirmAccountNumber(val)}
-						keyboardType="numeric"
-					/>
-					<TextInput
-						style={ownerBankDetailsStyles.bankDetailsInput}
-						placeholderTextColor={'#aaa'}
-						placeholder="IFSC*"
-						onChangeText={(val) => setIfsc(val)}
-					/>
-					<TextInput
-						style={ownerBankDetailsStyles.bankDetailsInput}
-						placeholderTextColor={'#aaa'}
-						placeholder="Beneficiary Name*"
-						onChangeText={(val) => setBeneficiaryName(val)}
-					/>
-					<View
-						style={{
-							flexDirection: 'row',
-							justifyContent: 'space-between',
-						}}
-					>
-						<TouchableOpacity
-							style={ownerBankDetailsStyles.oudsContinueButton}
-							onPress={() =>
-								firstLogin
-									? navigate('AddBuilding')
-									: navigate('ownerDashboard')
-							}
+					<View style={ownerBankDetailsStyles.oudsFormContainer}>
+						<TextInput
+							style={ownerBankDetailsStyles.bankDetailsInput}
+							placeholderTextColor={'#aaa'}
+							placeholder="Account Name*"
+							onChangeText={(val) => setAccountName(val)}
+						/>
+						<TextInput
+							style={ownerBankDetailsStyles.bankDetailsInput}
+							placeholderTextColor={'#aaa'}
+							placeholder="Bank Name*"
+							onChangeText={(val) => setBankName(val)}
+						/>
+						<TextInput
+							secureTextEntry={true}
+							contextMenuHidden={true}
+							selectTextOnFocus={false}
+							onBlur={() => Clipboard.setString('')}
+							onFocus={() => Clipboard.setString('')}
+							onSelectionChange={() => Clipboard.setString('')}
+							style={ownerBankDetailsStyles.bankDetailsInput}
+							placeholderTextColor={'#aaa'}
+							placeholder="Account Number*"
+							onChangeText={(val) => setAccountNumber(val)}
+							keyboardType="numeric"
+						/>
+						<TextInput
+							contextMenuHidden
+							selectTextOnFocus={false}
+							onBlur={() => Clipboard.setString('')}
+							onFocus={() => Clipboard.setString('')}
+							onSelectionChange={() => Clipboard.setString('')}
+							style={ownerBankDetailsStyles.bankDetailsInput}
+							placeholderTextColor={'#aaa'}
+							placeholder="Confirm Account Number*"
+							onChangeText={(val) => setConfirmAccountNumber(val)}
+							keyboardType="numeric"
+						/>
+						<TextInput
+							style={ownerBankDetailsStyles.bankDetailsInput}
+							placeholderTextColor={'#aaa'}
+							placeholder="IFSC*"
+							onChangeText={(val) => setIfsc(val)}
+						/>
+						<TextInput
+							style={ownerBankDetailsStyles.bankDetailsInput}
+							placeholderTextColor={'#aaa'}
+							placeholder="Beneficiary Name*"
+							onChangeText={(val) => setBeneficiaryName(val)}
+						/>
+						<View
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+							}}
 						>
-							<Text
-								style={[
-									ownerBankDetailsStyles.oudsContinueButton_text,
-									{ color: '#acadae' },
-								]}
+							<TouchableOpacity
+								style={
+									ownerBankDetailsStyles.oudsContinueButton
+								}
+								onPress={() =>
+									firstLogin
+										? navigate('AddBuilding')
+										: navigate('ownerDashboard')
+								}
 							>
-								Skip
-							</Text>
-						</TouchableOpacity>
-
-						<TouchableOpacity
-							style={ownerBankDetailsStyles.oudsContinueButton}
-							onPress={() => handleOwnerBankDetailsSubmit()}
-						>
-							{addBankDetailsState.loading ? (
-								<ActivityIndicator
-									color="#ffffff"
-									size="large"
-								/>
-							) : (
 								<Text
-									style={
-										ownerBankDetailsStyles.oudsContinueButton_text
-									}
+									style={[
+										ownerBankDetailsStyles.oudsContinueButton_text,
+										{ color: '#acadae' },
+									]}
 								>
-									Continue
+									Skip
 								</Text>
-							)}
-						</TouchableOpacity>
+							</TouchableOpacity>
+
+							<TouchableOpacity
+								style={
+									ownerBankDetailsStyles.oudsContinueButton
+								}
+								onPress={() => handleOwnerBankDetailsSubmit()}
+							>
+								{addBankDetailsState.loading ? (
+									<ActivityIndicator
+										color="#ffffff"
+										size="large"
+									/>
+								) : (
+									<Text
+										style={
+											ownerBankDetailsStyles.oudsContinueButton_text
+										}
+									>
+										Continue
+									</Text>
+								)}
+							</TouchableOpacity>
+						</View>
 					</View>
 				</View>
 			</View>
-		</View>
+		</ScrollView>
 	);
 };
 

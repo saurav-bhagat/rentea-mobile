@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, Alert, ActivityIndicator, ScrollView } from 'react-native';
 import { Card, Button } from 'react-native-elements';
-import { format } from 'date-fns';
+import { format, intervalToDuration } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import _ from 'lodash';
@@ -21,6 +21,7 @@ const tenantUpdate = 'tenant details updated successfully';
 const defaultState = 'default state';
 
 const TenantInfoScreen = ({ route }) => {
+	const [clickBtnId, setClickBtnId] = useState(null);
 	const [tenantData, setTenantData] = useState();
 	const [updateTenantModalFLag, setUpdateTenantModalFlag] = useState(false);
 	const { loading, msg: payWithCashResponseMsg } = useSelector(
@@ -123,12 +124,19 @@ const TenantInfoScreen = ({ route }) => {
 		}
 	}, [payWithCashResponseMsg, tenantUpdateMsg]);
 
-	const handlePayWithCash = () => {
+	const handlePayWithCash = (monthRentId, monthName, amount) => {
 		dispatch(
-			payWithCash({ tenant: tenantData, singleRoomData, propertyInfo })
+			payWithCash({
+				tenant: tenantData,
+				singleRoomData,
+				propertyInfo,
+				monthRentId,
+				monthName,
+				amount,
+			})
 		);
 	};
-	const showConfirmDialog = () => {
+	const showConfirmDialog = (monthRentId, monthName, amount) => {
 		return Alert.alert(
 			'Are your sure?',
 			'Are you sure you want to proceed?',
@@ -136,7 +144,7 @@ const TenantInfoScreen = ({ route }) => {
 				{
 					text: 'Yes',
 					onPress: () => {
-						handlePayWithCash();
+						handlePayWithCash(monthRentId, monthName, amount);
 					},
 				},
 
@@ -150,6 +158,10 @@ const TenantInfoScreen = ({ route }) => {
 	const handleTenantUpdate = () => {
 		setUpdateTenantModalFlag(true);
 	};
+	// filter only non paid data
+	const tenantRentData = tenantData?.rent.filter(
+		(rentData) => !rentData.isPaid
+	);
 
 	if (!tenantData) {
 		return (
@@ -160,7 +172,7 @@ const TenantInfoScreen = ({ route }) => {
 	} else {
 		return (
 			<Provider>
-				{/* <CrossPlatformHeader
+				<CrossPlatformHeader
 					title="TenantInfo"
 					profile={false}
 					backCallback={() => {
@@ -171,83 +183,158 @@ const TenantInfoScreen = ({ route }) => {
 							roomId,
 						});
 					}}
-				/> */}
+				/>
+				<ScrollView>
+					<Card>
+						<View style={tenantInfoStyles.updateTenantContainer}>
+							<FontAwesome5
+								onPress={handleTenantUpdate}
+								style={tenantInfoStyles.iconStyle}
+								name={'edit'}
+							/>
+						</View>
 
-				<Card>
-					<View style={tenantInfoStyles.updateTenantContainer}>
-						<FontAwesome5
-							onPress={handleTenantUpdate}
-							style={tenantInfoStyles.iconStyle}
-							name={'edit'}
-						/>
-					</View>
+						<View style={tenantInfoStyles.row}>
+							<Text style={tenantInfoStyles.col1}>
+								Tenant Name
+							</Text>
+							<Text style={tenantInfoStyles.col}>
+								{tenantData.name}
+							</Text>
+						</View>
 
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Tenant Name</Text>
-						<Text style={tenantInfoStyles.col}>
-							{tenantData.name}
-						</Text>
-					</View>
+						<View style={tenantInfoStyles.row}>
+							<Text style={tenantInfoStyles.col1}>Email</Text>
+							<Text style={tenantInfoStyles.col}>
+								{tenantData.email}
+							</Text>
+						</View>
+						<View style={tenantInfoStyles.row}>
+							<Text style={tenantInfoStyles.col1}>
+								Phone Number
+							</Text>
+							<Text style={tenantInfoStyles.col}>
+								{tenantData.phoneNumber}
+							</Text>
+						</View>
+						<View style={tenantInfoStyles.row}>
+							<Text style={tenantInfoStyles.col1}>Address</Text>
+							<Text style={tenantInfoStyles.col}>
+								{propertyInfo.address}
+							</Text>
+						</View>
 
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Email</Text>
-						<Text style={tenantInfoStyles.col}>
-							{tenantData.email}
+						<View style={tenantInfoStyles.row}>
+							<Text style={tenantInfoStyles.col1}>
+								Security Fee
+							</Text>
+							<Text style={tenantInfoStyles.col}>
+								{tenantData.securityAmount}
+							</Text>
+						</View>
+						<View style={tenantInfoStyles.row}>
+							<Text style={tenantInfoStyles.col1}>Join Date</Text>
+							<Text style={tenantInfoStyles.col}>
+								{format(
+									new Date(tenantData.joinDate),
+									'dd MMM yyyy'
+								)}
+							</Text>
+						</View>
+					</Card>
+					{!tenantData?.rent.every((r) => r.isPaid === true) ? (
+						<Text style={{ margin: 30 }}>
+							Some header with text
 						</Text>
-					</View>
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Phone Number</Text>
-						<Text style={tenantInfoStyles.col}>
-							{tenantData.phoneNumber}
-						</Text>
-					</View>
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Address</Text>
-						<Text style={tenantInfoStyles.col}>
-							{propertyInfo.address}
-						</Text>
-					</View>
+					) : (
+						<Text style={{ margin: 30 }}>No payments</Text>
+					)}
+					<View>
+						{tenantRentData.map((monthRent, i) => {
+							return (
+								<Card key={i}>
+									<View
+										style={
+											tenantInfoStyles.tenantRentDataRow
+										}
+									>
+										<Text style={tenantInfoStyles.col1}>
+											Month
+										</Text>
 
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Rent</Text>
-						<Text style={tenantInfoStyles.col}>
-							{tenantData.rent}
-						</Text>
+										<Text style={tenantInfoStyles.col}>
+											{monthRent.month}
+										</Text>
+									</View>
+									<View
+										style={
+											tenantInfoStyles.tenantRentDataRow
+										}
+									>
+										<Text style={tenantInfoStyles.col1}>
+											Amount
+										</Text>
+
+										<Text style={tenantInfoStyles.col}>
+											{' '}
+											{monthRent.amount}
+										</Text>
+									</View>
+									<View
+										style={
+											tenantInfoStyles.tenantRentDataRow
+										}
+									>
+										<Text style={tenantInfoStyles.col1}>
+											Due Date
+										</Text>
+
+										<Text style={tenantInfoStyles.col}>
+											{format(
+												new Date(monthRent.rentDueDate),
+												'dd MMM yyyy'
+											)}
+										</Text>
+									</View>
+									<View
+										style={
+											tenantInfoStyles.tenantRentDataRow
+										}
+									>
+										<View style={{ flex: 1 }}>
+											<Button
+												title="Paid with cash"
+												containerStyle={
+													tenantInfoStyles.paidWithCashContainer
+												}
+												buttonStyle={
+													tenantInfoStyles.paidWithCashBtn
+												}
+												titleStyle={
+													tenantInfoStyles.paidWithCashTitle
+												}
+												onPress={() => {
+													setClickBtnId(i);
+													showConfirmDialog(
+														monthRent._id,
+														monthRent.month,
+														monthRent.amount
+													);
+												}}
+												loading={
+													clickBtnId === i && loading
+												}
+												loadingProps={{
+													color: '#fff',
+												}}
+											/>
+										</View>
+									</View>
+								</Card>
+							);
+						})}
 					</View>
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Security Fee</Text>
-						<Text style={tenantInfoStyles.col}>
-							{tenantData.securityAmount}
-						</Text>
-					</View>
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Join Date</Text>
-						<Text style={tenantInfoStyles.col}>
-							{format(
-								new Date(tenantData.joinDate),
-								'dd MMM yyyy'
-							)}
-						</Text>
-					</View>
-					<View style={tenantInfoStyles.row}>
-						<Text style={tenantInfoStyles.col1}>Due Date</Text>
-						<Text style={tenantInfoStyles.col}>
-							{format(
-								new Date(tenantData.rentDueDate),
-								'dd MMM yyyy'
-							)}
-						</Text>
-					</View>
-					<Button
-						title="Paid with cash"
-						containerStyle={tenantInfoStyles.paidWithCashContainer}
-						buttonStyle={tenantInfoStyles.paidWithCashBtn}
-						titleStyle={tenantInfoStyles.paidWithCashTitle}
-						onPress={showConfirmDialog}
-						loading={loading}
-						loadingProps={{ color: '#109ED9' }}
-					/>
-				</Card>
+				</ScrollView>
 				{/* Modal for update Tenant */}
 				<Portal>
 					<Modal
@@ -274,9 +361,6 @@ const TenantInfoScreen = ({ route }) => {
 					text={text}
 					onDismissSnackBar={onDismissSnackBar}
 					onToggleSnackBar={onToggleSnackBar}
-					// Todo : for now we statically fix its position
-					// but when header is customize then we will fix it accordingly
-					bottom={-70}
 				/>
 			</Provider>
 		);

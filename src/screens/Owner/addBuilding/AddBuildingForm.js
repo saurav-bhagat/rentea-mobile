@@ -338,7 +338,11 @@ const AddBuildingForm = ({ route }) => {
 				</View> */}
 
 						<Button
-							title={buildingInfo ? 'Update' : 'Add'}
+							title={
+								buildingInfo
+									? 'Update apartment'
+									: 'Add apartment'
+							}
 							onPress={handleAddBuildingAndUpdateFormSubmit}
 							buttonStyle={addBuildingFormstyles.submitBtn}
 							titleStyle={addBuildingFormstyles.submitBtnTxt}
