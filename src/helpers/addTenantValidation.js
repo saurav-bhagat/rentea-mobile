@@ -13,9 +13,9 @@ export const isValidTenantData = ({
 	if (
 		validateText({
 			name,
-			email,
+			// email,
 		}) &&
-		validateCount({ securityAmount }) &&
+		// validateCount({ securityAmount }) &&
 		validatePhone(phoneNumber)
 	) {
 		return true;

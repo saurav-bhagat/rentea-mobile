@@ -144,7 +144,7 @@ const AddTenantScreen = ({
 					<View style={addTenantStyles.row}>
 						<View style={addTenantStyles.col}>
 							<TextInputCommon
-								label="Tenant Name"
+								label="Tenant Name*"
 								name="tenantName"
 								onChangeText={(val) => setName(val)}
 								value={name}
@@ -162,7 +162,7 @@ const AddTenantScreen = ({
 					<View style={addTenantStyles.row}>
 						<View style={addTenantStyles.col}>
 							<TextInputCommon
-								label="Tenant Phone"
+								label="Tenant Phone*"
 								name="tenantPhone"
 								onChangeText={(val) => setPhone(val)}
 								value={phone}
@@ -190,7 +190,7 @@ const AddTenantScreen = ({
 							<View style={addTenantStyles.row}>
 								<View style={addTenantStyles.col}>
 									<TextInputCommon
-										label="Rent"
+										label="Rent*"
 										name="rent"
 										onChangeText={(val) => setRent(val)}
 										value={rent}
@@ -282,7 +282,14 @@ const AddTenantScreen = ({
 								loading={loading}
 							/>
 						</View>
-						<View style={addTenantStyles.col}></View>
+						<View style={addTenantStyles.col}>
+							<Button
+								title={'Cancel'}
+								buttonStyle={addTenantStyles.submitButton}
+								titleStyle={addTenantStyles.submitButton_text}
+								onPress={dismissAddAndUpdateTenantModal}
+							/>
+						</View>
 					</View>
 				</View>
 				<SnackBar

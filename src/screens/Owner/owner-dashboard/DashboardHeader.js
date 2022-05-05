@@ -31,7 +31,7 @@ const DashboardHeader = ({ usedInPaymentScreen }) => {
 						flex: 0.5,
 					}}
 				>
-					<Text style={dashboardStyles.revenueText}>
+					{/* <Text style={dashboardStyles.revenueText}>
 						Total Revenue
 					</Text>
 					<View
@@ -60,7 +60,7 @@ const DashboardHeader = ({ usedInPaymentScreen }) => {
 								5,000
 							</Text>
 						</View>
-					</View>
+					</View> */}
 				</View>
 			</View>
 		</View>

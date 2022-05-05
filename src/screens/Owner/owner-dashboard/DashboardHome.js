@@ -69,10 +69,10 @@ const DashboardHome = ({ route }) => {
 			getSummaryViewDetails();
 		}
 	}, [properties]);
-
+	//flex: showDashboard ? 2 : 3
 	return (
 		<View style={dashboardStyles.dashboardHomeContainer}>
-			<View style={{ flex: showDashboard ? 2 : 3 }}>
+			<View style={{}}>
 				<DashboardHeader />
 			</View>
 			<View style={dashboardStyles.buttonView}>

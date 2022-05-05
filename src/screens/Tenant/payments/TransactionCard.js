@@ -56,6 +56,13 @@ const TransactionCard = ({ data, color }) => {
 									)}
 								</Text>
 							</View>
+							<View>
+								<Text
+									style={transactionCardStyles.dateTextStyle}
+								>
+									Room : {data.roomNo}{' '}
+								</Text>
+							</View>
 						</View>
 					</View>
 				</Body>

@@ -243,9 +243,7 @@ const TenantInfoScreen = ({ route }) => {
 						</View>
 					</Card>
 					{!tenantData?.rent.every((r) => r.isPaid === true) ? (
-						<Text style={{ margin: 30 }}>
-							Some header with text
-						</Text>
+						<Text style={{ margin: 30 }}>Due Months:</Text>
 					) : (
 						<Text style={{ margin: 30 }}>No payments</Text>
 					)}

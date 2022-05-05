@@ -24,9 +24,9 @@ export const ProfileScreen = ({ route }) => {
 	}
 
 	let list = [
-		{
-			name: 'Edit Profile',
-		},
+		// {
+		// 	name: 'Edit Profile',
+		// },
 	];
 	if (userType === 'Owner') {
 		const ownerDashboardResult =

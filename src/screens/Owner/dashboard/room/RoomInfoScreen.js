@@ -217,7 +217,7 @@ const RoomInfoScreen = ({ route }) => {
 														roomInfoScreenStyles.col1
 													}
 												>
-													Due date :{' '}
+													Due Rents :{' '}
 												</Text>
 												<View style={{ flex: 2 }}>
 													{

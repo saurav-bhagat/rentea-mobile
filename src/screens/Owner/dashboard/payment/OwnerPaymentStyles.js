@@ -3,7 +3,8 @@ import { ScaledSheet } from 'react-native-size-matters';
 export const ownerPaymentStyles = ScaledSheet.create({
 	ownerPaymentContainer: {
 		flex: 1,
-		marginTop: 20,
+		// marginTop: 10,
+		paddingTop: 10,
 		backgroundColor: '#fff',
 	},
 	transactionCardContainer: {

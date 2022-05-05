@@ -17,11 +17,12 @@ export const roomInfoScreenStyles = ScaledSheet.create({
 		fontSize: '15@s',
 	},
 	cardStyle: {
-		marginTop: '20@s',
+		marginTop: '10@s',
 		width: '90%',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		borderRadius: '20@s',
+		marginBottom: '30@s',
 	},
 	row: {
 		flexDirection: 'row',
