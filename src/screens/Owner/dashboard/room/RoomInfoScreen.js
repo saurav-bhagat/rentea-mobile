@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { Button, ListItem } from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { format, intervalToDuration } from 'date-fns';
 import { Provider, Portal, Modal } from 'react-native-paper';
 
@@ -13,17 +13,27 @@ import useSnack from '../../../../components/common/useSnack';
 import { roomInfoScreenStyles } from './RoomInfoStyle';
 import AddRoomForm from '../../addBuilding/AddRoomForm';
 import AddTenantScreen from '../tenant/AddTenantScreen';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import DeleteConfirmation from '../../../../components/common/DeleteConfirmation';
+import { removeTenant } from '../../../../redux/actions/ownerActions/removeTenantAction';
 
 const tenantAdded = 'tenant added successfully';
 const roomUpdate = 'room updated successfully';
+const tenantRemoved = 'Tenant removed successfully!';
 const defaultState = 'default state';
 
 const RoomInfoScreen = ({ route }) => {
+	const dispatch = useDispatch();
+
 	const { properties } = useSelector((state) => state.ownerDashbhoard);
 	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+	const { message: tenantRemoveResponse, error: removeTenantError } =
+		useSelector((state) => state.removeTenantResponse);
 	const { msg: updateRoomInfoMsg } = useSelector((state) => state.updateRoom);
 	const [updateRoomModal, setUpdateRoomModal] = useState(false);
 	const [addTenantModalFlag, setAddTenantModalFlag] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [tenantIdToDelete, setTenantIdToDelete] = useState(null);
 	const {
 		visible,
 		text,
@@ -57,7 +67,15 @@ const RoomInfoScreen = ({ route }) => {
 			setVisible(true);
 			setText('Error while updating room info');
 		}
-	}, [tenantMsg, updateRoomInfoMsg]);
+
+		if (tenantRemoveResponse === tenantRemoved) {
+			setVisible(true);
+			setText(tenantRemoveResponse);
+		} else if (removeTenantError) {
+			setVisible(true);
+			setText('Error while removing tenant.');
+		}
+	}, [tenantMsg, updateRoomInfoMsg, tenantRemoveResponse, removeTenantError]);
 
 	// when navigating after adding tenant (addTenantAction),
 	// updating roomInfo (updateRoomInfoAction)
@@ -170,6 +188,23 @@ const RoomInfoScreen = ({ route }) => {
 							/>
 						</Modal>
 					</Portal>
+					{/* Delete confirmation modal */}
+					<Portal>
+						<Modal
+							visible={showDeleteModal}
+							onDismiss={() => setShowDeleteModal(false)}
+							contentContainerStyle={
+								roomInfoScreenStyles.addTenantModalContainer
+							}
+						>
+							<DeleteConfirmation
+								onDismiss={() => setShowDeleteModal(false)}
+								onConfirm={() =>
+									dispatch(removeTenant(tenantIdToDelete))
+								}
+							/>
+						</Modal>
+					</Portal>
 
 					{singleRoomData.tenants.length > 0 ? (
 						singleRoomData.tenants.map((tenant, i) => {
@@ -251,6 +286,20 @@ const RoomInfoScreen = ({ route }) => {
 												</View>
 											</View>
 										)}
+										<View>
+											<MaterialIcons
+												onPress={() => {
+													setShowDeleteModal(true);
+													setTenantIdToDelete(
+														tenant._id
+													);
+												}}
+												style={
+													roomInfoScreenStyles.deleteIcon
+												}
+												name="delete-outline"
+											/>
+										</View>
 									</ListItem.Content>
 								</ListItem>
 							);
