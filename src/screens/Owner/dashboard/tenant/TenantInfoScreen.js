@@ -115,12 +115,6 @@ const TenantInfoScreen = ({ route }) => {
 		if (tenantUpdateMsg === tenantUpdate) {
 			setVisible(true);
 			setText('Tenant Detail updated successfully.');
-		} else if (
-			tenantUpdateMsg !== defaultState &&
-			tenantUpdateMsg !== tenantUpdate
-		) {
-			setVisible(true);
-			setText('Error while updating tenant.');
 		}
 	}, [payWithCashResponseMsg, tenantUpdateMsg]);
 
@@ -202,13 +196,14 @@ const TenantInfoScreen = ({ route }) => {
 								{tenantData.name}
 							</Text>
 						</View>
-
-						<View style={tenantInfoStyles.row}>
-							<Text style={tenantInfoStyles.col1}>Email</Text>
-							<Text style={tenantInfoStyles.col}>
-								{tenantData.email}
-							</Text>
-						</View>
+						{!!tenantData.email && (
+							<View style={tenantInfoStyles.row}>
+								<Text style={tenantInfoStyles.col1}>Email</Text>
+								<Text style={tenantInfoStyles.col}>
+									{tenantData.email}
+								</Text>
+							</View>
+						)}
 						<View style={tenantInfoStyles.row}>
 							<Text style={tenantInfoStyles.col1}>
 								Phone Number
@@ -223,15 +218,16 @@ const TenantInfoScreen = ({ route }) => {
 								{propertyInfo.address}
 							</Text>
 						</View>
-
-						<View style={tenantInfoStyles.row}>
-							<Text style={tenantInfoStyles.col1}>
-								Security Fee
-							</Text>
-							<Text style={tenantInfoStyles.col}>
-								{tenantData.securityAmount}
-							</Text>
-						</View>
+						{!!tenantData.securityAmount && (
+							<View style={tenantInfoStyles.row}>
+								<Text style={tenantInfoStyles.col1}>
+									Security Fee
+								</Text>
+								<Text style={tenantInfoStyles.col}>
+									{tenantData.securityAmount}
+								</Text>
+							</View>
+						)}
 						<View style={tenantInfoStyles.row}>
 							<Text style={tenantInfoStyles.col1}>Join Date</Text>
 							<Text style={tenantInfoStyles.col}>

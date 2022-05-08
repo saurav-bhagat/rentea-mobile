@@ -6,6 +6,7 @@ import {
 	ADD_TENANT_FAILURE,
 	ADD_TENANT_REQUEST,
 	ADD_TENANT_SUCCESS,
+	CLEAR_ADD_TENANT_MSG_ERROR,
 } from './addEntitiesTypes';
 import { getOwnerDashboard } from './dashboardAction';
 import { getToken } from '../../../helpers/checkTokenExpiry';
@@ -27,6 +28,12 @@ const addTenantFailure = (error) => {
 	return {
 		type: ADD_TENANT_FAILURE,
 		payload: error,
+	};
+};
+
+export const clearAddTenantMsgErrorOnDialogClose = () => {
+	return {
+		type: CLEAR_ADD_TENANT_MSG_ERROR,
 	};
 };
 

@@ -2,6 +2,7 @@ import {
 	UPDATE_TENANT_REQUEST,
 	UPDATE_TENANT_SUCCESS,
 	UPDATE_TENANT_FAIL,
+	CLEAR_UPDATE_TENANT_MSG_ERROR,
 } from '../../actions/ownerActions/updateTenantActionTypes';
 
 const initialState = {
@@ -15,6 +16,7 @@ const updateTenantReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: true,
+				msg: '',
 			};
 		case UPDATE_TENANT_SUCCESS:
 			return {
@@ -28,6 +30,11 @@ const updateTenantReducer = (state = initialState, action) => {
 				...state,
 				msg: action.msg,
 				loading: false,
+			};
+		case CLEAR_UPDATE_TENANT_MSG_ERROR:
+			return {
+				...state,
+				msg: '',
 			};
 		default:
 			return {

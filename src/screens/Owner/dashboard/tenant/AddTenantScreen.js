@@ -7,13 +7,23 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import TextInputCommon from '../../../../components/common/TextInputCommon';
 import { isValidTenantData } from '../../../../helpers/addTenantValidation';
-import { addTenant } from '../../../../redux/actions/ownerActions/addTenantAction';
+import {
+	addTenant,
+	clearAddTenantMsgErrorOnDialogClose,
+} from '../../../../redux/actions/ownerActions/addTenantAction';
 import { addTenantStyles } from './AddTenantStyles';
 import SnackBar from '../../../../components/common/SnackBar';
 import useSnack from '../../../../components/common/useSnack';
 
-import { updateTenantDetails } from '../../../../redux/actions/ownerActions/updateTenantAction';
+import {
+	clearUpdateTenantMsgErrorOnDialogClose,
+	updateTenantDetails,
+} from '../../../../redux/actions/ownerActions/updateTenantAction';
 import { Input, Item, Label } from 'native-base';
+
+const tenantAdded = 'tenant added successfully';
+const tenantUpdate = 'tenant details updated successfully';
+const defaultState = 'default state';
 
 const AddTenantScreen = ({
 	singleRoomData,
@@ -24,6 +34,8 @@ const AddTenantScreen = ({
 }) => {
 	const dispatch = useDispatch();
 	const { error } = useSelector((state) => state.addTenantResponse);
+	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
+	const { msg: tenantUpdateMsg } = useSelector((state) => state.updateTenant);
 
 	let loading;
 	let roomData = singleRoomData;
@@ -76,9 +88,6 @@ const AddTenantScreen = ({
 
 		if (isValidTenantData(tenantData)) {
 			dispatch(addTenant(tenantData));
-			setTimeout(() => {
-				dismissAddAndUpdateTenantModal();
-			}, 1000);
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);
@@ -89,8 +98,8 @@ const AddTenantScreen = ({
 			_id: tenant._id,
 			name,
 			email,
-			phoneNumber: phone,
 			securityAmount: security,
+			phoneNumber: phone,
 			roomId: roomData._id,
 			buildingId: propertyInfo._id,
 			//rent,
@@ -98,9 +107,6 @@ const AddTenantScreen = ({
 		};
 		if (isValidTenantData(tenantData)) {
 			dispatch(updateTenantDetails(tenantData));
-			setTimeout(() => {
-				dismissAddAndUpdateTenantModal();
-			}, 1000);
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);
@@ -111,8 +117,8 @@ const AddTenantScreen = ({
 		if (tenant && !showAddTenantScreenFlag) {
 			setName(tenant.name);
 			setPhone(tenant.phoneNumber);
-			setEmail(tenant.email);
-			setSecurity(tenant.securityAmount.toString());
+			setEmail(tenant?.email);
+			setSecurity(tenant?.securityAmount?.toString());
 			setRent(tenant.rent.toString());
 		}
 	}, [tenant]);
@@ -121,9 +127,21 @@ const AddTenantScreen = ({
 		if (error) {
 			setVisible(true);
 			setText(error.err);
+		} else if (tenantMsg === tenantAdded) {
+			dismissAddAndUpdateTenantModal();
+		} else if (tenantUpdateMsg === tenantUpdate) {
+			dismissAddAndUpdateTenantModal();
+		} else if (tenantUpdateMsg === 'failed to update tenant details') {
+			setVisible(true);
+			setText('Error while updating tenant.');
 		}
-	}, [error]);
+	}, [error, tenantMsg, tenantUpdateMsg]);
 
+	const handleAndAndUpdateCancel = () => {
+		dispatch(clearAddTenantMsgErrorOnDialogClose());
+		tenant && dispatch(clearUpdateTenantMsgErrorOnDialogClose());
+		dismissAddAndUpdateTenantModal();
+	};
 	return (
 		<View>
 			{/* <CrossPlatformHeader backCallback={handleGoBack} /> */}
@@ -287,7 +305,7 @@ const AddTenantScreen = ({
 								title={'Cancel'}
 								buttonStyle={addTenantStyles.submitButton}
 								titleStyle={addTenantStyles.submitButton_text}
-								onPress={dismissAddAndUpdateTenantModal}
+								onPress={handleAndAndUpdateCancel}
 							/>
 						</View>
 					</View>
