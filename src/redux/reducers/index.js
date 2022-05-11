@@ -14,6 +14,7 @@ import payWithCashReducer from './payment/payWithCashReducer';
 import updateRoomReducer from './ownerReducers/updateRoomReducer';
 import updateTenantReducer from './ownerReducers/updateTenantReducer';
 import addRoomSeparatelyReducer from './ownerReducers/addRoomSeparatelyReducer';
+import { removeTenantReducer } from './ownerReducers/removeTenantReducer';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
 	userDetail: addUserDetailReducer,
 	ownerDashbhoard: dashboardReducer,
 	addTenantResponse: addTenantReducer,
+	removeTenantResponse: removeTenantReducer,
 	addBankDetails: addBankDetailsReducer,
 	tenantDashboard: tenantDashboard,
 	payWithCash: payWithCashReducer,

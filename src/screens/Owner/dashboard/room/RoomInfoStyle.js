@@ -54,4 +54,8 @@ export const roomInfoScreenStyles = ScaledSheet.create({
 		marginHorizontal: 20,
 		borderRadius: 15,
 	},
+	deleteIcon: {
+		color: '#109FDA',
+		fontSize: '26@s',
+	},
 });
