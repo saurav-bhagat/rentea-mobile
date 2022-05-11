@@ -19,7 +19,7 @@ export default function SnackBar({
 					onToggleSnackBar();
 				},
 			}}
-			duration={3000}
+			duration={1000}
 			style={{
 				backgroundColor: '#000',
 				bottom: bottom || 50,

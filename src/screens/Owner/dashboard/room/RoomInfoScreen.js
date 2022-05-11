@@ -40,12 +40,7 @@ const RoomInfoScreen = ({ route }) => {
 		if (tenantMsg === tenantAdded) {
 			setVisible(true);
 			setText('Tenant added successfully.');
-		} else if (tenantMsg !== defaultState && tenantMsg !== tenantAdded) {
-			console.log('tenant msg is ', tenantAdded, tenantMsg);
-			setVisible(true);
-			setText('Error while adding tenant.');
 		}
-
 		//   Integrating Snack after updating roomInfo
 		if (updateRoomInfoMsg === roomUpdate) {
 			setVisible(true);

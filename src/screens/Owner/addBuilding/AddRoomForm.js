@@ -89,7 +89,15 @@ const AddRoomForm = ({
 				floor,
 				roomSize,
 			} = roomDetail;
-			rent = rent.toString();
+			let rentOfRoomIncludingAllTenant = 0;
+			roomDetail?.tenants?.forEach((tenant) => {
+				tenant?.rent.forEach((r) => {
+					if (!r.isPaid) {
+						rentOfRoomIncludingAllTenant += r?.amount;
+					}
+				});
+			});
+			rent = rent?.toString();
 			if (!roomType) {
 				roomType = parseInt(type.split('')[0]);
 			}
@@ -102,7 +110,7 @@ const AddRoomForm = ({
 			}
 			setRoomNo(roomNo);
 			setSelectedType(roomType);
-			setRent(rent);
+			setRent(rentOfRoomIncludingAllTenant.toString());
 			setSecurity(security);
 			setIsMultipleTenant(isMultipleTenant);
 			setSelectedFloor(floor);

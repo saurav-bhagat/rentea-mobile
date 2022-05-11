@@ -2,6 +2,7 @@ import {
 	ADD_TENANT_FAILURE,
 	ADD_TENANT_REQUEST,
 	ADD_TENANT_SUCCESS,
+	CLEAR_ADD_TENANT_MSG_ERROR,
 } from '../../actions/ownerActions/addEntitiesTypes';
 
 const initialState = {
@@ -33,6 +34,11 @@ const addTenantReducer = (state = initialState, action) => {
 				tenantMsg: 'failed to save tenant',
 				error: action.payload,
 				loading: false,
+			};
+		case CLEAR_ADD_TENANT_MSG_ERROR:
+			return {
+				...state,
+				error: '',
 			};
 		default:
 			return {

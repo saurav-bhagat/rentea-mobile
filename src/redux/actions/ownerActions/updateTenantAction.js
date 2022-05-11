@@ -3,6 +3,7 @@ import {
 	UPDATE_TENANT_REQUEST,
 	UPDATE_TENANT_SUCCESS,
 	UPDATE_TENANT_FAIL,
+	CLEAR_UPDATE_TENANT_MSG_ERROR,
 } from './updateTenantActionTypes';
 
 import { API_URL } from '@env';
@@ -27,6 +28,12 @@ export const updateTenantFail = () => {
 	return {
 		type: UPDATE_TENANT_FAIL,
 		msg: 'failed to update tenant details',
+	};
+};
+
+export const clearUpdateTenantMsgErrorOnDialogClose = () => {
+	return {
+		type: CLEAR_UPDATE_TENANT_MSG_ERROR,
 	};
 };
 
