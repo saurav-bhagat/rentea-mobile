@@ -11,8 +11,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getOwnerDashboard } from '../../../redux/actions/ownerActions/dashboardAction';
 import Notification from './Notification';
 import DashboardHeader from './DashboardHeader';
+import SnackBar from '../../../components/common/SnackBar';
+import useSnack from '../../../components/common/useSnack';
+
+const tenantAdded = 'tenant added successfully';
+
 const DashboardHome = ({ route }) => {
 	const dispatch = useDispatch();
+
+	const {
+		onDismissSnackBar,
+		onToggleSnackBar,
+		setText,
+		visible,
+		setVisible,
+		text,
+	} = useSnack();
+
 	const [showDashboard, setShowDashboard] = useState(true);
 	const [summaryDetails, setSummaryDetails] = useState({
 		propertiesNo: 0,
@@ -25,6 +40,7 @@ const DashboardHome = ({ route }) => {
 	const { properties, error, loading } = useSelector(
 		(state) => state.ownerDashbhoard
 	);
+	const { tenantMsg } = useSelector((state) => state.addTenantResponse);
 	let buildingUpdateFlag;
 	if (route && route.params) {
 		buildingUpdateFlag = route.params.buildingUpdateFlag;
@@ -69,6 +85,13 @@ const DashboardHome = ({ route }) => {
 			getSummaryViewDetails();
 		}
 	}, [properties]);
+
+	useEffect(() => {
+		if (tenantMsg === tenantAdded) {
+			setVisible(true);
+			setText('Tenant added successfully.');
+		}
+	}, [tenantMsg]);
 	//flex: showDashboard ? 2 : 3
 	return (
 		<View style={dashboardStyles.dashboardHomeContainer}>
@@ -228,7 +251,9 @@ const DashboardHome = ({ route }) => {
 							title="Add Tenants"
 							containerStyle={dashboardStyles.addPropertyButton}
 							titleStyle={dashboardStyles.OpenSans_600SemiBold}
-							onPress={() => setShowDashboard(false)}
+							onPress={() => {
+								navigation.navigate('AddTenantFromDashboard');
+							}}
 						/>
 					</View>
 					<View style={dashboardStyles.notificationContainer}>
@@ -240,6 +265,12 @@ const DashboardHome = ({ route }) => {
 					<PropertiesScreen />
 				</View>
 			)}
+			<SnackBar
+				visible={visible}
+				text={text}
+				onDismissSnackBar={onDismissSnackBar}
+				onToggleSnackBar={onToggleSnackBar}
+			/>
 		</View>
 	);
 };

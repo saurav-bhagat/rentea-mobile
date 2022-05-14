@@ -37,7 +37,7 @@ export const clearAddTenantMsgErrorOnDialogClose = () => {
 	};
 };
 
-export const addTenant = (tenantData) => {
+export const addTenant = (tenantData, navigateToDashboard = false) => {
 	return async (dispatch, getState) => {
 		dispatch(addTenantRequest());
 		const { auth } = getState();
@@ -57,11 +57,12 @@ export const addTenant = (tenantData) => {
 
 				// to update the dashboard in the redux store
 				await dispatch(getOwnerDashboard());
-
-				await navigate('RoomInfo', {
-					buildingId: tenantData.buildId,
-					roomId: tenantData.roomId,
-				});
+				!navigateToDashboard
+					? await navigate('RoomInfo', {
+							buildingId: tenantData.buildId,
+							roomId: tenantData.roomId,
+					  })
+					: await navigate('ownerDashboard');
 			})
 			.catch((error) => {
 				console.log('Error while adding tenant: ', error.response.data);
