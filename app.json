@@ -16,6 +16,19 @@
     "android": {
       "package": "in.rentea.rentea",
       "versionCode": 5
+    },
+    "plugins": ["sentry-expo"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "rentea",
+            "project": "rentea",
+            "authToken": "9ac0e427405d48048b5ad7e68810546209ae593842a54636a89e7d1d02940f0e"
+          }
+        }
+      ]
     }
   }
 }
