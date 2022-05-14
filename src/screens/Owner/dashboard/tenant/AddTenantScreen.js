@@ -31,6 +31,7 @@ const AddTenantScreen = ({
 	showAddTenantScreenFlag,
 	tenantInfo,
 	dismissAddAndUpdateTenantModal,
+	navigateToDashboard,
 }) => {
 	const dispatch = useDispatch();
 	const { error } = useSelector((state) => state.addTenantResponse);
@@ -87,7 +88,7 @@ const AddTenantScreen = ({
 		};
 
 		if (isValidTenantData(tenantData)) {
-			dispatch(addTenant(tenantData));
+			dispatch(addTenant(tenantData, navigateToDashboard));
 		} else {
 			setText('Enter fields properly');
 			setVisible(true);

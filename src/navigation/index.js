@@ -28,6 +28,7 @@ import { LeftNavbar } from './LeftNavbar';
 import { IntroSlider } from '../screens/Introslides/IntroSlider';
 import Dashboard from '../screens/Owner/owner-dashboard/Dashboard';
 import TransactionScreen from '../screens/Owner/dashboard/payment/TransactionScreen';
+import { AddTenantFromDashboard } from '../screens/Owner/owner-dashboard/AddTenantFromDashboard';
 const { Screen, Navigator } = createStackNavigator();
 
 /**
@@ -164,6 +165,11 @@ const RootRoutes = () => {
 										<Screen
 											name="TransactionScreen"
 											component={TransactionScreen}
+										/>
+
+										<Screen
+											name="AddTenantFromDashboard"
+											component={AddTenantFromDashboard}
 										/>
 									</>
 								)}
