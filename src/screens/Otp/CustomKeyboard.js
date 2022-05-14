@@ -19,7 +19,7 @@ const CustomKeyboard = ({ setOtpValues, otpValues }) => {
 		'-1',
 	];
 	const setValueInOtpTxt = (value) => {
-		otpValues.length !== 6 &&
+		otpValues.length !== 4 &&
 			value !== '-1' &&
 			value !== '' &&
 			setOtpValues([...otpValues, value]);

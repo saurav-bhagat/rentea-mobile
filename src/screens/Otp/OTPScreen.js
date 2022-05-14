@@ -110,7 +110,7 @@ const OtpScreen = ({ route }) => {
 								{otpValues[3]}
 							</Text>
 						</View>
-						<View style={otpStyles.otpTextBox}>
+						{/* <View style={otpStyles.otpTextBox}>
 							<Text style={otpStyles.otpText}>
 								{otpValues[4]}
 							</Text>
@@ -119,7 +119,7 @@ const OtpScreen = ({ route }) => {
 							<Text style={otpStyles.otpText}>
 								{otpValues[5]}
 							</Text>
-						</View>
+						</View> */}
 					</View>
 
 					<View>
@@ -129,7 +129,7 @@ const OtpScreen = ({ route }) => {
 							loading={authState.loading ? true : false}
 							onPress={handleOTPSubmit}
 							buttonStyle={otpStyles.continueBtnStyle}
-							disabled={otpValues.length !== 6}
+							disabled={otpValues.length !== 4}
 						/>
 					</View>
 				</View>
