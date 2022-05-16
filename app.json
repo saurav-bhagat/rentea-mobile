@@ -5,17 +5,17 @@
     "name": "RenTea",
     "icon": "https://res.cloudinary.com/ddwwsfeeh/image/upload/v1630580471/app-icon_iqf0po.png",
     "slug": "RenTea",
-    "version": "0.0.2",
+    "version": "0.0.7",
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "bundleIdentifier": "in.rentea.rentea",
-      "buildNumber": "0.0.5"
+      "buildNumber": "0.0.7"
     },
     "android": {
       "package": "in.rentea.rentea",
-      "versionCode": 5
+      "versionCode": 7
     },
     "plugins": ["sentry-expo"],
     "hooks": {
