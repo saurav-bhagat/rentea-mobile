@@ -19,7 +19,7 @@ const SingleProperty = ({ data, vaccantRooms, address }) => {
 				</View>
 				<View style={propertyStyles.singlePropertyCol2}>
 					<Text style={propertyStyles.buildingNoTxt}>
-						Building No. {data.name}
+						{data.name}
 					</Text>
 					<Text style={propertyStyles.buildingAdrsTxt}>
 						{address}

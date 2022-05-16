@@ -95,8 +95,7 @@ export const validateRoomFields = (
 			roomType > 0 &&
 			roomType < 10 &&
 			floor >= 0 &&
-			floor <= floorCount &&
-			security >= rent
+			floor <= floorCount
 		) {
 			return true;
 		}

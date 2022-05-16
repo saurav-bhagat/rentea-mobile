@@ -133,11 +133,15 @@ export const verifyOtp = (phoneNumber, code) => {
 			})
 			.catch((err) => {
 				dispatch(verifyOtpFail());
-				console.log(err.response.data);
-				alert(
-					'Error while verifying otp: ' +
-						JSON.stringify(err.response.data)
-				);
+				console.log(err);
+				if ((err = 'Network Error')) {
+					alert('Error while verifying otp: ' + JSON.stringify(err));
+				} else {
+					alert(
+						'Error while verifying otp: ' +
+							JSON.stringify(err.response.data)
+					);
+				}
 			});
 	};
 };

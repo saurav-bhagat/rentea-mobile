@@ -191,7 +191,7 @@ const AddTenantScreen = ({
 						</View>
 						<View style={addTenantStyles.col}>
 							<TextInputCommon
-								label="Security Paid"
+								label="Security/Advance Paid"
 								name="securityPaid"
 								onChangeText={(val) => setSecurity(val)}
 								value={security}

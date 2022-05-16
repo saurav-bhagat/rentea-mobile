@@ -145,7 +145,8 @@ const TenantDashboard = ({ route }) => {
 									Your Phone: {userDetails.tenantPhoneNumber}
 								</Text>
 								<Text>
-									Security Paid: {userDetails.security}
+									Security/Advance Paid:{' '}
+									{userDetails.security}
 								</Text>
 							</Body>
 						</CardItem>

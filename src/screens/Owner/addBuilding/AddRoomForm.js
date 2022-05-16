@@ -230,7 +230,7 @@ const AddRoomForm = ({
 				</View>
 				<View style={addRoomFormStyles.col}>
 					<TextInputCommon
-						label="Room size"
+						label="Room size(in sq ft)"
 						name="roomSize"
 						value={roomSize}
 						onChangeText={(val) => setRoomSize(val)}
@@ -256,7 +256,7 @@ const AddRoomForm = ({
 					</View>
 					<View style={addRoomFormStyles.col}>
 						<TextInputCommon
-							label="Security"
+							label="Security/Advance"
 							name="security"
 							value={security}
 							onChangeText={(val) => setSecurity(val)}
@@ -275,6 +275,8 @@ const AddRoomForm = ({
 				style={pickerSelectStyles}
 				placeholder={SelectRoomPlaceholder}
 			/>
+
+			<Text>*Consider Floor 0 as Ground floor.</Text>
 
 			<RNPickerSelect
 				useNativeAndroidPickerStyle={false}

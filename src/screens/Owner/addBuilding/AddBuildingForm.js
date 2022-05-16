@@ -179,6 +179,7 @@ const AddBuildingForm = ({ route }) => {
 							inputStyle={addBuildingFormstyles.inputStyle}
 							value={stateAddress}
 						/>
+						<Text>*Consider Floor 0 as Ground floor.</Text>
 						{!buildingInfo && (
 							<View style={addBuildingFormstyles.roomAndFloorC}>
 								<View>
